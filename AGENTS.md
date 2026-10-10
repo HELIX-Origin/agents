@@ -42,6 +42,12 @@
 ├── TODO.md                    <- actionable checklist (update as you go)
 ├── BUGS.md                    <- known issues, quirks, workarounds
 ├── .gitignore                 <- keeps projects/ and scratch/ untracked
+├── .github/                   <- GitHub configuration & Copilot instructions
+│   └── copilot-instructions.md<- Universal workspace guidance for GitHub Copilot
+├── .opencode/                 <- OpenCode configuration & workflow commands
+│   ├── opencode.jsonc         <- Tool permissions, plugins, and compaction config
+│   ├── dcp.jsonc              <- Dynamic context pruning rules
+│   └── command/               <- Workflow commands (review, release, fix-bug, etc.)
 ├── .agents/                   <- agent resources (rules, skills, roles)
 │   ├── rules/                 <- binding constraints
 │   ├── skills/                <- domain knowledge packs

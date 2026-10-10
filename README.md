@@ -25,6 +25,12 @@ This repository houses the authoritative operational blueprint for AI coding ass
 ├── TODO.md                    <- Actionable, granular task checklist
 ├── BUGS.md                    <- Active defect tracker and technical workarounds
 ├── .gitignore                 <- Keeps projects/ and scratch/ untracked
+├── .github/                   <- GitHub configuration & Copilot instructions
+│   └── copilot-instructions.md<- Universal workspace guidance for GitHub Copilot
+├── .opencode/                 <- OpenCode AI agent configuration & workflows
+│   ├── opencode.jsonc         <- Tool permissions, plugins, and compaction config
+│   ├── dcp.jsonc              <- Dynamic context pruning rules
+│   └── command/               <- Workflow commands (review, release, fix-bug, etc.)
 ├── .agents/                   <- AI Agent core resources
 │   ├── rules/                 <- Binding operational constraints
 │   │   ├── git-operations.md  <- Strict read-only git safety policy

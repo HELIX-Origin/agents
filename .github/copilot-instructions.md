@@ -1,0 +1,42 @@
+# Copilot Instructions — HELIX-Origin AI Agents Ecosystem
+
+> Auto-loaded by GitHub Copilot. `AGENTS.md` at the workspace root is the authoritative authority; this file provides high-level guidance for GitHub Copilot in this workspace.
+
+---
+
+## 1. Workspace Identity & Scope
+
+- **Organization Focus:** All software and theme engineering belongs to the **HELIX Origin** organization (`https://github.com/HELIX-Origin`).
+- **Organization Repositories:** All projects reside under the gitignored `projects/` directory (`projects/helix-docs`, `projects/helix-origin.github.io`, `projects/NH-Reader`, `projects/Windhawk-Themes`, `projects/Hentai-Senpai-Multi-DE-Theme`).
+- **Forbidden Directories:** Never explore, modify, or reference non-organization directories (specifically `ramensoftware/`).
+
+---
+
+## 2. Hard Invariants
+
+1. **No Unauthorized Git Operations:** Always treat git as read-only (`status`, `log`, `diff`, `show`, `ls-files`). Never execute mutating commands (`commit`, `push`, `tag`, `checkout`, `merge`, `reset`) unless explicitly instructed by the user in the current conversation.
+2. **No Hardcoded Machine Paths:** Never expose absolute system paths (e.g. `C:\Users\...` or machine drives). Always use clean relative paths (`projects/<repo>`, `./`).
+3. **No Secrets or Tokens:** Never write, commit, or log credentials, private keys, certificates, or tokens.
+4. **Tracking Document Discipline:** Keep `PLAN.md`, `TODO.md`, and `BUGS.md` updated as tasks progress.
+5. **Theme Release Precedence:** The shared Jekyll theme repository (`projects/helix-docs`) must always be verified and released before consuming projects.
+
+---
+
+## 3. Subsystem Architecture
+
+- **`projects/helix-docs`**: Shared Jekyll theme mirroring `just-the-docs` component structure (`_includes/components/`), frontmatter-driven navigation, precompiled Dart Sass (`assets/css/site.css`), and 18-language Google Translate switcher.
+- **`projects/NH-Reader`**: Cross-platform desktop client built with Tauri (Rust) and SvelteKit (Svelte 5 runes). Version manifests (`package.json`, `tauri.conf.json`, `Cargo.toml`) must move together.
+- **`projects/Windhawk-Themes`**: Windows 11 styling suites for 5 target styler mods. Uses `WindhawkBlur` and vertical gradient rim borders. Releases use milestone tags (`M.NN`) with zero attached assets.
+- **`projects/Hentai-Senpai-Multi-DE-Theme`**: Nord-themed multi-DE GTK 2/3/4, GNOME Shell, Cinnamon, and Plank themes.
+- **`projects/helix-origin.github.io`**: Organization portal site powered by GitHub Pages and `helix-docs` remote theme.
+
+---
+
+## 4. Verification Before Declaring Done
+
+| Subsystem / Area | Verification Command |
+|---|---|
+| Theme (`helix-docs` & portal) | `bundle exec jekyll build` (0 errors, 0 warnings) |
+| Desktop App (`NH-Reader`) | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` |
+| Windows 11 Mods (`Windhawk-Themes`) | `pwsh -NoProfile -File projects/Windhawk-Themes/tools/Test-WindhawkStyles.ps1` |
+| GTK Themes (`Hentai-Senpai`) | `bash -n install.sh`, `bash -n scripts/*.sh` |
