@@ -18,6 +18,32 @@
 
 ## 🎯 Active Sprints
 
+### 🚀 [Windhawk-Themes] Sprint 3: Command Center Stability — High-Contrast & explorer.exe Crash Fixes
+- **Project Identifier:** `[Windhawk-Themes]`
+- **Repository Path:** `projects/Windhawk-Themes`
+- **Target Component:** Command Center Suite (`windows-11-start-menu-styler.yml`, `windows-11-taskbar-styler.yml`)
+
+```mermaid
+flowchart TD
+    S3_HC["[Windhawk-Themes] Remove Start Menu High-Contrast Border Override"] --> S3_Crash["[Windhawk-Themes] Remove Unanchored explorer.exe-Leaking Selectors"]
+    S3_Crash --> S3_Gate["[Windhawk-Themes] Static Gate: Test-WindhawkStyles.ps1"]
+    S3_Gate --> S3_Verify["[Windhawk-Themes] Live Desktop Verification"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[Windhawk-Themes] High-Contrast Neutrality (Start Menu)**:
+   - Remove the `Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder` `Visibility=Collapsed` override so the theme never styles Windows high-contrast UI.
+   - Sync `docs/_wiki/start-menu-styler/targets/elements.md`.
+2. **[Windhawk-Themes] Random `explorer.exe` Crash During File/Folder Actions (Taskbar)**:
+   - Remove the bare-type, unanchored flyout/menu targets (`FlyoutPresenter`, `MenuFlyoutPresenter > Border`, `MenuFlyoutSubItem`) that leaked a `WindhawkBlur` into every `explorer.exe`, including File Explorer context menus/flyouts (Selector Hygiene Rule §2.1).
+   - Remove the two no-op `RenderTransform` overrides (`Taskbar.TaskbarExtensionElement`, `Taskbar.TaskListButtonPanel#ExperienceToggleButtonRootPanel`).
+3. **[Windhawk-Themes] Verification**:
+   - `tools/Test-WindhawkStyles.ps1` → 0 errors, 0 warnings (met).
+   - Live desktop verification for both fixes (pending).
+
+---
+
 ### 🚀 [Windhawk-Themes] Sprint 2: Suite Refinements & Shell Geometry Alignment
 - **Project Identifier:** `[Windhawk-Themes]`
 - **Repository Path:** `projects/Windhawk-Themes`

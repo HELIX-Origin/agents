@@ -25,6 +25,25 @@
 
 ## 🔥 Active Workstreams
 
+### 🎯 [Windhawk-Themes] Workstream W.12: Command Center — High-Contrast & explorer.exe Crash Fixes
+- **Project Identifier:** `[Windhawk-Themes]`
+- **Repository Path:** `projects/Windhawk-Themes`
+- **Target Component:** Command Center Suite (`windows-11-start-menu-styler.yml`, `windows-11-taskbar-styler.yml`)
+
+**Locked user directives:**
+- "this is not a high contrast theme."
+- "It's more than likely the taskbar style since it effects explorer.exe and is known to have this exact problem when a misconfigured style is being used."
+
+**Implementation checklist:**
+- [x] `[Windhawk-Themes]` Remove the Start Menu high-contrast border override (`Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder`) so the theme no longer styles high-contrast UI; sync `docs/_wiki/start-menu-styler/targets/elements.md`.
+- [x] `[Windhawk-Themes]` Remove the three bare-type, unanchored flyout/menu targets in the taskbar config (`FlyoutPresenter`, `MenuFlyoutPresenter > Border`, `MenuFlyoutSubItem`) that leaked a `WindhawkBlur` into every `explorer.exe` (File Explorer context menus/flyouts) — Selector Hygiene Rule §2.1.
+- [x] `[Windhawk-Themes]` Remove two no-op `RenderTransform` overrides (`Taskbar.TaskbarExtensionElement`, `Taskbar.TaskListButtonPanel#ExperienceToggleButtonRootPanel`) that clobbered the taskbar's internal transforms for zero visual effect.
+- [x] `[Windhawk-Themes]` Static gate `tools/Test-WindhawkStyles.ps1` → 0 errors, 0 warnings.
+- [ ] `[Windhawk-Themes]` Live-verify on user desktop: no File Explorer freeze/crash during file/folder actions; Start Menu normal in both standard and high-contrast modes.
+- [ ] `[Windhawk-Themes]` Commit + push `Windhawk-Themes` (both stylers + `elements.md`) and `agents` (`BUGS.md`, `TODO.md`) once authorized.
+
+---
+
 ### 🎯 [Windhawk-Themes] Workstream W.11: Command Center Catalogue — Companion Extras Documentation
 - **Project Identifier:** `[Windhawk-Themes]`
 - **Repository Path:** `projects/Windhawk-Themes`

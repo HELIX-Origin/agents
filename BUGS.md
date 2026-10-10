@@ -75,6 +75,26 @@
 
 ### [Windhawk-Themes] (projects/Windhawk-Themes)
 
+#### [Windhawk-Themes] 2026-10-10 — Start Menu Styler Overrides Native High-Contrast Borders
+- **Project Identifier:** `[Windhawk-Themes]`
+- **Repository Path:** `projects/Windhawk-Themes`
+- **Severity**: 🟠 High (accessibility violation)
+- **Status**: 🚧 fix applied (pending user desktop verification)
+- **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-start-menu-styler.yml`
+- **Reported Issue**: The Start Menu theme forced `Visibility=Collapsed` on `Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder`, stripping Windows' native high-contrast accessibility boundary. This is not a high-contrast theme and must not style high-contrast UI.
+- **Root Cause**: The only literal high-contrast targeting in the suite was a single `controlStyles` block collapsing the two native high-contrast borders.
+- **Resolution Applied**: Removed the high-contrast border target entirely (the borders are already hidden outside high-contrast mode, so there is no visual regression) and updated `docs/_wiki/start-menu-styler/targets/elements.md`.
+
+#### [Windhawk-Themes] 2026-10-10 — Random explorer.exe Crash During File/Folder Actions
+- **Project Identifier:** `[Windhawk-Themes]`
+- **Repository Path:** `projects/Windhawk-Themes`
+- **Severity**: 🔴 Critical (shell crash)
+- **Status**: 🚧 fix applied (pending user desktop verification)
+- **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-taskbar-styler.yml`
+- **Reported Issue**: Random `explorer.exe` crash, most often during file/folder actions and when File Explorer opens (freeze then immediate crash).
+- **Root Cause (hypothesis)**: The Taskbar Styler injects into every `explorer.exe`, including File Explorer windows. Three unanchored, bare-type selectors (`FlyoutPresenter`, `MenuFlyoutPresenter > Border`, `MenuFlyoutSubItem`) applied a `WindhawkBlur` `$Background` to File Explorer's context menus/flyouts, violating the "anchor broad types" selector-hygiene rule (Evidence-Protocol §2).
+- **Resolution Applied**: Removed the three bare-type flyout/menu targets (taskbar flyout cards remain styled via their specific named selectors). Also removed two no-op `RenderTransform` overrides (`Taskbar.TaskbarExtensionElement`, `Taskbar.TaskListButtonPanel#ExperienceToggleButtonRootPanel`) that clobbered the taskbar's internal transforms for zero visual effect.
+
 #### [Windhawk-Themes] 2026-10-07 — Notification / Action Center Quick Settings Split Button Color Mismatch
 - **Project Identifier:** `[Windhawk-Themes]`
 - **Repository Path:** `projects/Windhawk-Themes`
