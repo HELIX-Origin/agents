@@ -161,3 +161,7 @@
 - **[helix-docs] BUG-10 — Defaults scope syntax linter warnings:** Standardized `{path: "", type: ...}` across all configs.
 - **[helix-docs] BUG-11 — Duplicate layout frontmatter:** Cleaned duplicate keys across companion doc pages.
 - **[helix-docs] BUG-12 — XAML curly brace Kramdown interpolation:** Wrapped XAML bindings in `{% raw %}` blocks.
+- **[helix-docs] BUG-15 — Mermaid diagrams rendered as raw code blocks:** Made the `components/mermaid.html` loader opt-out (`site.mermaid == false`). Live-verified the `mermaid@11.12.0` ESM loader on Windhawk-Themes, NH-Reader, Hentai-Senpai and helix-origin.github.io (`05b9943`).
+- **[helix-docs] BUG-16 — Sidebar nav tree had no hierarchy:** Level-1 category emoji + indented sub-page bullets with left-aligned markers; icons resolved from `nav_icon` front matter → `nav_icons` map → heuristic. Live-verified `nav-bullet`/`nav-icon`/category markers on consuming wiki trees (`05b9943`).
+- **[helix-docs] BUG-17 — Sidebar footer links were centered:** Footer switched to `justify-items: start` + `text-align: left`. Live-verified in the served `site.css` (`05b9943`).
+- **[helix-docs] BUG-18 — Brand logo & favicon used raw relative paths:** `logo`/`favicon` now resolve from the site root in `head.html`/`header.html`/`sidebar.html` (absolute and protocol-relative URLs pass through); `apple-touch-icon` added. Live-verified on nested helix-docs routes and on Windhawk-Themes (`05b9943`, Windhawk `eb4b2a6`).
