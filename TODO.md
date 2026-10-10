@@ -35,7 +35,7 @@
 
 **Implementation checklist:**
 - [x] `[Windhawk-Themes]` Add a "🧩 Configuring the Companion Extras" section to the Command Center Suite catalogue page: extras matrix (8 companion mods with mod IDs, YAML files, and target process/scope), step-by-step install instructions, and a link to the full `projects/command-center/extras/README.md` reference.
-- [ ] `[Windhawk-Themes]` Commit + push, then live-verify the rendered section on the published catalogue page.
+- [x] `[Windhawk-Themes]` Commit + push (`5a331de`); Pages build succeeded and the rendered section was live-verified at `https://helix-origin.github.io/Windhawk-Themes/catalogue/command-center/`.
 
 ---
 
