@@ -1,131 +1,110 @@
-# PLAN.md — helix-docs theme + consuming projects
+# PLAN.md — HELIX Origin Master Plan & Sprints
 
-> Master plan. If credits run out, resume from **Current Status** and work down **TODO.md**.
-> Last updated: 2026-10-09
+> 🎯 **Master Plan**: Active sprint planning, execution architecture, and completed sprint history across all repositories in the **HELIX Origin** organization.
+>
+> Pair with [`ROADMAP.md`](./ROADMAP.md) (strategic direction), [`TODO.md`](./TODO.md) (executable tasks), and [`BUGS.md`](./BUGS.md) (known issues).
+> Last updated: 2026-10-10
 
-## Goal
+---
 
-1. **helix-docs** is the shared Jekyll theme, consumed by other repos as a **remote theme**
-   (`remote_theme: HELIX-Origin/helix-docs`).
-2. Make the theme's **repo structure mirror `just-the-docs`** (proven, fully-featured theme):
-   `_includes/components/*`, minimal `_layouts/*`, layered `_sass/{support,modules,color_schemes,vendor,custom}`,
-   `assets`, `_config.yml`, Gemfile — while keeping our **own HELIX style and palette**.
-3. Navigation must be **frontmatter-driven** (`parent`, `grand_parent`, `nav_order`, `published`,
-   `nav_exclude`, `permalink`) — consuming sites must **not** need a `_data/navigation.yml`.
-4. Layouts depend on dedicated **navigation include HTML files** (just-the-docs component style).
-5. Fix every consuming project so it renders correctly with the remote theme, and GFM-ify content.
+## 📜 Organizational Tracking Contract
 
-## Environment
+- **Single Pane of Glass:** All repository sprint plans are consolidated here at workspace root.
+- **Mandatory Project Tagging Invariant:** Every sprint, workstream, task, and verification command **must explicitly state its project name and repository path** (`[<project-name>] (<project-path>)`). Unscoped items are strictly prohibited so agents never conflate repositories.
+- **Active Sprints First:** Ongoing sprint tasks precede completed historical phases.
+- **Strict Scope Boundaries:** Repositories belong to the `HELIX-Origin` organization. External directories (`ramensoftware`) are strictly forbidden.
 
-- Windows 11. Ruby **3.3.12** installed via winget to `<ruby-install-dir>` (DevKit/MSYS2 included).
-- PATH is NOT refreshed in the agent shell — **prepend** it per command:
-  `$env:PATH = "<ruby-bin-dir>;$env:PATH"`
-- bundler 4.0.22. `bundle install` completed in `projects/helix-docs` (Gemfile now also
-  declares `faraday-retry` — see BUG-5).
-- **Original `assets/css/site.css` was compiled with dart-sass** (Ruby Sass 3.7.4 and liblibsass
-  both fail on the CSS in this theme — see BUGS.md). Use dart-sass to regenerate.
-- `site.css` is **precompiled and committed** on purpose: remote themes serve it directly and
-  GitHub Pages must not try to compile the theme SCSS. Keep `_sass` as the source of truth and
-  regenerate `assets/css/site.css` after SCSS edits.
-- Local preview build: `bundle exec jekyll build --source "projects/helix-docs"
-  --destination "projects/helix-docs\_site"` with `workdir: projects/helix-docs`.
-  Expect ~1–3 s, zero warnings (see BUGS.md Notes for the exact verification greps).
+---
 
-## Projects in scope
-- `projects/helix-docs` (the theme itself + its preview site)
-- `projects/helix-origin.github.io\docs` (portal)
-- `projects/NH-Reader\docs`
-- `projects/Windhawk-Themes\docs` (largest repair)
-- `projects/Hentai-Senpai-Multi-DE-Theme\docs`
+## 🎯 Active Sprints
 
-**Ignore** `ramensoftware` entirely.
+### 🚀 [Windhawk-Themes] Sprint 2: Suite Refinements & Shell Geometry Alignment
+- **Project Identifier:** `[Windhawk-Themes]`
+- **Repository Path:** `projects/Windhawk-Themes`
+- **Target Component:** Command Center Suite (`windows-11-start-menu-styler.yml`, `windows-11-notification-center-styler.yml`, `windows-11-taskbar-styler.yml`)
 
-## Phases
+```mermaid
+flowchart TD
+    S2_SM["[Windhawk-Themes] Start Menu Header & Companion Alignments"] --> S2_NC["[Windhawk-Themes] Action Center Button State Fixes"]
+    S2_NC --> S2_Snap["[Windhawk-Themes] Taskbar Snap Container Theming"]
+    S2_Snap --> S2_Gate["[Windhawk-Themes] Static Gate: Test-WindhawkStyles.ps1"]
+    S2_Gate --> S2_Verify["[Windhawk-Themes] Live Desktop Verification"]
+```
 
-### Phase 1 — Theme SCSS restructure (mirror just-the-docs) — DONE
-- [x] Move `_sass/*` into `support/`, `modules/`, `color_schemes/`, `vendor/`, `custom/`.
-- [x] Split: `_variables` → `support/_variables` + `support/_mixins` + `color_schemes/dark`
-      (+ new `support/_functions`); `_base` → `vendor/_normalize` + `layout` + `modules/aesthetics`.
-- [x] Split `_sidebar` → `modules/sidebar` + `modules/navigation`; `_components` → `+modules/footer`;
-      `_header` → `+modules/utilities`.
-- [x] Create entrypoint `_sass/helix-docs.scss` (mirrors `just-the-docs.scss`).
-- [x] Regenerate `assets/css/site.css` with dart-sass and verify parity (432/432 rules
-      preserved, +5 nested-nav rules; file is 46,118 bytes).
-- [x] Nested-tree indent rules live in `modules/navigation.scss` and are in the compiled CSS.
+#### 📝 Execution Tasks
 
-### Phase 2 — Theme includes/layouts (mirror just-the-docs components) — DONE
-- [x] `_includes/components/nav.html` — frontmatter-driven 3-level tree, variant docs/wiki,
-      with `published`/`nav_exclude` filtering and `site.html_pages` base set.
-- [x] `components/` created: `header.html`, `sidebar.html`, `breadcrumbs.html`,
-      `children_nav.html`, `toc.html`, `footer.html`, `scripts.html` (head.html stays at
-      `_includes/` root, just-the-docs pattern).
-- [x] `default.html`, `docs.html`, `wiki.html` are structure-only; catalogue/store/faq/changelog/
-      item layouts share `components/header|footer|scripts`.
-- [x] Zero `site.data.navigation` anywhere; `_data/navigation.yml` deleted (`languages.yml` kept).
-- [x] Pagers computed from `parent`/`nav_order` only (frontmatter), verified prev/next targets.
-- [x] `_config.yml` defaults converted to canonical `{path: "", type: ...}` scopes + global
-      `nav_order: 9999` fallback (BUG-10: also silences the IDE `path`-required false flag).
-- [x] README.md rewritten (frontmatter nav model + accurate Repository Structure tree).
+1. **[Windhawk-Themes] Start Menu Search & Phone Link Geometry Alignment**:
+   - **Top Card Vertical Alignment**: Move Phone Link companion cards up flush with the top of the menu, bringing the search box into horizontal alignment to their left.
+   - **Inter-Panel Gap Reduction**: Reduce horizontal spacing between the main content and companion pane.
+   - **Search Box & Toggle Sizing**: Align search box left edge flush with pinned apps section; align companion toggle button (`ToggleButton#ShowHideCompanion`) right edge flush with pinned apps section.
+2. **[Windhawk-Themes] Notification / Action Center Button Color & Split Button Refinement**:
+   - Fix Quick Settings toggle buttons and split buttons (`SplitL2Button`, chevron button, toggle button) where colors are inconsistently applied across states (ref `media_1791431699608_c575da8b.png`).
+   - Resolve split-button mismatch where one half displays accent color and the chevron half displays bright high-contrast blue.
+   - Ensure unified `$ElementBackground`, `$BorderBrush`, and `$AccentColor` styling across all quick action tiles.
+3. **[Windhawk-Themes] Taskbar Snap Layout Containers Theming**:
+   - Inspect and theme internal elements of the Snap Layout container (`SnapLayoutControl`, `LayoutBorder`, `LayoutGrid`) with Command Center glass without breaking coordinate calculations.
+4. **[Windhawk-Themes] Taskbar System Tray Overflow Grid Glass Background**:
+   - Restore frosted glass background (`$Background`), top-lit border (`$BorderBrush`), and matching corner radius to the system tray overflow flyout (`Grid#OverflowRootGrid > Border` and `Border#OverflowFlyoutBackgroundBorder`).
 
-### Phase 3 — Theme robustness — IN PROGRESS
-- [x] `translate-control.html`: hard-coded 18-language fallback mirroring `languages.yml`
-      exactly; `site.data.languages` used only if present (verified end-to-end).
-- [x] Bug-fix pass on the preview build — faraday-retry (BUG-5), titles-from-headings title
-      override (BUG-6), `where_exp` `and`/`or` (BUG-7), Liquid subscript filter trap in the
-      pager (BUG-8), github-pages → Primer theme leak (BUG-9).
-- [x] Verify all 9 layouts + 4 collections (docs, wiki, catalogue, store) build — done;
-      nav trees, breadcrumb parent links, pagers and translate fallback all spot-checked.
-- [x] **Remaining:** Mermaid support mirroring just-the-docs (`components/mermaid.html` +
-      `mermaid_config.js` + `mermaid: true`); docs use legible ` ```mermaid ` fences.
+---
 
-### Phase 4 — Consuming projects — DONE
-- [x] Portal config + GFM content.
-- [x] NH-Reader config/frontmatter/GFM.
-- [x] Hentai-Senpai: delete `_data/navigation.yml`, add permalinks/frontmatter, GFM.
-- [x] Windhawk: config defaults, `layout: docs`, titles, 3-level wiki tree, fix links.
-- [x] Resolved duplicate frontmatter keys (`layout`) and wrapped XAML bindings in `{% raw %}`.
-- All config fixes use the canonical `{path: "", type: docs}` scope form (BUG-10).
+## 🔮 Planned Sprints
 
-### Phase 5 — Verification — DONE
-- [x] Build theme preview locally (`bundle exec jekyll build`) — passes, 0 warnings.
-- [x] Build each consuming project's `docs` locally (`Windhawk-Themes`, `NH-Reader`, `Hentai-Senpai`, `helix-origin.github.io`).
-- [x] Validate frontmatter across all 87 Markdown files (all YAML valid, no duplicate keys).
-- [ ] Optional: preview in the browser tool.
+### 1. [NH-Reader] Post-v0.7.5 / M13 Preparation
+- **Project Identifier:** `[NH-Reader]`
+- **Repository Path:** `projects/NH-Reader`
+- **Scope:**
+  - `[NH-Reader]` Tag frequency analytics and local recommendation engine based on reading history.
+  - `[NH-Reader]` Multi-profile library partitions (isolated blacklist/favorite spaces).
+  - `[NH-Reader]` Background auto-update checker and GitHub release notification toasts.
 
-## Key decisions
+### 2. [helix-docs] v1.1.0 Feature Cycle
+- **Project Identifier:** `[helix-docs]`
+- **Repository Path:** `projects/helix-docs`
+- **Scope:**
+  - `[helix-docs]` Native Mermaid diagram client rendering macro (`components/mermaid.html`).
+  - `[helix-docs]` In-page Table of Contents sidebar module resolving `BUG-14`.
+  - `[helix-docs]` Dynamic catalogue filtering scripts for software and theme showcases.
 
-- Nav is computed in Liquid from frontmatter — jekyll-remote-theme ships only
-  `_includes`, `_layouts`, `_sass`, `assets` (no `_data`).
-- Parent anchor titles:
-  - NH-Reader: "Documentation Home" / "NH Reader Technical Wiki"
-  - Hentai-Senpai: "Documentation Directory" / "Technical Wiki & Reference"
-  - Windhawk: "Documentation Directory" / "Target & Configuration Wiki"
-- `defaults` scopes always written as `{path: "", type: <collection>}` — semantically
-  type-only (empty path = match-all) but satisfies YAML schema linters requiring `path`.
-- Never ship/enable `jekyll-titles-from-headings` — it overrides collection-document titles
-  and breaks `parent` matching (BUG-6).
-- `published: false` hides from all nav; `nav_exclude: true` hides from the nav tree only.
-- Keep precompiled `site.css`; do NOT commit a live `assets/css/site.scss` entrypoint to the theme.
-- Do **not** modify `ramensoftware`. Do not commit/push unless asked.
-- helix-docs has pre-existing uncommitted changes (`D LICENSE`, `?? LICENSE.md`) — leave untouched.
-  (`M _config.yml` is now also our intentional change set.)
-- **Workspace governance:** `AGENTS.md` + `.agents/` at the `.` root govern ALL
-  projects. Conventions: rules in `.agents/rules/`, skills in `.agents/skills/`, agents
-  nested `.agents/agents/<primary>/<sub>/`.
-- **Mermaid:** prefer legible GFM ` ```mermaid ` diagrams (flowcharts, ≤ ~8 nodes, short
-  labels) in documentation and agent docs wherever they clarify; never over-complex ones
-  that shrink.
+### 3. [helix-origin.github.io] Portal v3 Enhancement
+- **Project Identifier:** `[helix-origin.github.io]`
+- **Repository Path:** `projects/helix-origin.github.io`
+- **Scope:**
+  - `[helix-origin.github.io]` Live release status widgets dynamically queried via Jekyll GitHub metadata.
+  - `[helix-origin.github.io]` Interactive showcase component consuming the `catalogue` layout.
 
-## Current Status (resume point)
+---
 
-- **Phases 1–5 complete & pushed to remote repositories.**
-- Theme repository (`helix-docs`) updated with wiki layout delegation for docs, modular landing section cards, YAML Issue Forms (`.github/ISSUE_TEMPLATE/`), and pushed first (commit `90c608b`).
-- Open/deferred bugs tracked as official GitHub issues on `helix-docs`: #1 (landing card layout), #2 (in-page TOC in docs layout), #3 (Dart Sass slash division).
-- All consuming project sites (`Windhawk-Themes`, `NH-Reader`, `Hentai-Senpai-Multi-DE-Theme`, `helix-origin.github.io`) updated with:
-  - `_config.yml` defaults setting `layout: wiki` for docs collections.
-  - Flush-left modular `<section class="doc-section">` card markup on landing index pages (0 Kramdown code block bugs).
-  - Unrooted `.gitignore` patterns for `_site/`, `.sass-cache/`, `.jekyll-cache/`, and `.jekyll-metadata`.
-- All local changes committed and pushed to `origin/main` across all repositories. Working trees 100% clean.
-- Added workspace-wide release notes standards to `.agents/rules/release-notes.md` and `.agents/templates/release-notes-template.md` adapted from NH-Reader, accounting for SemVer vs. Milestone version control types across all projects.
-- Initial release `v1.0.0` published to `HELIX-Origin/helix-docs` with annotated tag and standardized SemVer release notes.
-- Extracted site-wide `_includes/components/navbar.html` to unify top navigation across `default.html`, `wiki.html`, and `header.html`; updated catalogue grid min-width to 400px and recompiled `assets/css/site.css` (commit `1056904` on `helix-docs`).
+## ✅ Completed Sprints & Phases
+
+### ✅ [helix-docs] Phases 1–5 & v1.0.0 Initial Release
+- **Project Identifier:** `[helix-docs]` · **Path:** `projects/helix-docs` · **Commits:** `90c608b`, `1056904` · **Release:** `v1.0.0`
+- `[helix-docs]` **Phase 1: SCSS Architecture**: Reorganized `_sass/` into `support/`, `modules/`, `color_schemes/`, `vendor/`, `custom/`. Precompiled `assets/css/site.css` with Dart Sass (`sass-embedded` 1.105.1; 432 original rules preserved + 5 nested-nav rules).
+- `[helix-docs]` **Phase 2: Includes & Layouts**: Mirrored just-the-docs component structure (`header`, `sidebar`, `nav`, `breadcrumbs`, `children_nav`, `footer`, `scripts`). Navigation 100% frontmatter-driven (`parent`, `grand_parent`, `nav_order`, `published`, `nav_exclude`). Deleted obsolete `_data/navigation.yml`.
+- `[helix-docs]` **Phase 3: Robustness & Universal Navbar**: Hardcoded 18-language fallback in `translate-control.html`. Fixed Faraday retry (`BUG-5`), title override (`BUG-6`), Liquid subscript filter trap (`BUG-8`). Extracted universal site-wide top navbar (`_includes/components/navbar.html`).
+- `[helix-docs]` **Phase 4: Consuming Sites**: Unified `remote_theme: HELIX-Origin/helix-docs` with canonical scopes `{path: "", type: ...}` across all four consuming sites.
+- `[helix-docs]` **Phase 5: Release v1.0.0**: Tagged `v1.0.0` with standardized SemVer release notes.
+
+### ✅ [NH-Reader] Sprints 1–16 & Releases v0.1.0 through v0.7.5
+- **Project Identifier:** `[NH-Reader]` · **Path:** `projects/NH-Reader` · **Latest Release:** `v0.7.5`
+- `[NH-Reader]` **Sprints 1–4 (v0.1.0 – v0.2.1)**: Foundation, Browse, Advanced Search Query Builder, Global Blacklist engine.
+- `[NH-Reader]` **Sprints 5–8 (v0.3.0 – v0.5.0)**: SQLite Cache, Responsive Reader, Throttled Background Workers, Native NSIS/WiX installers and isolated `.portable` mode.
+- `[NH-Reader]` **Sprints 9–12 (v0.6.0 – v0.7.3)**: 18-Language Localization Core, Storage Budgets & LRU Pruning, Official Archive Downloads, Complete 17 Language Packs, Custom Title Bar with OS glyphs, RTL layout polish.
+- `[NH-Reader]` **Sprint 13–16 (v0.7.4 – v0.7.5)**: Blacklist pagination backfill, NSIS installer text legibility fix, unified `npm run sign` script (`scripts/sign.mjs`), squircle website assets (`logo.svg`, `favicon.ico`, `icon.png`).
+
+### ✅ [Windhawk-Themes] Sprints 1 & 1.5
+- **Project Identifier:** `[Windhawk-Themes]` · **Path:** `projects/Windhawk-Themes` · **Milestones:** `M.01`, `M.02`
+- `[Windhawk-Themes]` **Sprint 1: Governance & Static Gate**: Multi-agent ecosystem rules (Rules 00–09), domain skills, templates, automated validation gate `tools/Test-WindhawkStyles.ps1`.
+- `[Windhawk-Themes]` **Sprint 1.5: Notification Center Styler Generation**: Generated `windows-11-notification-center-styler.yml` applying frosted glass, specular rim borders, compact media layouts, and calendar styling.
+
+### ✅ [helix-origin.github.io] Portal Modernization & Artwork Suite
+- **Project Identifier:** `[helix-origin.github.io]` · **Path:** `projects/helix-origin.github.io`
+- `[helix-origin.github.io]` Standardized portal landing structure on `helix-docs` remote theme.
+- `[helix-origin.github.io]` Authored custom 16:9 vector artwork suite (`windhawk-themes.svg`, `nh-reader.svg`, `hentai-senpai-theme.svg`, `helix-docs.svg`).
+- `[helix-origin.github.io]` Integrated `helix-docs.svg` into `docs/index.md` project card.
+
+### ✅ [Hentai-Senpai-Multi-DE-Theme] GTK Theme & Remote Docs
+- **Project Identifier:** `[Hentai-Senpai-Multi-DE-Theme]` · **Path:** `projects/Hentai-Senpai-Multi-DE-Theme` · **Release:** `v1.0.0`
+- `[Hentai-Senpai-Multi-DE-Theme]` Multi-desktop GTK theme installer for GNOME, Cinnamon, XFCE, Budgie, and MATE.
+- `[Hentai-Senpai-Multi-DE-Theme]` Authored squircle vector icon assets (`icon.svg`, `logo.ico`, `my-avatar.png`).
+- `[Hentai-Senpai-Multi-DE-Theme]` Aligned documentation with `helix-docs` remote theme and frontmatter navigation.

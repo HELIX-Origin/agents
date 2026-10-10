@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title description">
+  <title id="title">PROJECT_NAME</title>
+  <desc id="description">PROJECT_DESCRIPTION</desc>
+  <defs>
+    <!-- Background Gradient: Customize base dark stop colors -->
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#07111f"/>
+      <stop offset="1" stop-color="#040a14"/>
+    </linearGradient>
+
+    <!-- Accent Gradient: Customize primary and secondary brand colors -->
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#48d8f2"/>
+      <stop offset="1" stop-color="#b06cff"/>
+    </linearGradient>
+
+    <!-- Icon Plate Clip Path (Standard 450x450 at 218, 315 with 72px radius) -->
+    <clipPath id="icon">
+      <rect x="218" y="315" width="450" height="450" rx="72"/>
+    </clipPath>
+  </defs>
+
+  <!-- 1. Full Canvas Background -->
+  <rect width="1920" height="1080" fill="url(#background)"/>
+
+  <!-- 2. Atmospheric Ambient Orbs -->
+  <circle cx="1700" cy="150" r="540" fill="#48d8f2" opacity=".10"/>
+  <circle cx="1400" cy="900" r="420" fill="#b06cff" opacity=".08"/>
+
+  <!-- 3. Signature Diagonal Light Ray -->
+  <path d="M0 930 750 180h360L360 1080H0z" fill="#fff" opacity=".025"/>
+
+  <!-- 4. Soft Outer Glow Behind Icon Plate -->
+  <rect x="198" y="295" width="490" height="490" rx="92" fill="#fff" opacity=".08"/>
+
+  <!-- 5. Icon Plate Vector Artwork Container -->
+  <g clip-path="url(#icon)">
+    <!-- Plate Background Base -->
+    <rect x="218" y="315" width="450" height="450" fill="#0d1b2d"/>
+
+    <!-- Internal Ambient Glows -->
+    <circle cx="619" cy="343" r="160" fill="#48d8f2" opacity=".12"/>
+    <circle cx="260" cy="740" r="140" fill="#b06cff" opacity=".10"/>
+
+    <!-- ============================================================== -->
+    <!-- INSERT PROJECT DOMAIN VECTOR ARTWORK HERE                      -->
+    <!-- Guidelines: Window frames, app UI, books, shell pills, glyphs  -->
+    <!-- Bounds: Keep primary artwork within (250, 350) to (635, 730)   -->
+    <!-- ============================================================== -->
+
+  </g>
+
+  <!-- 6. Outer Border Outline for Icon Plate -->
+  <rect x="218" y="315" width="450" height="450" rx="72" fill="none" stroke="#48d8f2" stroke-opacity=".3" stroke-width="3"/>
+
+  <!-- 7. Vertical Brand Accent Divider Bar -->
+  <rect x="820" y="376" width="10" height="328" rx="5" fill="url(#accent)"/>
+
+  <!-- 8. Typography Block -->
+  <!-- Primary Title (H1) -->
+  <text x="880" y="485" fill="#edf5ff" font-family="Arial, sans-serif" font-size="82" font-weight="700">PROJECT_TITLE</text>
+
+  <!-- Subtitle / Tagline (H2) -->
+  <text x="880" y="585" fill="#dfeafa" font-family="Arial, sans-serif" font-size="56" font-weight="600">PROJECT_SUBTITLE</text>
+
+  <!-- Category Tracking Badge -->
+  <text x="885" y="660" fill="#48d8f2" font-family="Arial, sans-serif" font-size="32" letter-spacing="8">CATEGORY_OR_SYSTEM_BADGE</text>
+</svg>

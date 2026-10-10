@@ -22,9 +22,11 @@
    projects that are not part of the organization. Specifically, **`ramensoftware`** is
    strictly off-limits and must be completely ignored unless explicitly authorized.
 
-3. **Keep the tracking docs current.** `PLAN.md`, `TODO.md`, `BUGS.md` at workspace root
-   are the session handoff mechanism. Update them any time you start, finish, or re-scope a
-   work item. If credits run out mid-task, the next session resumes from these files.
+3. **Keep the tracking docs current.** `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`
+   at workspace root are the session handoff mechanism. Update them any time you start,
+   finish, or re-scope a work item. Every tracked item across all four documents must be
+   explicitly prefixed with its project tag (`[<project-name>] (<project-path>)`). If credits
+   run out mid-task, the next session resumes from these files.
 
 4. **No scope creep.** Repos under `projects/` that are not part of the active task are
    someone else's work. Don't touch them unless asked.
@@ -38,7 +40,8 @@
 ```
 ./
 ├── AGENTS.md                  <- this file
-├── PLAN.md                    <- master plan (phases, decisions, resume point)
+├── ROADMAP.md                 <- master roadmap (architecture, milestone matrix, direction)
+├── PLAN.md                    <- active sprint planning (execution tasks, gate, history)
 ├── TODO.md                    <- actionable checklist (update as you go)
 ├── BUGS.md                    <- known issues, quirks, workarounds
 ├── .gitignore                 <- keeps projects/ and scratch/ untracked
@@ -77,11 +80,18 @@
 | Git permission rules | `.agents/rules/git-operations.md` |
 | Workspace invariants | `.agents/rules/workspace.md` |
 | Release notes standards | `.agents/rules/release-notes.md` |
+| Project artwork standards | `.agents/rules/project-artwork.md` |
 | Verification standards | `.agents/rules/verification.md` |
 | Security & secret hygiene | `.agents/rules/security-hygiene.md` |
 | Clone organization repos | `.agents/skills/clone-org-repos.md` |
 | Compile theme CSS (dart-sass) | `.agents/skills/sass-compile.md` |
 | helix-docs theme knowledge / repair | `.agents/skills/helix-theme.md` |
+| Project artwork generation | `.agents/skills/project-artwork-generation.md` |
+| Template: Project artwork (16:9) | `.agents/templates/project-artwork-template.svg` |
+| Template: Roadmap ledger | `.agents/templates/roadmap-template.md` |
+| Template: Sprint plan ledger | `.agents/templates/plan-template.md` |
+| Template: Task checklist ledger | `.agents/templates/todo-template.md` |
+| Template: Bug tracker ledger | `.agents/templates/bugs-template.md` |
 | Tauri & Rust desktop engineering | `.agents/skills/tauri-desktop-engineering.md` |
 | Windhawk styler mod engineering | `.agents/skills/windhawk-styler-engineering.md` |
 | Linux & GTK theme engineering | `.agents/skills/gtk-desktop-theming.md` |
@@ -90,6 +100,7 @@
 | Agent: SCSS engineer | `.agents/agents/theme-engineer/scss-engineer.md` |
 | Agent: Components & layouts | `.agents/agents/theme-engineer/components-engineer.md` |
 | Agent: Preview builder | `.agents/agents/theme-engineer/preview-builder.md` |
+| Agent: Artwork designer | `.agents/agents/artwork-designer/artwork-designer.md` |
 | Agent: Config fixer | `.agents/agents/docs-site-engineer/config-fixer.md` |
 | Agent: Frontmatter fixer | `.agents/agents/docs-site-engineer/frontmatter-fixer.md` |
 | Agent: Content validator (GFM) | `.agents/agents/docs-site-engineer/content-validator.md` |
@@ -101,6 +112,6 @@
 ## Session start checklist
 
 1. Read `AGENTS.md` (done — it's this file).
-2. Read `PLAN.md` → `TODO.md` → `BUGS.md`; resume at the first unchecked TODO item.
+2. Read `ROADMAP.md` → `PLAN.md` → `TODO.md` → `BUGS.md`; resume at the first unchecked TODO item.
 3. Consult `.agents/skills/helix-theme.md` before touching helix-docs or any consuming site.
 4. Confirm what (if any) git operations the user has authorized this session.

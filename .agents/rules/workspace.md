@@ -25,13 +25,16 @@ Everything else outside `projects/` is presumptively out of scope.
 
 ## Tracking docs contract
 
-- `PLAN.md` — strategic plan, phases, decisions, "resume point".
-- `TODO.md` — checklist; **toggle items from `- [ ]` to `- [x]` as they complete** and add
+- `ROADMAP.md` — master roadmap, milestone delivery history, organization architecture, and project direction.
+- `PLAN.md` — strategic active sprint planning, sprint history, decisions, and "resume point".
+- `TODO.md` — actionable checklist; **toggle items from `- [ ]` to `- [x]` as they complete** and add
   new unchecked items before starting new work.
-- `BUGS.md` — anything that breaks or surprises, with status and workaround. Move entries
-  from Open to Resolved when fixed.
-- Update all three when: starting a task, completing a task, hitting a blocker, or changing
-  scope.
+- `BUGS.md` — known issues, quirks, and workarounds. Move entries from Open to Resolved when fixed.
+- **Mandatory Project Tagging**: In workspace root tracking documents (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`),
+  every milestone, sprint, task, workstream, quirk, or bug MUST be explicitly prefixed with its project tag
+  and relative path (`[<project-name>] (<project-path>)`, e.g. `[NH-Reader] (projects/NH-Reader)`). Never omit
+  project attribution so agents never mix up distinct repositories.
+- Update all four when: starting a task, completing a task, hitting a blocker, or changing scope.
 
 ## Communication
 
