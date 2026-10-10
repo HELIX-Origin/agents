@@ -36,7 +36,24 @@
 **Implementation checklist:**
 - [x] `[helix-origin.github.io]` Render the HELIX Docs project card with the display title "HELIX Docs" instead of the repo slug `helix-docs` (card heading + image `alt`).
 - [x] `[helix-docs]` Title the theme README heading as "HELIX Docs".
+- [x] `[helix-docs]` Display the theme/preview site title as "HELIX Docs" (`_config.yml` `title:` + `index.md`) and dedupe the home-page `<title>` in `_includes/head.html`.
 - [x] `[helix-origin.github.io]` Live verification after commit + Pages rebuild — portal card confirmed reading "HELIX Docs" (`409111f`; theme README `a00a540`).
+
+---
+
+### 🎯 [helix-docs] Workstream W.10: Home Page (vCard Pattern) Documentation
+- **Project Identifier:** `[helix-docs]`
+- **Repository Path:** `projects/helix-docs`
+- **Target Component:** `_docs/home-page.md`, `_docs/index.md`, `_docs/layouts.md`
+
+**Locked user directives:**
+- "add instructions in the site for properly writing the index.md page to use our custom vcard layout in the site home pages"
+- The vCard is a *pattern*, not a layout: home pages keep `layout: default` and are composed with hand-written HTML sections in `index.md`.
+
+**Implementation checklist:**
+- [x] `[helix-docs]` Author `_docs/home-page.md` documenting the vCard home pattern (hero front matter, `.doc-section`/`.section-heading`, feature cards, project cards, documentation directory, previews, timeline, closing CTA) with copy-paste snippets.
+- [x] `[helix-docs]` Link the guide from the Theme Documentation Directory and cross-reference it from the Default layout section; renumber `nav_order` for the components/multilingual pages.
+- [x] `[helix-docs]` Local build verified (Liquid examples render literally; page builds at `/docs/home-page/`); pushed `3b79c5f`.
 
 ---
 
