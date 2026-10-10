@@ -25,6 +25,20 @@
 
 ## 🔥 Active Workstreams
 
+### 🎯 [Windhawk-Themes] Workstream W.11: Command Center Catalogue — Companion Extras Documentation
+- **Project Identifier:** `[Windhawk-Themes]`
+- **Repository Path:** `projects/Windhawk-Themes`
+- **Target Component:** `docs/_catalogue/command-center.md`
+
+**Locked user directives:**
+- "our catalogue has a page for the command center suite. but that page lacks instructions for configuring the extras. we need to add instructions for those into it as well."
+
+**Implementation checklist:**
+- [x] `[Windhawk-Themes]` Add a "🧩 Configuring the Companion Extras" section to the Command Center Suite catalogue page: extras matrix (8 companion mods with mod IDs, YAML files, and target process/scope), step-by-step install instructions, and a link to the full `projects/command-center/extras/README.md` reference.
+- [ ] `[Windhawk-Themes]` Commit + push, then live-verify the rendered section on the published catalogue page.
+
+---
+
 ### 🎯 [helix-origin.github.io] Workstream W.09: Portal Project Card Naming
 - **Project Identifier:** `[helix-origin.github.io]`
 - **Repository Path:** `projects/helix-origin.github.io`
