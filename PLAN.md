@@ -1,4 +1,4 @@
-﻿# PLAN.md — helix-docs theme + consuming projects
+# PLAN.md — helix-docs theme + consuming projects
 
 > Master plan. If credits run out, resume from **Current Status** and work down **TODO.md**.
 > Last updated: 2026-10-09
@@ -128,3 +128,4 @@
 - All local changes committed and pushed to `origin/main` across all repositories. Working trees 100% clean.
 - Added workspace-wide release notes standards to `.agents/rules/release-notes.md` and `.agents/templates/release-notes-template.md` adapted from NH-Reader, accounting for SemVer vs. Milestone version control types across all projects.
 - Initial release `v1.0.0` published to `HELIX-Origin/helix-docs` with annotated tag and standardized SemVer release notes.
+- Extracted site-wide `_includes/components/navbar.html` to unify top navigation across `default.html`, `wiki.html`, and `header.html`; updated catalogue grid min-width to 400px and recompiled `assets/css/site.css` (commit `1056904` on `helix-docs`).

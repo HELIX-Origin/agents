@@ -59,7 +59,6 @@
 │   ├── NH-Reader/             <- (docs/ in scope)
 │   ├── Windhawk-Themes/       <- (docs/ in scope)
 │   └── Hentai-Senpai-Multi-DE-Theme/ <- (docs/ in scope)
-├── ramensoftware/             <- Non-org directory — FORBIDDEN — never touch
 └── (other projects)           <- out of scope unless asked
 ```
 

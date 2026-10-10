@@ -1,4 +1,4 @@
-﻿# TODO.md — running checklist
+# TODO.md — running checklist
 
 > Keep this current. Check items off as they complete. If credits run out, resume at the first
 > unchecked item. See PLAN.md for full context.
@@ -53,6 +53,8 @@ Last updated: 2026-10-09
       (Jekyll-documented form; also silences the IDE `path`-required false flag — BUG-10).
 - [x] `nav_exclude` opt-out added to `nav.html` (jtd parity); set on `404.md`.
 - [x] Nav sources use `site.html_pages` (excludes sitemap/robots/feed/css output pages — BUG-9).
+- [x] **Site-wide navbar component**: Extracted `_includes/components/navbar.html` from `header.html`, `default.html`, and `wiki.html`. Dynamically resolves registered collection root indexes (`docs`, `wiki`, `catalogue`, `store`) from built pages.
+- [x] **Catalogue showcase styling**: Expanded `.catalogue-grid` column min-width to 400px and recompiled `assets/css/site.css`.
 
 ## Phase 3 — Theme robustness
 - [x] `translate-control.html`: hard-coded 18-language fallback; `site.data.languages` used only
