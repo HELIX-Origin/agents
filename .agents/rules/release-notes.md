@@ -1,7 +1,7 @@
-# Rule: Release Notes Standards
+﻿# Rule: Release Notes Standards
 
 **Status:** BINDING.
-**Scope:** All repositories under `D:\Projects\` (except forbidden paths).
+**Scope:** All repositories under `` (except forbidden paths).
 **Base Reference:** Adapted from `NH-Reader` release notes and announcement standards.
 
 ---

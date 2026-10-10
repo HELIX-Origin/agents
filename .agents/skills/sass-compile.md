@@ -1,4 +1,4 @@
-# Skill: Recompiling helix-docs CSS with dart-sass
+﻿# Skill: Recompiling helix-docs CSS with dart-sass
 
 > Helm-docs serves a **precompiled** `assets/css/site.css`. `_sass/` is the source of truth.
 > After ANY `_sass` edit, regenerate `site.css` and commit the result (only with git
@@ -14,11 +14,11 @@
 
 ## Compile procedure
 
-Prereq: `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"` if `ruby`/`gem` are not on PATH.
+Prereq: `$env:PATH = "<ruby-bin-dir>;$env:PATH"` if `ruby`/`gem` are not on PATH.
 
-1. Edit files under `D:\Projects\projects\helix-docs\_sass\` (entrypoint = `helix-docs.scss`,
+1. Edit files under `projects/helix-docs\_sass\` (entrypoint = `helix-docs.scss`,
    mirroring just-the-docs' `just-the-docs.scss`).
-2. Compile (from `D:\Projects\projects\helix-docs`):
+2. Compile (from `projects/helix-docs`):
 
    ```
    ruby %TEMP%\opencode\compile.rb

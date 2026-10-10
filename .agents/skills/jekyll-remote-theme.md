@@ -1,6 +1,6 @@
-# Skill: Jekyll remote theme + GitHub Pages configuration
+﻿# Skill: Jekyll remote theme + GitHub Pages configuration
 
-> How any `D:\Projects\*` site must be configured to consume `helix-docs` as a remote
+> How any `*` site must be configured to consume `helix-docs` as a remote
 > theme, and how to build/verify it locally. Workspace-wide.
 
 ## GitHub Pages (production)
@@ -18,7 +18,7 @@
 
 ## Local builds (Windows, Ruby 3.3.12)
 
-- PATH quirk first: `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"`
+- PATH quirk first: `$env:PATH = "<ruby-bin-dir>;$env:PATH"`
 - The repo may lack a Gemfile (docs-only folders). Use a scratch Gemfile at the repo root
   (do not commit unless asked):
   ```ruby

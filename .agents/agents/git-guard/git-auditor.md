@@ -1,6 +1,6 @@
-# Agent: Git Guard → Auditor
+﻿# Agent: Git Guard → Auditor
 
-Primary agent: **git-guard** · Scope: every repo under `D:\Projects` · Rule: `git-operations`
+Primary agent: **git-guard** · Scope: every repo under `.` · Rule: `git-operations`
 
 ## Mission
 
@@ -33,7 +33,7 @@ flowchart LR
 
 ## Known state (2026-10-09)
 
-- `D:\Projects\helix-docs` has uncommitted changes predating our work (`M _config.yml`,
+- `projects/helix-docs` has uncommitted changes predating our work (`M _config.yml`,
   `D LICENSE`, `?? LICENSE.md`) — leave untouched.
 
 ## Reporting

@@ -1,4 +1,4 @@
-# BUGS.md — issues, quirks, and workarounds
+﻿# BUGS.md — issues, quirks, and workarounds
 
 > Track anything that breaks or surprises us, with status and workaround.
 > Last updated: 2026-10-09
@@ -26,8 +26,8 @@
 ## Environment quirks
 
 ### ENV-1 — Ruby not on PATH in the agent shell
-- Ruby installed to `C:\Ruby33-x64` but the running shell's PATH is stale.
-- **Workaround:** prepend every command: `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"`.
+- Ruby installed to `<ruby-install-dir>` but the running shell's PATH is stale.
+- **Workaround:** prepend every command: `$env:PATH = "<ruby-bin-dir>;$env:PATH"`.
 
 ### ENV-2 — Theme ships precompiled CSS, not a live SCSS entrypoint
 - `assets/css/site.css` is committed on purpose so remote-theme consumers on GitHub Pages get
@@ -139,11 +139,11 @@
 - **Fix:** Updated `_layouts/default.html` and `_includes/components/sidebar.html` to detect `is_home`, preserve the clean vCard profile sidebar without the docs tree, render the hero header with custom navbar/brand options, wrap home body in `<div class="landing-content">`, and added `_layouts/home.html`. Pushed to `helix-docs` origin/main.
 
 ## Notes for future runs
-- Compile command (from `D:\Projects\helix-docs`, with `C:\Ruby33-x64\bin` prepended to PATH):
+- Compile command (from `projects/helix-docs`, with `<ruby-bin-dir>` prepended to PATH):
   `ruby %TEMP%\opencode\compile.rb` (reads `_sass/helix-docs.scss`, writes `%TEMP%\opencode\site.css.new`,
   then copy over `assets\site.css`).
-- Build/verify command: `bundle exec jekyll build --source "D:\Projects\helix-docs"
-  --destination "D:\Projects\helix-docs\_site"` with `workdir: D:\Projects\helix-docs`.
+- Build/verify command: `bundle exec jekyll build --source "projects/helix-docs"
+  --destination "projects/helix-docs\_site"` with `workdir: projects/helix-docs`.
   Expected: `done in ~1–3 s`, zero `faraday`/`Liquid Exception`/`warning` matches.
 - dart-sass prints `@import` deprecation warnings — ignore; github-pages still uses `@import`.
 - PowerShell shows UTF-8 emoji as mojibake in console output — files are fine; verify with the

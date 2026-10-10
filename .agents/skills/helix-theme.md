@@ -1,13 +1,13 @@
-# Skill: helix-docs theme — structure, consumption, repair
+﻿# Skill: helix-docs theme — structure, consumption, repair
 
 > Everything an agent needs to work on the shared Jekyll theme `helix-docs`, or to fix any
-> site that consumes it. Applies to **all** projects under `D:\Projects\` that use GitHub
+> site that consumes it. Applies to **all** projects under `` that use GitHub
 > Pages. The theme repo mirrors **just-the-docs**' structure while keeping its own HELIX
 > style and palette.
 
 ## What helix-docs is
 
-- Repo: `D:\Projects\projects\helix-docs` — a remote theme consumed by the other projects.
+- Repo: `projects/helix-docs` — a remote theme consumed by the other projects.
 - Consuming sites set `remote_theme: HELIX-Origin/helix-docs` in `_config.yml`.
 - GitHub Pages serves the theme's **precompiled** `assets/css/site.css`; the theme never
   compiles SCSS at build time (see skill `sass-compile`).

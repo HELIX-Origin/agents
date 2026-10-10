@@ -1,4 +1,4 @@
-# PLAN.md — helix-docs theme + consuming projects
+﻿# PLAN.md — helix-docs theme + consuming projects
 
 > Master plan. If credits run out, resume from **Current Status** and work down **TODO.md**.
 > Last updated: 2026-10-09
@@ -17,28 +17,28 @@
 
 ## Environment
 
-- Windows 11. Ruby **3.3.12** installed via winget to `C:\Ruby33-x64` (DevKit/MSYS2 included).
+- Windows 11. Ruby **3.3.12** installed via winget to `<ruby-install-dir>` (DevKit/MSYS2 included).
 - PATH is NOT refreshed in the agent shell — **prepend** it per command:
-  `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"`
-- bundler 4.0.22. `bundle install` completed in `D:\Projects\helix-docs` (Gemfile now also
+  `$env:PATH = "<ruby-bin-dir>;$env:PATH"`
+- bundler 4.0.22. `bundle install` completed in `projects/helix-docs` (Gemfile now also
   declares `faraday-retry` — see BUG-5).
 - **Original `assets/css/site.css` was compiled with dart-sass** (Ruby Sass 3.7.4 and liblibsass
   both fail on the CSS in this theme — see BUGS.md). Use dart-sass to regenerate.
 - `site.css` is **precompiled and committed** on purpose: remote themes serve it directly and
   GitHub Pages must not try to compile the theme SCSS. Keep `_sass` as the source of truth and
   regenerate `assets/css/site.css` after SCSS edits.
-- Local preview build: `bundle exec jekyll build --source "D:\Projects\helix-docs"
-  --destination "D:\Projects\helix-docs\_site"` with `workdir: D:\Projects\helix-docs`.
+- Local preview build: `bundle exec jekyll build --source "projects/helix-docs"
+  --destination "projects/helix-docs\_site"` with `workdir: projects/helix-docs`.
   Expect ~1–3 s, zero warnings (see BUGS.md Notes for the exact verification greps).
 
 ## Projects in scope
-- `D:\Projects\projects\helix-docs` (the theme itself + its preview site)
-- `D:\Projects\projects\helix-origin.github.io\docs` (portal)
-- `D:\Projects\projects\NH-Reader\docs`
-- `D:\Projects\projects\Windhawk-Themes\docs` (largest repair)
-- `D:\Projects\projects\Hentai-Senpai-Multi-DE-Theme\docs`
+- `projects/helix-docs` (the theme itself + its preview site)
+- `projects/helix-origin.github.io\docs` (portal)
+- `projects/NH-Reader\docs`
+- `projects/Windhawk-Themes\docs` (largest repair)
+- `projects/Hentai-Senpai-Multi-DE-Theme\docs`
 
-**Ignore** `D:\Projects\ramensoftware` entirely.
+**Ignore** `ramensoftware` entirely.
 
 ## Phases
 
@@ -109,7 +109,7 @@
 - Do **not** modify `ramensoftware`. Do not commit/push unless asked.
 - helix-docs has pre-existing uncommitted changes (`D LICENSE`, `?? LICENSE.md`) — leave untouched.
   (`M _config.yml` is now also our intentional change set.)
-- **Workspace governance:** `AGENTS.md` + `.agents/` at the `D:\Projects` root govern ALL
+- **Workspace governance:** `AGENTS.md` + `.agents/` at the `.` root govern ALL
   projects. Conventions: rules in `.agents/rules/`, skills in `.agents/skills/`, agents
   nested `.agents/agents/<primary>/<sub>/`.
 - **Mermaid:** prefer legible GFM ` ```mermaid ` diagrams (flowcharts, ≤ ~8 nodes, short

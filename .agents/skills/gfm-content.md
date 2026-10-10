@@ -1,6 +1,6 @@
-# Skill: GitHub Flavored Markdown content (GFM)
+﻿# Skill: GitHub Flavored Markdown content (GFM)
 
-> Rules for writing and repairing content in every docs site under `D:\Projects\`.
+> Rules for writing and repairing content in every docs site under ``.
 > Markdown first; raw HTML only where markdown cannot express the structure
 > (cards, grids, buttons, embedded media, spanning tables).
 

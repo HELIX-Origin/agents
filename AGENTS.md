@@ -1,9 +1,9 @@
 # AGENTS.md — Workspace Rules for AI Agents
 
-> Authoritative rules for any agent working inside `D:\Projects` (this workspace).
+> Authoritative rules for any agent working inside this workspace.
 > Read this file first, every session, before touching anything.
 > **Scope: the entire workspace — this file and `.agents/` cover ALL projects under
-> `D:\Projects`, not just the ones listed below.**
+> `projects/`, not just the ones listed below.**
 
 ## Absolute invariants — never violate
 
@@ -16,14 +16,17 @@
    When in doubt: **ask first.** Rationale: prevents pushing unverified or half-finished
    code to the user's projects. See `.agents/rules/git-operations.md`.
 
-2. **Ignore `ramensoftware` entirely.** Never read, modify, or explore
-   `D:\Projects\ramensoftware` unless the user explicitly says otherwise.
+2. **Organization scope invariant & ignore non-org directories.**
+   This agents ecosystem is engineered exclusively for repositories within the `HELIX-Origin`
+   organization (`https://github.com/HELIX-Origin`). Never work with, read, explore, or modify
+   projects that are not part of the organization. Specifically, **`ramensoftware`** is
+   strictly off-limits and must be completely ignored unless explicitly authorized.
 
-3. **Keep the tracking docs current.** `PLAN.md`, `TODO.md`, `BUGS.md` at `D:\Projects\`
+3. **Keep the tracking docs current.** `PLAN.md`, `TODO.md`, `BUGS.md` at workspace root
    are the session handoff mechanism. Update them any time you start, finish, or re-scope a
    work item. If credits run out mid-task, the next session resumes from these files.
 
-4. **No scope creep.** Repos under `D:\Projects\` that are not part of the active task are
+4. **No scope creep.** Repos under `projects/` that are not part of the active task are
    someone else's work. Don't touch them unless asked.
 
 5. **Rely on `.agents/`.** The binding constraints, domain knowledge, and role playbooks for
@@ -33,7 +36,7 @@
 ## Workspace layout
 
 ```
-D:\Projects\
+./
 ├── AGENTS.md                  <- this file
 ├── PLAN.md                    <- master plan (phases, decisions, resume point)
 ├── TODO.md                    <- actionable checklist (update as you go)
@@ -50,18 +53,17 @@ D:\Projects\
 │   ├── NH-Reader/             <- (docs/ in scope)
 │   ├── Windhawk-Themes/       <- (docs/ in scope)
 │   └── Hentai-Senpai-Multi-DE-Theme/ <- (docs/ in scope)
-├── ramensoftware/             <- FORBIDDEN — never touch
+├── ramensoftware/             <- Non-org directory — FORBIDDEN — never touch
 └── (other projects)           <- out of scope unless asked
 ```
 
 ## Environment quirks (Windows 11)
 
 - Commands run through **PowerShell**.
-- Ruby 3.3.12 lives at `C:\Ruby33-x64` but the shell PATH is often stale — prepend it:
-  `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"`
+- Ensure Ruby is accessible in PATH (prepend local Ruby bin if needed):
+  `$env:PATH = "<ruby-bin-dir>;$env:PATH"`
 - The end-of-line style is the projects' existing convention; match the file you edit.
-- Use `git -C <repo> <cmd>` and set `workdir:` explicitly; the `D:\Projects` root is not a
-  git repo itself.
+- Use `git -C <repo> <cmd>` when operating on sub-projects inside `projects/`.
 
 ## Quick reference
 
@@ -70,6 +72,7 @@ D:\Projects\
 | Git permission rules | `.agents/rules/git-operations.md` |
 | Workspace invariants | `.agents/rules/workspace.md` |
 | Release notes standards | `.agents/rules/release-notes.md` |
+| Clone organization repos | `.agents/skills/clone-org-repos.md` |
 | Compile theme CSS (dart-sass) | `.agents/skills/sass-compile.md` |
 | helix-docs theme knowledge / repair | `.agents/skills/helix-theme.md` |
 | GFM content rules (+ mermaid) | `.agents/skills/gfm-content.md` |

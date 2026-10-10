@@ -2,17 +2,18 @@
 
 **Status:** BINDING.
 
-## Forbidden paths
+## Forbidden paths & non-organization projects
 
-- **`D:\Projects\ramensoftware\`** — absolutely off-limits. Do not read, list, search,
+- **`ramensoftware\`** — absolutely off-limits. Not an organization repository. Do not read, list, search,
   modify, or reference it. If a search glob happens to match it, filter it out.
+- Any project not belonging to the `HELIX-Origin` organization is off-limits by default.
 
 ## Scope
 
-These rules apply to **every project** under `D:\Projects\` — the folder structure below is
+These rules apply to **every project** under `projects/` — the folder structure below is
 the *currently active* work set (repos where only `docs/` is in scope are marked).
 
-## In-scope projects (as of 2026-10-10)
+## In-scope organization projects (as of 2026-10-10)
 
 - `projects/helix-docs` — theme repo (+ its own preview site).
 - `projects/helix-origin.github.io` — portal; **only `docs/` is in scope**.
@@ -20,7 +21,7 @@ the *currently active* work set (repos where only `docs/` is in scope are marked
 - `projects/Windhawk-Themes` — **only `docs/` is in scope**.
 - `projects/Hentai-Senpai-Multi-DE-Theme` — **only `docs/` is in scope**.
 
-Everything else under `D:\Projects\` is presumptively out of scope.
+Everything else outside `projects/` is presumptively out of scope.
 
 ## Tracking docs contract
 
@@ -34,7 +35,7 @@ Everything else under `D:\Projects\` is presumptively out of scope.
 
 ## Communication
 
-- Use clear paths (`D:\Projects\helix-docs\_includes\nav.html`).
+- Use clear paths (`projects/helix-docs/_includes/nav.html`).
 - Report progress against TODO items, not just prose.
 - If credits may run out mid-task, leave TODO.md in a state a fresh session can resume from
   (first unchecked item = next action).
@@ -42,5 +43,5 @@ Everything else under `D:\Projects\` is presumptively out of scope.
 ## Environment
 
 - PowerShell. Windows 11.
-- Ruby is at `C:\Ruby33-x64\bin`; prepend to PATH per command if `ruby` is not found.
-- `D:\Projects` itself is not a git repo; always `git -C <repo>`.
+- Ensure Ruby is accessible in PATH (prepend local Ruby bin if needed).
+- Always specify target repo: `git -C projects/<repo> <cmd>`.

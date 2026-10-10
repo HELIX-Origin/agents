@@ -1,4 +1,4 @@
-# Rule: No Unauthorized Git Operations
+﻿# Rule: No Unauthorized Git Operations
 
 **Status:** BINDING. This is the most important rule in the workspace.
 
@@ -53,7 +53,7 @@ Forbidden unless the user explicitly authorizes the operation **and** names the 
 - Pre-existing uncommitted changes in a repo are the user's work — never stage, revert, or
   "clean up" them. Only add files that the current task explicitly creates/modifies, and
   only when commit authorization is given.
-- Note: `D:\Projects\helix-docs` currently has uncommitted changes (`M _config.yml`,
+- Note: `projects/helix-docs` currently has uncommitted changes (`M _config.yml`,
   `D LICENSE`, `?? LICENSE.md`) that pre-date our work — leave them alone.
 
 ## Reminder for every session

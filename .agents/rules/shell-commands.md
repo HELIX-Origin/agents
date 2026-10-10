@@ -7,13 +7,13 @@
 - Always pass absolute or fully qualified paths for source/destination.
 
 ## Building
-- Always prepend Ruby to PATH when running bundle/jekyll:
-  `$env:PATH = "C:\\Ruby33-x64\\bin;$env:PATH"; ...`
-- For Jekyll: `bundle exec jekyll build --source "<abs>" --destination "<abs>"`
-- Set `workdir: D:\\Projects\\helix-docs` when building the theme.
+- Ensure Ruby is available in the shell PATH when running bundle/jekyll:
+  `$env:PATH = "<ruby-bin-dir>;$env:PATH"; ...`
+- For Jekyll: `bundle exec jekyll build --source "<site-source-dir>" --destination "<site-dest-dir>"`
+- Set `workdir: projects/helix-docs` when building the theme.
 
 ## Git
-- `D:\Projects` is NOT a git repo; use `git -C <repo> <cmd>`.
+- Use `git -C <repo> <cmd>` when operating inside individual project repositories under `projects/`.
 - Read-only by default; no mutating ops without explicit authorization.
 
 ## Output

@@ -1,4 +1,4 @@
-# Agent: Theme Engineer → Preview Builder
+﻿# Agent: Theme Engineer → Preview Builder
 
 Primary agent: **theme-engineer** · Repo: `helix-docs` (+ consumer sites) · Skill: `jekyll-remote-theme`
 
@@ -19,8 +19,8 @@ flowchart LR
 
 ## Procedure (theme preview)
 
-1. `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"` (PATH is stale in agent shells).
-2. `workdir: D:\Projects\helix-docs` → `bundle install` (once) → `bundle exec jekyll build`.
+1. `$env:PATH = "<ruby-bin-dir>;$env:PATH"` (PATH is stale in agent shells).
+2. `workdir: projects/helix-docs` → `bundle install` (once) → `bundle exec jekyll build`.
 3. Open `_site/index.html` in the browser tool; check sidebar nav, trees, breadcrumbs,
    pagers, translate control. Capture any layout breakage in BUGS.md.
 

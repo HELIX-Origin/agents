@@ -1,4 +1,4 @@
-# TODO.md — running checklist
+﻿# TODO.md — running checklist
 
 > Keep this current. Check items off as they complete. If credits run out, resume at the first
 > unchecked item. See PLAN.md for full context.
@@ -6,7 +6,7 @@
 Last updated: 2026-10-09
 
 ## Workspace scaffolding (2026-10-09 — done)
-- [x] `AGENTS.md` at `D:\Projects\` root — workspace-wide rules (covers ALL projects).
+- [x] `AGENTS.md` at `` root — workspace-wide rules (covers ALL projects).
 - [x] Session handoff docs `PLAN.md` / `TODO.md` / `BUGS.md`.
 - [x] `.agents/rules/` — `git-operations.md` (BINDING: no unauthorized git ops),
       `workspace.md` (forbidden paths, scope, tracking contract),
@@ -110,7 +110,7 @@ Last updated: 2026-10-09
 - [x] Wrap XAML bindings in `{% raw %}` and clean stray divider lines in wiki docs (BUG-12).
 
 ### Ignore
-- [x] Skip `D:\Projects\ramensoftware` entirely.
+- [x] Skip `ramensoftware` entirely.
 
 ## Phase 5 — Verification
 - [x] Build each project `docs` locally (`bundle exec jekyll build`, temp Gemfile if needed).

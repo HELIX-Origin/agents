@@ -1,6 +1,6 @@
-# Workspace Release Notes Templates
+﻿# Workspace Release Notes Templates
 
-This document provides ready-to-use release notes templates for all projects in `D:\Projects\`, adapted from the `NH-Reader` canonical release notes standard.
+This document provides ready-to-use release notes templates for all projects in ``, adapted from the `NH-Reader` canonical release notes standard.
 
 ---
 
