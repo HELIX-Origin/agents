@@ -14,7 +14,7 @@ user project. Git is a write-to-history action; once pushed it is hard to undo.
 flowchart LR
     cmd[git command] --> ro{read-only?}
     ro -- yes --> run[run it]
-    ro -- no --> auth{authorized this\nsession for this repo?}
+    ro -- no --> auth{explicitly authorized this\nexact operation on this\nexact repo, in this conversation?}
     auth -- yes --> run2[run + report]
     auth -- no --> ask[STOP - ask first]
 ```
@@ -26,7 +26,8 @@ flowchart LR
 
 ## Never without explicit authorization
 
-Forbidden unless the user explicitly authorizes the operation **and** names the repo:
+Forbidden unless the user explicitly authorizes **that exact operation on that exact
+repository, in the current conversation**:
 
 - `git add` / `git rm` / `git mv`
 - `git commit` (any form, including `--amend`)
@@ -53,10 +54,11 @@ Forbidden unless the user explicitly authorizes the operation **and** names the 
 - Pre-existing uncommitted changes in a repo are the user's work — never stage, revert, or
   "clean up" them. Only add files that the current task explicitly creates/modifies, and
   only when commit authorization is given.
-- Note: `projects/helix-docs` currently has uncommitted changes (`M _config.yml`,
-  `D LICENSE`, `?? LICENSE.md`) that pre-date our work — leave them alone.
+- Always run a fresh `git status` before acting. Never trust a dated snapshot of a repo's
+  state: what looks like it predates your work may already be committed, and vice versa.
 
-## Reminder for every session
+## Reminder for every git command
 
-- Ask: *"Has the user authorized any git operation this session? If so, which repo and which
-  operation?"* If the answer is no, treat ALL git repos in the workspace as read-only.
+- Ask: *"Did the user explicitly authorize THIS exact operation on THIS exact repository,
+  in the current conversation?"* Authorization never carries over from an earlier statement
+  or an earlier session. If the answer is no, treat the repo as read-only and ask first.

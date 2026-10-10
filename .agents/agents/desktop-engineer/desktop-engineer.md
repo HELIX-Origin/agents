@@ -36,7 +36,7 @@
 
 - Never commit signing keys, keystores, certificates, or personal user paths.
 - Never bump versions in only one file; all project manifests must move together.
-- Never push changes without explicit human authorization.
+- Never push changes without explicit human authorization for that exact repository, in the current conversation.
 
 ---
 

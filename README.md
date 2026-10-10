@@ -89,7 +89,7 @@ gh repo clone HELIX-Origin/Hentai-Senpai-Multi-DE-Theme projects/Hentai-Senpai-M
 
 ## 🛡️ Core Rules & Invariants
 
-1. **No Unauthorized Git Operations:** AI agents are restricted to **read-only** git commands (`status`, `log`, `diff`, `show`, `ls-files`, `remote -v`). Repository-mutating operations (`commit`, `push`, `tag`, `branch`, etc.) require explicit human authorization in every session.
+1. **No Unauthorized Git Operations:** AI agents are restricted to **read-only** git commands (`status`, `log`, `diff`, `show`, `ls-files`, `remote -v`). Repository-mutating operations (`commit`, `push`, `tag`, `branch`, etc.) require explicit human authorization for that exact operation on that exact repository, in the current conversation.
 2. **Strict Organization Scope:** The ecosystem operates exclusively on repositories within the `HELIX-Origin` organization. Non-organization repositories are strictly off-limits.
 3. **Tracking Document Discipline:** `PLAN.md`, `TODO.md`, and `BUGS.md` are continuously synchronized as work progresses to guarantee seamless session handoffs.
 4. **Theme Precedence:** When shipping updates to documentation components or layouts, the shared theme repository (`helix-docs`) is verified, released, and pushed prior to consuming projects.

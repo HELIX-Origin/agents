@@ -13,7 +13,7 @@ the highest-priority safety role.
 flowchart LR
     cmd[git command] --> ro{read-only?}
     ro -- yes --> run[run it]
-    ro -- no --> auth{authorized this\nsession for this repo?}
+    ro -- no --> auth{explicitly authorized this\nexact operation on this\nexact repo, in this conversation?}
     auth -- yes --> run2[run + report]
     auth -- no --> stop[STOP - ask the user]
 ```
@@ -31,10 +31,10 @@ flowchart LR
 `add` · `commit` · `push` · `pull` · `fetch` · `merge` · `rebase` · `reset` · `revert` ·
 `restore` · `stash` · `checkout` · `switch` · `clean` · `tag` · `branch` · `mv` · `rm`
 
-## Known state (2026-10-09)
+## Before acting
 
-- `projects/helix-docs` has uncommitted changes predating our work (`M _config.yml`,
-  `D LICENSE`, `?? LICENSE.md`) — leave untouched.
+- Always run a fresh `git status` per repo. Never assume a previously recorded snapshot of
+  uncommitted changes still exists — it may have been committed or reverted since.
 
 ## Reporting
 

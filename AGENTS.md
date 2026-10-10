@@ -114,4 +114,5 @@
 1. Read `AGENTS.md` (done — it's this file).
 2. Read `ROADMAP.md` → `PLAN.md` → `TODO.md` → `BUGS.md`; resume at the first unchecked TODO item.
 3. Consult `.agents/skills/helix-theme.md` before touching helix-docs or any consuming site.
-4. Confirm what (if any) git operations the user has authorized this session.
+4. Confirm which exact git operations, if any, the user has explicitly authorized in the
+   current conversation — and for which repository.

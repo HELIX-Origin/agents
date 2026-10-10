@@ -102,5 +102,5 @@ Full commit history: `git log --oneline <previous-tag>..<current-tag>`
 1. **Lead with what the user notices:** Write release notes for humans, not raw git logs.
 2. **Honesty regarding assets:** If a project does not publish prebuilt signed binaries or release assets, explicitly document local build/run steps. Never claim downloadable installers exist when they do not.
 3. **No credentials or personal data:** Never include signing keys, tokens, passwords, or personal local user paths in release notes.
-4. **No unauthorized git operations:** Release notes may be prepared locally in `scratch/release-notes.md` or staged when requested, but git tagging or pushing requires explicit user approval.
+4. **No unauthorized git operations:** Release notes may be prepared locally in `scratch/release-notes.md` or staged when requested, but git tagging or pushing requires explicit user approval for that exact operation on that exact repository, in the current conversation.
 5. **Theme repo precedence:** When releasing theme changes that affect consuming projects, `helix-docs` must always be tagged/pushed first.

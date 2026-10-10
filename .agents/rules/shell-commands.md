@@ -14,7 +14,7 @@
 
 ## Git
 - Use `git -C <repo> <cmd>` when operating inside individual project repositories under `projects/`.
-- Read-only by default; no mutating ops without explicit authorization.
+- Read-only by default; no mutating ops without explicit authorization for that exact operation on that exact repository, in the current conversation.
 
 ## Output
 - Display progress concisely; avoid dumping huge logs. Grep for specific errors first.

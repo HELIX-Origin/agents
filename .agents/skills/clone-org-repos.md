@@ -9,7 +9,7 @@
 - **Organization Repositories Only:** All active engineering and documentation projects belong to the `HELIX-Origin` organization on GitHub (`https://github.com/HELIX-Origin/<repo>`).
 - **Clone Destination:** Every organization repository must be cloned inside `projects/<repo>` (e.g., `projects/helix-docs/`). The `projects/` directory is untracked in the root repository.
 - **Never Touch Non-Organization Repositories:** Any directory outside the `HELIX-Origin` organization (such as `ramensoftware`) is strictly off-limits and must never be explored, tracked, or modified.
-- **Git Authorization:** Cloning new repositories or checking out branches requires user direction or task scope approval.
+- **Git Authorization:** Cloning new repositories or checking out branches requires explicit user authorization for that exact operation, in the current conversation. Task scope alone is never authorization.
 
 ---
 
