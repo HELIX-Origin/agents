@@ -18,29 +18,31 @@
 
 ## 🎯 Active Sprints
 
-### 🚀 [Windhawk-Themes] Sprint 3: Command Center Stability — High-Contrast & explorer.exe Crash Fixes
+### 🚀 [Windhawk-Themes] Sprint 3: Command Center Stability — High-Contrast & explorer.exe Crash Fixes (Rolled Back / External Root Cause)
 - **Project Identifier:** `[Windhawk-Themes]`
 - **Repository Path:** `projects/Windhawk-Themes`
 - **Target Component:** Command Center Suite (`windows-11-start-menu-styler.yml`, `windows-11-taskbar-styler.yml`)
 
 ```mermaid
 flowchart TD
-    S3_HC["[Windhawk-Themes] Remove Start Menu High-Contrast Border Override"] --> S3_Crash["[Windhawk-Themes] Remove Unanchored explorer.exe-Leaking Selectors"]
-    S3_Crash --> S3_Gate["[Windhawk-Themes] Static Gate: Test-WindhawkStyles.ps1"]
-    S3_Gate --> S3_Verify["[Windhawk-Themes] Live Desktop Verification"]
+    S3_Prelude["[Windhawk-Themes] 64711d2 Styler Edits Rolled Back"] --> S3_HC["[Windhawk-Themes] High-Contrast Fix Not Done — Redesign Correctly Later"]
+    S3_Prelude --> S3_Crash["[Windhawk-Themes] Crash Root Cause = External file-operations-styler Mod"]
+    S3_HC --> S3_Gate["[Windhawk-Themes] Static Gate passes on restored configs"]
+    S3_Crash --> S3_Gate
 ```
 
 #### 📝 Execution Tasks
 
-1. **[Windhawk-Themes] High-Contrast Neutrality (Start Menu)**:
-   - Remove the `Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder` `Visibility=Collapsed` override so the theme never styles Windows high-contrast UI.
-   - Sync `docs/_wiki/start-menu-styler/targets/elements.md`.
-2. **[Windhawk-Themes] Random `explorer.exe` Crash During File/Folder Actions (Taskbar)**:
-   - Remove the bare-type, unanchored flyout/menu targets (`FlyoutPresenter`, `MenuFlyoutPresenter > Border`, `MenuFlyoutSubItem`) that leaked a `WindhawkBlur` into every `explorer.exe`, including File Explorer context menus/flyouts (Selector Hygiene Rule §2.1).
-   - Remove the two no-op `RenderTransform` overrides (`Taskbar.TaskbarExtensionElement`, `Taskbar.TaskListButtonPanel#ExperienceToggleButtonRootPanel`).
+1. **[Windhawk-Themes] High-Contrast Neutrality (Start Menu) — not done, pending**:
+   - The `64711d2` removal of the `Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder` `Visibility=Collapsed` override was rolled back: it damaged the Start Menu styling (the borders affect normal-mode rendering).
+   - Redesign the fix at a later time so the theme never styles high-contrast UI without altering normal glass styling.
+2. **[Windhawk-Themes] Random `explorer.exe` Crash During File/Folder Actions — root cause external (confirmed)**:
+   - Reproduced via the companion **`file-operations-styler`** Windhawk mod: deleting a folder → "provide administrator permission" prompt → explorer freeze → crash.
+   - Not fixable in-repo. Mitigation: disable the mod; user files the report with the Windhawk mods team.
+   - The taskbar hypothesis edits from `64711d2` (bare-type flyout/menu target removal + two `RenderTransform` removals) were reverted — not the crash source, and they undid intended styling.
 3. **[Windhawk-Themes] Verification**:
-   - `tools/Test-WindhawkStyles.ps1` → 0 errors, 0 warnings (met).
-   - Live desktop verification for both fixes (pending).
+   - `tools/Test-WindhawkStyles.ps1` → 0 errors, 0 warnings on the restored configs (met).
+   - Target catalog `docs/_wiki/start-menu-styler/targets/elements.md` restored to match the actual config.
 
 ---
 

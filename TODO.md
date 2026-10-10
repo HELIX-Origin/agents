@@ -32,15 +32,15 @@
 
 **Locked user directives:**
 - "this is not a high contrast theme."
-- "It's more than likely the taskbar style since it effects explorer.exe and is known to have this exact problem when a misconfigured style is being used."
+- "It's more than likely the taskbar style since it effects explorer.exe and is known to have this exact problem when a misconfigured style is being used." — superseded: root cause later confirmed as the external `file-operations-styler` companion mod.
 
 **Implementation checklist:**
-- [x] `[Windhawk-Themes]` Remove the Start Menu high-contrast border override (`Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder`) so the theme no longer styles high-contrast UI; sync `docs/_wiki/start-menu-styler/targets/elements.md`.
-- [x] `[Windhawk-Themes]` Remove the three bare-type, unanchored flyout/menu targets in the taskbar config (`FlyoutPresenter`, `MenuFlyoutPresenter > Border`, `MenuFlyoutSubItem`) that leaked a `WindhawkBlur` into every `explorer.exe` (File Explorer context menus/flyouts) — Selector Hygiene Rule §2.1.
-- [x] `[Windhawk-Themes]` Remove two no-op `RenderTransform` overrides (`Taskbar.TaskbarExtensionElement`, `Taskbar.TaskListButtonPanel#ExperienceToggleButtonRootPanel`) that clobbered the taskbar's internal transforms for zero visual effect.
-- [x] `[Windhawk-Themes]` Static gate `tools/Test-WindhawkStyles.ps1` → 0 errors, 0 warnings.
-- [ ] `[Windhawk-Themes]` Live-verify on user desktop: no File Explorer freeze/crash during file/folder actions; Start Menu normal in both standard and high-contrast modes.
-- [ ] `[Windhawk-Themes]` Commit + push `Windhawk-Themes` (both stylers + `elements.md`) and `agents` (`BUGS.md`, `TODO.md`) once authorized.
+- [ ] `[Windhawk-Themes]` High-contrast neutrality (open): the `64711d2` removal of `Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder` was rolled back — it damaged the Start Menu styling (the borders affect normal-mode rendering). Redesign a correct fix later that never alters normal glass styling; the config still collapses the borders.
+- [x] `[Windhawk-Themes]` Explorer crash root cause confirmed **external**: the companion `file-operations-styler` mod crashes `explorer.exe` during file ops (repro: folder delete → "provide administrator permission" prompt → freeze → crash). Not fixable in-repo; disable the mod pending upstream fix; user to report to the Windhawk mods team.
+- [x] `[Windhawk-Themes]` Revert the taskbar styler edits from `64711d2` (bare-type flyout/menu targets + two `RenderTransform` overrides restored) — they were not the crash source and their removal undid intended styling.
+- [x] `[Windhawk-Themes]` Restore `docs/_wiki/start-menu-styler/targets/elements.md` high-contrast row so the target catalog matches the restored Start Menu config.
+- [x] `[Windhawk-Themes]` Static gate `tools/Test-WindhawkStyles.ps1` → 0 errors, 0 warnings on the restored configs.
+- [x] `[Windhawk-Themes]` Commit + push `Windhawk-Themes` (restored stylers + `elements.md` + changelog) and `agents` (`BUGS.md`, `TODO.md`, `PLAN.md`).
 
 ---
 

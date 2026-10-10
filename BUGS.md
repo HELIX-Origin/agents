@@ -79,21 +79,23 @@
 - **Project Identifier:** `[Windhawk-Themes]`
 - **Repository Path:** `projects/Windhawk-Themes`
 - **Severity**: 🟠 High (accessibility violation)
-- **Status**: 🚧 fix applied (pending user desktop verification)
+- **Status**: ⚠️ open — fix attempt rolled back; correct fix pending
 - **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-start-menu-styler.yml`
-- **Reported Issue**: The Start Menu theme forced `Visibility=Collapsed` on `Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder`, stripping Windows' native high-contrast accessibility boundary. This is not a high-contrast theme and must not style high-contrast UI.
-- **Root Cause**: The only literal high-contrast targeting in the suite was a single `controlStyles` block collapsing the two native high-contrast borders.
-- **Resolution Applied**: Removed the high-contrast border target entirely (the borders are already hidden outside high-contrast mode, so there is no visual regression) and updated `docs/_wiki/start-menu-styler/targets/elements.md`.
+- **Reported Issue**: The Start Menu theme forces `Visibility=Collapsed` on `Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder`, stripping Windows' native high-contrast accessibility boundary. This is not a high-contrast theme and must not style high-contrast UI.
+- **Attempted Fix (`64711d2`, rolled back)**: Removed the high-contrast border target entirely and synced `docs/_wiki/start-menu-styler/targets/elements.md`.
+- **Why Rolled Back**: The removal was not purely cosmetic — it damaged the actual Start Menu styling. The borders had no visible effect until a shell refresh, after which the glass styling was broken. They participate in normal (non-HC) rendering, so a blind removal is not a valid fix.
+- **Current State**: The `Visibility=Collapsed` override is restored in the config (matches the original). The correct fix must be redesigned later to protect high-contrast UI without altering normal styling.
 
 #### [Windhawk-Themes] 2026-10-10 — Random explorer.exe Crash During File/Folder Actions
 - **Project Identifier:** `[Windhawk-Themes]`
 - **Repository Path:** `projects/Windhawk-Themes`
 - **Severity**: 🔴 Critical (shell crash)
-- **Status**: 🚧 fix applied (pending user desktop verification)
-- **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-taskbar-styler.yml`
+- **Status**: ⚠️ open — root cause external (companion mod); upstream report pending
+- **Scope**: external Windhawk mod `file-operations-styler` (suite companion config: `projects/Windhawk-Themes/projects/command-center/extras/file-operations-styler.yml`)
 - **Reported Issue**: Random `explorer.exe` crash, most often during file/folder actions and when File Explorer opens (freeze then immediate crash).
-- **Root Cause (hypothesis)**: The Taskbar Styler injects into every `explorer.exe`, including File Explorer windows. Three unanchored, bare-type selectors (`FlyoutPresenter`, `MenuFlyoutPresenter > Border`, `MenuFlyoutSubItem`) applied a `WindhawkBlur` `$Background` to File Explorer's context menus/flyouts, violating the "anchor broad types" selector-hygiene rule (Evidence-Protocol §2).
-- **Resolution Applied**: Removed the three bare-type flyout/menu targets (taskbar flyout cards remain styled via their specific named selectors). Also removed two no-op `RenderTransform` overrides (`Taskbar.TaskbarExtensionElement`, `Taskbar.TaskListButtonPanel#ExperienceToggleButtonRootPanel`) that clobbered the taskbar's internal transforms for zero visual effect.
+- **Root Cause (confirmed)**: The external companion Windhawk mod **`file-operations-styler`** (hooks copy/move/delete dialogs in `explorer.exe`). Reproduced by deleting a folder: explorer froze then crashed as soon as the "provide administrator permission" prompt appeared. It is a mod bug, not a suite styling issue.
+- **Resolution**: In-repo mitigation is to disable the `file-operations-styler` mod until an upstream fix ships. Report to be filed with the Windhawk mods team (maintainer action).
+- **Related Rollback**: The taskbar hypothesis edits from `64711d2` (bare-type flyout/menu target removal + two `RenderTransform` removals) were reverted — they were not the crash source and their removal undid intended styling.
 
 #### [Windhawk-Themes] 2026-10-07 — Notification / Action Center Quick Settings Split Button Color Mismatch
 - **Project Identifier:** `[Windhawk-Themes]`
