@@ -25,6 +25,21 @@
 
 ## 🔥 Active Workstreams
 
+### 🎯 [helix-origin.github.io] Workstream W.09: Portal Project Card Naming
+- **Project Identifier:** `[helix-origin.github.io]`
+- **Repository Path:** `projects/helix-origin.github.io`
+- **Target Component:** `docs/index.md` project grid
+
+**Locked user directives:**
+- "the repo title needs proper formatting. The correct way for the repo title to be displayed is HELIX Docs"
+
+**Implementation checklist:**
+- [x] `[helix-origin.github.io]` Render the HELIX Docs project card with the display title "HELIX Docs" instead of the repo slug `helix-docs` (card heading + image `alt`).
+- [x] `[helix-docs]` Title the theme README heading as "HELIX Docs".
+- [x] `[helix-origin.github.io]` Live verification after commit + Pages rebuild — portal card confirmed reading "HELIX Docs" (`409111f`; theme README `a00a540`).
+
+---
+
 ### 🎯 [Windhawk-Themes] Workstream W.08: Site Branding Artwork (logo / icon / favicon)
 - **Project Identifier:** `[Windhawk-Themes]`
 - **Repository Path:** `projects/Windhawk-Themes`
