@@ -72,9 +72,14 @@
 | Git permission rules | `.agents/rules/git-operations.md` |
 | Workspace invariants | `.agents/rules/workspace.md` |
 | Release notes standards | `.agents/rules/release-notes.md` |
+| Verification standards | `.agents/rules/verification.md` |
+| Security & secret hygiene | `.agents/rules/security-hygiene.md` |
 | Clone organization repos | `.agents/skills/clone-org-repos.md` |
 | Compile theme CSS (dart-sass) | `.agents/skills/sass-compile.md` |
 | helix-docs theme knowledge / repair | `.agents/skills/helix-theme.md` |
+| Tauri & Rust desktop engineering | `.agents/skills/tauri-desktop-engineering.md` |
+| Windhawk styler mod engineering | `.agents/skills/windhawk-styler-engineering.md` |
+| Linux & GTK theme engineering | `.agents/skills/gtk-desktop-theming.md` |
 | GFM content rules (+ mermaid) | `.agents/skills/gfm-content.md` |
 | Remote-theme config for a site | `.agents/skills/jekyll-remote-theme.md` |
 | Agent: SCSS engineer | `.agents/agents/theme-engineer/scss-engineer.md` |
@@ -83,6 +88,9 @@
 | Agent: Config fixer | `.agents/agents/docs-site-engineer/config-fixer.md` |
 | Agent: Frontmatter fixer | `.agents/agents/docs-site-engineer/frontmatter-fixer.md` |
 | Agent: Content validator (GFM) | `.agents/agents/docs-site-engineer/content-validator.md` |
+| Agent: Desktop engineer (Rust/Tauri) | `.agents/agents/desktop-engineer/desktop-engineer.md` |
+| Agent: Desktop theme engineer | `.agents/agents/desktop-theme-engineer/desktop-theme-engineer.md` |
+| Agent: Security reviewer | `.agents/agents/security-reviewer/security-reviewer.md` |
 | Agent: Git auditor | `.agents/agents/git-guard/git-auditor.md` |
 
 ## Session start checklist
