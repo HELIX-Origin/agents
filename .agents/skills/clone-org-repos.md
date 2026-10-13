@@ -18,18 +18,75 @@
 | Repository | GitHub URL | Description | Local Directory |
 |---|---|---|---|
 | **helix-docs** | `https://github.com/HELIX-Origin/helix-docs.git` | Shared Jekyll theme & preview site | `projects/helix-docs` |
-| **helix-origin.github.io** | `https://github.com/HELIX-Origin/helix-origin.github.io.git` | Organization portal | `projects/helix-origin.github.io` |
-| **NH-Reader** | `https://github.com/HELIX-Origin/NH-Reader.git` | Desktop client for nhentai | `projects/NH-Reader` |
+| **helix-origin.github.io** | `https://github.com/HELIX-Origin/helix-origin.github.io.git` | Organization portal & project directory | `projects/helix-origin.github.io` |
+| **NH-Reader** | `https://github.com/HELIX-Origin/NH-Reader.git` | Cross-platform desktop reader for nhentai.net | `projects/NH-Reader` |
 | **Windhawk-Themes** | `https://github.com/HELIX-Origin/Windhawk-Themes.git` | Windows 11 Windhawk styler mod suites | `projects/Windhawk-Themes` |
 | **Hentai-Senpai-Multi-DE-Theme** | `https://github.com/HELIX-Origin/Hentai-Senpai-Multi-DE-Theme.git` | Multi-DE GTK & GNOME theme | `projects/Hentai-Senpai-Multi-DE-Theme` |
+| **FFXIV-Config** | `https://github.com/HELIX-Origin/FFXIV-Config.git` | Custom FFXIV Config UI (Fr4nsson's base, 8.x jobs) | `projects/FFXIV-Config` |
+| **agents** | `https://github.com/HELIX-Origin/agents.git` | This workspace: agent rules, skills & CTL | `projects/agents` *(skipped by default)* |
+| **.github** | `https://github.com/HELIX-Origin/.github.git` | Organization profile & community health files | `projects/.github` |
+
+> This table is a human-readable overview. The bulk-clone scripts in §3 enumerate
+> the organization **live** via `gh repo list`, so they stay correct even as the
+> organization changes.
 
 ---
 
 ## 3. Cloning Procedure
 
-### Method 1: Using GitHub CLI (Recommended)
+### Bulk clone every repository (cross-platform scripts)
 
-Ensure you are authenticated (`gh auth status`). To clone an organization repository into `projects/`:
+Three helper scripts at the workspace root clone **every** `HELIX-Origin` repository
+into `projects/`:
+
+| Platform | Script | Shell |
+|---|---|---|
+| Windows | `clone-org-repos-windows.ps1` | PowerShell 5.1+ |
+| Linux | `clone-org-repos-linux.sh` | Bash |
+| macOS | `clone-org-repos-macos.sh` | Bash (system 3.2+) |
+
+Behaviour:
+
+- Enumerates the organization live with `gh repo list` — the repository list never goes stale.
+- Idempotent: repositories already present in `projects/` are skipped.
+- Skips the `agents` repository by default so the workspace is never nested inside its
+  own `projects/` folder (override with `-IncludeSelf` / `--include-self`).
+- Requires `gh` to be installed and authenticated (`gh auth login`).
+
+Options:
+
+| Windows | Linux / macOS | Meaning |
+|---|---|---|
+| `-Org <name>` | `--org <name>` | Organization (default `HELIX-Origin`) |
+| `-Destination <path>` | `--dest <path>` | Destination (default `<root>/projects`) |
+| `-Exclude a,b` | `--exclude a,b` | Skip repositories (comma-separated, repeatable) |
+| `-IncludeSelf` | `--include-self` | Also clone the `agents` repository |
+| `-Update` | `--update` | Fast-forward existing clones instead of skipping |
+| `-Shallow` | `--shallow` | Shallow clone (`--depth 1`) |
+| `-DryRun` | `--dry-run` | Preview actions without changing anything |
+
+```powershell
+# Windows
+./clone-org-repos-windows.ps1
+./clone-org-repos-windows.ps1 -DryRun
+./clone-org-repos-windows.ps1 -Update -Exclude FFXIV-Config
+```
+
+```bash
+# Linux
+bash clone-org-repos-linux.sh
+bash clone-org-repos-linux.sh --dry-run --exclude FFXIV-Config,NH-Reader
+
+# macOS  (chmod +x once, then ./clone-org-repos-macos.sh)
+bash clone-org-repos-macos.sh --update
+```
+
+> Running these scripts clones repositories and therefore requires the same explicit
+> user authorization as any clone operation (see §1).
+
+### Method 1: Using GitHub CLI (single repository)
+
+Ensure you are authenticated (`gh auth status`). To clone one organization repository into `projects/`:
 
 ```powershell
 # Create projects folder if it does not already exist
@@ -39,36 +96,10 @@ if (-not (Test-Path "projects")) { New-Item -ItemType Directory -Path "projects"
 gh repo clone HELIX-Origin/<repo> "projects/<repo>"
 ```
 
-### Method 2: Using Standard Git
+### Method 2: Using Standard Git (single repository)
 
 ```powershell
 git clone "https://github.com/HELIX-Origin/<repo>.git" "projects/<repo>"
-```
-
-### Bulk Clone All Organization Repositories
-
-If setting up a fresh environment or recovering the workspace:
-
-```powershell
-$repos = @(
-    "helix-docs",
-    "helix-origin.github.io",
-    "NH-Reader",
-    "Windhawk-Themes",
-    "Hentai-Senpai-Multi-DE-Theme"
-)
-
-if (-not (Test-Path "projects")) { New-Item -ItemType Directory -Path "projects" }
-
-foreach ($r in $repos) {
-    $target = "projects/$r"
-    if (-not (Test-Path $target)) {
-        Write-Host "Cloning $r..."
-        gh repo clone "HELIX-Origin/$r" $target
-    } else {
-        Write-Host "$r already exists at $target."
-    }
-}
 ```
 
 ---

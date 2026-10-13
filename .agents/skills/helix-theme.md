@@ -85,6 +85,7 @@ flowchart TB
 | NH-Reader | "Documentation Home" | "NH Reader Technical Wiki" |
 | Hentai-Senpai-Multi-DE-Theme | "Documentation Directory" | "Technical Wiki & Reference" |
 | Windhawk-Themes | "Documentation Directory" | "Target & Configuration Wiki" |
+| FFXIV-Config | "Documentation Directory" | — |
 | helix-origin.github.io | portal root (`/`, layout `default`) | — |
 
 ## Repair checklist for a consuming site

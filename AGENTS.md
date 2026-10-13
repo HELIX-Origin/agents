@@ -53,6 +53,9 @@
 ├── TODO.md                    <- actionable checklist (update as you go)
 ├── BUGS.md                    <- known issues, quirks, workarounds
 ├── .gitignore                 <- keeps projects/ and scratch/ untracked
+├── clone-org-repos-windows.ps1<- Clone all HELIX-Origin repos into projects/ (Windows)
+├── clone-org-repos-linux.sh   <- Clone all HELIX-Origin repos into projects/ (Linux)
+├── clone-org-repos-macos.sh   <- Clone all HELIX-Origin repos into projects/ (macOS)
 ├── .github/                   <- GitHub configuration & Copilot instructions
 │   └── copilot-instructions.md<- Universal workspace guidance for GitHub Copilot
 ├── .opencode/                 <- OpenCode configuration & workflow commands
@@ -93,6 +96,7 @@
 | Security & secret hygiene | `.agents/rules/security-hygiene.md` |
 | Documentation & content standards (theme-neutrality) | `.agents/rules/documentation-standards.md` |
 | Clone organization repos | `.agents/skills/clone-org-repos.md` |
+| Clone all org repos (scripts) | `clone-org-repos-windows.ps1`, `clone-org-repos-linux.sh`, `clone-org-repos-macos.sh` |
 | Compile theme CSS (dart-sass) | `.agents/skills/sass-compile.md` |
 | helix-docs theme knowledge / repair | `.agents/skills/helix-theme.md` |
 | Project artwork generation | `.agents/skills/project-artwork-generation.md` |
