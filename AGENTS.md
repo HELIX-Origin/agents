@@ -35,6 +35,14 @@
    this workspace live in `.agents/`. If a rule there conflicts with anything else, the
    `.agents/rules` files win.
 
+6. **Documentation theme-neutrality invariant.**
+   The `docs/` documentation site — including `docs/_docs/`, `docs/_wiki/`, and root guides — is
+   deliberately **theme-neutral and mod-agnostic**. It explains *how to work with the mods*, never
+   any author's theme. A specific theme/suite (its token names, values, radius scales, colours,
+   geometry) may be described **only** in the **catalogue/store** (`docs/_catalogue/`,
+   `docs/_store/`). **Never make a catalogue theme the source of truth for the docs, and never copy
+   its style references into the docs.** See `.agents/rules/documentation-standards.md`.
+
 ## Workspace layout
 
 ```
@@ -83,6 +91,7 @@
 | Project artwork standards | `.agents/rules/project-artwork.md` |
 | Verification standards | `.agents/rules/verification.md` |
 | Security & secret hygiene | `.agents/rules/security-hygiene.md` |
+| Documentation & content standards (theme-neutrality) | `.agents/rules/documentation-standards.md` |
 | Clone organization repos | `.agents/skills/clone-org-repos.md` |
 | Compile theme CSS (dart-sass) | `.agents/skills/sass-compile.md` |
 | helix-docs theme knowledge / repair | `.agents/skills/helix-theme.md` |
@@ -114,5 +123,8 @@
 1. Read `AGENTS.md` (done — it's this file).
 2. Read `ROADMAP.md` → `PLAN.md` → `TODO.md` → `BUGS.md`; resume at the first unchecked TODO item.
 3. Consult `.agents/skills/helix-theme.md` before touching helix-docs or any consuming site.
-4. Confirm which exact git operations, if any, the user has explicitly authorized in the
+4. Before editing **any** `docs/` content, consult `.agents/rules/documentation-standards.md` —
+   the docs stay **theme-neutral/mod-agnostic**; a theme/suite's specifics belong only in the
+   catalogue/store.
+5. Confirm which exact git operations, if any, the user has explicitly authorized in the
    current conversation — and for which repository.

@@ -3,7 +3,7 @@
 > 🐛 **Living Source of Truth**: Unified tracking ledger for active bugs, environment quirks, external limitations, and verified fixes across all repositories in the **HELIX Origin** organization.
 >
 > Pair with [`ROADMAP.md`](./ROADMAP.md) (direction), [`PLAN.md`](./PLAN.md) (sprint execution), and [`TODO.md`](./TODO.md) (task ledger).
-> Last updated: 2026-10-10
+> Last updated: 2026-10-13
 
 ---
 
@@ -65,7 +65,7 @@
 ## 💡 Explicitly Not Bugs
 
 - 💡 **[NH-Reader] Blacklisted Galleries Accessible via Direct Link:** Blacklists govern search discovery, grids, and feeds, but do not prevent opening direct gallery URLs.
-- 💡 **[Windhawk-Themes] Different Radii on Taskbar vs Start Menu:** Taskbar uses compact radii (`R1=6`, `R2=20`) due to its 38px bar height, whereas Start Menu uses large panel radii (`R0=35`). This is an intentional design scale hierarchy.
+- 💡 **[Windhawk-Themes] Different Radii on Taskbar vs Start Menu:** Taskbar uses compact radii (`R1=6`, `R2=20`) because of its compact bar height, whereas Start Menu uses large panel radii (`CornerRadius=35`). This is an intentional design scale hierarchy.
 - 💡 **[Windhawk-Themes] Win32 Scrollbars in File Explorer:** DirectUI scrollbars follow system mode rather than custom XAML templates.
 - 💡 **[Hentai-Senpai] Host Build Dependencies:** System requirements (`sassc`, `optipng`, `inkscape`) are build prerequisites, not theme bugs.
 
@@ -79,12 +79,12 @@
 - **Project Identifier:** `[Windhawk-Themes]`
 - **Repository Path:** `projects/Windhawk-Themes`
 - **Severity**: 🟠 High (accessibility violation)
-- **Status**: ⚠️ open — fix attempt rolled back; correct fix pending
+- **Status**: 🚧 superseded by the 2026-10-13 refactor — pending live verification
 - **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-start-menu-styler.yml`
 - **Reported Issue**: The Start Menu theme forces `Visibility=Collapsed` on `Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder`, stripping Windows' native high-contrast accessibility boundary. This is not a high-contrast theme and must not style high-contrast UI.
 - **Attempted Fix (`64711d2`, rolled back)**: Removed the high-contrast border target entirely and synced `docs/_wiki/start-menu-styler/targets/elements.md`.
 - **Why Rolled Back**: The removal was not purely cosmetic — it damaged the actual Start Menu styling. The borders had no visible effect until a shell refresh, after which the glass styling was broken. They participate in normal (non-HC) rendering, so a blind removal is not a valid fix.
-- **Current State**: The `Visibility=Collapsed` override is restored in the config (matches the original). The correct fix must be redesigned later to protect high-contrast UI without altering normal styling.
+- **Current State**: The `Visibility=Collapsed` override was restored after the `64711d2` rollback. **Update (2026-10-13, `f9f228b`)**: the user's Start Menu refactor removes both `*HighContrastBorder` targets from `windows-11-start-menu-styler.yml` entirely, superseding the rollback. The high-contrast styling concern is moot unless the targets are reintroduced; needs live verification that normal glass styling remains intact.
 
 #### [Windhawk-Themes] 2026-10-10 — Random explorer.exe Crash During File/Folder Actions
 - **Project Identifier:** `[Windhawk-Themes]`
@@ -124,6 +124,28 @@
 - **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-taskbar-styler.yml`
 - **Reported Issue**: System tray overflow flyout renders with a solid/missing background instead of frosted glass (ref `media_1791432063085_e18460b5.png`).
 - **Resolution**: Restore `$Background`, `$BorderBrush`, and corner radius to `Grid#OverflowRootGrid > Border` and `Border#OverflowFlyoutBackgroundBorder`.
+- **Update (2026-10-13, `f9f228b`)**: the taskbar refactor instead sets `Grid#OverflowRootGrid > Border` to `Background:=Transparent`, `BorderBrush:=Transparent`, `BorderThickness=0` (fully transparent overflow). Confirm intent (intentional design change vs regression).
+
+#### [Windhawk-Themes] 2026-10-13 — Static Gate Warnings: Duplicate Target Selectors After Suite Refactor
+- **Project Identifier:** `[Windhawk-Themes]`
+- **Repository Path:** `projects/Windhawk-Themes`
+- **Severity**: 🟢 Low (config hygiene; superseded style blocks)
+- **Status**: ✅ resolved — gate now **0 errors / 0 warnings**
+- **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-start-menu-styler.yml`, `windows-11-taskbar-styler.yml`
+- **Reported Issue**: `tools/Test-WindhawkStyles.ps1` reported **0 errors, 8 warnings** after the 2026-10-13 refactor (`f9f228b`) — duplicate `target` selectors: `Border#AppBorder`, `Border#LayerBorder`, `Grid#AllListHeading > TextBlock#AllListHeadingText`, `TextBlock#PinnedListHeaderText`, `Border@CommonStates > … Grid#LogoContainer > Image`; `Rectangle#HorizontalTrackRect`, `Rectangle#HorizontalDecreaseRect`, `Border#SnapBarBorder`.
+- **Resolution**: Merged each pair into a single entry as a **behavior-preserving union** (Windhawk applies every matching entry; later wins per property), then re-ran the gate → **0 errors, 0 warnings**. Note: the two `Border#AppBorder` entries were a collapse plus a glass style — the union keeps both, but the element is likely meant to be collapsed only (the glass panel is `Grid#Root > Border`).
+
+#### [Windhawk-Themes] 2026-10-13 — Suite Config Hygiene Findings (post-refactor review)
+- **Project Identifier:** `[Windhawk-Themes]`
+- **Repository Path:** `projects/Windhawk-Themes`
+- **Severity**: 🟢 Low
+- **Status**: ⚠️ open — user decision
+- **Scope**: `projects/command-center/windows-11-start-menu-styler.yml`, `windows-11-notification-center-styler.yml`
+- **Findings** (surfaced while syncing the suite README + docs; none block the gate):
+  - **NC radii/vocabulary drift:** the Notification Center config still uses `PanelRadius=13` / `CardRadius=10` / `ChipRadius=6`, while the refactored Start Menu + Taskbar moved to the new token scale. Decide whether to refactor NC (behavioral — needs live desktop verification) or leave it and document the divergence. `projects/command-center/README.md` currently documents the per-file truth.
+  - **Dead token:** Start Menu `HoverCornerRadius=15` is declared in `styleConstants` but referenced by no `controlStyles` rule (hover/list surfaces resolve through `$ElementCornerRadius` = 10).
+  - **Selector ambiguity:** `Grid#CompanionRoot > Border#AcrylicBorder` gets glass styling, but a more specific selector (`StartDocked.StartMenuCompanion#RightCompanion > Grid#CompanionRoot > Border#AcrylicBorder`) sets `Visibility=1` on the same element.
+  - **Redundant styling:** `Border#AppBorder` is both collapsed (`Visibility=1`) and glass-styled in the merged dedup entry.
 
 ---
 

@@ -19,6 +19,7 @@
 3. **No Secrets or Tokens:** Never write, commit, or log credentials, private keys, certificates, or tokens.
 4. **Tracking Document Discipline:** Keep `PLAN.md`, `TODO.md`, and `BUGS.md` updated as tasks progress.
 5. **Theme Release Precedence:** The shared Jekyll theme repository (`projects/helix-docs`) must always be verified and released before consuming projects.
+6. **Documentation Theme-Neutrality:** Documentation (`docs/`, including `docs/wiki/`) must stay theme-neutral and mod-agnostic — it explains *how to work with the mods*, not any author's theme. Author-specific themes/suites (token names, values, radius scales, geometry) belong **only** in `docs/_catalogue/` and `docs/_store/`. Never make a catalogue theme the source of truth for the docs, and never copy its style references into the docs. See `.agents/rules/documentation-standards.md`.
 
 ---
 
