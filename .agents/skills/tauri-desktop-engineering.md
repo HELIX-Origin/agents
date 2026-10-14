@@ -1,6 +1,6 @@
 # Skill: Tauri & Rust Desktop Client Engineering
 
-> Domain knowledge and engineering runbook for cross-platform Tauri and Rust applications (`projects/NH-Reader`).
+> Domain knowledge and engineering runbook for cross-platform Tauri and Rust applications (`projects/NH-Reader`, `projects/Steam-Vault`).
 
 ---
 
@@ -10,6 +10,11 @@
 - **Backend:** Rust / Tauri v1/v2 core (`src-tauri/`).
 - **IPC Layer:** Strongly-typed invoke commands between TypeScript frontend and Rust backend handlers.
 - **Data Stores:** Local encrypted SQLite / JSON storage on client device.
+
+> **Project note — `Steam-Vault`:** a Tauri v2 Steam library organizer. Backend modules under
+> `src-tauri/src/` (`steam/` data layer, `metadata/` provider clients, `autocat.rs`, `filter.rs`,
+> `cache.rs`, `settings.rs`, `commands.rs`). Frontend is SvelteKit in SPA mode (`ssr = false`)
+> with a glassmorphism theme. Verification: `cargo check`, `cargo test`, `npm run check`.
 
 ---
 

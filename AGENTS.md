@@ -71,6 +71,7 @@
 │   ├── helix-docs/            <- the shared Jekyll theme (+ its preview site)
 │   ├── helix-origin.github.io/ <- GitHub Pages portal (docs/ in scope)
 │   ├── NH-Reader/             <- (docs/ in scope)
+│   ├── Steam-Vault/           <- Tauri v2 Steam library organizer (Depressurizer revival)
 │   ├── Windhawk-Themes/       <- (docs/ in scope)
 │   └── Hentai-Senpai-Multi-DE-Theme/ <- (docs/ in scope)
 └── (other projects)           <- out of scope unless asked
