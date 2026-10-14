@@ -3,7 +3,7 @@
 > 🎯 **Master Plan**: Active sprint planning, execution architecture, and completed sprint history across all repositories in the **HELIX Origin** organization.
 >
 > Pair with [`ROADMAP.md`](./ROADMAP.md) (strategic direction), [`TODO.md`](./TODO.md) (executable tasks), and [`BUGS.md`](./BUGS.md) (known issues).
-> Last updated: 2026-10-13
+> Last updated: 2026-10-14
 
 ---
 
@@ -17,6 +17,81 @@
 ---
 
 ## 🎯 Active Sprints
+
+### 🚀 [Steam-Vault] Sprint 3: Developer Tooling — Logged Command Scripts & Metadata Cache Warming
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Target Component:** `scripts/` (`lib/logger.mjs`, `lib/runner.mjs`, `dev.mjs`, `build.mjs`, `run.mjs`), `logs/`, `package.json`; `src-tauri/src/commands.rs`, `src-tauri/src/metadata/steam_store.rs`, `src/routes/organize/+page.svelte`
+
+```mermaid
+flowchart TD
+    S3_Log["[Steam-Vault] Logger (logger.mjs)"] --> S3_Run["[Steam-Vault] Runner (runner.mjs)"]
+    S3_Run --> S3_Wrap["[Steam-Vault] dev/build/run wrappers"]
+    S3_Wrap --> S3_Npm["[Steam-Vault] npm wiring + logs/ + .gitattributes"]
+    S3_Tags["[Steam-Vault] Steam Store tag fetch"] --> S3_Sync["[Steam-Vault] ensure/sync metadata commands"]
+    S3_Sync --> S3_UI["[Steam-Vault] Auto-fetch in categorization + Organize button"]
+    S3_Npm --> S3_Gate["[Steam-Vault] Verification: cargo check/test + npm run check + script smoke"]
+    S3_UI --> S3_Gate
+```
+
+#### 📝 Execution Tasks
+
+1. **[Steam-Vault] Logged command scripts**:
+   - `scripts/lib/logger.mjs` writes a timestamped, ANSI-stripped transcript to `logs/` while the
+     runner streams live coloured output to the console.
+   - `scripts/lib/runner.mjs` spawns `tauri dev` / `tauri build` (portable CLI path) and arbitrary
+     commands, forwards signals, and never overwrites a previous log.
+2. **[Steam-Vault] npm integration**:
+   - `tauri:dev` / `tauri:build` route through the wrappers; `*:raw` scripts and `npm run log` provide
+     escape hatches.
+3. **[Steam-Vault] On-demand metadata cache warming**:
+   - Fetch Steam Store tags; batch `appdetails`; reuse cached entries; expose `sync_library_metadata`.
+   - Auto-fetch during categorization when an enabled rule or kind needs metadata or tags.
+4. **[Steam-Vault] Verification**:
+   - `npm run check` (0/0), `npm run build`, `cargo check`, `cargo test` (7 passed), and a logging
+     smoke test (transcript written, no `DEP0190`).
+
+---
+
+### 🚀 [Steam-Vault] Sprint 2: Milestone M2 — Whole-Library Organizing, Platform Import & Custom Title Bar
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Target Component:** `src-tauri/src/platforms/`, `src-tauri/src/steam/owned.rs`, `src-tauri/src/steam/shortcuts.rs`, `src-tauri/src/autocat.rs`, `src-tauri/src/commands.rs`, `src/` (title bar, Platforms + Organize views)
+
+```mermaid
+flowchart TD
+    S2_Title["[Steam-Vault] Custom title bar"] --> S2_Owned["[Steam-Vault] Full owned library (Web API)"]
+    S2_Owned --> S2_Detect["[Steam-Vault] Platform detection (GOG/Epic/itch/…)"]
+    S2_Detect --> S2_Import["[Steam-Vault] Import as non-Steam shortcuts"]
+    S2_Import --> S2_Categorize["[Steam-Vault] Create collections from any sorting option"]
+    S2_Categorize --> S2_UI["[Steam-Vault] Platforms + Organize views"]
+    S2_UI --> S2_Gate["[Steam-Vault] Verification: cargo check/test + npm run check"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[Steam-Vault] Whole-library model**:
+   - Cache the Steam Web API's `GetOwnedGames` result and merge it into `load_library`, so
+     owned-but-not-installed games are targets for organizing.
+   - Annotate shortcuts with their source platform via a persisted appid → platform map.
+2. **[Steam-Vault] External platform detection and import**:
+   - Detect GOG, Epic Games, itch.io, Amazon Games, Ubisoft Connect, EA, Battle.net, Rockstar, and
+     other publishers from local sources only (no scraping, no launcher login).
+   - Import selected games into `shortcuts.vdf` with Steam-compatible appids, quoted fields, and
+     de-duplication.
+3. **[Steam-Vault] Create collections from a sorting option**:
+   - Compute a plan (dry run) for any kind — genre, developer, publisher, flag, tag, release year,
+     user score, platform, installed state, playtime, name.
+   - Apply the plan atomically with one backup; support prefix, installed-only, and
+     replace-membership options.
+4. **[Steam-Vault] Shell + views**:
+   - Frameless custom title bar with platform-aware window controls.
+   - New Platforms and Organize views; Library badges for platform and installed state; six-item
+     navigation.
+5. **[Steam-Vault] Verification**:
+   - `npm run check` (0/0), `npm run build`, `cargo check`, `cargo test` (7 passed).
+
+---
 
 ### 🚀 [Windhawk-Themes] Sprint 3: Command Center Stability — High-Contrast & explorer.exe Crash Fixes (Rolled Back / External Root Cause)
 - **Project Identifier:** `[Windhawk-Themes]`
@@ -106,6 +181,14 @@ flowchart TD
 ---
 
 ## ✅ Completed Sprints & Phases
+
+### ✅ [Steam-Vault] Sprint 1: Milestone M1 — Foundation
+- **Project Identifier:** `[Steam-Vault]` · **Path:** `projects/Steam-Vault`
+- `[Steam-Vault]` Scaffolded Tauri v2 + SvelteKit (Svelte 5 / strict TS / Vite) with identifiers, window, and CSP.
+- `[Steam-Vault]` Text + binary KeyValues parsers with round-trip tests; Steam discovery, library aggregation, and modern collection read/write with backups and a Steam-must-be-closed guard.
+- `[Steam-Vault]` Metadata provider layer (Steam Store, Steam Web API, SteamGridDB, IGDB, PCGamingWiki, Wikipedia); RAWG excluded; JSON metadata cache; local settings.
+- `[Steam-Vault]` AutoCats engine + Allowed/Required/Excluded filter model; glassmorphism app shell (Dashboard/Library/Collections/Settings).
+- `[Steam-Vault]` `docs/` GitHub Pages site on the `helix-docs` remote theme (vCard home, 10 user guides, 8-page wiki, squircle branding) — live at https://helix-origin.github.io/Steam-Vault/ (commit `0475ed9`).
 
 ### ✅ [Ecosystem] Stale Agents-Ecosystem Reference Cleanup (Windhawk-Themes, NH-Reader, helix-origin.github.io)
 - **Project Identifier:** `[Ecosystem]` · **Path:** Workspace Root + project repos

@@ -3,7 +3,7 @@
 > 🐛 **Living Source of Truth**: Unified tracking ledger for active bugs, environment quirks, external limitations, and verified fixes across all repositories in the **HELIX Origin** organization.
 >
 > Pair with [`ROADMAP.md`](./ROADMAP.md) (direction), [`PLAN.md`](./PLAN.md) (sprint execution), and [`TODO.md`](./TODO.md) (task ledger).
-> Last updated: 2026-10-13
+> Last updated: 2026-10-14
 
 ---
 
@@ -60,6 +60,16 @@
 ### [Hentai-Senpai-Multi-DE-Theme] (projects/Hentai-Senpai-Multi-DE-Theme)
 - 🐧 **[Hentai-Senpai] Desktop Environment Variations:** GTK4/libadwaita theming overrides and desktop specifics (GNOME, XFCE, Cinnamon, MATE, Budgie) depend on individual DE version capabilities and user window managers.
 
+### [Steam-Vault] (projects/Steam-Vault)
+- ☁️ **[Steam-Vault] Steam Cloud Collection Sync:** Modern Steam collections are stored in a cloud-synced namespace file (`userdata/<id3>/config/cloudstorage/cloud-storage-namespace-1.json`). Editing while Steam is running, or while another device changes collections, can cause a sync conflict. Mitigation: writes are refused while Steam is running, and every write is preceded by a timestamped backup.
+- 🧩 **[Steam-Vault] Legacy Tags Are Often Empty:** On modern accounts the old `localconfig.vdf` `apps/<appid>/tags` categories are empty (collections moved to `cloudstorage`). Legacy tag import is therefore best-effort and may surface nothing.
+- 🔑 **[Steam-Vault] Steam Web API Profile Visibility:** `IPlayerService/GetOwnedGames` returns data only when the profile's game details are public; otherwise Steam returns `403`. Local library data is unaffected.
+- 🔌 **[Steam-Vault] Provider Fragility (keyless sources):** PCGamingWiki and Wikipedia are keyless, best-effort providers and may change shape; the Steam Store `appdetails` endpoint is keyless but rate-limited. These are supplementary and never required.
+- 🏷️ **[Steam-Vault] Metadata Warming Is Network-Heavy and Rate-Limited:** Warming a large owned library issues many Steam Store `appdetails` batches (50 per request) plus one `actions/ajaxgetstoretags` request per app, which can trip Steam's rate limiting; cached entries are reused within the TTL and per-app failures are skipped rather than fatal. Categorization now fetches metadata on demand (`fetchMetadata`, default `true`), so rules that need genre/tag/other metadata can trigger network calls implicitly — cache warming for a full owned library is best run deliberately via the Organize view's **Sync metadata** button.
+- 🖥️ **[Steam-Vault] Platform Detection Depends on Local Sources:** External-platform detection reads only local data — launcher manifests, the GOG registry, the itch app library, and the Windows Uninstall registry. Titles that are absent from all of those (for example, Microsoft Store / Xbox Game Pass games, which are not in the classic Uninstall registry) are not detected yet.
+- 🌐 **[Steam-Vault] Owned-Library Sync Needs a Public Profile:** `refresh_owned_games` uses `IPlayerService/GetOwnedGames`, which requires a Steam Web API key and a public "game details" profile setting. Installed games are always read locally regardless, and the cached owned list is only used to broaden the ordering surface.
+- 🎭 **[Steam-Vault] Shortcut Platform Attribution Is Best-Effort:** A non-Steam shortcut added outside Steam Vault has no recorded platform and is shown as "Other" until it is re-imported. Attribution is kept in `<config>/steam-vault/platform-map.json`.
+
 ---
 
 ## 💡 Explicitly Not Bugs
@@ -68,6 +78,7 @@
 - 💡 **[Windhawk-Themes] Different Radii on Taskbar vs Start Menu:** Taskbar uses compact radii (`R1=6`, `R2=20`) because of its compact bar height, whereas Start Menu uses large panel radii (`CornerRadius=35`). This is an intentional design scale hierarchy.
 - 💡 **[Windhawk-Themes] Win32 Scrollbars in File Explorer:** DirectUI scrollbars follow system mode rather than custom XAML templates.
 - 💡 **[Hentai-Senpai] Host Build Dependencies:** System requirements (`sassc`, `optipng`, `inkscape`) are build prerequisites, not theme bugs.
+- 💡 **[Steam-Vault] RAWG Is Not Supported:** RAWG is defunct, so no RAWG provider exists. This is intentional, per user directive.
 
 ---
 

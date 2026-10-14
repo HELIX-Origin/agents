@@ -3,7 +3,7 @@
 > 🗺️ **Living Source of Truth**: Unified organizational roadmap, multi-project milestone matrix, and long-term product direction across all repositories under **HELIX Origin**.
 >
 > Pair with [`PLAN.md`](./PLAN.md) (sprint execution), [`TODO.md`](./TODO.md) (task ledger), and [`BUGS.md`](./BUGS.md) (open issues and quirks).
-> Last updated: 2026-10-13
+> Last updated: 2026-10-14
 
 ---
 
@@ -48,6 +48,7 @@ flowchart TB
 | **[NH-Reader]** | `projects/NH-Reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/NH-Reader/releases/tag/v0.7.5) | ✅ Shipped (M12) | M13 Planning: unified sign script, multi-platform toolchain |
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
 | **[Hentai-Senpai-Multi-DE-Theme]** | `projects/Hentai-Senpai-Multi-DE-Theme` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Hentai-Senpai-Multi-DE-Theme/releases/tag/v1.0.0) | ✅ Complete | Nord GTK multi-desktop theme installer & remote docs |
+| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | M2 (Whole-Library Organizing) | ✅ Delivered (M2) | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
 
 ---
 
@@ -133,3 +134,61 @@ flowchart LR
 - **[Hentai-Senpai-Multi-DE-Theme] Future Roadmap:**
   - Automated libadwaita / GTK4 user override configuration scripts.
   - Optional custom accent color generator presets.
+
+---
+
+### 6. [Steam-Vault] — Steam Library Organizer
+*Target Path: `projects/Steam-Vault` · Tauri v2 / Rust / SvelteKit Desktop App*
+
+```mermaid
+flowchart LR
+    M1["[Steam-Vault] M1: Foundation ✅"] --> M2["[Steam-Vault] M2: Whole-Library Organizing ✅"]
+    M2 --> M2b["[Steam-Vault] Developer Tooling: Logged Scripts + Metadata Warming 🚧"]
+    M2b --> M3["[Steam-Vault] M3: Rich AutoCats + Filter Builder ⏳"]
+    M3 --> M4["[Steam-Vault] M4: Artwork + Non-Steam Art ⏳"]
+    M4 --> M5["[Steam-Vault] M5: Glassmorphism UI Pass ⏳"]
+```
+
+- **[Steam-Vault] Milestone M1: Foundation (DELIVERED):**
+  - Clean-room, cross-platform revival of **Depressurizer** as a Tauri v2 app.
+  - Steam discovery (registry + cross-platform fallbacks), library/account aggregation from
+    `libraryfolders.vdf`, `appmanifest_*.acf`, `localconfig.vdf`, and non-Steam `shortcuts.vdf`.
+  - Modern Steam collection read/write against the cloud namespace store, with backups and a
+    Steam-must-be-closed guard.
+  - Metadata provider layer: Steam Store (`appdetails`), Steam Web API, SteamGridDB, IGDB (Twitch),
+    PCGamingWiki, Wikipedia. **RAWG intentionally excluded (service defunct).** Steam Web API,
+    SteamGridDB, and IGDB are the only keyed providers.
+  - AutoCats engine + Allowed/Required/Excluded filter model; JSON metadata cache; local settings.
+  - `docs/` GitHub Pages site on the `helix-docs` remote theme, live at
+    **https://helix-origin.github.io/Steam-Vault/** (source `main` / `docs`).
+- **[Steam-Vault] Milestone M2: Whole-Library Organizing (DELIVERED):**
+  - **Custom title bar** — frameless window (`decorations: false`), a draggable app header, and
+    platform-aware window controls (macOS traffic lights, Windows-style buttons elsewhere).
+  - **Whole owned library** — the Steam Web API's `GetOwnedGames` result is cached to
+    `owned-games.json` and merged into the Library view, so owned-but-not-installed games can be
+    organized too.
+  - **External platform detection** — GOG, Epic Games, itch.io, Amazon Games, Ubisoft Connect, EA,
+    Battle.net, Rockstar, and other publishers, read from local launcher manifests, the GOG registry,
+    the itch app library, and the Windows Uninstall registry (no scraping, no launcher login).
+  - **Import as non-Steam shortcuts** — appids derived exactly as Steam does
+    (`crc32(exe + name) | 0x80000000`), quoted `Exe` / `StartDir`, de-duplication, and a persisted
+    appid → platform map.
+  - **Collection creation from any sorting option** — genre, developer, publisher, Steam feature,
+    tag, release year, user score, platform, installed state, playtime, and name — previewed, then
+    written in a single backed-up operation.
+  - New **Platforms** and **Organize** views; navigation extended to six items.
+- **[Steam-Vault] Developer Tooling: Logged Command Scripts + Metadata Cache Warming (IN PROGRESS / UNRELEASED):**
+  - **Logged command scripts** — `scripts/*.mjs` wrap `tauri dev` / `tauri build` (and any command via
+    `npm run log`) so each run streams live and leaves a timestamped, ANSI-stripped transcript in
+    `logs/` (`<type>-<YYYY-MM-DD_HH-MM-SS>.log`, never overwritten).
+  - **On-demand metadata cache warming** — the Steam Store provider also fetches store **tags**
+    (`actions/ajaxgetstoretags`); `ensure_steam_metadata` de-duplicates ids, batches `appdetails`
+    50/request, and reuses cached entries; a `sync_library_metadata` command warms the whole owned
+    library; collection creation can fetch metadata on demand (`fetchMetadata`, default on).
+- **[Steam-Vault] Backlog (deferred):**
+  - Full **modern dark glassmorphism** visual design pass across every view.
+  - HELIX squircle branding artwork for the app/repo; GitHub issue templates; release notes.
+  - SQLite metadata cache (replacing the JSON cache); dynamic (filter-spec) collection authoring.
+  - Platform storefront launch URIs (Epic / itch) as shortcut launch options; per-game platform
+    override UI; Microsoft Store / Xbox Game Pass detection.
+  - Release notes, issue templates, and first SemVer release.
