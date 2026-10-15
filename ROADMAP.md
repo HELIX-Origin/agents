@@ -48,7 +48,7 @@ flowchart TB
 | **[NH-Reader]** | `projects/NH-Reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/NH-Reader/releases/tag/v0.7.5) | ✅ Shipped (M12) | M13 Planning: unified sign script, multi-platform toolchain |
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
 | **[Hentai-Senpai-Multi-DE-Theme]** | `projects/Hentai-Senpai-Multi-DE-Theme` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Hentai-Senpai-Multi-DE-Theme/releases/tag/v1.0.0) | ✅ Complete | Nord GTK multi-desktop theme installer & remote docs |
-| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Steam-Vault/releases/tag/v1.0.0) | ✅ Shipped | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
+| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | [v1.1.0](https://github.com/HELIX-Origin/Steam-Vault/releases/tag/v1.1.0) | ✅ Shipped | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
 | **[Steam-Vault-Catalog]** | `projects/Steam-Vault-Catalog` | SemVer | [v1.0.5](https://github.com/HELIX-Origin/Steam-Vault-Catalog/releases/tag/v1.0.5) | 🚀 Active | Community open game catalog, metadata crawler & compressed SQLite index |
 | **[FFXIV-Config]** | `projects/FFXIV-Config` | Rolling Sprints | 8.x HUD/Macro Config | ✅ Complete | FFXIV HUD, hotbar & macro configuration suite with remote Jekyll docs |
 
@@ -243,3 +243,9 @@ flowchart LR
   - HELIX squircle 16:9 branding artwork (`static/steam-vault.svg`, `docs/assets/images/steam-vault.svg`, portal card).
   - GitHub issue templates (`config.yml`, `1_bug_report.yml`, `2_feature_proposal.yml`).
   - SemVer v1.0.0 release notes, CHANGELOG v1.0.0, and version bumps.
+- **[Steam-Vault] Milestone M10: Catalog & Console Expansion v1.1.0 (DELIVERED):**
+  - Native integration with Community Game Catalog (`Steam-Vault-Catalog`) via embedded compressed SQLite seed (`catalog_seed.bin`, curated multi-platform games) and online sync.
+  - High-precision console platform determination (`determine_console_platform`) for emulated ROMs with Platforms view badges.
+  - Automated binary `shortcuts.vdf` `tags` injection for native Steam client console grouping and collection ingestion.
+  - Keyless MediaWiki wikitext infobox parser in `metadata::extra::wikipedia_game_lookup` for console titles and retro platforms.
+  - SemVer v1.1.0 release packaging, release notes, and documentation synchronization.
