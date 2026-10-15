@@ -25,7 +25,39 @@
 
 ## 🔥 Active Workstreams
 
-### 🎯 [Steam-Vault] & [Steam-Vault-Catalogue] Workstream W.33: Multi-Platform Owned Games Detection, Official & Enhanced Metadata Engine, Interactive Library Grid & Per-Game Management Pages, and Catalog Alignment
+### 🎯 [Steam-Vault] & [Steam-Vault-Catalogue] Workstream W.35: Multi-Provider Metadata Parity, Lightweight Catalogue Index Manifest, Settings & Per-Game Refresh Metadata, and i18n Localization
+- **Project Identifiers:** `[Steam-Vault]` (`projects/Steam-Vault`), `[Steam-Vault-Catalogue]` (`projects/Steam-Vault-Catalogue`)
+- **Target Components:** `projects/Steam-Vault/src-tauri/src/commands.rs`, `projects/Steam-Vault/src-tauri/src/lib.rs`, `projects/Steam-Vault/src/lib/api.ts`, `projects/Steam-Vault/src/lib/types.ts`, `projects/Steam-Vault/src/lib/i18n/*`, `projects/Steam-Vault/src/routes/settings/+page.svelte`, `projects/Steam-Vault/src/routes/library/+page.svelte`; `projects/Steam-Vault-Catalogue/scripts/modules/types.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/config.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/indexer.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/engine.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/providers/*`, `projects/Steam-Vault-Catalogue/index.json`
+
+**Locked user directives:**
+- "ok the web search needs to be keyword based instead of direct image url based. aslo some of the images being fetched by our providers are showing up as broken images"
+- "Also using the steam store and steamdgridb as the sole source for metadata is problematic. we have multiple supported meatdat providers to ensure we never miss artowrk. many of the games this app will support are not on the steam store and don't have artowkr on the steamgriddb."
+- "We support multiple. I have repeatedly told you to use the same metadata sources we use in our steam-vault-catalogue. so VNDB, IGDB, Wikapedia, PCGaminkWiki, Elulation game metadata sources, etc. we need a versatile amount of metadata providers. minimal api keys if possible but api keys can be accepted if they are completey free and working. RAWG is intentionally not supported sicne the website has been broken for eyars and is no longer able to get an API key from."
+- "Note: Our steam-vault-catalogue has a cron workflow that adds new games to it's metadata on a daily basis. so it gets new games every day. We can technically update that with the same metadata source updates we make here. in fact, i recommend doing that so both repos have the same support."
+- "Note: A button in the settings tab to fetch metadata for all games would be usful for updating missing metadata and artwork and ehnacing existing metadata and artwork if possible. Ths is also needed since the per game details pages will need it to refresh or update their auto fetched details. This can be a refresh metadata button."
+- "ok. the index.json file in the steam-vault-catalogue repo needs to serve as an ntree point to detect the actual per game json files. it should not carryu the infor they provide. that is redundant and will cause it to become far too large to keep in the repo defeating the point of having per game json files to begin with."
+- "We should include proper i18n support so it works with our steam-vault apps i18n localization support."
+- "we need to update the population workflow in the steam vault catalogue repo. rn it only uses a cron, it also needs an option for manually running it. we also need to make sure it is corrctly using the updated modular script when populating and updating the catalogue."
+
+**Implementation checklist:**
+- [x] `[Steam-Vault-Catalogue]` **Lightweight Index Manifest** — refactored `scripts/modules/indexer.ts` and `types.ts` to output `CatalogueIndexEntry` in root `index.json`, providing a compact entrypoint (220 KB, >80% reduction) pointing to `games/<slug>.json` without bloated descriptions, categories, scores, and image arrays.
+- [x] `[Steam-Vault-Catalogue]` **Expanded Metadata Providers** — implemented `pcgamingwiki.ts` (MediaWiki parsing & box art), `libretro.ts` (emulation box art, snaps, titles across console systems), and enhanced `wikipedia.ts` with direct box art image extraction (`pageimages`); integrated all into `scripts/modules/engine.ts`.
+- [x] `[Steam-Vault]` **Backend Single-Game & Library Metadata Refresh** — implemented `refresh_game_metadata` command querying and merging across Steam Store, Catalogue, PCGamingWiki, Wikipedia, and VNDB; updated `sync_library_metadata` with `force` and `auto_artwork` support in `commands.rs` and registered in `lib.rs`.
+- [x] `[Steam-Vault]` **Settings Library Metadata & Artwork Refresh Action** — added "Fetch & Refresh Library Metadata" UI block in `/settings` under Preferences & Offline Cache with live status indicators, auto-artwork toggle, and online catalogue sync trigger.
+- [x] `[Steam-Vault]` **Per-Game Details & Modal Refresh Metadata Buttons** — added prominent "Refresh Metadata" button on game details topbar and in Manage modal with spin indicator and live feedback toast.
+- [x] `[Steam-Vault]` **Keyword-Based Multi-Provider Artwork Search** — added PCGamingWiki and Libretro Emulation search providers to Artwork Manager modal; updated filter dropdown with all providers; enabled safe search toggle; and enforced client-side `onerror` removal of dead URLs to prevent broken image cards.
+- [x] `[Steam-Vault]` **Comprehensive i18n Localization** — expanded `TranslationDictionary` in `types.ts` and `en.ts` with all strings for metadata refresh, display name customization, artwork search placeholders, and provider filter labels.
+- [x] `[Steam-Vault-Catalogue]` & `[Steam-Vault]` **Cross-Repo i18n & Multilingual Metadata Schema Parity** — added `locales` to `game.schema.json` and `types.ts` in `Steam-Vault-Catalogue`, added `languages.ts` supporting all 30 Valve/Steam languages, added `locales` validation in `validator.ts`, aggregated multilingual titles into `aliases` during index generation in `indexer.ts`, preserved `locales` in `catalogue.db.gz`, added `locales` to `AppMeta` in both Rust (`models.rs`) and TypeScript (`types.ts`), and implemented `getLocalizedTitle` and `getLocalizedDescription` in `projects/Steam-Vault/src/routes/library/+page.svelte` dynamically reacting to active `$locale` and `$activeLanguage`.
+- [x] `[Steam-Vault-Catalogue]` **Manual & Scheduled Population Workflow Overhaul** — updated `.github/workflows/populate-catalogue.yml` with comprehensive `workflow_dispatch` manual inputs (`mode` selection: `missing`, `all`, `crawl`, `seeds`, `query`, `slug`, `index`, `validate`; `provider`, `limit`, `query`, `slug`, `dry_run`), added `--experimental-strip-types` to npm scripts in `package.json` for seamless Node 22+ execution, and verified `populate-catalogue.yml` and `validate.yml`.
+- [x] `[Steam-Vault]` & `[Steam-Vault-Catalogue]` **Verification Suite** — verified with `npm run catalogue:validate` (729/729 games valid), `npm run catalogue:build:index`, `npm run check` (0 errors, 0 warnings), and `npm run build` (clean Vite + SvelteKit bundle).
+
+---
+
+### 🎯 [Steam-Vault] Workstream W.34: Library 500 Repair, Steam-Parity Artwork & Custom Display Name Sub-Window, and Settings Navigation & Layout Consolidation (Completed)
+
+---
+
+### 🎯 [Steam-Vault] & [Steam-Vault-Catalogue] Workstream W.33: Multi-Platform Owned Games Detection, Official & Enhanced Metadata Engine, Interactive Library Grid & Per-Game Management Pages, and Catalog Alignment (Completed)
 - **Project Identifiers:** `[Steam-Vault]` (`projects/Steam-Vault`), `[Steam-Vault-Catalogue]` (`projects/Steam-Vault-Catalogue`)
 - **Target Components:** `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/platforms/mod.rs`, `src-tauri/src/metadata/*`, `src-tauri/src/commands.rs`, `src-tauri/src/steam/models.rs`, `src/routes/library/+page.svelte`, `src/lib/api.ts`, `src/lib/types.ts`; `projects/Steam-Vault-Catalogue/schema/game.schema.json`, `projects/Steam-Vault-Catalogue/scripts/build-index.ts`, `projects/Steam-Vault-Catalogue/scripts/manage-catalog.ts`
 

@@ -328,6 +328,30 @@
   3. Recomputed normalized title and lookups (`alias` and `exe`) during catalog ingestion to guarantee exact title and alias matching in `find_catalog_by_title`.
   4. Updated `build-index.js` to emit both camelCase and snake_case properties in `meta` objects, rebuilt `catalog.db.gz`, updated `catalog_seed.bin`, and validated all 7 test suites pass.
 
+#### [Steam-Vault] 2026-10-15 — Library 500 Error, Artwork Application Refusal, and Settings Navigation & Layout Consolidation
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Severity**: 🔴 Critical (app render failure & layout regressions)
+- **Status**: ✅ resolved — verified with `npm run check` (0 errors, 0 warnings) and `npm run build`
+- **Scope**: `src/lib/stores.ts`, `src/routes/library/+page.svelte`, `src-tauri/src/steam/artwork.rs`, `src-tauri/src/metadata/steamgriddb.rs`, `src-tauri/src/commands.rs`, `src/routes/settings/+page.svelte`, `src/routes/+layout.svelte`, `src/lib/components/settings/*`, `src/styles/*`
+- **Reported Issues**:
+  1. Library page broke completely displaying a 500 error.
+  2. Selected artwork refused to apply due to strict dimension checks and CORS HEAD fetch failures. Safe search could not be disabled to retrieve NSFW results.
+  3. Per-game artwork manager and game display name customization were missing from the per-game management sub-window.
+  4. Collections, platforms, and organize tabs remained in the primary navigation instead of being organized into dedicated sections within Settings.
+  5. Settings tab suffered from severe layout inconsistencies: uneven 2-column masonry with large vertical gaps, missing section tabs, and monolithic layout.
+- **Root Cause**:
+  1. Missing `loading` writable store export in `stores.ts` referenced by pages, plus untracked/corrupted `LibraryGrid.svelte` component.
+  2. Client-side dimension validation rejected non-standard aspect ratios, and client-side `fetch(HEAD)` failed on cross-origin image CDNs. Backend SGDB queries forced safe search without an NSFW parameter.
+  3. Standalone routes (`/collections`, `/platforms`, `/organize`) were exposed in primary sidebar instead of consolidated within `/settings`.
+  4. Settings page used an unconstrained `grid two` where cards of drastically different heights caused masonry height gaps.
+- **Resolution**:
+  1. Restored `loading` store in `stores.ts` and purged untracked corrupted components.
+  2. Updated backend artwork sniffing to support PNG, JPEG, WebP, and ICO; added `nsfw: Option<bool>` parameter to SGDB queries (`nsfw=any&humor=any` when Safe Search is disabled); removed client-side CORS HEAD checks and dimension restrictions to match Steam's non-refusal policy.
+  3. Integrated tabbed Steam-parity Artwork Manager (Portrait, Landscape, Hero, Logo, Icon) and custom display name override (persisted in `localStorage`) into the per-game Manage modal.
+  4. Removed `/collections`, `/platforms`, and `/organize` from sidebar nav and consolidated them into dedicated, modular section tabs inside `/settings`.
+  5. Built responsive tab bar navigation for `/settings` with a balanced 2x2 grid for General & Storage settings and scoped section components (`CollectionsSection`, `PlatformsSection`, `OrganizeSection`), eliminating all layout gaps.
+
 ---
 
 ### [helix-docs] (projects/helix-docs)
