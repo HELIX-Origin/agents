@@ -76,6 +76,7 @@
 - [x] `[Steam-Vault]` **Wikipedia video game & console metadata provider** — implemented keyless MediaWiki wikitext infobox parser in `src-tauri/src/metadata/extra.rs` resolving developer, publisher, genre, release year, console platforms, and summaries; wired into `ensure_game_metadata` for console shortcuts and exposed via `wikipedia_game_lookup` Tauri command.
 - [x] `[Steam-Vault]` **Console platform shortcut tags** — updated `shortcuts::NewShortcut` and `shortcuts::build_fields` to write console platforms into binary `shortcuts.vdf` `tags`, and updated `shortcuts::load_shortcuts` to load tags into `game.collections` for automatic categorization.
 - [x] `[Steam-Vault]` **Catalog seed database synchronization** — compiled `dist/catalog.db.gz` from the game files in `Steam-Vault-Catalog` and synchronized it to `projects/Steam-Vault/src-tauri/src/catalog_seed.bin`.
+- [x] `[Steam-Vault & Catalog]` **Online catalog sync JSON deserialization & case normalization** — resolved `JSON error: invalid type: sequence` when syncing online catalog archives; added untagged `StringOrSeq` enum in `cache.rs` supporting both stringified and sequence arrays for `platforms` and `known_exes`, and `Option<serde_json::Value>` for `meta_json` / `meta`; added serde aliases (`app_id`, `release_year`, etc.) and defaults to `AppMeta` in `models.rs`; recomputed normalized titles and lookups during import; updated `build-index.js` to emit both camelCase and snake_case properties in catalog metadata; verified with dedicated unit tests and full 7-suite runner.
 
 ---
 

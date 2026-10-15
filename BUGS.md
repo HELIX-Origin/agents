@@ -279,6 +279,22 @@
   4. Implemented automatic artwork downloading upon platform game/ROM import and added bulk auto-fetch missing artwork button.
   5. Implemented emulator and ROM detection (`Platform::Emulator`) for 11 popular emulators with tailored launch arguments.
 
+#### [Steam-Vault] 2026-10-15 — Online Catalog Synchronization JSON Deserialization Type Mismatch & Metadata Case Normalization
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Severity**: 🟠 High (functional defect)
+- **Status**: ✅ resolved — verified across unit tests and full 7-suite runner
+- **Scope**: `src-tauri/src/cache.rs`, `src-tauri/src/steam/models.rs`, `projects/Steam-Vault-Catalog/scripts/build-index.js`
+- **Reported Issue**: When synchronizing the online catalog via `sync_online_catalog`, deserialization failed with `JSON error: invalid type: sequence, expected a string at line 1 column 79`.
+- **Root Cause**:
+  1. `CatalogExportRecord` in `cache.rs` expected stringified JSON fields (`platforms: String`, `known_exes: String`, `meta_json: String`). `Steam-Vault-Catalog`'s `build-index.js` outputs JSON sequences (`platforms: [...]`, `known_exes: [...]`) and nested `meta: { ... }` objects.
+  2. `AppMeta` field names used `rename_all = "camelCase"` without aliases or defaults for snake_case keys present in catalog export metadata (`app_id`, `release_year`, etc.).
+- **Resolution**:
+  1. Implemented untagged `StringOrSeq` enum in `cache.rs` and `Option<serde_json::Value>` for `meta_json` / `meta`, allowing seamless deserialization of both stringified and structured sequence/object formats.
+  2. Added serde aliases (`app_id`, `release_date`, `release_year`, `user_score`, etc.) and `#[serde(default)]` to `AppMeta` in `models.rs` ensuring resilient deserialization across camelCase and snake_case representations.
+  3. Recomputed normalized title and lookups (`alias` and `exe`) during catalog ingestion to guarantee exact title and alias matching in `find_catalog_by_title`.
+  4. Updated `build-index.js` to emit both camelCase and snake_case properties in `meta` objects, rebuilt `catalog.db.gz`, updated `catalog_seed.bin`, and validated all 7 test suites pass.
+
 ---
 
 ### [helix-docs] (projects/helix-docs)
