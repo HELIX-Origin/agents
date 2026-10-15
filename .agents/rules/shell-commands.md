@@ -35,7 +35,14 @@
 - No `echo "===="` / `printf '---'` separators.
 - **Retry budget: 2.** After two failures at the same command shape, change approach (absolute paths,
   `-LiteralPath`, a dedicated tool) — never loop the identical failing invocation.
+- **Tool output can be corrupted** (lines shuffled, duplicated, dropped, or fabricated — including
+  fake filenames and SHAs). When a result looks suspicious, re-route it through a temp file
+  (`Set-Content "$env:TEMP\x.txt" ...; Get-Content "$env:TEMP\x.txt"`) for a clean render, or confirm
+  with an independent command. Never act on an unverified value.
 
 ## Line endings / format
-- Match the file's existing EOL convention; the `edit`/`write` tools preserve CRLF/LF automatically.
-- The git *"LF will be replaced by CRLF"* warning is a checkout artifact — do not "fix" it.
+- **All text files are LF** across the workspace: every repo carries a `.gitattributes`
+  (`* text=auto eol=lf`) and the effective `core.autocrlf` is `input`. Write LF for all text files.
+  `*.bat`/`*.cmd` are the deliberate CRLF exception (`text eol=crlf`).
+- The `edit`/`write` tools preserve a file's existing EOL, so a stale CRLF file stays CRLF. Never
+  hand-edit bytes to fix EOL — normalise through git (see `.agents/rules/git-operations.md`).

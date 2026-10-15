@@ -57,6 +57,18 @@ repository, in the current conversation**:
 - Always run a fresh `git status` before acting. Never trust a dated snapshot of a repo's
   state: what looks like it predates your work may already be committed, and vice versa.
 
+## Verify every mutation — tool output can lie
+
+Harness tool output is occasionally corrupted: a `git commit`/`push` can *appear* to succeed in the
+transcript while never landing, and SHAs/statuses can be fabricated. Therefore:
+
+- Run `git add` + `git commit` + `git push` in a **single shell call** — one atomic action with one
+  result, rather than several steps that can desynchronise across turns.
+- After pushing, verify with `git ls-remote origin <branch>` (hits GitHub; authoritative) and confirm
+  the local tip with a fresh `git -C <repo> rev-parse HEAD`.
+- Never assume a commit exists because a previous turn said so — re-check `git log` / `ls-remote`.
+- If output is garbled, re-route it through a temp file (`Set-Content ...; Get-Content ...`) and retry.
+
 ## Reminder for every git command
 
 - Ask: *"Did the user explicitly authorize THIS exact operation on THIS exact repository,

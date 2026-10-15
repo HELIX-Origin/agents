@@ -82,7 +82,13 @@
 - Commands run through **PowerShell**.
 - Ensure Ruby is accessible in PATH (prepend local Ruby bin if needed):
   `$env:PATH = "<ruby-bin-dir>;$env:PATH"`
-- The end-of-line style is the projects' existing convention; match the file you edit.
+- **Line endings are LF everywhere.** Every repository carries a `.gitattributes`
+  (`* text=auto eol=lf`; explicit text/binary types; `*.bat`/`*.cmd` → `text eol=crlf`), and the
+  effective `core.autocrlf` is `input`. Write LF for all text files; never introduce CRLF and never
+  strip a repo's `.gitattributes`.
+- **Never trust a single tool result.** Tool output is occasionally corrupted or fabricated —
+  verify git mutations with `git ls-remote origin <branch>` before acting (see
+  `.agents/rules/git-operations.md`).
 - Use `git -C <repo> <cmd>` when operating on sub-projects inside `projects/`.
 
 ## Quick reference
