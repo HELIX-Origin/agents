@@ -18,7 +18,9 @@
 - [`.agents/rules/git-operations.md`](../../rules/git-operations.md) — Git permissions (read-only default).
 - [`.agents/rules/verification.md`](../../rules/verification.md) — Mandatory verification check requirements.
 - [`.agents/rules/security-hygiene.md`](../../rules/security-hygiene.md) — Secret and keystore management.
+- [`.agents/rules/styling-standards.md`](../../rules/styling-standards.md) — SCSS-first styling standards & zero-hardcoding rules.
 - [`.agents/skills/tauri-desktop-engineering.md`](../../skills/tauri-desktop-engineering.md) — Tauri architecture and toolchains.
+- [`.agents/skills/scss-architecture.md`](../../skills/scss-architecture.md) — Modern SCSS modular architecture and token systems.
 
 ---
 

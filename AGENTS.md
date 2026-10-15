@@ -102,6 +102,7 @@
 | Project artwork standards | `.agents/rules/project-artwork.md` |
 | Verification standards | `.agents/rules/verification.md` |
 | Security & secret hygiene | `.agents/rules/security-hygiene.md` |
+| Styling standards & SCSS-first | `.agents/rules/styling-standards.md` |
 | Documentation & content standards (theme-neutrality) | `.agents/rules/documentation-standards.md` |
 | Shell command rules | `.agents/rules/shell-commands.md` |
 | Large task handling rules | `.agents/rules/large-task-handling.md` |
@@ -110,6 +111,7 @@
 | Clone organization repos | `.agents/skills/clone-org-repos.md` |
 | Clone all org repos (scripts) | `clone-org-repos-windows.ps1`, `clone-org-repos-linux.sh`, `clone-org-repos-macos.sh` |
 | Compile theme CSS (dart-sass) | `.agents/skills/sass-compile.md` |
+| Modern SCSS architecture | `.agents/skills/scss-architecture.md` |
 | Task decomposition & incremental steps | `.agents/skills/task-decomposition.md` |
 | Large session & context management | `.agents/skills/large-session-management.md` |
 | Shell command management (Windows/PowerShell) | `.agents/skills/shell-command-management.md` |
