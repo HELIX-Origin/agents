@@ -177,7 +177,7 @@ flowchart LR
     tag, release year, user score, platform, installed state, playtime, and name — previewed, then
     written in a single backed-up operation.
   - New **Platforms** and **Organize** views; navigation extended to six items.
-- **[Steam-Vault] Developer Tooling: Logged Command Scripts + Metadata Cache Warming (IN PROGRESS / UNRELEASED):**
+- **[Steam-Vault] Developer Tooling: Logged Command Scripts + Metadata Cache Warming (COMPLETE):**
   - **Logged command scripts** — `scripts/*.mjs` wrap `tauri dev` / `tauri build` (and any command via
     `npm run log`) so each run streams live and leaves a timestamped, ANSI-stripped transcript in
     `logs/` (`<type>-<YYYY-MM-DD_HH-MM-SS>.log`, never overwritten).

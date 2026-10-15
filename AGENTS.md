@@ -96,9 +96,18 @@
 | Verification standards | `.agents/rules/verification.md` |
 | Security & secret hygiene | `.agents/rules/security-hygiene.md` |
 | Documentation & content standards (theme-neutrality) | `.agents/rules/documentation-standards.md` |
+| Shell command rules | `.agents/rules/shell-commands.md` |
+| Large task handling rules | `.agents/rules/large-task-handling.md` |
+| Background task execution rules | `.agents/rules/background-tasks.md` |
+| Session & context management rules | `.agents/rules/session-management.md` |
 | Clone organization repos | `.agents/skills/clone-org-repos.md` |
 | Clone all org repos (scripts) | `clone-org-repos-windows.ps1`, `clone-org-repos-linux.sh`, `clone-org-repos-macos.sh` |
 | Compile theme CSS (dart-sass) | `.agents/skills/sass-compile.md` |
+| Task decomposition & incremental steps | `.agents/skills/task-decomposition.md` |
+| Large session & context management | `.agents/skills/large-session-management.md` |
+| Shell command management (Windows/PowerShell) | `.agents/skills/shell-command-management.md` |
+| Safe file editing (paths, EOL, exact match) | `.agents/skills/file-editing.md` |
+| Test execution without blocking | `.agents/skills/test-execution.md` |
 | helix-docs theme knowledge / repair | `.agents/skills/helix-theme.md` |
 | Project artwork generation | `.agents/skills/project-artwork-generation.md` |
 | Template: Project artwork (16:9) | `.agents/templates/project-artwork-template.svg` |
@@ -133,3 +142,5 @@
    catalogue/store.
 5. Confirm which exact git operations, if any, the user has explicitly authorized in the
    current conversation — and for which repository.
+6. If this is a large/multi-step task, load `task-decomposition` skill and follow `large-task-handling.md`. If session may be long, load `large-session-management` skill and follow `session-management.md`. Follow `background-tasks.md` for any long-running commands.
+7. For any shell command, follow `.agents/skills/shell-command-management.md` (quote paths with spaces, set `workdir` instead of `cd`, PowerShell-native tools only). For file edits, follow `.agents/skills/file-editing.md` (read first, exact match, preserve EOL) — never edit files via the shell.

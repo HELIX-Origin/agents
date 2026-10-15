@@ -18,6 +18,40 @@
 
 ## 🎯 Active Sprints
 
+### 🚀 [Ecosystem] Sprint: Agent Workflow Skills & Rules Expansion
+- **Project Identifier:** `[Ecosystem]`
+- **Repository Path:** Workspace Root (`D:\Projects\GitHub\HELIX Origin`)
+- **Target Component:** `.agents/skills/`, `.agents/rules/`, `AGENTS.md`
+
+```mermaid
+flowchart TD
+    E1["[Ecosystem] Workflow skills: task-decomposition / large-session / test-execution"] --> E2["[Ecosystem] Workflow rules: large-task / background-tasks / session-management"]
+    E2 --> E3["[Ecosystem] Shell command skill: paths, quoting, background, retry budget"]
+    E3 --> E4["[Ecosystem] File editing skill: exact match, EOL, no shell edits"]
+    E4 --> E5["[Ecosystem] Rule refresh: shell-commands.md cross-references"]
+    E5 --> E6["[Ecosystem] AGENTS.md registration + session checklist step 7"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[Ecosystem] Workflow skills & rules**
+   - Skills: `task-decomposition.md`, `large-session-management.md`, `test-execution.md`.
+   - Rules: `large-task-handling.md`, `background-tasks.md`, `session-management.md`.
+2. **[Ecosystem] Shell command management skill** — `shell-command-management.md`:
+   - PowerShell contract, path quoting, `workdir` over `cd`, Unix→PowerShell table, no `&&`,
+     `git -C`, background execution, output discipline, and a 2-retry budget.
+3. **[Ecosystem] File editing skill** — `file-editing.md`:
+   - Read-before-edit, exact/unique `oldString`, `replaceAll`, EOL preservation, no shell edits,
+     and a 2-retry escalation (re-read → narrow anchor → `write`).
+4. **[Ecosystem] Registration & rule refresh**
+   - Expand `shell-commands.md`; update `AGENTS.md` quick-reference + session checklist step 7.
+5. **[Ecosystem] Remaining**
+   - Commit + push awaiting explicit per-repository authorization.
+
+> **Status (2026-10-14):** Authored and registered; uncommitted pending user git authorization.
+
+---
+
 ### 🚀 [Steam-Vault] Sprint 3: Developer Tooling — Logged Command Scripts & Metadata Cache Warming
 - **Project Identifier:** `[Steam-Vault]`
 - **Repository Path:** `projects/Steam-Vault`
