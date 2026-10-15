@@ -53,7 +53,12 @@
 - "basically it needs to support both .env files and github secrets"
 - "the build-index command should be build:index, populate can be populate:games, etc, keeping a standard where beneficial is useful for the commands."
 - "this means removing the build-index, buld, and populate commands since we don't need duplicate commands."
-- "alos test and validate seem to be running the same command, so we should check that and if they are just drop the test command."
+- "ok. one slight issue in our steam-vault-catalogue repo. it's only populating the info for windows. each game file needs to info for windows, macos, and linux. so all supported platforms must be included in each game json file. we need to fix this in our populations cripts and also update all existing game json files to fix them as well."
+- "note, not many metadata providers support roms or emulators. so we need metadata providers for console games as well as retro console games. this should fill in for that lack of info. Both the Steam Vault and Steam Vault Catalogue projects need this update."
+- "the platform integration needs to be able to determine console platforms too, such as GameCube, Wii, Playstation, etc. this is necessary for emulated games."
+- "note: emulator is not a valid platform in the per game json files, that is more of a software category."
+- "our game json files have property names that aren't allowed. we need to fix our json files to ensure we are using the correct format and keys"
+- "we have incorrect types in our game json files in the catalogue repo"
 
 **Implementation checklist:**
 - [x] `[Steam-Vault-Catalog]` **Repository initialization & schema** — created `HELIX-Origin/Steam-Vault-Catalog` with MIT license, `.gitattributes` (LF), `.gitignore` (ignoring `dist/` and `node_modules/`), and formal JSON schema in `schema/game.schema.json`.
@@ -65,6 +70,12 @@
 - [x] `[Steam-Vault-Catalog]` **Documentation update** — updated `README.md` and `CONTRIBUTING.md` with accurate architecture, `.env` setup, updated command names, and live game counter.
 - [x] `[Steam-Vault-Catalog]` **Automated CI SemVer release pipeline** (`.github/workflows/populate-catalog.yml`, `build-release.yml`) — automated patch bumping (`npm version patch`), CHANGELOG/README updating, git push authenticated via `PAT_TOKEN`, git release tagging, and release assets generation (`catalog.db.gz`, `index.json`, `index.json.gz`).
 - [x] `[Steam-Vault]` **Offline SQLite game catalog & platform detector fixes** — implemented local SQLite game catalog in `cache.rs`, Roman numeral normalization, passive Windows uninstall registry metadata ingestion (eliminating duplicates), EA working directory `start_dir` fix, itch.io cache blacklist and multi-engine support, emulator config-based ROM discovery, and Settings UI catalog synchronization.
+- [x] `[Steam-Vault-Catalog]` **Multi-platform & console platforms taxonomy** — updated all 729 game JSON files to include supported OS platforms (`windows`, `macos`, `linux`) and specific console hardware (`PlayStation`, `PlayStation 2`, `GameCube`, `Wii`, `Nintendo 64`, `Super Nintendo`, `Game Boy Advance`, `Genesis`, `Dreamcast`, etc.), while strictly excluding software categories like `"emulator"`.
+- [x] `[Steam-Vault-Catalog]` **Game JSON type & schema validation fix** — resolved type violation where 205 visual novel files had string VNDB IDs (e.g. `"v239"`) in `externalIds.igdbId` (which expects an integer or null); preserved VNDB IDs in `externalIds.vndbId` and reset `externalIds.igdbId` to null; updated `scripts/populate.js` and `scripts/validate.js` to strictly enforce type safety; verified `npm run validate` passes with 0 errors across all 729 game files.
+- [x] `[Steam-Vault]` **Console platform identification & UI badge** — implemented `determine_console_platform` in `src-tauri/src/platforms/detectors.rs` resolving console platforms from ROM extensions and emulator paths, exposed `console: Option<String>` in `PlatformGame`, and surfaced console badges in `src/routes/platforms/+page.svelte`.
+- [x] `[Steam-Vault]` **Wikipedia video game & console metadata provider** — implemented keyless MediaWiki wikitext infobox parser in `src-tauri/src/metadata/extra.rs` resolving developer, publisher, genre, release year, console platforms, and summaries; wired into `ensure_game_metadata` for console shortcuts and exposed via `wikipedia_game_lookup` Tauri command.
+- [x] `[Steam-Vault]` **Console platform shortcut tags** — updated `shortcuts::NewShortcut` and `shortcuts::build_fields` to write console platforms into binary `shortcuts.vdf` `tags`, and updated `shortcuts::load_shortcuts` to load tags into `game.collections` for automatic categorization.
+- [x] `[Steam-Vault]` **Catalog seed database synchronization** — compiled `dist/catalog.db.gz` from 729 game files in `Steam-Vault-Catalog` and synchronized it to `projects/Steam-Vault/src-tauri/src/catalog_seed.bin`.
 
 ---
 

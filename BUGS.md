@@ -231,6 +231,32 @@
   2. Authenticated git remote via `PAT_TOKEN` with write permissions.
   3. Added automated SemVer patch version bumping in `package.json`, automated `CHANGELOG.md` and `README.md` game count updates, and automated git tagging (`v1.0.X`) which triggers the release workflow.
 
+#### [Steam-Vault-Catalog] 2026-10-15 — VNDB String IDs Written into igdbId Integer Schema Field
+- **Project Identifier:** `[Steam-Vault-Catalog]`
+- **Repository Path:** `projects/Steam-Vault-Catalog`
+- **Severity**: 🟠 High (schema type violation)
+- **Status**: ✅ resolved — verified across all 729 files via `npm run validate`
+- **Scope:** `scripts/populate.js`, `scripts/validate.js`, `games/*.json`
+- **Reported Issue**: Game JSON files failed schema validation with type errors (`igdbId must be integer or null`) because string VNDB IDs (such as `"v239"`) were being populated into `externalIds.igdbId`.
+- **Root Cause**: `scripts/populate.js` used `igdbId: data.id || null` where `data.id` was a string for VNDB API records.
+- **Resolution**:
+  1. Migrated all 205 affected game JSON files in `games/`: preserved VNDB IDs in `externalIds.vndbId` and reset `externalIds.igdbId` to `null`.
+  2. Patched `scripts/populate.js` line 664 to enforce `(typeof data.id === "number" && Number.isInteger(data.id))` before assigning to `igdbId`, keeping `vndbId` as a string.
+  3. Extended `scripts/validate.js` to enforce strict type assertions matching `schema/game.schema.json`.
+
+#### [Steam-Vault-Catalog] 2026-10-15 — Single-Platform Incompleteness & "emulator" Category in Game Platforms Array
+- **Project Identifier:** `[Steam-Vault-Catalog]`
+- **Repository Path:** `projects/Steam-Vault-Catalog`
+- **Severity**: 🟡 Medium (data taxonomy incompleteness)
+- **Status**: ✅ resolved — verified across all 729 files
+- **Scope:** `schema/game.schema.json`, `scripts/populate.js`, `scripts/validate.js`, `games/*.json`
+- **Reported Issue**: Games were only populating `"windows"` in the `platforms` array despite being released on macOS, Linux, or classic consoles. In addition, `"emulator"` was incorrectly used as a platform in some records when it represents a software category.
+- **Root Cause**: The catalog crawler defaulted to single-platform tags without inspecting multi-platform release arrays or console hardware categories, and lacked validation against software categories in `platforms`.
+- **Resolution**:
+  1. Updated all 729 game JSON files to enumerate all supported operating systems (`windows`, `macos`, `linux`) and specific console hardware (`PlayStation`, `PlayStation 2`, `GameCube`, `Wii`, `Nintendo 64`, `Super Nintendo`, `Game Boy Advance`, `Genesis`, `Dreamcast`, etc.).
+  2. Strictly prohibited `"emulator"` from the `platforms` array in `schema/game.schema.json` and `scripts/validate.js`.
+  3. Added cross-platform operating system population logic in `scripts/populate.js`.
+
 ---
 
 ### [Steam-Vault] (projects/Steam-Vault)

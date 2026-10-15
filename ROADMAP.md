@@ -49,7 +49,7 @@ flowchart TB
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
 | **[Hentai-Senpai-Multi-DE-Theme]** | `projects/Hentai-Senpai-Multi-DE-Theme` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Hentai-Senpai-Multi-DE-Theme/releases/tag/v1.0.0) | ✅ Complete | Nord GTK multi-desktop theme installer & remote docs |
 | **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Steam-Vault/releases/tag/v1.0.0) | ✅ Shipped | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
-| **[Steam-Vault-Catalog]** | `projects/Steam-Vault-Catalog` | SemVer | [v1.0.3](https://github.com/HELIX-Origin/Steam-Vault-Catalog/releases/tag/v1.0.3) | 🚀 Active | Community open game catalog, metadata crawler & compressed SQLite index |
+| **[Steam-Vault-Catalog]** | `projects/Steam-Vault-Catalog` | SemVer | [v1.0.5](https://github.com/HELIX-Origin/Steam-Vault-Catalog/releases/tag/v1.0.5) | 🚀 Active | Community open game catalog, metadata crawler & compressed SQLite index |
 | **[FFXIV-Config]** | `projects/FFXIV-Config` | Rolling Sprints | 8.x HUD/Macro Config | ✅ Complete | FFXIV HUD, hotbar & macro configuration suite with remote Jekyll docs |
 
 ---
