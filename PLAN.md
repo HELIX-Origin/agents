@@ -18,6 +18,58 @@
 
 ## 🎯 Active Sprints
 
+### 🚀 [Steam-Vault-Catalog] Sprint 8: Community Game Catalog Infrastructure & Provider Crawler
+- **Project Identifiers:** `[Steam-Vault-Catalog]` (`projects/Steam-Vault-Catalog`), `[Steam-Vault]` (`projects/Steam-Vault`)
+- **Target Components:** `scripts/populate.js`, `scripts/build-index.js`, `schema/game.schema.json`, `package.json`, `README.md`, `.github/workflows/*`; `src-tauri/src/cache.rs`
+
+```mermaid
+flowchart TD
+    S8_Schema["[Catalog] JSON schema & repo initialization"] --> S8_Crawler["[Catalog] Multi-provider crawler (IGDB, SGDB, Steam, VNDB)"]
+    S8_Crawler --> S8_Env["[Catalog] Zero-dep .env & GitHub secrets loader"]
+    S8_Env --> S8_Vndb["[Catalog] Fix VNDB query (developers.name)"]
+    S8_Vndb --> S8_Scripts["[Catalog] Standardize scripts (build:index, populate:games, validate)"]
+    S8_Scripts --> S8_CI["[Catalog] Automated SemVer bump & release pipeline"]
+    S8_CI --> S8_SV["[Steam-Vault] Offline SQLite catalog & sync command"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[Steam-Vault-Catalog] W.30a — Repo initialization & schema**: formal JSON schema (`schema/game.schema.json`), MIT license, `.gitattributes` (LF), and `.gitignore` (ignoring `dist/` and `node_modules/`).
+2. **[Steam-Vault-Catalog] W.30b — Automated multi-provider crawler & .env support**: pagination crawler (`scripts/populate.js` via `npm run populate:games`) querying IGDB, SteamGridDB, Steam Store API, and VNDB Kana API with state persistence in `scripts/.crawler-state.json`; added `loadEnv()` supporting local `.env` files while cleanly preserving GitHub Actions repository secrets in CI.
+3. **[Steam-Vault-Catalog] W.30c — Script standardization & de-duplication**: standardized npm scripts to canonical colon-scoped names (`build:index`, `populate:games`, `validate`), dropped duplicate aliases (`generate`, `populate`, `build`, `build-index`, `test`), and deleted obsolete `scripts/generate.js`.
+4. **[Steam-Vault-Catalog] W.30d — Repository metadata & documentation**: configured GitHub description and 12 topics via `gh repo edit`; updated `README.md` and `CONTRIBUTING.md` with accurate architecture, `.env` setup, and live game counters.
+5. **[Steam-Vault-Catalog] W.30e — Automated CI SemVer release pipeline**: `.github/workflows/populate-catalog.yml` and `build-release.yml` with automated patch bumping, CHANGELOG/README updating, git push authenticated via `PAT_TOKEN`, git release tagging, and release assets generation (`catalog.db.gz`, `index.json`, `index.json.gz`).
+6. **[Steam-Vault] W.30f — Offline SQLite game catalog & platform detector fixes**: local SQLite game catalog in `cache.rs`, Roman numeral normalization, passive Windows uninstall registry metadata ingestion (eliminating duplicates), EA working directory `start_dir` fix, itch.io cache blacklist and multi-engine support, emulator config-based ROM discovery, and Settings UI catalog synchronization.
+
+> **Status:** In progress — Core catalog infrastructure, crawler, .env loader, script standardization, and repository metadata completed; remote commit & population batch runs pending.
+
+---
+
+### 🚀 [Multi-Project] Sprint 7: Multi-Platform Tauri v2 CI Release Workflows (Steam-Vault & NH-Reader)
+- **Project Identifiers:** `[Steam-Vault]` (`projects/Steam-Vault`), `[NH-Reader]` (`projects/NH-Reader`)
+- **Target Components:** `.github/workflows/release.yml`, `.github/releases/*.md`, `.agents/rules/release-notes.md`
+
+```mermaid
+flowchart TD
+    S7_Notes["[Steam-Vault] Format v1.0.0 release notes (.agents/rules/release-notes.md)"] --> S7_SV_WF["[Steam-Vault] 2-stage release workflow (create-release + matrix build/upload)"]
+    S7_SV_WF --> S7_Fix_Deps["[Steam-Vault] Fix Ubuntu 22.04 CI deps (libayatana-appindicator3-dev)"]
+    S7_Fix_Deps --> S7_NH_WF["[NH-Reader] 2-stage desktop release workflow (skip signing, no mobile)"]
+    S7_NH_WF --> S7_NH_Notes["[NH-Reader] Format v0.7.5 release notes"]
+    S7_NH_Notes --> S7_Gate["[Multi-Project] Verification & remote push"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[Steam-Vault] W.29a — Release notes formatting**: create `.github/releases/v1.0.0.md` strictly following `.agents/rules/release-notes.md` standard structure (Highlights, Key Improvements, Changed, Fixed, Compatibility Matrix, Verification, Changes & Commits).
+2. **[Steam-Vault] W.29b — Two-stage release workflow & dependency fix**: re-architect `.github/workflows/release.yml` with `create-release` (creates/updates release with full notes via `PAT_TOKEN`) and `build-and-upload` (matrix: Windows, macOS universal, Ubuntu 22.04); replace missing `libappindicator3-dev` with `libayatana-appindicator3-dev` and `libwebkit2gtk-4.1-dev`.
+3. **[NH-Reader] W.29c — Two-stage release workflow (desktop only, unsigned)**: create `.github/workflows/release.yml` supporting Windows (`.exe`/`.msi`), macOS (universal `.dmg`), and Linux (`.deb`/`.AppImage`), skipping optional local signing step and omitting Android/iOS.
+4. **[NH-Reader] W.29d — Release notes formatting**: create `.github/releases/v0.7.5.md` strictly conforming to release notes standards.
+5. **[Workspace] W.29e — Update release notes taxonomy**: update `.agents/rules/release-notes.md` table to document prebuilt desktop installer assets for Steam-Vault and NH-Reader.
+
+> **Status:** In progress — Workflows, release notes, and taxonomy rules authored; local builds and verification in progress.
+
+---
+
 ### 🚀 [Steam-Vault] Sprint 6: v1.0 Completion — Platform, Dynamic Collections, SQLite Cache, M5 UI & Release
 - **Project Identifier:** `[Steam-Vault]`
 - **Repository Path:** `projects/Steam-Vault`

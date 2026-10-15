@@ -25,6 +25,71 @@
 
 ## 🔥 Active Workstreams
 
+### 🎯 [Multi-Project] Workstream W.31: FFXIV-Config vCard Home Pattern & Portal Showcase Integration
+- **Project Identifiers:** `[FFXIV-Config]` (`projects/FFXIV-Config`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`)
+- **Target Components:** `projects/FFXIV-Config/docs/index.md`, `projects/FFXIV-Config/docs/assets/images/ffxiv-config.svg`, `projects/helix-origin.github.io/docs/index.md`, `projects/helix-origin.github.io/README.md`, `projects/helix-origin.github.io/docs/assets/images/ffxiv-config.svg`
+
+**Locked user directives:**
+- "Our FFXIV-Config repo docs didn't use the custom vcard layout for the home page. we need to fix that. we also need to add it to the primary docs site."
+
+**Implementation checklist:**
+- [x] `[FFXIV-Config]` **Refactor home page to vCard pattern** — restructured `docs/index.md` strictly according to `helix-docs` vCard specification (`_docs/home-page.md`) with 5 numbered sections (`01 Overview`, `02 Features & Hotbar Architecture`, `03 Supported Jobs`, `04 Documentation Directory`, `05 Credits & Disclaimer`) and boxed counters.
+- [x] `[FFXIV-Config]` **Vector artwork generation** — authored 16:9 widescreen SVG artwork (`ffxiv-config.svg`) following `.agents/rules/project-artwork.md` standards with meteor/crystal emblem and gold/cyan palette.
+- [x] `[helix-origin.github.io]` **Portal showcase card integration** — added FFXIV Config project card with 16:9 artwork to `docs/index.md` project grid and linked repository in `README.md`.
+
+---
+
+### 🎯 [Steam-Vault-Catalog] Workstream W.30: Community Game Catalog Infrastructure & High-Precision Platform Discovery
+- **Project Identifiers:** `[Steam-Vault-Catalog]` (`projects/Steam-Vault-Catalog`), `[Steam-Vault]` (`projects/Steam-Vault`)
+- **Target Components:** `scripts/populate.js`, `scripts/build-index.js`, `schema/game.schema.json`, `package.json`, `README.md`, `.github/workflows/*`; `src-tauri/src/cache.rs`, `src-tauri/src/commands.rs`, `src-tauri/src/platforms/detectors.rs`
+
+**Locked user directives:**
+- "ah slight issue in the steam vault catalogue rpeo, the workflow didn't add any new game json files to the repo. we may need a workflow for populating the repo with game json files."
+- "it also got the tag and release versions wrong. actual semantic versioning is important."
+- "ah the populate workflow is a bit too manual it needs to populate the repo with all games from all supported metadata providers."
+- "the games folder is where the json files are stored not dist, so it should not be psushing the dist folder since that is local only."
+- "ok. the steam-vault-catalogue repo needs an update. it has outdated documentation, it needs it's description and topics set, and it needs to have it's games populated a few times to get a decent catalogue built up."
+- "also the poplate script isn't accepting .env files and i'm not sure if the generate script is needed since we have the populate script."
+- "basically it needs to support both .env files and github secrets"
+- "the build-index command should be build:index, populate can be populate:games, etc, keeping a standard where beneficial is useful for the commands."
+- "this means removing the build-index, buld, and populate commands since we don't need duplicate commands."
+- "alos test and validate seem to be running the same command, so we should check that and if they are just drop the test command."
+
+**Implementation checklist:**
+- [x] `[Steam-Vault-Catalog]` **Repository initialization & schema** — created `HELIX-Origin/Steam-Vault-Catalog` with MIT license, `.gitattributes` (LF), `.gitignore` (ignoring `dist/` and `node_modules/`), and formal JSON schema in `schema/game.schema.json`.
+- [x] `[Steam-Vault-Catalog]` **Automated multi-provider crawler** (`scripts/populate.js`) — automated pagination crawler for IGDB (`IGDB_CLIENT_ID` & `IGDB_CLIENT_SECRET`), SteamGridDB (`STEAMGRIDDB_API_KEY`), Steam Storefront API, and VNDB Kana API with state persistence in `scripts/.crawler-state.json`.
+- [x] `[Steam-Vault-Catalog]` **Zero-dependency .env & GitHub secrets loader** — added `loadEnv()` supporting local `.env` files while cleanly preserving GitHub Actions repository secrets in CI.
+- [x] `[Steam-Vault-Catalog]` **VNDB Kana API query fix** — fixed query fields from `dev.name` to `developers.name` and updated data extraction for `developers`.
+- [x] `[Steam-Vault-Catalog]` **Script command standardization & de-duplication** — standardized npm scripts to canonical colon-scoped names (`build:index`, `populate:games`, `validate`), dropped duplicate aliases (`generate`, `populate`, `build`, `build-index`, `test`), and deleted obsolete `scripts/generate.js`.
+- [x] `[Steam-Vault-Catalog]` **Repository metadata configuration** — set GitHub repository description and 12 relevant topics (`steam-vault`, `game-catalog`, `metadata`, `pc-gaming`, `steam`, `gog`, `epic-games`, `itch-io`, `ea-app`, `emulators`, `helix-origin`, `game-metadata`) via `gh repo edit`.
+- [x] `[Steam-Vault-Catalog]` **Documentation update** — updated `README.md` and `CONTRIBUTING.md` with accurate architecture, `.env` setup, updated command names, and live game counter.
+- [x] `[Steam-Vault-Catalog]` **Automated CI SemVer release pipeline** (`.github/workflows/populate-catalog.yml`, `build-release.yml`) — automated patch bumping (`npm version patch`), CHANGELOG/README updating, git push authenticated via `PAT_TOKEN`, git release tagging, and release assets generation (`catalog.db.gz`, `index.json`, `index.json.gz`).
+- [x] `[Steam-Vault]` **Offline SQLite game catalog & platform detector fixes** — implemented local SQLite game catalog in `cache.rs`, Roman numeral normalization, passive Windows uninstall registry metadata ingestion (eliminating duplicates), EA working directory `start_dir` fix, itch.io cache blacklist and multi-engine support, emulator config-based ROM discovery, and Settings UI catalog synchronization.
+
+---
+
+### 🎯 [Multi-Project] Workstream W.29: Multi-Platform Tauri v2 CI Release Workflows (Steam-Vault & NH-Reader)
+- **Project Identifiers:** `[Steam-Vault]` (`projects/Steam-Vault`), `[NH-Reader]` (`projects/NH-Reader`)
+- **Target Components:** `.github/workflows/release.yml`, `.github/releases/*.md`
+
+**Locked user directives:**
+- "the release workflow failed. you should research how to make a proper release workflow for a tauri v2 app when making the release workflow"
+- "we also need the release actually made so the workflow can attatch the compiled installers to it."
+- "if the release workflow is going to create the release, it needs to follow our release notes format standards."
+- "NH-Reader will need a proper release workflow as well. hwoever NH-Reader has a optional singing step for local builds that will be skipped in the release workflow, and android and ios builds won't be included in the release workflow in NH-Reader either."
+
+**Implementation checklist:**
+- [x] `[Steam-Vault]` **Release notes standard compliance** — create `.github/releases/v1.0.0.md` strictly following `.agents/rules/release-notes.md` (Highlights, Key Improvements, Changed, Fixed, Compatibility Matrix, Verification, Changes & Commits).
+- [x] `[Steam-Vault]` **Two-stage release workflow architecture** — re-architect `.github/workflows/release.yml` into separate `create-release` (creates/updates release with full notes via `PAT_TOKEN`) and `build-and-upload` (matrix: Windows, macOS universal, Ubuntu 22.04 with `releaseId` and `tagName`).
+- [x] `[Steam-Vault]` **Ubuntu 22.04 CI dependency fix** — replace missing `libappindicator3-dev` with `libayatana-appindicator3-dev` and `libwebkit2gtk-4.1-dev` (eliminating exit code 100).
+- [x] `[NH-Reader]` **Release notes standard compliance** — create `.github/releases/v0.7.5.md` strictly following `.agents/rules/release-notes.md` standard structure.
+- [x] `[NH-Reader]` **Two-stage release workflow architecture** — create `.github/workflows/release.yml` with `create-release` (release notes from `.github/releases/v0.7.5.md`) and desktop matrix `build-and-upload` (Windows, macOS universal, Ubuntu 22.04).
+- [x] `[NH-Reader]` **Local signing and mobile excluded** — release workflow omits `scripts/sign.mjs` (signing stays local-only opt-in) and excludes Android/iOS from the build matrix.
+- [x] `[Workspace]` **Update release notes taxonomy rule** — update `.agents/rules/release-notes.md` table to document prebuilt desktop installer assets for Steam-Vault and NH-Reader.
+- [ ] `[Multi-Project]` **Verification & push** — verify builds, commit, and push changes to origin.
+
+---
+
 ### 🎯 [Steam-Vault] Workstream W.24: Platform & Non-Steam Enhancements
 - **Project Identifier:** `[Steam-Vault]`
 - **Repository Path:** `projects/Steam-Vault`

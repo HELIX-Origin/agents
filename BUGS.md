@@ -163,6 +163,78 @@
 
 ### [Steam-Vault] (projects/Steam-Vault)
 
+#### [Steam-Vault] 2026-10-15 — Windows Uninstall Registry Scan Ingesting Uninstallers & Duplicating Library Titles
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Severity**: 🟠 High (library pollution & duplicates)
+- **Status**: ✅ resolved — verified across platform scan tests
+- **Scope**: `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/cache.rs`, `src-tauri/src/commands.rs`
+- **Reported Issue**: Platform scan was picking up uninstaller binaries (`unins000.exe`, `Uninstall.exe`, setup wrappers) and duplicating games across GOG, Epic, and other storefronts.
+- **Root Cause**: `detect_registry_based()` directly enumerated Windows Uninstall registry entries as platform games, using `DisplayIcon` and `UninstallString` which frequently point to uninstallation utilities.
+- **Resolution**:
+  1. Removed `detect_registry_based()` from active game scans entirely.
+  2. Implemented `ingest_uninstall_metadata()` in `cache.rs`, using the uninstall registry purely as passive metadata (indexing clean game titles and publishers into `game_catalog` without creating platform games).
+  3. Added real library directory scanners for Ubisoft Connect, Battle.net, and Rockstar Games.
+
+#### [Steam-Vault] 2026-10-15 — EA Games Subfolder Working Directory & Odd Entry Discovery
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Severity**: 🟠 High (launch failure & folder pollution)
+- **Status**: ✅ resolved
+- **Scope**: `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/commands.rs`
+- **Reported Issue**: EA game scan surfaced weird entries (`530c1147...`, `InstallData`, `Logs`, `PLR`) and broke working directories for nested binaries (e.g. Dragon Age II in `bin_ship/DragonAge2.exe`).
+- **Root Cause**: EA directory search did not score binaries by directory depth, and shortcut creation defaulted working directory (`start_dir`) to the root install folder instead of the binary's immediate parent directory.
+- **Resolution**:
+  1. Blacklisted EA metadata and log directories (`InstallData`, `Logs`, `PLR`, `__Installer`, `Support`).
+  2. Filtered out hex/hash-named directories.
+  3. Scored candidate binaries prioritizing deep main game executables over root setup wrappers.
+  4. Fixed `import_platform_games` so `start_dir` always prioritizes the executable's immediate directory (`parent()`).
+
+#### [Steam-Vault] 2026-10-15 — Itch.io Electron Cache/Internal Directory Ingestion & Indie Engine Support
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Severity**: 🟡 Medium (false positives & missing indie titles)
+- **Status**: ✅ resolved
+- **Scope**: `src-tauri/src/platforms/detectors.rs`
+- **Reported Issue**: Itch.io scanning produced false positive entries from Electron cache and internal folders (`Code Cache`, `db`, `Local Storage`, `logs`), while missing games built on indie engines with non-standard entry points.
+- **Root Cause**: Recursive file walking in itch folders traversed cache directories, and binary filters only checked standard Windows PE executables.
+- **Resolution**:
+  1. Blacklisted Electron, Chromium, and framework cache folders (`Code Cache`, `GPUCache`, `blob_storage`, `Local Storage`, `Session Storage`, `IndexedDB`, `logs`, `cache`).
+  2. Implemented multi-engine detection for HTML5 (`index.html`, `package.json`), NW.js, Ren'Py (`*.rpy`, `game/*.rpa`), RPG Maker (`Game.rpgproject`, `data/System.json`), Godot (`project.godot`, `*.pck`), Love2D (`*.love`, `main.lua`), Java (`*.jar`), Python (`*.py`), and custom shell/batch wrappers.
+
+#### [Steam-Vault] 2026-10-15 — Emulator System/BIOS Files False Positives & Automatic Config-Based ROM Discovery
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Severity**: 🟡 Medium (spurious ROM detection)
+- **Status**: ✅ resolved
+- **Scope**: `src-tauri/src/platforms/detectors.rs`
+- **Reported Issue**: Emulator scans picked up internal files, BIOS, and DSP dumps (`codehandler`, `dsp coef`, `misc`) as games, while requiring manual ROM path entry.
+- **Root Cause**: File extension matching for `.bin`, `.elf`, `.iso` without directory and file stem blacklisting, plus lack of emulator configuration parsing.
+- **Resolution**:
+  1. Blacklisted BIOS and system filenames (`dsp_coef*`, `codehandler*`, `IPL.BIN`, `bios*`, `firmware*`, `system*`, `misc*`).
+  2. Implemented config-based ROM library path auto-detection from emulator configuration files for Dolphin (`Dolphin.ini`), PCSX2 (`PCSX2.ini`), DuckStation (`settings.ini`), Ryujinx (`Config.json`), Cemu (`settings.xml`), and RetroArch (`retroarch.cfg`).
+
+---
+
+### [Steam-Vault-Catalog] (projects/Steam-Vault-Catalog)
+
+#### [Steam-Vault-Catalog] 2026-10-15 — CI Population Workflow Git Tracking of Local Dist & SemVer Tagging
+- **Project Identifier:** `[Steam-Vault-Catalog]`
+- **Repository Path:** `projects/Steam-Vault-Catalog`
+- **Severity**: 🟠 High (workflow failure)
+- **Status**: ✅ resolved — verified in CI run `d6c70b2`
+- **Scope**: `.github/workflows/populate-catalog.yml`, `scripts/build-index.js`, `.gitignore`
+- **Reported Issue**: The catalog population workflow failed trying to `git add dist/`, which is git-ignored as a build-only directory. Additionally, release tagging and documentation updates did not follow proper SemVer.
+- **Root Cause**: `populate-catalog.yml` attempted to commit `dist/`, while GitHub Actions checkout lacked push credentials and automated release version bumping.
+- **Resolution**:
+  1. Removed `dist/` from git tracking and workflow commit steps (release assets are uploaded directly to GitHub Releases by `build-release.yml`).
+  2. Authenticated git remote via `PAT_TOKEN` with write permissions.
+  3. Added automated SemVer patch version bumping in `package.json`, automated `CHANGELOG.md` and `README.md` game count updates, and automated git tagging (`v1.0.X`) which triggers the release workflow.
+
+---
+
+### [Steam-Vault] (projects/Steam-Vault)
+
 #### [Steam-Vault] 2026-10-14 — Missing Developer/Publisher/Metadata Collections for Non-Steam Shortcuts & Multi-Entity Strings
 - **Project Identifier:** `[Steam-Vault]`
 - **Repository Path:** `projects/Steam-Vault`

@@ -1,4 +1,4 @@
-﻿# Rule: Release Notes Standards
+# Rule: Release Notes Standards
 
 **Status:** BINDING.
 **Scope:** All repositories under `` (except forbidden paths).
@@ -18,7 +18,8 @@ Projects in this workspace do not all use Semantic Versioning (`vX.Y.Z`). Agents
 
 | Repository / Project | Versioning Type | Version / Tag Identifier Pattern | Prebuilt Release Assets Published? | Primary Tracking Docs |
 |---|---|---|---|---|
-| **NH-Reader** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.7.5`) | ❌ No (Local build & sign commands only) | `CHANGELOG.md`, `ROADMAP.md` |
+| **NH-Reader** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.7.5`) | ✅ Yes (Windows, macOS, Linux desktop installers; unsigned) | `CHANGELOG.md`, `ROADMAP.md` |
+| **Steam-Vault** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ✅ Yes (Windows, macOS, Linux desktop installers) | `CHANGELOG.md`, `ROADMAP.md` |
 | **Windhawk-Themes** | **Milestone-Based Releases** | `M.<NN>` or `M.<NN><suffix>` (e.g. `M.01`, `M.02b`) | ❌ No (Zero attached assets; git tag only) | `ROADMAP.md`, `PLAN.md`, `CHANGELOG.md` |
 | **Hentai-Senpai-Multi-DE-Theme** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.1`) | ❌ No (Source git repository + install script) | `CHANGELOG.md` |
 | **helix-docs** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.1.0`) | ❌ No (Remote Jekyll theme & Ruby gem) | `changelog.md` |
