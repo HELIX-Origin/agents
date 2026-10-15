@@ -46,9 +46,9 @@ flowchart TD
 4. **[Ecosystem] Registration & rule refresh**
    - Expand `shell-commands.md`; update `AGENTS.md` quick-reference + session checklist step 7.
 5. **[Ecosystem] Remaining**
-   - Commit + push awaiting explicit per-repository authorization.
+   - None — committed and pushed (`76feb66`).
 
-> **Status (2026-10-14):** Authored and registered; uncommitted pending user git authorization.
+> **Status (2026-10-14):** Authored, registered, committed, and pushed (`76feb66`).
 
 ---
 
