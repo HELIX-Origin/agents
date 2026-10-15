@@ -1,6 +1,7 @@
 # Ignored local projects workspace
 projects/
 scratch/
+temp/
 
 # OS and Editor metadata
 .DS_Store

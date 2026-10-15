@@ -25,7 +25,8 @@
 
 ```mermaid
 flowchart TD
-    S6_Platform["[Steam-Vault] W.24 Platform & non-Steam enhancements"] --> S6_Dyn["[Steam-Vault] W.25 Dynamic (filter-spec) collections"]
+    S6_Platform["[Steam-Vault] W.24 Platform & non-Steam enhancements"] --> S6_I18n["[Steam-Vault] W.24b Hand-rolled i18n (30 Steam languages)"]
+    S6_I18n --> S6_Dyn["[Steam-Vault] W.25 Dynamic (filter-spec) collections"]
     S6_Dyn --> S6_Sql["[Steam-Vault] W.26 SQLite metadata cache (rusqlite bundled)"]
     S6_Sql --> S6_Ui["[Steam-Vault] W.27 M5 glassmorphism UI pass (features frozen)"]
     S6_Ui --> S6_Rel["[Steam-Vault] W.28 v1.0 release packaging"]
@@ -33,15 +34,16 @@ flowchart TD
 
 #### 📝 Execution Tasks
 
-1. **[Steam-Vault] W.24 — Platform & non-Steam enhancements**: storefront launch URIs for Epic/itch written as shortcut launch options; per-game platform override command + UI; Microsoft Store / Xbox Game Pass detection.
-2. **[Steam-Vault] W.25 — Dynamic (filter-spec) collections**: persist named Allowed/Required/Excluded specs; save/apply/re-apply as smart collections; Organize + Collections UI.
-3. **[Steam-Vault] W.26 — SQLite metadata cache**: add `rusqlite` (`bundled`); schema + get/set/migrate; replace the JSON metadata cache with a one-time JSON import.
-4. **[Steam-Vault] W.27 — M5 glassmorphism UI pass**: design tokens and a full modern dark glass treatment across every view (done once, after features freeze).
-5. **[Steam-Vault] W.28 — v1.0 release packaging**: HELIX squircle branding artwork (app icon + repo social preview), GitHub issue templates, release notes, CHANGELOG v1.0.0, first SemVer tag/release.
+1. **[Steam-Vault] W.24 — Platform & non-Steam enhancements**: storefront launch URIs for Epic/itch written as shortcut launch options; per-game platform override command + UI; Microsoft Store / Xbox Game Pass detection; automated log file cleanup in `logger.mjs`; multi-provider game metadata resolver (VNDB, Steam Store search, PCGamingWiki, local engine inspection); organization multi-entity splitting and shortcut metadata wiring; automatic artwork fetching for shortcuts on scan/import; emulator & ROM detection (Dolphin, Mupen64, etc.); high-performance scanner with `sysinfo::Disks` volume resolution, pre-located emulators, and opt-in full-drive scanning.
+2. **[Steam-Vault] W.24b — Hand-rolled i18n localization engine**: zero-dependency hand-rolled TypeScript + Svelte reactive `$t` store; full native coverage for all 30 Valve/Steam officially supported languages; parameter interpolation; English fallback; RTL layout support for Arabic; Settings language selector dropdown; view integration across UI.
+3. **[Steam-Vault] W.25 — Dynamic (filter-spec) collections**: persist named Allowed/Required/Excluded specs; save/apply/re-apply as smart collections; Organize + Collections UI.
+4. **[Steam-Vault] W.26 — SQLite metadata cache**: add `rusqlite` (`bundled`); schema + get/set/migrate; replace the JSON metadata cache with a one-time JSON import.
+5. **[Steam-Vault] W.27 — M5 glassmorphism UI pass**: design tokens and a full modern dark glass treatment across every view (done once, after features freeze).
+6. **[Steam-Vault] W.28 — v1.0 release packaging**: HELIX squircle branding artwork (app icon + repo social preview), GitHub issue templates, release notes, CHANGELOG v1.0.0, first SemVer tag/release.
 
 > **Ordering rationale:** UI-touching features first so the glassmorphism pass is applied once; the SQLite refactor is backend-only; packaging is last because it depends on frozen features and final docs.
 
-> **Status:** In progress — W.24 started.
+> **Status:** Complete — W.24 and W.24b (Hand-rolled i18n localization across all 30 Steam languages) fully verified. Next: W.25 (Dynamic collections).
 
 ---
 

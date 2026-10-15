@@ -161,6 +161,28 @@
 
 ---
 
+### [Steam-Vault] (projects/Steam-Vault)
+
+#### [Steam-Vault] 2026-10-14 — Missing Developer/Publisher/Metadata Collections for Non-Steam Shortcuts & Multi-Entity Strings
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Severity**: 🟠 High (functional defect)
+- **Status**: ✅ resolved — verified across 30 unit tests and full suite
+- **Scope**: `src-tauri/src/commands.rs`, `src-tauri/src/autocat.rs`, `src-tauri/src/metadata/*`, `src-tauri/src/platforms/*`
+- **Reported Issue**: When organizing by Developer, Publisher, Genre, or Release Year, non-Steam games and certain Steam games do not have their metadata detected. As a result, no collections are created for them.
+- **Root Cause**:
+  1. `compute_categorization` and `compute_autocats` only requested metadata for `GameKind::Steam` and queried the cache solely under `steam-store` with synthetic shortcut app IDs. Shortcuts never had metadata populated, causing `AppMeta::default()` with empty fields.
+  2. Multi-developer/publisher comma-separated strings (e.g. `"Square Enix, PlatinumGames"`) were not split in `autocat::apply`, creating single monolithic collection names.
+  3. No fallback metadata providers (PCGamingWiki, VNDB, Steam Store Search, local engine/receipt inspection) were integrated into the categorization pipeline.
+- **Resolution**:
+  1. Built multi-provider metadata pipeline: keyless VNDB Kana API provider (`metadata::vndb`), keyless Steam Store Search (`metadata::steam_search`), offline engine sniffer (`metadata::local`), and PCGamingWiki queries with title sanitization.
+  2. Implemented `ensure_game_metadata` resolving metadata for both Steam games and non-Steam shortcuts, caching under both `shortcut-meta` and `steam-store` namespaces.
+  3. Added `split_entities` in `autocat.rs` to break comma/semicolon/slash-delimited entities into individual collections while protecting legal company suffixes (`Co., Ltd.`, `Inc.`), plus platform publisher fallbacks for non-Steam games.
+  4. Implemented automatic artwork downloading upon platform game/ROM import and added bulk auto-fetch missing artwork button.
+  5. Implemented emulator and ROM detection (`Platform::Emulator`) for 11 popular emulators with tailored launch arguments.
+
+---
+
 ### [helix-docs] (projects/helix-docs)
 
 #### [helix-docs] BUG-4 — `_functions.scss` legacy division triggers Dart Sass deprecation
