@@ -25,6 +25,89 @@
 
 ## 🔥 Active Workstreams
 
+### 🎯 [Steam-Vault] Workstream W.24: Platform & Non-Steam Enhancements
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Target Component:** `src-tauri/src/platforms/{mod,detectors,registry}.rs`, `src-tauri/src/steam/shortcuts.rs`, `src-tauri/src/commands.rs`, `src-tauri/src/lib.rs`; `src/routes/platforms/+page.svelte`, `src/lib/{api,types}.ts`; `docs/_docs/…`
+
+**Locked user directives:**
+- "a complete management tool for the steam library with organization, storage management, non-steam game support, and any other feature that benefits a completely steam library management suite."
+- Docs stay "100% accurate" and free of stale information.
+
+**Implementation checklist:**
+- [ ] `[Steam-Vault]` **Storefront launch URIs** — populate `PlatformGame.launch_uri` for Epic (`com.epicgames.launcher://apps/<id>`) and itch, and write it as the non-Steam shortcut's launch option on import.
+- [ ] `[Steam-Vault]` **Per-game platform override** — command to set/clear the appid → platform mapping (persisted), plus UI to re-tag a shortcut's source storefront.
+- [ ] `[Steam-Vault]` **Microsoft Store / Xbox Game Pass detection** — a registry/manifest-based detector for `Platform::Xbox`, no scraping.
+- [ ] `[Steam-Vault]` **Verify + docs** — `npm run test:all` green; README/CHANGELOG/`_docs`/`_wiki` updated.
+
+> **Status:** Not started.
+
+---
+
+### 🎯 [Steam-Vault] Workstream W.25: Dynamic (Filter-Spec) Collections
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Target Component:** `src-tauri/src/filter.rs`, new `src-tauri/src/steam/filters.rs`, `src-tauri/src/commands.rs`, `src-tauri/src/lib.rs`; `src/routes/organize/+page.svelte`, `src/routes/collections/+page.svelte`, `src/lib/{api,types}.ts`; docs
+
+**Implementation checklist:**
+- [ ] `[Steam-Vault]` **Filter-spec model** — persist named Allowed/Required/Excluded specs, evaluate against the current library.
+- [ ] `[Steam-Vault]` **Smart collections** — save/apply/re-apply a spec; refresh a collection from its spec.
+- [ ] `[Steam-Vault]` **UI** — Organize gains spec save/load; Collections shows which are smart.
+- [ ] `[Steam-Vault]` **Verify + docs** — `npm run test:all` green; docs updated.
+
+> **Status:** Not started.
+
+---
+
+### 🎯 [Steam-Vault] Workstream W.26: SQLite Metadata Cache
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Target Component:** `src-tauri/Cargo.toml` (`rusqlite` bundled), new `src-tauri/src/metadata/cache.rs`, `src-tauri/src/metadata/mod.rs`, `src-tauri/src/commands.rs`; docs
+
+**Locked user directives:**
+- Dependency decision: **rusqlite with the `bundled` feature** (compiles SQLite from source; no system dependency).
+
+**Implementation checklist:**
+- [ ] `[Steam-Vault]` **SQLite cache layer** — schema + open/migrate; get/set metadata rows keyed by provider + id.
+- [ ] `[Steam-Vault]` **Swap the JSON cache** — metadata providers read/write SQLite; one-time import of the existing JSON cache.
+- [ ] `[Steam-Vault]` **Verify + docs** — `npm run test:all` green; Cargo/architecture docs updated.
+
+> **Status:** Not started.
+
+---
+
+### 🎯 [Steam-Vault] Workstream W.27: Milestone M5 — Glassmorphism UI Pass
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Target Component:** `src/app.css`, `src/routes/+layout.svelte`, all `src/routes/**/+page.svelte`
+
+**Locked user directives:**
+- Deferred until "the app is more or less complete" — now that features are frozen, do the full pass.
+- "Full modern dark glassmorphism visual design pass across every view."
+
+**Implementation checklist:**
+- [ ] `[Steam-Vault]` **Design tokens** — glass surfaces, blur, radii, elevation, accent system in `app.css`.
+- [ ] `[Steam-Vault]` **Apply across every view** — library, organize, collections, platforms, storage, artwork, settings, title bar.
+- [ ] `[Steam-Vault]` **Verify + docs** — `npm run test:all` green; docs/screenshots updated.
+
+> **Status:** Not started.
+
+---
+
+### 🎯 [Steam-Vault] Workstream W.28: v1.0 Release Packaging
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Target Component:** `static/`, `src-tauri/icons/`, `.github/`, `CHANGELOG.md`, `README.md`
+
+**Implementation checklist:**
+- [ ] `[Steam-Vault]` **HELIX squircle branding artwork** — app icon set + repository social preview.
+- [ ] `[Steam-Vault]` **GitHub issue templates**.
+- [ ] `[Steam-Vault]` **Release notes + CHANGELOG v1.0.0**; first SemVer tag and GitHub release.
+
+> **Status:** Not started.
+
+---
+
 ### 🎯 [Steam-Vault] Workstream W.23: Milestone M4 — Custom Artwork Manager
 - **Project Identifier:** `[Steam-Vault]`
 - **Repository Path:** `projects/Steam-Vault`

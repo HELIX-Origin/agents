@@ -18,6 +18,33 @@
 
 ## 🎯 Active Sprints
 
+### 🚀 [Steam-Vault] Sprint 6: v1.0 Completion — Platform, Dynamic Collections, SQLite Cache, M5 UI & Release
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Target Component:** `src-tauri/src/platforms/*`, `src-tauri/src/steam/{shortcuts,filters}.rs`, `src-tauri/src/filter.rs`, `src-tauri/src/metadata/*`, `src-tauri/Cargo.toml`, `src-tauri/src/commands.rs`, `src-tauri/src/lib.rs`; `src/app.css`, all `src/routes/**`, `src/lib/{api,types}.ts`; `static/`, `src-tauri/icons/`, `.github/`; `README.md`, `CHANGELOG.md`, `docs/*`
+
+```mermaid
+flowchart TD
+    S6_Platform["[Steam-Vault] W.24 Platform & non-Steam enhancements"] --> S6_Dyn["[Steam-Vault] W.25 Dynamic (filter-spec) collections"]
+    S6_Dyn --> S6_Sql["[Steam-Vault] W.26 SQLite metadata cache (rusqlite bundled)"]
+    S6_Sql --> S6_Ui["[Steam-Vault] W.27 M5 glassmorphism UI pass (features frozen)"]
+    S6_Ui --> S6_Rel["[Steam-Vault] W.28 v1.0 release packaging"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[Steam-Vault] W.24 — Platform & non-Steam enhancements**: storefront launch URIs for Epic/itch written as shortcut launch options; per-game platform override command + UI; Microsoft Store / Xbox Game Pass detection.
+2. **[Steam-Vault] W.25 — Dynamic (filter-spec) collections**: persist named Allowed/Required/Excluded specs; save/apply/re-apply as smart collections; Organize + Collections UI.
+3. **[Steam-Vault] W.26 — SQLite metadata cache**: add `rusqlite` (`bundled`); schema + get/set/migrate; replace the JSON metadata cache with a one-time JSON import.
+4. **[Steam-Vault] W.27 — M5 glassmorphism UI pass**: design tokens and a full modern dark glass treatment across every view (done once, after features freeze).
+5. **[Steam-Vault] W.28 — v1.0 release packaging**: HELIX squircle branding artwork (app icon + repo social preview), GitHub issue templates, release notes, CHANGELOG v1.0.0, first SemVer tag/release.
+
+> **Ordering rationale:** UI-touching features first so the glassmorphism pass is applied once; the SQLite refactor is backend-only; packaging is last because it depends on frozen features and final docs.
+
+> **Status:** In progress — W.24 started.
+
+---
+
 ### 🚀 [Steam-Vault] Sprint 5: Milestone M4 — Custom Artwork Manager
 - **Project Identifier:** `[Steam-Vault]`
 - **Repository Path:** `projects/Steam-Vault`

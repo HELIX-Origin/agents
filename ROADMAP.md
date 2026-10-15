@@ -48,7 +48,7 @@ flowchart TB
 | **[NH-Reader]** | `projects/NH-Reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/NH-Reader/releases/tag/v0.7.5) | ✅ Shipped (M12) | M13 Planning: unified sign script, multi-platform toolchain |
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
 | **[Hentai-Senpai-Multi-DE-Theme]** | `projects/Hentai-Senpai-Multi-DE-Theme` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Hentai-Senpai-Multi-DE-Theme/releases/tag/v1.0.0) | ✅ Complete | Nord GTK multi-desktop theme installer & remote docs |
-| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | M4 (Artwork Manager) | 🚀 Active (M4 delivered) | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
+| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | M5 (Platform & Non-Steam) | 🚀 Active | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
 
 ---
 
@@ -147,7 +147,11 @@ flowchart LR
     M2b --> M3["[Steam-Vault] M3: Filter Builder, Sources & Storage Manager ✅"]
     M3 --> M3b["[Steam-Vault] Test Runner: Agent-friendly mjs suites ✅"]
     M3b --> M4["[Steam-Vault] M4: Artwork + Non-Steam Art ✅"]
-    M4 --> M5["[Steam-Vault] M5: Glassmorphism UI Pass ⏳"]
+    M4 --> M5["[Steam-Vault] M5: Platform & Non-Steam Enhancements 🚧"]
+    M5 --> M6["[Steam-Vault] M6: Dynamic (Filter-Spec) Collections ⏳"]
+    M6 --> M7["[Steam-Vault] M7: SQLite Metadata Cache ⏳"]
+    M7 --> M8["[Steam-Vault] M8: Glassmorphism UI Pass ⏳"]
+    M8 --> M9["[Steam-Vault] M9: v1.0 Release ⏳"]
 ```
 
 - **[Steam-Vault] Milestone M1: Foundation (DELIVERED):**
@@ -217,10 +221,22 @@ flowchart LR
   - Six new commands (`get_artwork`, `read_artwork`, `apply_artwork_from_url`,
     `apply_artwork_from_file`, `remove_artwork`, `steamgriddb_for_game`), a new `steam/artwork.rs`
     module (7 unit tests), and an eight-item navigation.
+- **[Steam-Vault] Milestone M5: Platform & Non-Steam Enhancements (🚧 IN PROGRESS):**
+  - **Storefront launch URIs** — Epic (`com.epicgames.launcher://apps/<id>`) and itch launch URIs are
+    written as a non-Steam shortcut's launch option, so launching it opens the right storefront.
+  - **Per-game platform override** — re-tag any shortcut's source storefront from the UI.
+  - **Microsoft Store / Xbox Game Pass detection** — a registry/manifest-based `Platform::Xbox`
+    detector, with no scraping.
+- **[Steam-Vault] Milestone M6: Dynamic (Filter-Spec) Collections (⏳ PLANNED):**
+  - Persist named Allowed / Required / Excluded specs and re-apply them as **smart collections** that can
+    be refreshed as the library changes.
+- **[Steam-Vault] Milestone M7: SQLite Metadata Cache (⏳ PLANNED):**
+  - Replace the JSON metadata cache with **SQLite** (`rusqlite`, `bundled`), with a one-time import of
+    the existing JSON cache.
+- **[Steam-Vault] Milestone M8: Glassmorphism UI Pass (⏳ PLANNED):**
+  - Full **modern dark glassmorphism** visual design pass across every view, applied once features freeze.
+- **[Steam-Vault] Milestone M9: v1.0 Release (⏳ PLANNED):**
+  - HELIX squircle branding artwork (app icon + repo social preview), GitHub issue templates, release
+    notes, CHANGELOG **v1.0.0**, and the first SemVer tag/release.
 - **[Steam-Vault] Backlog (deferred):**
-  - Full **modern dark glassmorphism** visual design pass across every view.
-  - HELIX squircle branding artwork for the app/repo; GitHub issue templates; release notes.
-  - SQLite metadata cache (replacing the JSON cache); dynamic (filter-spec) collection authoring.
-  - Platform storefront launch URIs (Epic / itch) as shortcut launch options; per-game platform
-    override UI; Microsoft Store / Xbox Game Pass detection.
-  - Release notes, issue templates, and first SemVer release.
+  - Post-v1.0 enhancements TBD; the pre-1.0 backlog has been promoted to milestones **M5–M9** above.
