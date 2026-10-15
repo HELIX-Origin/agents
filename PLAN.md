@@ -18,6 +18,46 @@
 
 ## 🎯 Active Sprints
 
+### 🚀 [Steam-Vault] Sprint 5: Milestone M4 — Custom Artwork Manager
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Target Component:** `src-tauri/src/steam/artwork.rs` (new), `src-tauri/src/commands.rs`, `src-tauri/src/lib.rs`, `src-tauri/src/steam/mod.rs`, `src-tauri/src/metadata/steamgriddb.rs`; `src/routes/artwork/+page.svelte` (new), `src/routes/+layout.svelte`, `src/lib/{api,types}.ts`; `docs/_docs/Artwork-Management.md` (new), `README.md`, `CHANGELOG.md`
+
+```mermaid
+flowchart TD
+    S5_Slots["[Steam-Vault] Artwork slots: inspect the five config/grid slots"] --> S5_Apply["[Steam-Vault] Apply from URL / local file (format sniffing, backup)"]
+    S5_Apply --> S5_Sgdb["[Steam-Vault] SteamGridDB by app id (games) / name (shortcuts)"]
+    S5_Sgdb --> S5_UI["[Steam-Vault] Artwork view + eight-item navigation"]
+    S5_UI --> S5_Gate["[Steam-Vault] Verification (npm run test:all) + docs"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[Steam-Vault] Artwork backend** (`steam/artwork.rs`, new):
+   - Inspect, apply, and remove Steam's five custom-artwork slots (portrait grid `<appid>p`, landscape
+     grid `<appid>`, hero `<appid>_hero`, logo `<appid>_logo`, icon `<appid>_icon`) in
+     `userdata/<id3>/config/grid/`.
+   - Sniff PNG/JPEG from magic bytes so the correct extension is written; dependency-free base64
+     `data:` URL previews; archive the previous image before every overwrite/removal; 7 unit tests.
+2. **[Steam-Vault] Commands + wiring**:
+   - `get_artwork`, `read_artwork`, `apply_artwork_from_url`, `apply_artwork_from_file`,
+     `remove_artwork`, `steamgriddb_for_game`; `lib.rs` registration and `api.ts` / `types.ts` wrappers.
+   - Artwork writes are **exempt** from the Steam-must-be-closed guard (Steam repaints `config/grid` live).
+3. **[Steam-Vault] SteamGridDB resolution**:
+   - Real Steam games resolve by **exact app id** (no search ambiguity); non-Steam shortcuts resolve by
+     **name** with an exact-title preference.
+4. **[Steam-Vault] Artwork view**:
+   - New `src/routes/artwork/+page.svelte` (game list, per-slot cards, SteamGridDB browse, local-file
+     import, remove) added to the navigation (**eight items**).
+5. **[Steam-Vault] Verification & docs**:
+   - `npm run test:all` green: fmt, clippy (`-D warnings`), cargo check, cargo test (**21 tests**),
+     svelte-check (0/0), vite build.
+   - New `docs/_docs/Artwork-Management.md`; README, CHANGELOG, `_docs`, and `_wiki` accuracy updates.
+
+> **Status (2026-10-14):** Complete — code, tests (21 Rust tests), and docs done; full verification green; **committed and pushed** as `4d49d25` (rustfmt/clippy hygiene) and `4bc8001` (M4).
+
+---
+
 ### 🚀 [Steam-Vault] Sprint 4: Milestone M3 — Filter Builder, Non-Steam Sources, Branding & Storage Manager
 - **Project Identifier:** `[Steam-Vault]`
 - **Repository Path:** `projects/Steam-Vault`

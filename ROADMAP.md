@@ -48,7 +48,7 @@ flowchart TB
 | **[NH-Reader]** | `projects/NH-Reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/NH-Reader/releases/tag/v0.7.5) | ✅ Shipped (M12) | M13 Planning: unified sign script, multi-platform toolchain |
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
 | **[Hentai-Senpai-Multi-DE-Theme]** | `projects/Hentai-Senpai-Multi-DE-Theme` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Hentai-Senpai-Multi-DE-Theme/releases/tag/v1.0.0) | ✅ Complete | Nord GTK multi-desktop theme installer & remote docs |
-| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | M2 (Whole-Library Organizing) | ✅ Delivered (M2) | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
+| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | M4 (Artwork Manager) | 🚀 Active (M4 delivered) | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
 
 ---
 
@@ -144,9 +144,9 @@ flowchart LR
 flowchart LR
     M1["[Steam-Vault] M1: Foundation ✅"] --> M2["[Steam-Vault] M2: Whole-Library Organizing ✅"]
     M2 --> M2b["[Steam-Vault] Developer Tooling: Logged Scripts + Metadata Warming ✅"]
-    M2b --> M3["[Steam-Vault] M3: Filter Builder, Sources & Storage Manager 🚧"]
-    M3 --> M3b["[Steam-Vault] Test Runner: Agent-friendly mjs suites 🚧"]
-    M3b --> M4["[Steam-Vault] M4: Artwork + Non-Steam Art ⏳"]
+    M2b --> M3["[Steam-Vault] M3: Filter Builder, Sources & Storage Manager ✅"]
+    M3 --> M3b["[Steam-Vault] Test Runner: Agent-friendly mjs suites ✅"]
+    M3b --> M4["[Steam-Vault] M4: Artwork + Non-Steam Art ✅"]
     M4 --> M5["[Steam-Vault] M5: Glassmorphism UI Pass ⏳"]
 ```
 
@@ -201,6 +201,22 @@ flowchart LR
   - **Agent-friendly test runner** — `scripts/test.mjs` + `scripts/lib/suites.mjs` run named suites
     with stdin closed, a per-step timeout, transcripts, and a PASS/FAIL summary (`npm test`,
     `verify`, …).
+- **[Steam-Vault] Milestone M4: Custom Artwork Manager (✅ COMPLETE — committed & pushed):**
+  - **Artwork view** — inspect and replace the five custom-artwork slots Steam reads from
+    `userdata/<id3>/config/grid/` (portrait grid, landscape grid, hero, logo, icon) for **Steam games
+    and non-Steam shortcuts alike**.
+  - **SteamGridDB by app id** — real Steam games are matched by their exact app id (no search
+    ambiguity); non-Steam shortcuts, which have no store page, are matched by name with an
+    exact-title preference.
+  - **Local-file import** — apply a PNG or JPEG directly; the image's real format is sniffed from its
+    magic bytes so Steam always loads it (with a 64 MiB cap).
+  - **Backup-on-replace** — every overwrite and removal archives the previous image into the
+    timestamped backup store first.
+  - **No Steam-closed guard** — Steam watches `config/grid` and repaints live, so artwork writes do
+    **not** require Steam to be closed (unlike collections and shortcuts).
+  - Six new commands (`get_artwork`, `read_artwork`, `apply_artwork_from_url`,
+    `apply_artwork_from_file`, `remove_artwork`, `steamgriddb_for_game`), a new `steam/artwork.rs`
+    module (7 unit tests), and an eight-item navigation.
 - **[Steam-Vault] Backlog (deferred):**
   - Full **modern dark glassmorphism** visual design pass across every view.
   - HELIX squircle branding artwork for the app/repo; GitHub issue templates; release notes.
