@@ -47,10 +47,8 @@ flowchart TB
 | **[helix-origin.github.io]** | `projects/helix-origin.github.io` | Rolling Sprints | Portal v2 | 🚀 Active | 16:9 vector artwork integration, project showcase cards |
 | **[NH-Reader]** | `projects/NH-Reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/NH-Reader/releases/tag/v0.7.5) | ✅ Shipped (M12) | M13 Planning: unified sign script, multi-platform toolchain |
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
-| **[Hentai-Senpai-Multi-DE-Theme]** | `projects/Hentai-Senpai-Multi-DE-Theme` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Hentai-Senpai-Multi-DE-Theme/releases/tag/v1.0.0) | ✅ Complete | Nord GTK multi-desktop theme installer & remote docs |
-| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | [v1.1.0](https://github.com/HELIX-Origin/Steam-Vault/releases/tag/v1.1.0) | ✅ Shipped | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
-| **[Steam-Vault-Catalog]** | `projects/Steam-Vault-Catalog` | SemVer | [v1.0.5](https://github.com/HELIX-Origin/Steam-Vault-Catalog/releases/tag/v1.0.5) | 🚀 Active | Community open game catalog, metadata crawler & compressed SQLite index |
-| **[FFXIV-Config]** | `projects/FFXIV-Config` | Rolling Sprints | 8.x HUD/Macro Config | ✅ Complete | FFXIV HUD, hotbar & macro configuration suite with remote Jekyll docs |
+| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | [v1.2.0](https://github.com/HELIX-Origin/Steam-Vault/releases/tag/v1.2.0) | 🚀 Active | Library Grid launcher, per-game management sub-page, right sidebar filters, streamlined storage & multi-scope lists |
+| **[Steam-Vault-Catalogue]** | `projects/Steam-Vault-Catalogue` | SemVer | [v1.1.0](https://github.com/HELIX-Origin/Steam-Vault-Catalogue/releases/tag/v1.1.0) | 🚀 Active | Community open game catalogue, modular TypeScript manager, main:sub:option scripts & living index |
 
 ---
 
@@ -243,9 +241,33 @@ flowchart LR
   - HELIX squircle 16:9 branding artwork (`static/steam-vault.svg`, `docs/assets/images/steam-vault.svg`, portal card).
   - GitHub issue templates (`config.yml`, `1_bug_report.yml`, `2_feature_proposal.yml`).
   - SemVer v1.0.0 release notes, CHANGELOG v1.0.0, and version bumps.
-- **[Steam-Vault] Milestone M10: Catalog & Console Expansion v1.1.0 (DELIVERED):**
-  - Native integration with Community Game Catalog (`Steam-Vault-Catalog`) via embedded compressed SQLite seed (`catalog_seed.bin`, curated multi-platform games) and online sync.
+- **[Steam-Vault] Milestone M10: Catalogue & Console Expansion v1.1.0 (DELIVERED):**
+  - Native integration with Community Game Catalogue (`Steam-Vault-Catalogue`) via embedded compressed SQLite seed (`catalog_seed.bin`, curated multi-platform games) and online sync.
   - High-precision console platform determination (`determine_console_platform`) for emulated ROMs with Platforms view badges.
   - Automated binary `shortcuts.vdf` `tags` injection for native Steam client console grouping and collection ingestion.
   - Keyless MediaWiki wikitext infobox parser in `metadata::extra::wikipedia_game_lookup` for console titles and retro platforms.
   - SemVer v1.1.0 release packaging, release notes, and documentation synchronization.
+- **[Steam-Vault] Milestone M11: Library Grid Launcher, Per-Game Management & Multi-Storefront Ingestion v1.2.0 (ACTIVE):**
+  - **Zero-API-Key Architecture Pivot**: Phased transition moving metadata sources solely to official integrations (Steam Store API / ACF manifests, GOG Galaxy DB / store APIs, Epic manifests, Xbox AppxManifest / WindowsApps, itch receipts, PE headers) and our open Community Catalogue (`Steam-Vault-Catalogue`). Furthermore, the **Steam Web API key is planned to be completely optional**, as Steam Vault is designed to read the user's authenticated local Steam installation directly (`appinfo.vdf`, `packageinfo.vdf`, `localconfig.vdf`) to discover all owned games without external API dependencies—paralleling the zero-friction, keyless architecture established across GOG, Epic, and Xbox.
+  - **Redesigned Library Grid Launcher (`/library`)**: Vertical game capsule grid view as the central launcher hub with responsive cover artwork, platform badges, install status pills, and one-click play controls.
+  - **Collapsible Right Sidebar**: Instant sort controls (Name A-Z/Z-A, Playtime high/low, Last played, Size on disk) and granular filters (installation state, platform counts across Steam, GOG, Epic, Itch, Ubisoft, EA, Battle.net, Amazon, Xbox, Rockstar, Emulators, Other, collection dropdown, and favorites/hidden toggles).
+  - **Extensive Per-Game Management Sub-Page**: 10-image media gallery with fullscreen lightbox modal, meta links card (Store, PCGamingWiki, SteamDB, ProtonDB, Wikipedia, Community Catalogue), comprehensive details cards, playtime tracking, Play/Install button (via `steam://run/{app_id}`, `steam://install/{app_id}`, and native fallbacks), and Manage button opening a sub-window modal.
+  - **Streamlined Storage Statistics (`/storage`)**: Dedicated storage statistics dashboard and Steam Library Folder management, removing redundant game lists.
+  - **Streamlined Organize Scopes List (`/organize`)**: Multi-select scope list (Genre, Developer, Publisher, Release Year, Platform) with custom Depressurizer-style rule builder to organize the Steam library without clutter.
+  - **Multi-Platform Owned Games Detection**: GOG Galaxy SQLite database reader (`galaxy-2.0.db`), Epic manifests, WindowsApps/Xbox packages, and platform launch URIs.
+
+---
+
+### 7. [Steam-Vault-Catalogue] — Community Game Catalogue & Crawler
+*Target Path: `projects/Steam-Vault-Catalogue` · Open Metadata Ingestion Engine*
+
+- **[Steam-Vault-Catalogue] Milestone M1: Catalog Foundation & CI Release Pipeline (DELIVERED):**
+  - Formal JSON schema (`schema/game.schema.json`), initial curated game database in `games/*.json`.
+  - Automated CI crawler querying IGDB, SteamGridDB, Steam Store API, and VNDB.
+  - Living `index.json` compiled for client lookup and distribution.
+- **[Steam-Vault-Catalogue] Milestone M2: Modular Catalogue Engine, Standardized Scripts & Living Index v1.1.0 (ACTIVE):**
+  - **Modular TypeScript ESM Catalogue Manager** (`scripts/manage-catalogue.ts`, `scripts/modules/*`): Ingestion engine, schema validator, and index builder.
+  - **Direct Root Index Access**: Living `index.json` committed directly in repository root for zero-dependency client access.
+  - **Standardized `main:sub:option` NPM Scripts**: `catalogue:update:all`, `catalogue:update:missing`, `catalogue:populate:games`, `catalogue:populate:seeds`, `catalogue:validate`, and `catalogue:build:index`.
+  - **Multi-Storefront Schema Expansion**: Official integration identifiers (`gogId`, `epicAppName`, `ubisoftId`, `eaOfferId`, `xboxPackageFamily`) and launch URIs.
+  - **Documentation Site (`docs/`)**: Jekyll site powered by `HELIX-Origin/helix-docs` with 5-section vCard homepage and squircle branding artwork.

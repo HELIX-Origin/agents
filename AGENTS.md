@@ -72,7 +72,7 @@
 │   ├── helix-origin.github.io/ <- GitHub Pages portal (docs/ in scope)
 │   ├── NH-Reader/             <- (docs/ in scope)
 │   ├── Steam-Vault/           <- Tauri v2 Steam library organizer (Depressurizer revival)
-│   ├── Steam-Vault-Catalog/   <- Community-maintained open game catalog & crawler
+│   ├── Steam-Vault-Catalogue/ <- Community-maintained open game catalogue & crawler
 │   ├── Windhawk-Themes/       <- (docs/ in scope)
 │   └── Hentai-Senpai-Multi-DE-Theme/ <- (docs/ in scope)
 └── (other projects)           <- out of scope unless asked

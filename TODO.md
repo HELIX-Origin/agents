@@ -25,6 +25,64 @@
 
 ## 🔥 Active Workstreams
 
+### 🎯 [Steam-Vault] & [Steam-Vault-Catalogue] Workstream W.33: Multi-Platform Owned Games Detection, Official & Enhanced Metadata Engine, Interactive Library Grid & Per-Game Management Pages, and Catalog Alignment
+- **Project Identifiers:** `[Steam-Vault]` (`projects/Steam-Vault`), `[Steam-Vault-Catalogue]` (`projects/Steam-Vault-Catalogue`)
+- **Target Components:** `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/platforms/mod.rs`, `src-tauri/src/metadata/*`, `src-tauri/src/commands.rs`, `src-tauri/src/steam/models.rs`, `src/routes/library/+page.svelte`, `src/lib/api.ts`, `src/lib/types.ts`; `projects/Steam-Vault-Catalogue/schema/game.schema.json`, `projects/Steam-Vault-Catalogue/scripts/build-index.ts`, `projects/Steam-Vault-Catalogue/scripts/manage-catalog.ts`
+
+**Locked user directives:**
+- "using the official integrations for the primary metadata source with our additional metadata sources for enhancement or filling in missing metadata will be useful for the library tab."
+- "The library tab can user per game sub pages for managing installation/uninstalltion. the sub pages will have rich detailes with description, metadata links, etc. these will serve as the per game management pages."
+- "This means our steam-vault-catalogue will also need to be updated to support this new direction."
+- "Actually the library tab CAN get the grid layout and can be useful for installing/uninstalling games. It should display all owned games from every supported platform and have filtering options to allow people to easily differentiate between, platform, installed, uninstalled, etc."
+- "This means our game platform integrations will need to detect all owned games if possible."
+- "I think we needs to update our autodetection for all supported platforms to detect the game installation locations and then use the correct methods for launching those games."
+- "I think the most effective option is to auto detect the locations by default, and instead of having the user fetch them just use a toggle in the settings app to enable/disable the integrations."
+- "Cloud drives like Google Drive, OneDrive, etc should not be showing up in the app."
+- "Note: game launching can also be added to the per game details/management pages. this way the Steam Vault app can alos be a more detailed launcher if the users desire it."
+- "It can use steam to launch the games since it wills till be adding all non-steam games to the steam library. this *should* simplify things a little bit."
+- "Note: The library tab should have a righ sidebar for toggling sort/filter/etc options. These would make it easier to sort, filter, or find games and would be generally a useful addition to the library tab update we are working on."
+- "The per game details/management pages should have a 10 image mideia gallery, a meta links card, details card(s), playtime treacking, etc. they should be extensive details pages with a play button for launching the game and a manage button that opens a small management sub window with all of the per game management options."
+- "Note: The library tab itself will still use the grid display i suggested before. This entire update is actually revolving around the redisgned library tab."
+- "This will also allow us to simplify the storage, organize, and other management tabs and move the simplified versions to the sttings page as their own dedicated sections. Note: The organization will still need to have the ability to fully organize the steam library on the steam side, but instea d of using cards, it will use lists. This way users can select multiple organizations copes, and even be eabke to make their own custom scopes (similar to how Deperessurizer worked)."
+- "no the library tab will be grid view. We are no abandoning the library tab redesig. The storage info will no longer display a library sinc eit won't need it and will be for dispaying the sotrage statistics. This plan is to streamline teh app's UI and functionality since we are implementing a luancher functionality to it."
+- "the commands need to be corrected as well. they should be catalogue:{command}"
+- "catalogue:all should be catalogue:update:all basically the update commands should be catalogue:update:{command}, follow the naming pattern basically main:sub:option"
+- "remove incorrectly formatted commands too. we don't need duplicate commands."
+- "Note: our plan is to slowly move the metata sources solely over to official source and our catalogue. this way user's aren't required to provide api keys or anable.disable ketadata sources."
+- "User's will still need to provide their steam web api key to get all of their steam games, but that will be the only api key users will need to provide in the Steam Vault app once our metadata source update is complete."
+- "In fact, the Steam Web API key can even be optional since we might be able to use the users own authenticated steam installation to grab all games from their authenticated account. The same way we can generally handle the game support for all other platforms."
+
+**Implementation checklist:**
+- [x] `[Steam-Vault]` **Multi-platform owned games detection backend** — expand GOG detector to read `%ProgramData%\GOG.com\Galaxy\storage\galaxy-2.0.db` in read-only mode, extracting owned and installed games, titles, and store images; surface uninstalled games with installation URIs across GOG, Epic, Steam, Ubisoft, and EA.
+- [x] `[Steam-Vault]` **Zero-third-party-API-key metadata architecture transition** — implement metadata resolver prioritizing authoritative official sources (Steam Store API / ACF manifests, GOG Galaxy DB / APIs, Epic manifests, Xbox AppxManifest, Itch receipts, PE headers) layered with the open Community Game Catalogue (`catalog_seed.bin` / `index.json`); plan extraction from local authenticated Steam installation data (`appinfo.vdf`, `packageinfo.vdf`, `localconfig.vdf`) to make even the Steam Web API key completely optional.
+- [x] `[Steam-Vault]` **Per-game management commands** — add backend commands for `launch_game` (via `steam://run/{app_id}` with native URI/executable fallback), `install_game`, `uninstall_game`, and `open_game_folder`.
+- [x] `[Steam-Vault]` **Redesigned Library Grid & Right Sidebar** — primary vertical capsule Grid view as the central launcher hub with hover quick actions; collapsible Right Sidebar with instant sort options (Name, Playtime, Last played, Size) and granular filters (Platform counts, Install state, Collections, Favorites, Hidden).
+- [x] `[Steam-Vault]` **Extensive Per-Game Details & Management Sub-Page** — interactive 10-image media gallery with full-screen lightbox modal, meta links card (Store, PCGamingWiki, SteamDB, ProtonDB, Wikipedia, Community Catalogue), comprehensive details cards, playtime tracking, Play/Install button, and Manage button launching dedicated sub-window modal.
+- [x] `[Steam-Vault]` **Streamlined Storage Statistics & Multi-Scope Organize Lists** — pure storage analytics and library folder manager on `/storage`; Depressurizer-style multi-select scope lists and custom rule builder on `/organize`.
+- [x] `[Steam-Vault-Catalogue]` **YAML issue templates** — add `.github/ISSUE_TEMPLATE/` configuration with `config.yml`, `1_bug_report.yml`, `2_metadata_correction.yml`, and `3_feature_proposal.yml` tailored for catalogue ingestion and multi-storefront metadata reporting, linking directly to the dedicated Discord community (`https://discord.com/invite/Ww3XBZC2HV`).
+- [x] `[Steam-Vault-Catalogue]` **Jekyll documentation site with helix-docs & vCard home page** — create `docs/` site configured with `remote_theme: HELIX-Origin/helix-docs`, `docs/_config.yml`, 5-section vCard styled `docs/index.md` home page, user guides in `docs/_docs/`, technical architecture in `docs/_wiki/`, and compliant 256x256 squircle logo `docs/assets/images/logo.svg` verified with ImageMagick.
+- [x] `[helix-origin.github.io]` **Portal showcase card & asset integration** — add Steam Vault Catalogue project card and `steam-vault-catalogue.svg` asset to the portal homepage grid.
+- [x] `[Ecosystem / Org]` **Disable GitHub Discussions & route to Discord** — disabled GitHub Discussions across all repositories in `HELIX-Origin` via GitHub CLI and routed community contact links in issue templates to `https://discord.com/invite/Ww3XBZC2HV`.
+- [x] `[Steam-Vault-Catalogue]` **Standardized `main:sub:option` NPM scripts & living index** — unified modular TypeScript ESM catalogue manager (`scripts/manage-catalogue.ts`, `scripts/modules/*`) with `catalogue:update:all`, `catalogue:update:missing`, `catalogue:populate:games`, `catalogue:populate:seeds`, `catalogue:validate`, `catalogue:build:index`, and root living `index.json`.
+- [x] `[Steam-Vault]` **Verification & test suite** — `cargo test` passes 39 unit tests with 0 failures; `cargo check` exits code 0; `npm run check` passes with 0 Svelte errors; `npm run build` succeeds cleanly.
+
+---
+
+### 🎯 [Steam-Vault] Workstream W.32: Windows Store & Xbox Game Detection, Custom NSIS Installer, and System Tray Support
+- **Project Identifier:** `[Steam-Vault]` (`projects/Steam-Vault`)
+- **Target Components:** `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/platforms/registry.rs`, `src-tauri/src/commands.rs`, `src-tauri/src/lib.rs`, `src-tauri/Cargo.toml`, `src-tauri/tauri.conf.json`, `src-tauri/windows/hooks.nsh`, `src-tauri/windows/sidebar.bmp`, `src-tauri/icons/tray-icon.png`
+
+**Implementation checklist:**
+- [x] `[Steam-Vault]` **AppModel registry & WindowsApps game detection** — query Windows AppModel repository registry packages and `WindowsApps` folders for `xboxservices.config`, `MicrosoftGame.config`, Xbox manifest protocols (`xboxliveapp`, `ms-xbl-`), and `shell:AppsFolder` AUMID resolution.
+- [x] `[Steam-Vault]` **Steam shortcut UWP launcher handling** — wire `explorer.exe shell:AppsFolder\...` for UWP / Windows Store games on shortcut import so games launch reliably via Windows AppContainer activation.
+- [x] `[Steam-Vault]` **Custom NSIS script & installer hooks** (`src-tauri/windows/hooks.nsh`) — implement preinstall process termination for running instances and synchronous uninstaller execution matching NH-Reader pattern.
+- [x] `[Steam-Vault]` **ImageMagick NSIS sidebar bitmap** (`src-tauri/windows/sidebar.bmp`) — generate 164x314 branded obsidian 24-bit BMP with centered squircle mark and add generator script.
+- [x] `[Steam-Vault]` **NSIS configuration in tauri.conf.json** — configure `bundle.windows.nsis` with `installMode: "both"`, multilingual selector, installer icon, hooks, and sidebar bitmap.
+- [x] `[Steam-Vault]` **System tray implementation** (`src-tauri/src/lib.rs`) — enable `tray-icon` and `image-png` features in Tauri, build tray icon with "Show Steam Vault", "Minimize to Tray", separator, "Quit", left-click toggle, and window close-to-tray event handler.
+- [x] `[Steam-Vault]` **Verification & test suite** — verify live detection of Microsoft Solitaire Collection, run unit tests, cargo check, cargo test, and full test runner.
+
+---
+
 ### 🎯 [Multi-Project] Workstream W.31: FFXIV-Config vCard Home Pattern & Portal Showcase Integration
 - **Project Identifiers:** `[FFXIV-Config]` (`projects/FFXIV-Config`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`)
 - **Target Components:** `projects/FFXIV-Config/docs/index.md`, `projects/FFXIV-Config/docs/assets/images/ffxiv-config.svg`, `projects/helix-origin.github.io/docs/index.md`, `projects/helix-origin.github.io/README.md`, `projects/helix-origin.github.io/docs/assets/images/ffxiv-config.svg`

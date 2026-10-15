@@ -6,10 +6,10 @@
 
 ## 1. Owns
 
-- Desktop client codebases (specifically `projects/NH-Reader`).
-- Rust backend modules in `src-tauri/`.
-- Frontend SvelteKit views, stores, and components in `src/`.
-- Packaging and multi-platform build scripts.
+- Desktop client codebases: `projects/NH-Reader` and `projects/Steam-Vault`.
+- Rust backend modules in `src-tauri/` (Steam/shortcuts data layers, launcher protocols, platform detectors, metadata pipelines, storage managers).
+- Frontend SvelteKit views, stores, and components in `src/` (Library grid launcher, right sidebar filter/sort, per-game management sub-page with 10-image gallery and modal sub-window, streamlined storage metrics, and Depressurizer multi-scope lists).
+- Packaging, NSIS installer scripts, and multi-platform build scripts.
 
 ---
 

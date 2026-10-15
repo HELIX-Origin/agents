@@ -18,6 +18,65 @@
 
 ## 🎯 Active Sprints
 
+### 🚀 [Steam-Vault] & [Steam-Vault-Catalogue] Sprint 10: Multi-Platform Owned Games Detection, Official & Enhanced Metadata Engine, Interactive Library Grid & Per-Game Management Pages, and Catalogue Alignment
+- **Project Identifiers:** `[Steam-Vault]` (`projects/Steam-Vault`), `[Steam-Vault-Catalogue]` (`projects/Steam-Vault-Catalogue`)
+- **Target Components:** `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/platforms/mod.rs`, `src-tauri/src/metadata/*`, `src-tauri/src/commands.rs`, `src-tauri/src/steam/models.rs`, `src/routes/library/+page.svelte`, `src/lib/api.ts`, `src/lib/types.ts`; `projects/Steam-Vault-Catalogue/schema/game.schema.json`, `projects/Steam-Vault-Catalogue/scripts/manage-catalogue.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/*`
+
+```mermaid
+flowchart TD
+    S10_Official["[Steam-Vault] Official Sources (Steam, GOG DB, Epic, Xbox)"] --> S10_Resolve["[Steam-Vault] Zero-API-Key Resolver (Official + Catalogue)"]
+    S10_Catalog["[Steam-Vault-Catalogue] Community Catalogue (index.json)"] --> S10_Resolve
+    S10_Resolve --> S10_Cmds["[Steam-Vault] launch_game / install_game / uninstall_game / open_folder"]
+    S10_Cmds --> S10_Grid["[Steam-Vault] Redesigned Library Grid Launcher & Filter Sidebar"]
+    S10_Grid --> S10_Details["[Steam-Vault] Per-Game Details (10-Img Gallery, Modal, Meta Links)"]
+    S10_Details --> S10_Streamline["[Steam-Vault] Streamlined Storage Stats & Multi-Scope Organize"]
+```
+
+#### 🏛️ Architectural Strategy: Zero-API-Key Migration
+- **Strategic Directive**: Gradually and deliberately transition all metadata resolution in Steam Vault solely to **Official Sources** (local storefront manifests, registry entries, official unauthenticated store APIs) and the **Community Game Catalogue** (`Steam-Vault-Catalogue`).
+- **User Impact**: Users will never be required to supply third-party API keys (e.g. IGDB Twitch client credentials, SteamGridDB API keys) or fiddle with enabling/disabling metadata providers in Settings. Furthermore, the **Steam Web API key is planned to be completely optional**, as Steam Vault is designed to extract the full list of owned games directly from the user's local authenticated Steam installation (`appinfo.vdf`, `packageinfo.vdf`, `localconfig.vdf`), matching the local manifest-based integration of all other platforms. The app operates 100% keyless and out-of-the-box.
+
+#### 📝 Execution Tasks
+
+1. **[Steam-Vault] (projects/Steam-Vault) W.33a — Multi-platform owned games detection backend (Completed)**: Expanded GOG detector to read `%ProgramData%\GOG.com\Galaxy\storage\galaxy-2.0.db` in read-only mode, extracting owned and installed games, titles, and store images; updated Epic and Xbox/WindowsApps detectors with launch URIs (`goggalaxy://`, `com.epicgames.launcher://`, `shell:AppsFolder`).
+2. **[Steam-Vault] (projects/Steam-Vault) W.33b — Official integrations & Community Catalogue metadata architecture (Completed)**: Configured metadata engine prioritizing official integrations (Steam Store API / ACF manifests, GOG Galaxy DB, Epic manifests, Xbox AppxManifest, Itch receipts, PE headers) layered with the offline Community Game Catalogue (`catalog_seed.bin` / `index.json`) for zero-configuration lookups.
+3. **[Steam-Vault] (projects/Steam-Vault) W.33c — Per-game management backend commands (Completed)**: Implemented `launch_game` (via `steam://run/{app_id}` with native URI/executable fallback), `install_game` (`steam://install/{app_id}`), `uninstall_game` (`steam://uninstall/{app_id}`), and `open_game_folder` (native file explorer) in `src-tauri/src/commands.rs`.
+4. **[Steam-Vault] (projects/Steam-Vault) W.33d — Redesigned Library Grid Launcher & Filter Sidebar (Completed)**: Implemented primary vertical capsule Grid view as the central launcher hub with hover quick actions; built collapsible Right Sidebar with instant sort options (Name, Playtime, Last played, Size) and granular filters (Platform counts, Install state, Collections, Favorites, Hidden).
+5. **[Steam-Vault] (projects/Steam-Vault) W.33e — Extensive Per-Game Details & Management Sub-Page (Completed)**: Implemented comprehensive game details sub-page featuring an interactive 10-image media gallery with full-screen lightbox modal, meta links card (Store, PCGamingWiki, SteamDB, ProtonDB, Wikipedia, Community Catalogue), playtime tracking, Play/Install button, and Manage button launching dedicated sub-window management modal.
+6. **[Steam-Vault] (projects/Steam-Vault) W.33e2 — Streamlined Storage Statistics & Multi-Scope Organize Lists (Completed)**: Streamlined `/storage` into a pure storage analytics dashboard and library folder manager (removed redundant game table); overhauled `/organize` from card buttons to a multi-select scope list with Depressurizer custom rule builder.
+7. **[Steam-Vault-Catalogue] (projects/Steam-Vault-Catalogue) W.33f — YAML issue templates (Completed)**: Added `.github/ISSUE_TEMPLATE/` configuration with `config.yml`, `1_bug_report.yml`, `2_metadata_correction.yml`, and `3_feature_proposal.yml` linking to Discord (`https://discord.com/invite/Ww3XBZC2HV`).
+8. **[Steam-Vault-Catalogue] (projects/Steam-Vault-Catalogue) W.33g — Jekyll documentation site with helix-docs & vCard home page (Completed)**: Scaffolded `docs/` with `remote_theme: HELIX-Origin/helix-docs`, `docs/_config.yml`, 5-section vCard styled `docs/index.md` home page, user guides in `docs/_docs/`, technical architecture in `docs/_wiki/`, and compliant 256x256 squircle logo `docs/assets/images/logo.svg`.
+9. **[helix-origin.github.io] (projects/helix-origin.github.io) W.33h — Portal showcase card & asset integration (Completed)**: Added Steam Vault Catalogue project card and `steam-vault-catalogue.svg` asset to portal homepage grid; disabled GitHub Discussions organization-wide and directed community links to Discord.
+10. **[Steam-Vault-Catalogue] (projects/Steam-Vault-Catalogue) W.33i — Modular TypeScript manager, standardized scripts & living index (Completed)**: Refactored catalogue management into modular TypeScript ESM architecture (`scripts/manage-catalogue.ts`, `scripts/modules/*`); standardized `main:sub:option` npm scripts (`catalogue:update:all`, `catalogue:update:missing`, `catalogue:populate:games`, `catalogue:populate:seeds`, `catalogue:validate`, `catalogue:build:index`); committed living root `index.json`.
+11. **[Steam-Vault] (projects/Steam-Vault) W.33j — Verification & test suite (Completed)**: `cargo test` passes 39 unit tests with 0 failures; `cargo check` exits code 0; `npm run check` passes with 0 Svelte errors; `npm run build` succeeds cleanly.
+
+---
+
+### 🚀 [Steam-Vault] Sprint 9: Windows Store & Xbox Game Detection, Custom NSIS Installer, and System Tray Support (Completed)
+- **Project Identifier:** `[Steam-Vault]` (`projects/Steam-Vault`)
+- **Target Components:** `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/platforms/registry.rs`, `src-tauri/src/commands.rs`, `src-tauri/src/lib.rs`, `src-tauri/Cargo.toml`, `src-tauri/tauri.conf.json`, `src-tauri/windows/hooks.nsh`, `src-tauri/windows/sidebar.bmp`, `src-tauri/icons/tray-icon.png`
+
+```mermaid
+flowchart TD
+    S9_Detect["[Steam-Vault] AppModel registry & WindowsApps Xbox/Store game detector"] --> S9_Launch["[Steam-Vault] Explorer shell:AppsFolder UWP shortcut launcher"]
+    S9_Launch --> S9_NSIS["[Steam-Vault] Custom NSIS installer hooks & tauri.conf.json"]
+    S9_NSIS --> S9_Bmp["[Steam-Vault] Branded ImageMagick NSIS sidebar bitmap"]
+    S9_Bmp --> S9_Tray["[Steam-Vault] System tray with context menu & close-to-tray"]
+    S9_Tray --> S9_Gate["[Steam-Vault] Verification: cargo test + test:all runner"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[Steam-Vault] W.32a — AppModel registry & WindowsApps game detection**: query Windows AppModel repository registry packages and `WindowsApps` folders for `xboxservices.config`, `MicrosoftGame.config`, Xbox manifest protocols (`xboxliveapp`, `ms-xbl-`), and `shell:AppsFolder` AUMID resolution.
+2. **[Steam-Vault] W.32b — Steam shortcut UWP launcher handling**: wire `explorer.exe shell:AppsFolder\...` for UWP / Windows Store games on shortcut import so games launch reliably via Windows AppContainer activation.
+3. **[Steam-Vault] W.32c — Custom NSIS script & installer hooks**: create `src-tauri/windows/hooks.nsh` with preinstall process termination for running instances and synchronous uninstaller execution matching NH-Reader pattern.
+4. **[Steam-Vault] W.32d — ImageMagick NSIS sidebar bitmap**: generate 164x314 branded obsidian 24-bit BMP with centered squircle mark (`src-tauri/windows/sidebar.bmp`) and add generator script.
+5. **[Steam-Vault] W.32e — NSIS configuration in tauri.conf.json**: configure `bundle.windows.nsis` with `installMode: "both"`, multilingual selector, installer icon, hooks, and sidebar bitmap.
+6. **[Steam-Vault] W.32f — System tray implementation**: enable `tray-icon` and `image-png` features in Tauri, build tray icon with "Show Steam Vault", "Minimize to Tray", separator, "Quit", left-click toggle, and window close-to-tray event handler in `src-tauri/src/lib.rs`.
+7. **[Steam-Vault] W.32g — Verification & test suite**: verify live detection of Microsoft Solitaire Collection, run unit tests, cargo check, cargo test, and full test runner.
+
+---
+
 ### 🚀 [Steam-Vault-Catalog] Sprint 8: Community Game Catalog Infrastructure & Provider Crawler
 - **Project Identifiers:** `[Steam-Vault-Catalog]` (`projects/Steam-Vault-Catalog`), `[Steam-Vault]` (`projects/Steam-Vault`)
 - **Target Components:** `scripts/populate.js`, `scripts/build-index.js`, `schema/game.schema.json`, `package.json`, `README.md`, `.github/workflows/*`; `src-tauri/src/cache.rs`

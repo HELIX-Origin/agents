@@ -19,6 +19,7 @@ No change, feature, bug fix, or documentation update is complete without running
 | **helix-origin.github.io** | `bundle exec jekyll build` | 0 errors, 0 warnings. |
 | **NH-Reader** | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` | 0 Rust errors, 0 test failures, 0 Svelte errors, all i18n keys valid. |
 | **Steam-Vault** | `npm run build` (prereq), `cargo check`, `cargo test --manifest-path src-tauri/Cargo.toml`, `npm run check` | 0 Rust errors, 0 test failures, 0 Svelte errors/warnings. |
+| **Steam-Vault-Catalogue** | `npm run catalogue:validate`, `npm run catalogue:build:index` | 0 validation errors, living index.json compiled. |
 | **Windhawk-Themes** | `pwsh -NoProfile -File tools/Test-WindhawkStyles.ps1` | 0 errors. All styler YAML definitions parse correctly. |
 | **Hentai-Senpai-Multi-DE-Theme** | Shell syntax check (`bash -n install.sh`, `bash -n scripts/*.sh`), GTK asset check | 0 syntax errors, valid CSS/asset tree. |
 

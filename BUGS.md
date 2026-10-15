@@ -66,12 +66,16 @@
 - 🔑 **[Steam-Vault] Steam Web API Profile Visibility:** `IPlayerService/GetOwnedGames` returns data only when the profile's game details are public; otherwise Steam returns `403`. Local library data is unaffected.
 - 🔌 **[Steam-Vault] Provider Fragility (keyless sources):** PCGamingWiki and Wikipedia are keyless, best-effort providers and may change shape; the Steam Store `appdetails` endpoint is keyless but rate-limited. These are supplementary and never required.
 - 🏷️ **[Steam-Vault] Metadata Warming Is Network-Heavy and Rate-Limited:** Warming a large owned library issues many Steam Store `appdetails` requests (one per app id, with bounded concurrency) plus one `actions/ajaxgetstoretags` request per app, which can trip Steam's rate limiting; cached entries are reused within the TTL and per-app failures are skipped rather than fatal. Categorization now fetches metadata on demand (`fetchMetadata`, default `true`), so rules that need genre/tag/other metadata can trigger network calls implicitly — cache warming for a full owned library is best run deliberately via the Organize view's **Sync metadata** button.
-- 🖥️ **[Steam-Vault] Platform Detection Depends on Local Sources:** External-platform detection reads only local data — launcher manifests, the GOG registry, the itch app library, and the Windows Uninstall registry. Titles that are absent from all of those (for example, Microsoft Store / Xbox Game Pass games, which are not in the classic Uninstall registry) are not detected yet.
+- 🖥️ **[Steam-Vault] Platform Detection Depends on Local Sources:** External-platform detection reads only local data — launcher manifests, the GOG registry, the itch app library, Windows AppModel registry/WindowsApps packages (Xbox/Microsoft Store), and the Windows Uninstall registry. All detection runs entirely offline without external account logins.
 - 🌐 **[Steam-Vault] Owned-Library Sync Needs a Public Profile:** `refresh_owned_games` uses `IPlayerService/GetOwnedGames`, which requires a Steam Web API key and a public "game details" profile setting. Installed games are always read locally regardless, and the cached owned list is only used to broaden the ordering surface.
 - 🎭 **[Steam-Vault] Shortcut Platform Attribution Is Best-Effort:** A non-Steam shortcut added outside Steam Vault has no recorded platform and is shown as "Other" until it is re-imported. Attribution is kept in `<config>/steam-vault/platform-map.json`.
 - 💽 **[Steam-Vault] Storage Moves Are Real File Operations:** Moving a game or a whole library physically copies data cross-drive (a same-drive move is an instant rename). Steam must be closed, a library that still holds installed games cannot be removed, and the destination must have enough free space (plus a safety margin). Every copy of `libraryfolders.vdf` is rewritten — with backups — so Steam does not re-download a relocated game.
+- 🔑 **[Steam-Vault] Zero-Third-Party-API-Key Architecture Migration:** By deliberate design, Steam Vault is transitioning away from requiring third-party API keys (IGDB Twitch credentials, SteamGridDB keys) or manual metadata provider toggling in Settings. All metadata resolution is moving solely to official storefront sources (Steam Store API / ACF manifests, GOG Galaxy DB, Epic manifests, Xbox AppxManifest) and the offline Community Game Catalogue (`Steam-Vault-Catalogue`). Furthermore, even the **Steam Web API key is planned to be completely optional**, as Steam Vault is designed to read the user's authenticated local Steam installation directly (`appinfo.vdf`, `packageinfo.vdf`, `localconfig.vdf`) to discover all owned games without external API dependencies—providing a 100% keyless, zero-configuration out-of-the-box experience.
 
 ---
+
+### [Steam-Vault-Catalogue] (projects/Steam-Vault-Catalogue)
+- 🗃️ **[Steam-Vault-Catalogue] Script Naming Taxonomy (`main:sub:option`):** All package commands must adhere strictly to the canonical `main:sub:option` namespace format (`catalogue:update:all`, `catalogue:update:missing`, `catalogue:populate:games`, `catalogue:populate:seeds`, `catalogue:validate`, `catalogue:build:index`). Duplicate aliases or flat un-scoped commands are strictly prohibited.
 
 ## 💡 Explicitly Not Bugs
 
@@ -162,6 +166,21 @@
 ---
 
 ### [Steam-Vault] (projects/Steam-Vault)
+
+#### [Steam-Vault] 2026-10-15 — Microsoft Store / Xbox UWP Games Undetected, Missing Custom NSIS Hooks, and Lacking Tray Support
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Severity**: 🟠 High (functional defect & installer parity)
+- **Status**: 🚧 investigating / fix applied
+- **Scope**: `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/commands.rs`, `src-tauri/src/lib.rs`, `src-tauri/Cargo.toml`, `src-tauri/tauri.conf.json`, `src-tauri/windows/hooks.nsh`, `src-tauri/windows/sidebar.bmp`
+- **Reported Issues**:
+  1. Xbox/Microsoft Store games (e.g. Microsoft Solitaire Collection) are not detected because detector only scanned `XboxGames` directory and missed Windows AppModel registry packages and `WindowsApps` locations.
+  2. Windows installer lacks custom NSIS script and branded sidebar bitmap used by NH-Reader (`hooks.nsh`, `sidebar.bmp`).
+  3. Steam Vault lacks system tray support for minimizing to background, toggling visibility, and clean close-to-tray handling.
+- **Resolution**:
+  1. Implemented Windows AppModel repository registry enumeration and `WindowsApps` scanning in `detect_xbox`, detecting titles with `xboxservices.config`, `MicrosoftGame.config`, or Xbox manifest protocols, resolving valid `shell:AppsFolder\<FamilyName>!<AppId>` AUMIDs and wiring `explorer.exe` execution for Steam shortcuts.
+  2. Ported NH-Reader custom NSIS script (`hooks.nsh`) for process termination and clean uninstallation; generated 164x314 branded obsidian BMP (`sidebar.bmp`); updated `tauri.conf.json` with `bundle.windows.nsis`.
+  3. Added `tray-icon` and `image-png` Tauri features, created 32x32 `tray-icon.png`, implemented system tray with Show/Minimize/Quit menu and click toggle, and added window close-to-tray prevention in `lib.rs`.
 
 #### [Steam-Vault] 2026-10-15 — Windows Uninstall Registry Scan Ingesting Uninstallers & Duplicating Library Titles
 - **Project Identifier:** `[Steam-Vault]`
@@ -256,6 +275,19 @@
   1. Updated all game JSON files to enumerate all supported operating systems (`windows`, `macos`, `linux`) and specific console hardware (`PlayStation`, `PlayStation 2`, `GameCube`, `Wii`, `Nintendo 64`, `Super Nintendo`, `Game Boy Advance`, `Genesis`, `Dreamcast`, etc.).
   2. Strictly prohibited `"emulator"` from the `platforms` array in `schema/game.schema.json` and `scripts/validate.js`.
   3. Added cross-platform operating system population logic in `scripts/populate.js`.
+
+#### [Steam-Vault-Catalogue] 2026-10-15 — Catalogue Command Format & De-Duplication (`main:sub:option`)
+- **Project Identifier:** `[Steam-Vault-Catalogue]`
+- **Repository Path:** `projects/Steam-Vault-Catalogue`
+- **Severity**: 🟡 Medium (script naming inconsistency & redundancy)
+- **Status**: ✅ resolved — verified across package.json and workflows
+- **Scope:** `package.json`, `.github/workflows/populate-catalogue.yml`, `README.md`, `CONTRIBUTING.md`
+- **Reported Issue**: NPM commands contained redundant entries (`catalogue:update`, `catalogue:populate`) that did not follow the organization namespace convention `main:sub:option`.
+- **Root Cause**: Scripts in `package.json` had two-part names and duplicate aliases without clear sub/option flags.
+- **Resolution**:
+  1. Standardized all scripts to canonical `main:sub:option` format: `catalogue:validate`, `catalogue:build:index`, `catalogue:populate:games`, `catalogue:populate:seeds`, `catalogue:update:missing`, and `catalogue:update:all`.
+  2. Removed redundant unformatted commands (`catalogue:update`, `catalogue:populate`).
+  3. Updated `.github/workflows/populate-catalogue.yml`, `README.md`, and `CONTRIBUTING.md` to reference the canonical commands.
 
 ---
 
