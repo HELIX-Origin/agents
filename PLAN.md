@@ -18,6 +18,48 @@
 
 ## 🎯 Active Sprints
 
+### 🚀 [Steam-Vault] Sprint 4: Milestone M3 — Filter Builder, Non-Steam Sources, Branding & Storage Manager
+- **Project Identifier:** `[Steam-Vault]`
+- **Repository Path:** `projects/Steam-Vault`
+- **Target Component:** `src-tauri/src/steam/storage.rs` (new), `src-tauri/src/commands.rs`, `src-tauri/src/lib.rs`, `src-tauri/src/metadata/steam_store.rs`, `src-tauri/src/platforms/`, `src-tauri/src/settings.rs`; `src/routes/storage/+page.svelte` (new), `src/routes/organize/+page.svelte`, `src/routes/settings/+page.svelte`, `src/routes/+layout.svelte`, `src/lib/{api,types}.ts`; `scripts/test.mjs` + `scripts/lib/suites.mjs` (new), `scripts/lib/{logger,runner}.mjs`, `package.json`
+
+```mermaid
+flowchart TD
+    S4_Meta["[Steam-Vault] Steam Store fetch fix (per-appid)"] --> S4_Sources["[Steam-Vault] Platform scan honours settings + extra folders"]
+    S4_Sources --> S4_Settings["[Steam-Vault] Settings: Non-Steam sources"]
+    S4_Settings --> S4_Filter["[Steam-Vault] Organize filter builder"]
+    S4_Filter --> S4_Storage["[Steam-Vault] Storage manager: libraries, drives, moves"]
+    S4_Storage --> S4_UI["[Steam-Vault] Storage view + seven-item navigation"]
+    S4_UI --> S4_Runner["[Steam-Vault] Agent-friendly test runner (mjs suites)"]
+    S4_Runner --> S4_Gate["[Steam-Vault] Verification + docs accuracy pass"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[Steam-Vault] Metadata + platform fixes**:
+   - Steam Store fetch is per-app id with bounded concurrency (fixes the HTTP 400 from comma-joined `appids`).
+   - Platform scan honours per-platform enable flags, extra folders, and all mounted drives (`ScanConfig`).
+2. **[Steam-Vault] Settings & Organize UI**:
+   - Settings gains **Non-Steam sources** (per-launcher toggles + extra folders).
+   - Organize gains the Depressurizer-style **Allowed / Required / Excluded** filter builder with a live match count.
+3. **[Steam-Vault] Storage manager (end-to-end)**:
+   - New `steam/storage.rs`: report disks, libraries, and game placement/sizes; register/unregister
+     libraries; move a game or a whole library between drives, rewriting **every** `libraryfolders.vdf`
+     with backups and a Steam-closed guard; throttled `storage-progress` events.
+   - Seven Tauri commands, `api.ts` / `types.ts` wrappers, and a new **Storage** view (drive overview,
+     per-library cards, searchable game list, move previews) added to the navigation.
+4. **[Steam-Vault] Agent-friendly test runner**:
+   - `scripts/test.mjs` + `scripts/lib/suites.mjs` run named suites (`fmt`, `clippy`, `check`, `rust`,
+     `frontend`, `build`, `all`) directly, with stdin closed, a per-step timeout, transcripts, and a
+     PASS/FAIL summary; wired to `npm test`, `test:rust`, `test:frontend`, `test:all`, `verify`.
+5. **[Steam-Vault] Verification & docs**:
+   - `npm test` PASS (cargo check, cargo test — 12 tests, svelte-check 0/0); `vite build` PASS.
+   - Docs accuracy pass across README, CONTRIBUTING, `docs/_docs`, and `docs/_wiki`.
+
+> **Status (2026-10-14):** Implementation, tests, and docs complete; full verification green; **committed and pushed** as four M3 commits (`d6b9c84`, `ba67c23`, `292ca5d`, `992be3c`).
+
+---
+
 ### 🚀 [Ecosystem] Sprint: Agent Workflow Skills & Rules Expansion
 - **Project Identifier:** `[Ecosystem]`
 - **Repository Path:** Workspace Root (`D:\Projects\GitHub\HELIX Origin`)

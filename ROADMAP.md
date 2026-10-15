@@ -143,9 +143,10 @@ flowchart LR
 ```mermaid
 flowchart LR
     M1["[Steam-Vault] M1: Foundation ✅"] --> M2["[Steam-Vault] M2: Whole-Library Organizing ✅"]
-    M2 --> M2b["[Steam-Vault] Developer Tooling: Logged Scripts + Metadata Warming 🚧"]
-    M2b --> M3["[Steam-Vault] M3: Rich AutoCats + Filter Builder ⏳"]
-    M3 --> M4["[Steam-Vault] M4: Artwork + Non-Steam Art ⏳"]
+    M2 --> M2b["[Steam-Vault] Developer Tooling: Logged Scripts + Metadata Warming ✅"]
+    M2b --> M3["[Steam-Vault] M3: Filter Builder, Sources & Storage Manager 🚧"]
+    M3 --> M3b["[Steam-Vault] Test Runner: Agent-friendly mjs suites 🚧"]
+    M3b --> M4["[Steam-Vault] M4: Artwork + Non-Steam Art ⏳"]
     M4 --> M5["[Steam-Vault] M5: Glassmorphism UI Pass ⏳"]
 ```
 
@@ -176,15 +177,30 @@ flowchart LR
   - **Collection creation from any sorting option** — genre, developer, publisher, Steam feature,
     tag, release year, user score, platform, installed state, playtime, and name — previewed, then
     written in a single backed-up operation.
-  - New **Platforms** and **Organize** views; navigation extended to six items.
+  - New **Platforms** and **Organize** views added to the navigation.
 - **[Steam-Vault] Developer Tooling: Logged Command Scripts + Metadata Cache Warming (COMPLETE):**
   - **Logged command scripts** — `scripts/*.mjs` wrap `tauri dev` / `tauri build` (and any command via
     `npm run log`) so each run streams live and leaves a timestamped, ANSI-stripped transcript in
     `logs/` (`<type>-<YYYY-MM-DD_HH-MM-SS>.log`, never overwritten).
   - **On-demand metadata cache warming** — the Steam Store provider also fetches store **tags**
-    (`actions/ajaxgetstoretags`); `ensure_steam_metadata` de-duplicates ids, batches `appdetails`
-    50/request, and reuses cached entries; a `sync_library_metadata` command warms the whole owned
-    library; collection creation can fetch metadata on demand (`fetchMetadata`, default on).
+    (`actions/ajaxgetstoretags`); `ensure_steam_metadata` de-duplicates ids, fetches `appdetails`
+    per app id with bounded concurrency, and reuses cached entries; a `sync_library_metadata` command
+    warms the whole owned library; collection creation can fetch metadata on demand (`fetchMetadata`,
+    default on).
+- **[Steam-Vault] Milestone M3: Filter Builder, Non-Steam Sources & Storage Manager (✅ COMPLETE — committed & pushed):**
+  - **Filter builder in Organize** — Depressurizer-style **Allowed / Required / Excluded** term lists
+    with name search and a kind selector, plus a live match count, applied when creating collections.
+  - **Configurable non-Steam sources** — Settings gains per-launcher enable/disable and extra search
+    folders; platform detection honours them and can scan all mounted drives.
+  - **Storage manager** — a new **Storage** view (with `steam/storage.rs` and seven Tauri commands)
+    reports drives, libraries, and game placement/sizes; registers or removes libraries; and moves a
+    game or a whole library between drives, rewriting **every** `libraryfolders.vdf` with backups and
+    a Steam-closed guard, with live `storage-progress` events.
+  - **Steam Store fetch fix** — metadata is fetched per app id with bounded concurrency (fixes the
+    HTTP 400 from comma-joined `appids`).
+  - **Agent-friendly test runner** — `scripts/test.mjs` + `scripts/lib/suites.mjs` run named suites
+    with stdin closed, a per-step timeout, transcripts, and a PASS/FAIL summary (`npm test`,
+    `verify`, …).
 - **[Steam-Vault] Backlog (deferred):**
   - Full **modern dark glassmorphism** visual design pass across every view.
   - HELIX squircle branding artwork for the app/repo; GitHub issue templates; release notes.
