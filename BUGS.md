@@ -197,6 +197,9 @@
 
 ## ✅ Closed & Resolved Bugs
 
+### [Ecosystem] (workspace root)
+- **[Ecosystem] 2026-10-14 — CRLF line-ending churn across every repository:** The machine's **system** git config (`C:/Program Files/Git/etc/gitconfig`) sets `core.autocrlf=true`, which rewrote LF→CRLF on checkout and produced spurious working-tree churn and phantom "modified" files that repeatedly confused agents. Resolved by adding a per-repo `.gitattributes` (`* text=auto eol=lf`; explicit text types; explicit binary types; `*.bat`/`*.cmd` → `text eol=crlf`) to the workspace root (`4e70f4a`) and every org repo — FFXIV-Config (`93ebb89`), helix-docs (`58adc1e`), helix-origin.github.io (`4cd863a`), Hentai-Senpai-Multi-DE-Theme (`20ed6aa`), NH-Reader (`179bd22`), Windhawk-Themes (`0255193`); Steam-Vault already had one. All working trees were force-normalized to LF (a plain `git checkout -- .` is a no-op because the new `eol=lf` attribute makes CRLF and LF equivalent to git, so the files must be removed and re-checked-out). `core.autocrlf=input` was set in the **user-global** config (`C:/Users/Joshu/.gitconfig`) to override the system `true` without needing admin. Note: `.cff` is Citation File Format (text), not a font — do not mark it binary.
+
 ### [NH-Reader] (projects/NH-Reader)
 - **[NH-Reader] 2026-10-02 — Blacklist page filling & dynamic stream buffer:** In blacklist "Hide" mode, client-side filtering left pages partially empty. Resolved in v0.7.4 with continuous stream buffering in `src/lib/api.ts` (`streamBackfilledList`) and reactive `blacklistVersion` tracking.
 - **[NH-Reader] 2026-10-02 — NSIS installer finish page text legibility:** Finish page retained black text on dark background (NSIS bug #443). Resolved in v0.7.5 by reverting to stock MUI palette while keeping branded sidebar bitmap. Synchronous uninstaller execution fixed with `_?=$INSTDIR` and `ExecWait`.
