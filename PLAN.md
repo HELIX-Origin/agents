@@ -43,7 +43,7 @@ flowchart TD
 
 > **Ordering rationale:** UI-touching features first so the glassmorphism pass is applied once; the SQLite refactor is backend-only; packaging is last because it depends on frozen features and final docs.
 
-> **Status:** Complete — W.24 and W.24b (Hand-rolled i18n localization across all 30 Steam languages) fully verified. Next: W.25 (Dynamic collections).
+> **Status:** Complete — Sprint 6 fully delivered (W.24 Platform & non-Steam, W.24b Hand-rolled 30-language i18n, W.25 Dynamic smart collections, W.26 SQLite metadata cache, W.27 M5 glassmorphism UI pass, and W.28 v1.0 release packaging). Steam Vault v1.0.0 is complete and verified!
 
 ---
 

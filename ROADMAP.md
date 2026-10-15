@@ -48,7 +48,7 @@ flowchart TB
 | **[NH-Reader]** | `projects/NH-Reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/NH-Reader/releases/tag/v0.7.5) | ✅ Shipped (M12) | M13 Planning: unified sign script, multi-platform toolchain |
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
 | **[Hentai-Senpai-Multi-DE-Theme]** | `projects/Hentai-Senpai-Multi-DE-Theme` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Hentai-Senpai-Multi-DE-Theme/releases/tag/v1.0.0) | ✅ Complete | Nord GTK multi-desktop theme installer & remote docs |
-| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | M5 (Platform & Non-Steam) | 🚀 Active | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
+| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Steam-Vault/releases/tag/v1.0.0) | ✅ Shipped | Cross-platform Steam library organizer (Depressurizer revival) in Tauri v2 |
 
 ---
 
@@ -143,15 +143,15 @@ flowchart LR
 ```mermaid
 flowchart LR
     M1["[Steam-Vault] M1: Foundation ✅"] --> M2["[Steam-Vault] M2: Whole-Library Organizing ✅"]
-    M2 --> M2b["[Steam-Vault] Developer Tooling: Logged Scripts + Metadata Warming ✅"]
-    M2b --> M3["[Steam-Vault] M3: Filter Builder, Sources & Storage Manager ✅"]
-    M3 --> M3b["[Steam-Vault] Test Runner: Agent-friendly mjs suites ✅"]
-    M3b --> M4["[Steam-Vault] M4: Artwork + Non-Steam Art ✅"]
-    M4 --> M5["[Steam-Vault] M5: Platform & Non-Steam Enhancements 🚧"]
-    M5 --> M6["[Steam-Vault] M6: Dynamic (Filter-Spec) Collections ⏳"]
-    M6 --> M7["[Steam-Vault] M7: SQLite Metadata Cache ⏳"]
-    M7 --> M8["[Steam-Vault] M8: Glassmorphism UI Pass ⏳"]
-    M8 --> M9["[Steam-Vault] M9: v1.0 Release ⏳"]
+    M2 --> M2b["[Steam-Vault] Tooling: Logged Scripts + Cache Warming ✅"]
+    M2b --> M3["[Steam-Vault] M3: Filter Builder & Storage Manager ✅"]
+    M3 --> M3b["[Steam-Vault] Test Runner: Agent-friendly suites ✅"]
+    M3b --> M4["[Steam-Vault] M4: Custom Artwork Manager ✅"]
+    M4 --> M5["[Steam-Vault] M5: Platforms, Emulators, VNDB & i18n ✅"]
+    M5 --> M6["[Steam-Vault] M6: Dynamic (Filter-Spec) Collections ✅"]
+    M6 --> M7["[Steam-Vault] M7: SQLite Metadata Cache ✅"]
+    M7 --> M8["[Steam-Vault] M8: Glassmorphism UI Pass ✅"]
+    M8 --> M9["[Steam-Vault] M9: v1.0 Release Packaging ✅"]
 ```
 
 - **[Steam-Vault] Milestone M1: Foundation (DELIVERED):**
@@ -191,7 +191,7 @@ flowchart LR
     per app id with bounded concurrency, and reuses cached entries; a `sync_library_metadata` command
     warms the whole owned library; collection creation can fetch metadata on demand (`fetchMetadata`,
     default on).
-- **[Steam-Vault] Milestone M3: Filter Builder, Non-Steam Sources & Storage Manager (✅ COMPLETE — committed & pushed):**
+- **[Steam-Vault] Milestone M3: Filter Builder, Non-Steam Sources & Storage Manager (DELIVERED):**
   - **Filter builder in Organize** — Depressurizer-style **Allowed / Required / Excluded** term lists
     with name search and a kind selector, plus a live match count, applied when creating collections.
   - **Configurable non-Steam sources** — Settings gains per-launcher enable/disable and extra search
@@ -205,7 +205,7 @@ flowchart LR
   - **Agent-friendly test runner** — `scripts/test.mjs` + `scripts/lib/suites.mjs` run named suites
     with stdin closed, a per-step timeout, transcripts, and a PASS/FAIL summary (`npm test`,
     `verify`, …).
-- **[Steam-Vault] Milestone M4: Custom Artwork Manager (✅ COMPLETE — committed & pushed):**
+- **[Steam-Vault] Milestone M4: Custom Artwork Manager (DELIVERED):**
   - **Artwork view** — inspect and replace the five custom-artwork slots Steam reads from
     `userdata/<id3>/config/grid/` (portrait grid, landscape grid, hero, logo, icon) for **Steam games
     and non-Steam shortcuts alike**.
@@ -216,27 +216,28 @@ flowchart LR
     magic bytes so Steam always loads it (with a 64 MiB cap).
   - **Backup-on-replace** — every overwrite and removal archives the previous image into the
     timestamped backup store first.
-  - **No Steam-closed guard** — Steam watches `config/grid` and repaints live, so artwork writes do
-    **not** require Steam to be closed (unlike collections and shortcuts).
-  - Six new commands (`get_artwork`, `read_artwork`, `apply_artwork_from_url`,
-    `apply_artwork_from_file`, `remove_artwork`, `steamgriddb_for_game`), a new `steam/artwork.rs`
-    module (7 unit tests), and an eight-item navigation.
-- **[Steam-Vault] Milestone M5: Platform & Non-Steam Enhancements (🚧 IN PROGRESS):**
-  - **Storefront launch URIs** — Epic (`com.epicgames.launcher://apps/<id>`) and itch launch URIs are
-    written as a non-Steam shortcut's launch option, so launching it opens the right storefront.
-  - **Per-game platform override** — re-tag any shortcut's source storefront from the UI.
-  - **Microsoft Store / Xbox Game Pass detection** — a registry/manifest-based `Platform::Xbox`
-    detector, with no scraping.
-- **[Steam-Vault] Milestone M6: Dynamic (Filter-Spec) Collections (⏳ PLANNED):**
-  - Persist named Allowed / Required / Excluded specs and re-apply them as **smart collections** that can
-    be refreshed as the library changes.
-- **[Steam-Vault] Milestone M7: SQLite Metadata Cache (⏳ PLANNED):**
-  - Replace the JSON metadata cache with **SQLite** (`rusqlite`, `bundled`), with a one-time import of
-    the existing JSON cache.
-- **[Steam-Vault] Milestone M8: Glassmorphism UI Pass (⏳ PLANNED):**
-  - Full **modern dark glassmorphism** visual design pass across every view, applied once features freeze.
-- **[Steam-Vault] Milestone M9: v1.0 Release (⏳ PLANNED):**
-  - HELIX squircle branding artwork (app icon + repo social preview), GitHub issue templates, release
-    notes, CHANGELOG **v1.0.0**, and the first SemVer tag/release.
-- **[Steam-Vault] Backlog (deferred):**
-  - Post-v1.0 enhancements TBD; the pre-1.0 backlog has been promoted to milestones **M5–M9** above.
+  - Six new commands, `steam/artwork.rs` module (7 unit tests), and eight-item navigation.
+- **[Steam-Vault] Milestone M5: Platform, Emulators, VNDB & i18n Localization (DELIVERED):**
+  - Storefront launch URIs for Epic (`com.epicgames.launcher://apps/<id>`) and itch written as launch options.
+  - Per-game platform override command and UI selector.
+  - Microsoft Store / Xbox Game Pass detection with zero scraping.
+  - Keyless VNDB Kana API provider for visual novel developers, publishers, release dates, tags, and covers.
+  - Steam Store Search provider matching non-Steam/indie titles to official Steam app IDs.
+  - Local engine and game sniffer for itch.io `receipt.json`, Ren'Py, RPG Maker, and Windows PE VersionInfo.
+  - Emulator and ROM detection supporting 11 popular emulators with automated CLI launch arguments.
+  - Automatic artwork fetching for non-Steam shortcuts upon import and scan.
+  - Hand-rolled reactive i18n localization engine supporting all 30 official Valve/Steam languages with Arabic RTL layout.
+  - High-performance volume enumeration using `sysinfo::Disks` and pre-located emulators.
+- **[Steam-Vault] Milestone M6: Dynamic (Filter-Spec) Collections (DELIVERED):**
+  - Persist named filter presets (`filter-presets.json`) and evaluate dynamic matching rules.
+  - Native Valve `filterSpec` smart collections persisted directly to `cloud-storage-namespace-1.json`.
+  - "Smart Collection" badges and one-click "↻ Re-evaluate" in Collections view.
+- **[Steam-Vault] Milestone M7: SQLite Metadata Cache (DELIVERED):**
+  - Embedded SQLite database (`metadata.db`) via `rusqlite` bundled from source (zero system dependencies).
+  - WAL mode, multi-column indexing on `(provider, app_id)`, TTL handling, and zero-touch auto-migration from legacy JSON cache.
+- **[Steam-Vault] Milestone M8: Glassmorphism UI Pass (DELIVERED):**
+  - Complete modern dark obsidian glass styling pass across `app.css` and all 8 views with frosted panels, atmospheric gradients, tactile buttons, and refined glow borders.
+- **[Steam-Vault] Milestone M9: v1.0 Release Packaging (DELIVERED):**
+  - HELIX squircle 16:9 branding artwork (`static/steam-vault.svg`, `docs/assets/images/steam-vault.svg`, portal card).
+  - GitHub issue templates (`config.yml`, `1_bug_report.yml`, `2_feature_proposal.yml`).
+  - SemVer v1.0.0 release notes, CHANGELOG v1.0.0, and version bumps.

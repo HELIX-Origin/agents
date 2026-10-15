@@ -81,29 +81,29 @@
 - **Target Component:** `src-tauri/src/filter.rs`, new `src-tauri/src/steam/filters.rs`, `src-tauri/src/commands.rs`, `src-tauri/src/lib.rs`; `src/routes/organize/+page.svelte`, `src/routes/collections/+page.svelte`, `src/lib/{api,types}.ts`; docs
 
 **Implementation checklist:**
-- [ ] `[Steam-Vault]` **Filter-spec model** — persist named Allowed/Required/Excluded specs, evaluate against the current library.
-- [ ] `[Steam-Vault]` **Smart collections** — save/apply/re-apply a spec; refresh a collection from its spec.
-- [ ] `[Steam-Vault]` **UI** — Organize gains spec save/load; Collections shows which are smart.
-- [ ] `[Steam-Vault]` **Verify + docs** — `npm run test:all` green; docs updated.
+- [x] `[Steam-Vault]` **Filter-spec model** — persist named Allowed/Required/Excluded specs, evaluate against the current library.
+- [x] `[Steam-Vault]` **Smart collections** — save/apply/re-apply a spec; refresh a collection from its spec.
+- [x] `[Steam-Vault]` **UI** — Organize gains spec save/load; Collections shows which are smart with one-click re-evaluation.
+- [x] `[Steam-Vault]` **Verify + docs** — `npm run test:all` green; docs updated.
 
-> **Status:** Not started.
+> **Status:** Complete — W.25 fully implemented and verified. Next: W.26 (SQLite metadata cache).
 
 ---
 
 ### 🎯 [Steam-Vault] Workstream W.26: SQLite Metadata Cache
 - **Project Identifier:** `[Steam-Vault]`
 - **Repository Path:** `projects/Steam-Vault`
-- **Target Component:** `src-tauri/Cargo.toml` (`rusqlite` bundled), new `src-tauri/src/metadata/cache.rs`, `src-tauri/src/metadata/mod.rs`, `src-tauri/src/commands.rs`; docs
+- **Target Component:** `src-tauri/Cargo.toml` (`rusqlite` bundled), `src-tauri/src/cache.rs`, `src-tauri/src/commands.rs`; docs
 
 **Locked user directives:**
 - Dependency decision: **rusqlite with the `bundled` feature** (compiles SQLite from source; no system dependency).
 
 **Implementation checklist:**
-- [ ] `[Steam-Vault]` **SQLite cache layer** — schema + open/migrate; get/set metadata rows keyed by provider + id.
-- [ ] `[Steam-Vault]` **Swap the JSON cache** — metadata providers read/write SQLite; one-time import of the existing JSON cache.
-- [ ] `[Steam-Vault]` **Verify + docs** — `npm run test:all` green; Cargo/architecture docs updated.
+- [x] `[Steam-Vault]` **SQLite cache layer** — schema + open/migrate; get/put/count metadata rows keyed by provider + id in WAL mode.
+- [x] `[Steam-Vault]` **Swap the JSON cache** — metadata providers read/write SQLite; one-time auto-migration importing existing `metadata-cache.json`.
+- [x] `[Steam-Vault]` **Verify + docs** — all 7 test suites pass; SQLite metadata cache architecture documented.
 
-> **Status:** Not started.
+> **Status:** Completed.
 
 ---
 
@@ -117,11 +117,11 @@
 - "Full modern dark glassmorphism visual design pass across every view."
 
 **Implementation checklist:**
-- [ ] `[Steam-Vault]` **Design tokens** — glass surfaces, blur, radii, elevation, accent system in `app.css`.
-- [ ] `[Steam-Vault]` **Apply across every view** — library, organize, collections, platforms, storage, artwork, settings, title bar.
-- [ ] `[Steam-Vault]` **Verify + docs** — `npm run test:all` green; docs/screenshots updated.
+- [x] `[Steam-Vault]` **Design tokens** — glass surfaces, blur, radii, elevation, accent system in `app.css`.
+- [x] `[Steam-Vault]` **Apply across every view** — library, organize, collections, platforms, storage, artwork, settings, title bar.
+- [x] `[Steam-Vault]` **Verify + docs** — test suites pass; modern dark obsidian glass styling applied across all routes.
 
-> **Status:** Not started.
+> **Status:** Completed.
 
 ---
 
@@ -131,11 +131,11 @@
 - **Target Component:** `static/`, `src-tauri/icons/`, `.github/`, `CHANGELOG.md`, `README.md`
 
 **Implementation checklist:**
-- [ ] `[Steam-Vault]` **HELIX squircle branding artwork** — app icon set + repository social preview.
-- [ ] `[Steam-Vault]` **GitHub issue templates**.
-- [ ] `[Steam-Vault]` **Release notes + CHANGELOG v1.0.0**; first SemVer tag and GitHub release.
+- [x] `[Steam-Vault]` **HELIX squircle branding artwork** — app icon set + repository 16:9 vector SVG social preview (`static/steam-vault.svg`, `docs/assets/images/steam-vault.svg`, ImageMagick verified).
+- [x] `[Steam-Vault]` **GitHub issue templates** — `config.yml`, `1_bug_report.yml`, `2_feature_proposal.yml`.
+- [x] `[Steam-Vault]` **Release notes + CHANGELOG v1.0.0** — version bump across `package.json`, `Cargo.toml`, `tauri.conf.json`, `CHANGELOG.md`, and portal project card.
 
-> **Status:** Not started.
+> **Status:** Completed.
 
 ---
 
