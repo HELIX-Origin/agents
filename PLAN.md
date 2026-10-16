@@ -18,6 +18,21 @@
 
 ## 🎯 Active Sprints
 
+### 🚀 [Steam-Vault-Catalogue] & [Steam-Vault] & [Ecosystem-Wide] Sprint 17: Catalogue Provider Schema Alignment, Universal Modular Reusable Scripts Invariant & Seed Synchronization (Completed)
+- **Project Identifiers:** `[Steam-Vault-Catalogue]` (`projects/Steam-Vault-Catalogue`), `[Steam-Vault]` (`projects/Steam-Vault`), `[Ecosystem-Wide]`
+- **Target Components:** `projects/Steam-Vault-Catalogue/schema/providers/*.schema.json`, `projects/Steam-Vault-Catalogue/schema/game.schema.json`, `projects/Steam-Vault-Catalogue/scripts/modules/migrator.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/types.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/engine.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/indexer.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/validator.ts`, `projects/Steam-Vault-Catalogue/scripts/manage-catalogue.ts`, `projects/Steam-Vault-Catalogue/package.json`, `projects/Steam-Vault/src-tauri/src/catalog_seed.bin`, `.agents/rules/script-standards.md`
+
+#### 📝 Execution Tasks
+1. **[Steam-Vault-Catalogue] (projects/Steam-Vault-Catalogue) W.40a — Provider-Specific JSON Schema Definitions (Completed)**: Created modular JSON schemas under `schema/providers/` (`steam.schema.json`, `gog.schema.json`, `pcgamingwiki.schema.json`, `wikipedia.schema.json`, `vndb.schema.json`, `libretro.schema.json`, `igdb.schema.json`, `steamgriddb.schema.json`) mapping 1-to-1 with external provider responses.
+2. **[Steam-Vault-Catalogue] (projects/Steam-Vault-Catalogue) W.40b — Master Schema & Core Types Refactoring (Completed)**: Updated `schema/game.schema.json` with a dedicated `providers` section linking external schemas via `$ref`; updated `scripts/modules/types.ts`, `config.ts`, and `validator.ts` with typed provider interfaces and validation rules.
+3. **[Steam-Vault-Catalogue] (projects/Steam-Vault-Catalogue) W.40c — Reusable Modular Migrator Module (Completed)**: Created `scripts/modules/migrator.ts` providing permanent, extensible migration support; added `--migrate <target>` CLI option to `scripts/manage-catalogue.ts`; and registered `catalogue:migrate:providers` and `catalogue:migrate:dry` in `package.json`.
+4. **[Steam-Vault-Catalogue] (projects/Steam-Vault-Catalogue) W.40d — Whole-Catalogue Migration & Index Compilation (Completed)**: Ran provider migration across all 729 game files in `games/*.json`; verified `catalogue:validate` succeeds (729/729 games valid); compiled minimal living `index.json` and distributed SQLite seed `dist/catalogue.db.gz`.
+5. **[Ecosystem-Wide] W.40e — Ecosystem Reusable Modular Extension Invariant (Completed)**: Codified Invariant 4 in `.agents/rules/script-standards.md` mandating that all new scripts across all repositories (Tauri `.mjs` and non-Tauri `.ts`) be implemented as reusable modular extensions rather than disposable one-offs.
+6. **[Steam-Vault] (projects/Steam-Vault) W.40f — Seed Synchronization & Verification (Completed)**: Copied updated `dist/catalogue.db.gz` to `src-tauri/src/catalog_seed.bin`; verified Rust unit tests (`cargo test cache`), Svelte diagnostics (`npm run check`, 0 errors/0 warnings), and Vite production static build (`npm run build`).
+7. **[Steam-Vault-Catalogue] & [Steam-Vault] W.40g — Git Synchronization (Completed)**: Committed and pushed all changes to `HELIX-Origin/Steam-Vault-Catalogue` (`be5ed8c`) and `HELIX-Origin/Steam-Vault` (`cd0e97c`).
+
+---
+
 ### 🚀 [Theme-Toolkit] & [Ecosystem-Wide] Sprint 16: Theme Toolkit Repository Creation, Base Framework Scaffolding, and Dedicated Agent Suite (Completed)
 - **Project Identifiers:** `[Theme-Toolkit]` (`projects/Theme-Toolkit`), `[Ecosystem-Wide]`
 - **Target Components:** `projects/Theme-Toolkit/*`, `.agents/rules/theme-engineering-standards.md`, `.agents/skills/macos-theme-engineering.md`, `.agents/skills/linux-theme-engineering.md`, `.agents/agents/desktop-theme-engineer/*`, `AGENTS.md`, `.agents/rules/workspace.md`, `ROADMAP.md`

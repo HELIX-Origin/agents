@@ -16,8 +16,9 @@
 
 2. **Non-Tauri Applications — Modular TypeScript ESM Scripts**:
    - Non-Tauri applications and tools that use automation scripts (e.g., crawlers, catalogues, backend tools like `projects/Steam-Vault-Catalogue`) **must be implemented in TypeScript ESM (`.ts`)**.
-   - Executed using modern TypeScript ESM loaders (`tsx`, `ts-node/esm`, or native Node/runtime loaders).
-   - Must mirror the exact same modular runner architecture with shared utilities (`scripts/lib/runner.ts`) and unified domain handlers.
+   - Executed using modern TypeScript ESM loaders (`tsx`, `ts-node/esm`, or native Node 22+ `--experimental-strip-types`).
+   - Must mirror the exact same modular runner architecture with shared utilities (`scripts/lib/runner.ts` or `scripts/modules/*`) and unified domain handlers.
+   - **Reusable Modular Extension Invariant**: Whenever a new script or utility is needed (such as migrations, schema transformers, data cleaners, or formatters), **always build it as a reusable extension module** (e.g., under `scripts/modules/`) rather than a temporary disposable script. Expose it through the unified management CLI (`scripts/manage-catalogue.ts`) via sub-options and register canonical `main:sub:option` commands in `package.json` (`catalogue:migrate:providers`, `catalogue:migrate:dry`). This guarantees proper migration and data maintenance support whenever changes occur.
 
 3. **Universal Command Standard — `main:sub:option`**:
    - All `package.json` scripts across ALL projects must strictly adhere to the hierarchical **`main:sub:option`** format (or `main:sub` where no sub-option exists).
@@ -32,7 +33,13 @@
      - Crawlers & data: `crawler:run:all`, `crawler:sync:steam`, `db:migrate:up`, `db:seed:full`
    - Top-level single-word aliases (e.g. `dev`, `build`, `test`, `check`, `preview`) are permitted solely as ergonomic forwarders to their canonical `main:sub:option` counterparts for compatibility with CI and Vite tooling.
 
-4. **Cross-Platform Path & Environment Invariant**:
+4. **Ecosystem-Wide Reusable Modular Extension Invariant**:
+   - Across **ALL repositories** in the organization (both Tauri `.mjs` suites and non-Tauri TypeScript `.ts` suites), whenever a new script, tool, or utility is needed (such as migrations, schema transformers, asset compilers, formatters, diagnostic helpers, or data cleaners), **never create disposable, one-off, or throwaway scripts**.
+   - **Always build them as reusable modular extensions** integrated directly into the repository's modular script architecture (e.g. `scripts/modules/*` or `scripts/lib/*`).
+   - Wire them into the repository's central CLI or runner with sub-options and expose them as standard `main:sub:option` commands in `package.json`.
+   - Rationale: Any task worth writing a script for is almost certain to be needed again during future updates, migrations, or data audits. Making them permanent, reusable modular commands preserves organizational capabilities and prevents technical debt.
+
+5. **Cross-Platform Path & Environment Invariant**:
    - Scripts must never hardcode OS-specific path separators (`\\` or `/`). Always use `node:path` (`path.join`, `path.resolve`) or forward slashes.
    - Always quote arguments passed to child processes.
    - Never write CRLF line endings; enforce LF (`\n`) for all generated script outputs and manifests.

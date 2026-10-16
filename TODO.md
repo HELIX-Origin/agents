@@ -25,6 +25,32 @@
 
 ## 🔥 Active Workstreams
 
+### 🎯 [Steam-Vault-Catalogue] & [Steam-Vault] & [Ecosystem-Wide] Workstream W.40: Catalogue Provider Schema Alignment, Universal Modular Reusable Scripts Invariant & Seed Synchronization (Completed)
+- **Project Identifiers:** `[Steam-Vault-Catalogue]` (`projects/Steam-Vault-Catalogue`), `[Steam-Vault]` (`projects/Steam-Vault`), `[Ecosystem-Wide]`
+- **Target Components:** `projects/Steam-Vault-Catalogue/schema/providers/*.schema.json`, `projects/Steam-Vault-Catalogue/schema/game.schema.json`, `projects/Steam-Vault-Catalogue/scripts/modules/migrator.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/types.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/engine.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/indexer.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/validator.ts`, `projects/Steam-Vault-Catalogue/scripts/manage-catalogue.ts`, `projects/Steam-Vault-Catalogue/package.json`, `projects/Steam-Vault/src-tauri/src/catalog_seed.bin`, `.agents/rules/script-standards.md`
+
+**Locked user directives:**
+- "the app is dependant on the catalogue so that always needs to be updated and commited first to ensure the app is loading it correctly."
+- "As for the Zero-API key plan, that was abandodnded in favor of optional API keys due to the artwork manager and per game details pages needing them to update missing art and metadata."
+- "also our catalogue schema and seeds need to match with the supported metadata providers. the structure i build might not be properly compatible with them. So we need to do a thorough update of our catalogue repo to fully match it to the supported metadata providers so it uses the actual supported metada."
+- "This may involve using a seperate scheme per provider if it works better."
+- "in fact, importing the official schemes per provide rmight be best. Then our own scheme can be minimalized only to what it actually needs to be importing from our own index.json file."
+- "This means a proper alignment of our cheme and all json files is needed."
+- "the migrate providers script should be a migrate script that is built as part of our unified scripts. this way it can use sub options for migrations and be reusable to allow us to have proper migration support in case we ever need it again."
+- "proper migrations upport is a must for updating entrees whenever we make changes to our catalogue. So this is a definite benefit."
+- "This applies to all of our project scripts by the way."
+- "any time we need to make a new script for our catalogue, we should conside rincluding it as a resuable extension to our modular script. Chances are if we have to make a new script, we may end up needing to use it again at some point."
+
+**Implementation checklist:**
+- [x] `[Steam-Vault-Catalogue]` **Dedicated Provider Schemas & Master Schema Alignment** — created separate provider JSON schemas under `schema/providers/` (`steam.schema.json`, `gog.schema.json`, `pcgamingwiki.schema.json`, `wikipedia.schema.json`, `vndb.schema.json`, `libretro.schema.json`, `igdb.schema.json`, `steamgriddb.schema.json`) and imported them into master `schema/game.schema.json` via `$ref` in `providers`.
+- [x] `[Steam-Vault-Catalogue]` **Reusable Modular Migrator Integration** — authored `scripts/modules/migrator.ts` providing extensible migration routines; integrated `--migrate <target>` into `scripts/manage-catalogue.ts`; and added `catalogue:migrate:providers` and `catalogue:migrate:dry` to `package.json`.
+- [x] `[Steam-Vault-Catalogue]` **Catalogue Migration & Index Rebuild** — migrated all 729 game entries in `games/*.json` to populate structured `providers` matching external APIs; verified validation passes with 0 errors across 729 files; rebuilt minimal `index.json` entrypoint.
+- [x] `[Ecosystem-Wide]` **Universal Reusable Script Extension Invariant** — codified Invariant 4 in `.agents/rules/script-standards.md` establishing that all new scripts across all projects must be implemented as permanent reusable modular extensions rather than disposable one-offs.
+- [x] `[Steam-Vault]` **Seed Synchronization & Test Verification** — copied updated `dist/catalogue.db.gz` to `src-tauri/src/catalog_seed.bin`; verified Rust unit tests pass (`cargo test cache`); verified Svelte check passes with 0 errors/warnings (`npm run check`); and verified production static build succeeds (`npm run build`).
+- [x] `[Steam-Vault-Catalogue]` & `[Steam-Vault]` **Git Commit & Push** — committed and pushed all changes to `HELIX-Origin/Steam-Vault-Catalogue` (`be5ed8c`) and `HELIX-Origin/Steam-Vault` (`cd0e97c`).
+
+---
+
 ### 🎯 [Theme-Toolkit] & [Ecosystem-Wide] Workstream W.39: Theme Toolkit Repository Creation, Base Framework Scaffolding, and Dedicated Agent Suite (Completed)
 - **Project Identifiers:** `[Theme-Toolkit]` (`projects/Theme-Toolkit`), `[Ecosystem-Wide]`, `[NH-Reader]` (`projects/NH-Reader`), `[Steam-Vault]` (`projects/Steam-Vault`)
 - **Target Components:** `projects/Theme-Toolkit/*`, `.agents/rules/theme-engineering-standards.md`, `.agents/templates/nsis-hooks-template.nsh`, `.agents/skills/macos-theme-engineering.md`, `.agents/skills/linux-theme-engineering.md`, `.agents/skills/tauri-desktop-engineering.md`, `.agents/agents/desktop-theme-engineer/*`, `AGENTS.md`, `.agents/rules/workspace.md`, `ROADMAP.md`
