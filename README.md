@@ -53,8 +53,9 @@ This repository houses the authoritative operational blueprint for AI coding ass
 │   ├── helix-docs/            <- Shared Jekyll theme & preview site
 │   ├── helix-origin.github.io/ <- GitHub Pages portal
 │   ├── NH-Reader/             <- Desktop client for nhentai
-│   ├── Windhawk-Themes/       <- Windows 11 styling suites & toolchains
-│   └── Hentai-Senpai-Multi-DE-Theme/ <- Multi-DE GTK and GNOME theme
+│   ├── Steam-Vault/           <- Universal Game Launcher
+│   ├── Theme-Toolkit/         <- Cross-platform theme studio
+│   └── Windhawk-Themes/       <- Windows 11 styling suites & toolchains
 └── scratch/                   <- UNTRACKED: Temporary agent working files
 ```
 
@@ -81,8 +82,9 @@ New-Item -ItemType Directory -Force -Path "projects"
 gh repo clone HELIX-Origin/helix-docs projects/helix-docs
 gh repo clone HELIX-Origin/helix-origin.github.io projects/helix-origin.github.io
 gh repo clone HELIX-Origin/NH-Reader projects/NH-Reader
+gh repo clone HELIX-Origin/Steam-Vault projects/Steam-Vault
+gh repo clone HELIX-Origin/Theme-Toolkit projects/Theme-Toolkit
 gh repo clone HELIX-Origin/Windhawk-Themes projects/Windhawk-Themes
-gh repo clone HELIX-Origin/Hentai-Senpai-Multi-DE-Theme projects/Hentai-Senpai-Multi-DE-Theme
 ```
 
 ---

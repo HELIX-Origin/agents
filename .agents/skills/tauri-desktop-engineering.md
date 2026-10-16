@@ -112,12 +112,104 @@ Across all HELIX-Origin Tauri v2 desktop applications, the **NH Reader NSIS inst
 2. **Improved Dark Obsidian UI (`sidebarImage`):**
    - Custom 164x314 24-bit BMP graphic (`src-tauri/windows/sidebar.bmp`) placed on the Welcome and Finish wizard pages.
    - Header images (`headerImage`) are intentionally avoided because wide banners render as cramped top-bar icons in modern NSIS layouts.
-3. **Pre-Install Process Termination & Cleanup (`windows/hooks.nsh`):**
-   - Automatically terminates any running instances prior to file extraction to prevent file-locking errors.
-   - Synchronously runs previous version uninstallers (`$INSTDIR\uninstall.exe /S`) to prevent orphaned binary or asset files.
-   - Authoritative template maintained in [`.agents/templates/nsis-hooks-template.nsh`](../templates/nsis-hooks-template.nsh).
+3. **Update & Installation Lifecycle (`NSIS_HOOK_PREINSTALL` in `windows/hooks.nsh`):**
+   - During updates or fresh installations, `NSIS_HOOK_PREINSTALL` terminates any active instances of the app before file extraction so running binaries do not lock destination files.
+   - **Critical Invariant:** Pre-install hooks must **never** invoke `uninstall.exe`. Running `uninstall.exe` in pre-install is an anti-pattern patch method that deletes existing configurations, thrashes registry state, and breaks seamless application updates. Pre-install hooks are solely dedicated to updating and installing.
 4. **Multi-Language Accessibility:**
    - 10 international languages with automatic system locale detection and an interactive language selector fallback (`displayLanguageSelector: true`).
+
+### Windows Uninstall Registry & `uninstall.exe` Lifecycle
+
+Windows Add/Remove Programs (Settings > Apps > Installed apps and `appwiz.cpl`) relies strictly on an executable uninstaller registered in the Windows Registry:
+- **Registry Keys:** `HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\<App>` (current-user) or `HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\<App>` (all-users).
+- **Required Properties:**
+  - `UninstallString`: `"$INSTDIR\uninstall.exe"` — the uninstaller invoked when the user requests uninstallation.
+  - `QuietUninstallString`: `"$INSTDIR\uninstall.exe" /S` — silent uninstallation string used by WinGet and automated deployment tools.
+  - `DisplayIcon`: `"$INSTDIR\<binary>.exe,0"` — icon rendered in the Windows Settings installed apps list.
+  - `InstallLocation`: `"$INSTDIR"`
+- **Uninstallation Process Termination (`NSIS_HOOK_PREUNINSTALL`):**
+  - If the application, background services, WebView2 renderer instances, or companion tools (such as `legendary.exe`) are running when Windows executes `uninstall.exe`, the OS kernel holds open file handles and locks `$INSTDIR`.
+  - Without a pre-uninstall hook, `uninstall.exe` fails with file access errors, leaving the application half-uninstalled and the Windows registry entry corrupted or orphaned.
+  - Every Tauri desktop project must declare `NSIS_HOOK_PREUNINSTALL` in `src-tauri/windows/hooks.nsh`:
+    ```nsis
+    !macro NSIS_HOOK_PREUNINSTALL
+      ; Terminate application and companion tools
+      nsExec::Exec 'taskkill /F /IM "{{ APP_EXE_NAME }}.exe" /T'
+      nsExec::Exec 'taskkill /F /IM "{{ APP_BINARY_NAME }}.exe" /T'
+      nsExec::Exec 'taskkill /F /IM "legendary.exe" /T'
+      ; Cooldown for handle release
+      Sleep 1000
+    !macroend
+    ```
+- **Post-Uninstall Residual Directory Cleanup (`NSIS_HOOK_POSTUNINSTALL`):**
+  - Removes any dynamically created runtime subfolders (e.g. portable tools, local caches) in `$INSTDIR` that would otherwise prevent NSIS from deleting the application folder.
+  - Canonical template maintained in [`.agents/templates/nsis-hooks-template.nsh`](../templates/nsis-hooks-template.nsh).
+
+### Multi-Platform Uninstaller Standards (macOS & Linux)
+
+Unlike Windows, macOS and Linux do not utilize a centralized uninstaller registry. To ensure uninstallation is never blocked by running processes on other platforms:
+1. **macOS Uninstaller Architecture:**
+   - Script template: [`.agents/templates/uninstall-macos-template.sh`](../templates/uninstall-macos-template.sh).
+   - Terminates running instances via `pkill -f "<App Name>"` and `pkill -f "<Bundle ID>"`.
+   - Waits for process teardown and handle release (`sleep 1`).
+   - Removes `/Applications/<App Name>.app` or `~/Applications/<App Name>.app`.
+   - Supports optional `--purge` parameter to remove `~/Library/Application Support/<App Name>`, `~/Library/Caches/<Bundle ID>`, and preferences plist.
+2. **Linux Uninstaller Architecture:**
+   - Script template: [`.agents/templates/uninstall-linux-template.sh`](../templates/uninstall-linux-template.sh).
+   - Terminates running instances via `pkill -f "<binary_name>"`.
+   - Cleans up desktop menu entries (`~/.local/share/applications/` and `/usr/share/applications/`).
+   - Runs `update-desktop-database` to refresh system application menus.
+   - Purges application icons from `~/.local/share/icons/hicolor/`.
+   - In `.deb` packaging, maintainer script `prerm` must execute `pkill -f "<binary_name>" || true` before `dpkg` unlinks package files.
+
+### Windows WebView2 Teardown & Chrome_WidgetWin_0 (Error 1412) Standard
+
+On Windows, Chromium's internal Win32 window layer (`ui\gfx\win\window_impl.cc:172`) registers window classes such as `Chrome_WidgetWin_0` for webview windows.
+When an application shuts down, Chromium invokes `UnregisterClassW(L"Chrome_WidgetWin_0", hInstance)`.
+If any Win32 HWND belonging to that class is still open or hidden (e.g., when the main window was hidden instead of destroyed via a tray minimize pattern, or `app.exit(0)` was called before window handles were unhooked), the Windows API returns error `1412` (`ERROR_CLASS_HAS_WINDOWS: "The class still has open windows."`).
+
+**Mandatory Implementation Rules for all HELIX-Origin Tauri Apps:**
+1. **Explicit Window Destruction Before Process Exit**:
+   When quitting the application (e.g. from the tray icon or exit menu), never call `app.exit(0)` while webview windows are hidden or open. Always set an atomic `IS_QUITTING` flag and explicitly destroy all webview windows first:
+   ```rust
+   use std::sync::atomic::{AtomicBool, Ordering};
+   static IS_QUITTING: AtomicBool = AtomicBool::new(false);
+
+   // In tray or quit action:
+   "quit" => {
+       IS_QUITTING.store(true, Ordering::SeqCst);
+       for (_, window) in app.webview_windows() {
+           let _ = window.destroy();
+       }
+       app.exit(0);
+   }
+   ```
+2. **Prevent Close Guard on Window Teardown**:
+   In `on_window_event`, guard `CloseRequested` so `api.prevent_close()` is bypassed when the application is actually quitting:
+   ```rust
+   .on_window_event(|window, event| {
+       #[cfg(desktop)]
+       if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+           if window.label() == "main" && !IS_QUITTING.load(Ordering::SeqCst) {
+               api.prevent_close();
+               let _ = window.hide();
+           }
+       }
+   })
+   ```
+3. **Chromium / WebView2 Diagnostic Log Suppression**:
+   At the very entry point of `pub fn run()`, configure `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS` on Windows to silence internal Chromium stderr logs (`--disable-logging --log-level=3`):
+   ```rust
+   #[cfg(windows)]
+   {
+       if std::env::var("WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS").is_err() {
+           std::env::set_var(
+               "WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS",
+               "--disable-logging --log-level=3",
+           );
+       }
+   }
+   ```
 
 ---
 
@@ -154,10 +246,29 @@ All desktop repositories must maintain:
 
 ---
 
-## 7. Verification Checklist
+## 8. WinGet Compliance, Native Launcher Integration & Packaging Invariants
 
-Before committing any desktop changes:
-1. `npm run check --prefix projects/<project>` — Type check passed with 0 errors.
-2. `cargo check --manifest-path projects/<project>/src-tauri/Cargo.toml` — Rust compilation passed with 0 errors.
-3. `cargo test --manifest-path projects/<project>/src-tauri/Cargo.toml` — All backend unit & integration tests passed.
-4. Line endings: Enforce LF across all files.
+1. **WinGet Compliance & Zero Emulation Policy**:
+   - Applications distributed or submitted to Microsoft's WinGet package repository (`microsoft/winget-pkgs`) must strictly avoid emulation or ROM management features. Emulators and ROM managers frequently trigger policy flags or rejections regarding copyright infringement and piracy enablement.
+   - Applications intended for WinGet publication must never bundle emulator execution engines, ROM directory scrapers, or emulation platform types.
+
+2. **Native Launcher Integration & Zero Credential Invariant**:
+   - Universal launchers should integrate with official platform launchers (Steam, Epic Games, GOG Galaxy, EA App, Ubisoft Connect, Battle.net, Xbox, Amazon Games, itch.io) to detect owned and installed games for the authenticated user on the host system.
+   - **Zero Password Storage:** Applications must never handle, scrape, or store third-party user credentials or authentication tokens. All game installations, updates, uninstalls, and launches delegate to official launcher protocols (`steam://`, `com.epicgames.launcher://`, `goggalaxy://`, `uplay://`, etc.).
+   - **Full Platform Feature Preservation:** Delegating to official launchers preserves official game overlays, cloud synchronization, community friend lists, playtime counters, and achievement unlocks.
+   - **Metadata Architecture:** External metadata providers (e.g., IGDB, SteamGridDB, PCGamingWiki) serve primarily to enrich missing high-resolution artwork (heroes, logos, icons, screenshots) and provide metadata for manually added non-store titles.
+
+3. **Store & Order Delegation Invariant**:
+   - If an in-app store or deals browser is provided, it is strictly mandatory that order placement, purchasing, and payment processing are never performed within the application.
+   - Any purchase intent must pass directly to the official platform client or open the official store URL in the user's default browser.
+
+4. **Generic SQLite Database Naming Scheme**:
+   - Applications must never tie local SQLite database filenames to brittle branding or product names (e.g. `steam-vault.db` or `universal-game-launcher.db`).
+   - Use generic naming schemes such as `database.sqlite` (with fallback to `database.db` and automatic copy/migration from legacy paths) to prevent file breakage across branding iterations.
+
+5. **Tauri v2 NSIS Installer Artwork Specifications**:
+   - **NSIS Sidebar Bitmap:** Dimensions must strictly match default Tauri v2 NSIS specifications: **164 × 314 pixels**, BMP3 (Windows Bitmap) format (`src-tauri/windows/sidebar.bmp`).
+   - **Branding Artwork:** Vector SVGs follow `.agents/rules/project-artwork.md` standards (16:9 1920×1080 viewBox, dark theme background).
+
+6. **Animated Splash Transitions**:
+   - Desktop apps with heavyweight initializations (e.g. multi-store scan, SQLite index loading) should provide an animated splash screen at launch (`splashVisible` / `splashExiting`) with minimum display timing (e.g. 850ms) and smooth scale/fade transitions.

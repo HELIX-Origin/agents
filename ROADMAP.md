@@ -3,7 +3,8 @@
 > 🗺️ **Living Source of Truth**: Unified organizational roadmap, multi-project milestone matrix, and long-term product direction across all repositories under **HELIX Origin**.
 >
 > Pair with [`PLAN.md`](./PLAN.md) (sprint execution), [`TODO.md`](./TODO.md) (task ledger), and [`BUGS.md`](./BUGS.md) (open issues and quirks).
-> Last updated: 2026-10-14
+> Delivered historical milestone records live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md).
+> Last updated: 2026-10-16
 
 ---
 
@@ -12,7 +13,7 @@
 - **Single Pane of Glass:** All repository roadmaps, sprints, tasks, and bugs are synchronized here at workspace root.
 - **Mandatory Project Tagging Invariant:** Every tracked milestone, sprint, task, bug, and backlog candidate **must explicitly state its project name and repository path** (`[<project-name>] (<project-path>)`). Unscoped items are strictly prohibited so agents never conflate repositories.
 - **Active Milestones First:** Active workstreams and upcoming milestones must always precede completed historical records.
-- **Strict Typing:** Differentiate explicitly between **SemVer repositories** (`helix-docs`, `NH-Reader`, `Hentai-Senpai-Multi-DE-Theme`) and **Milestone/Sprint-tracked repositories** (`Windhawk-Themes`, `helix-origin.github.io`).
+- **Strict Typing:** Differentiate explicitly between **SemVer repositories** (`helix-docs`, `NH-Reader`, `Universal-Game-Launcher`, `Theme-Toolkit`) and **Milestone/Sprint-tracked repositories** (`Windhawk-Themes`, `helix-origin.github.io`).
 - **No Stale Ledgers:** Updates to roadmap milestones must occur before or alongside code and configuration changes.
 
 ---
@@ -24,14 +25,14 @@ flowchart TB
     Org[HELIX Origin Organization] --> DocsTheme["[helix-docs] Remote Jekyll Theme"]
     Org --> Portal["[helix-origin.github.io] Portal Hub"]
     Org --> DesktopApp["[NH-Reader] Desktop/Mobile App"]
-    Org --> SteamVault["[Steam-Vault] Desktop App"]
-    Org --> Catalogue["[Steam-Vault-Catalogue] Game Catalogue"]
+    Org --> UniversalLauncher["[Universal-Game-Launcher] Desktop App"]
+    Org --> ThemeToolkit["[Theme-Toolkit] Theme Suite"]
     Org --> ShellMods["[Windhawk-Themes] Shell Styler Suite"]
 
     DocsTheme -.->|remote_theme| Portal
     DocsTheme -.->|remote_theme| DesktopApp
-    DocsTheme -.->|remote_theme| SteamVault
-    DocsTheme -.->|remote_theme| Catalogue
+    DocsTheme -.->|remote_theme| UniversalLauncher
+    DocsTheme -.->|remote_theme| ThemeToolkit
     DocsTheme -.->|remote_theme| ShellMods
 ```
 
@@ -49,10 +50,9 @@ flowchart TB
 | **[helix-origin.github.io]** | `projects/helix-origin.github.io` | Rolling Sprints | Portal v2 | 🚀 Active | 16:9 vector artwork integration, project showcase cards |
 | **[NH-Reader]** | `projects/NH-Reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/NH-Reader/releases/tag/v0.7.5) | 🚀 Active | M13: Unified `.mjs` scripts architecture, main:sub:option command hierarchy, local code signing |
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
-| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | [v1.2.0](https://github.com/HELIX-Origin/Steam-Vault/releases/tag/v1.2.0) | 🚀 Active | Per-platform lib isolation, per-platform tauri config, WinGet package registration, opt-in code signing |
-| **[Steam-Vault-Catalogue]** | `projects/Steam-Vault-Catalogue` | SemVer | [v1.1.0](https://github.com/HELIX-Origin/Steam-Vault-Catalogue/releases/tag/v1.1.0) | 🚀 Active | Community open game catalogue, modular TypeScript manager, main:sub:option scripts & living index |
+| **[Universal-Game-Launcher]** | `projects/Steam-Vault` | SemVer | [v1.4.0](https://github.com/HELIX-Origin/Steam-Vault) | 🚀 Active | M14: Universal Game Launcher Rebranding, Zero Emulation Purge for WinGet, Generic SQLite Persistence & Modern Visual Identity |
+| **[Universal-Game-Launcher-Plugins]** | `projects/Universal-Game-Launcher-Plugins` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/Universal-Game-Launcher-Plugins) | 🚀 Active | Official drop-in plugin catalog, 11 platform plugins, 17 rich metadata providers, JSON schema & validator |
 | **[Theme-Toolkit]** | `projects/Theme-Toolkit` | SemVer | [v0.1.0-alpha](https://github.com/HELIX-Origin/Theme-Toolkit) | 🚀 Active | M1: Framework scaffolded, Per-Platform Lib isolation, native packaging blueprints |
-| **[Hentai-Senpai]** | `projects/Hentai-Senpai-Multi-DE-Theme` | SemVer | Archived | 🛑 Discontinued | Discontinued and archived; unmaintained legacy reference |
 
 ---
 
@@ -85,11 +85,7 @@ flowchart LR
 ### 2. [NH-Reader] — Desktop & Android Reader
 *Target Path: `projects/NH-Reader` · Tauri / Rust / SvelteKit Native Client*
 
-- **[NH-Reader] Milestone History (M1–M12 Shipped):**
-  - **M1–M4**: Foundation, Browse, Advanced Query Search & Filter Drawer, Global Blacklist engine.
-  - **M5–M8**: SQLite Cache, Responsive Reader, Throttled Background Workers, Portable Packaging.
-  - **M9–M11**: 18-Language Localization Core, Disk Storage Budgets & LRU Pruning, Official Archive Downloads & Library Hub.
-  - **M12 (v0.7.3 – v0.7.5)**: Complete 17 community language packs, custom title bar with per-OS window controls, RTL polish, multi-platform portable archives, unified `npm run sign` (`scripts/sign.mjs`), squircle website assets (`logo.svg`, `favicon.ico`, `icon.png`).
+- **[NH-Reader] Milestone History (M1–M12 Delivered)**: Foundation, Browse, Advanced Query Search, Blacklist Engine, SQLite Cache, Responsive Reader, Storage Budgets, 18-Language Localization Core, Custom Title Bar, and Multi-Platform Sign Script (v0.1.0 – v0.7.5). Full technical summaries live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md#nh-reader).
 - **[NH-Reader] Milestone M13 (UPCOMING / PLANNED):**
   - Tag frequency analytics and recommended read suggestions based on local history.
   - Multi-profile library partitions (e.g. separate blacklist/favorites sets).
@@ -100,14 +96,7 @@ flowchart LR
 ### 3. [helix-docs] — Remote Jekyll Theme
 *Target Path: `projects/helix-docs` · Organization Documentation & Wiki Engine*
 
-- **[helix-docs] v1.0.0 Delivery (SHIPPED):**
-  - Layered SCSS architecture (`support/`, `modules/`, `color_schemes/`, `vendor/`, `custom/`).
-  - Precompiled Dart Sass `assets/css/site.css` (zero build-time SCSS compilation on GitHub Pages).
-  - Pure frontmatter-driven 3-level tree navigation (`_includes/components/nav.html`).
-  - Modular `<section class="doc-section">` landing cards with zero Kramdown indentation bugs.
-  - Wiki layout delegation for docs collections (`layout: wiki`).
-  - Extracted universal site-wide top navbar partial (`_includes/components/navbar.html`).
-  - Expanded catalogue column min-width to 400px.
+- **[helix-docs] v1.0.0 Delivery (SHIPPED)**: Layered SCSS architecture, precompiled Dart Sass `site.css`, frontmatter tree navigation, modular card layouts, and universal navbar. Full technical summaries live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md#helix-docs).
 - **[helix-docs] v1.1.0 Roadmap (PLANNED):**
   - Dedicated client-side Mermaid diagram rendering helper (`components/mermaid.html`).
   - Dynamic in-page Table of Contents sidebar module (solving `BUG-14`).
@@ -128,154 +117,56 @@ flowchart LR
 
 ---
 
-### 5. [Hentai-Senpai-Multi-DE-Theme] — Nord GTK Theme (DISCONTINUED & ARCHIVED)
-*Target Path: `projects/Hentai-Senpai-Multi-DE-Theme` · Linux Desktop Customization*
-
-- **[Hentai-Senpai-Multi-DE-Theme] Archival Status:**
-  - Discontinued and archived. Development and maintenance ceased due to lack of Linux testbeds and maintenance capacity.
-  - Repository is archived on GitHub (`isArchived: true`), documentation portal pages decommissioned, and all active agent tasks completed.
-
----
-
-### 6. [Steam-Vault] — Steam Library Organizer
+### 5. [Universal-Game-Launcher] (formerly Steam-Vault) — Universal Game Launcher
 *Target Path: `projects/Steam-Vault` · Tauri v2 / Rust / SvelteKit Desktop App*
 
 ```mermaid
 flowchart LR
-    M1["[Steam-Vault] M1: Foundation ✅"] --> M2["[Steam-Vault] M2: Whole-Library Organizing ✅"]
-    M2 --> M2b["[Steam-Vault] Tooling: Logged Scripts + Cache Warming ✅"]
-    M2b --> M3["[Steam-Vault] M3: Filter Builder & Storage Manager ✅"]
-    M3 --> M3b["[Steam-Vault] Test Runner: Agent-friendly suites ✅"]
-    M3b --> M4["[Steam-Vault] M4: Custom Artwork Manager ✅"]
-    M4 --> M5["[Steam-Vault] M5: Platforms, Emulators, VNDB & i18n ✅"]
-    M5 --> M6["[Steam-Vault] M6: Dynamic (Filter-Spec) Collections ✅"]
-    M6 --> M7["[Steam-Vault] M7: SQLite Metadata Cache ✅"]
-    M7 --> M8["[Steam-Vault] M8: Glassmorphism UI Pass ✅"]
-    M8 --> M9["[Steam-Vault] M9: v1.0 Release Packaging ✅"]
+    M1["M1: Foundation ✅"] --> M2["M2: Library Organizing ✅"]
+    M2 --> M3["M3: Storage Manager ✅"]
+    M3 --> M4["M4: Artwork Manager ✅"]
+    M4 --> M5["M5: Platforms & i18n ✅"]
+    M5 --> M7["M7: SQLite Cache ✅"]
+    M7 --> M9["M9: v1.0 Release ✅"]
+    M9 --> M12["M12: Deals & News ✅"]
+    M12 --> M13["M13: Multi-Platform & WinGet ✅"]
+    M13 --> M14["M14: Rebrand & Zero-Emulation 🚀"]
+    M14 -.-> M15["M15: Store Checkout (Planned) ⏳"]
+    M15 -.-> M16["M16: Cloud Gaming (Planned) ⏳"]
 ```
 
-- **[Steam-Vault] Milestone M1: Foundation (DELIVERED):**
-  - Clean-room, cross-platform revival of **Depressurizer** as a Tauri v2 app.
-  - Steam discovery (registry + cross-platform fallbacks), library/account aggregation from
-    `libraryfolders.vdf`, `appmanifest_*.acf`, `localconfig.vdf`, and non-Steam `shortcuts.vdf`.
-  - Modern Steam collection read/write against the cloud namespace store, with backups and a
-    Steam-must-be-closed guard.
-  - Metadata provider layer: Steam Store (`appdetails`), Steam Web API, SteamGridDB, IGDB (Twitch),
-    PCGamingWiki, Wikipedia. **RAWG intentionally excluded (service defunct).** Steam Web API,
-    SteamGridDB, and IGDB are the only keyed providers.
-  - AutoCats engine + Allowed/Required/Excluded filter model; JSON metadata cache; local settings.
-  - `docs/` GitHub Pages site on the `helix-docs` remote theme, live at
-    **https://helix-origin.github.io/Steam-Vault/** (source `main` / `docs`).
-- **[Steam-Vault] Milestone M2: Whole-Library Organizing (DELIVERED):**
-  - **Custom title bar** — frameless window (`decorations: false`), a draggable app header, and
-    platform-aware window controls (macOS traffic lights, Windows-style buttons elsewhere).
-  - **Whole owned library** — the Steam Web API's `GetOwnedGames` result is cached to
-    `owned-games.json` and merged into the Library view, so owned-but-not-installed games can be
-    organized too.
-  - **External platform detection** — GOG, Epic Games, itch.io, Amazon Games, Ubisoft Connect, EA,
-    Battle.net, Rockstar, and other publishers, read from local launcher manifests, the GOG registry,
-    the itch app library, and the Windows Uninstall registry (no scraping, no launcher login).
-  - **Import as non-Steam shortcuts** — appids derived exactly as Steam does
-    (`crc32(exe + name) | 0x80000000`), quoted `Exe` / `StartDir`, de-duplication, and a persisted
-    appid → platform map.
-  - **Collection creation from any sorting option** — genre, developer, publisher, Steam feature,
-    tag, release year, user score, platform, installed state, playtime, and name — previewed, then
-    written in a single backed-up operation.
-  - New **Platforms** and **Organize** views added to the navigation.
-- **[Steam-Vault] Developer Tooling: Logged Command Scripts + Metadata Cache Warming (COMPLETE):**
-  - **Logged command scripts** — `scripts/*.mjs` wrap `tauri dev` / `tauri build` (and any command via
-    `npm run log`) so each run streams live and leaves a timestamped, ANSI-stripped transcript in
-    `logs/` (`<type>-<YYYY-MM-DD_HH-MM-SS>.log`, never overwritten).
-  - **On-demand metadata cache warming** — the Steam Store provider also fetches store **tags**
-    (`actions/ajaxgetstoretags`); `ensure_steam_metadata` de-duplicates ids, fetches `appdetails`
-    per app id with bounded concurrency, and reuses cached entries; a `sync_library_metadata` command
-    warms the whole owned library; collection creation can fetch metadata on demand (`fetchMetadata`,
-    default on).
-- **[Steam-Vault] Milestone M3: Filter Builder, Non-Steam Sources & Storage Manager (DELIVERED):**
-  - **Filter builder in Organize** — Depressurizer-style **Allowed / Required / Excluded** term lists
-    with name search and a kind selector, plus a live match count, applied when creating collections.
-  - **Configurable non-Steam sources** — Settings gains per-launcher enable/disable and extra search
-    folders; platform detection honours them and can scan all mounted drives.
-  - **Storage manager** — a new **Storage** view (with `steam/storage.rs` and seven Tauri commands)
-    reports drives, libraries, and game placement/sizes; registers or removes libraries; and moves a
-    game or a whole library between drives, rewriting **every** `libraryfolders.vdf` with backups and
-    a Steam-closed guard, with live `storage-progress` events.
-  - **Steam Store fetch fix** — metadata is fetched per app id with bounded concurrency (fixes the
-    HTTP 400 from comma-joined `appids`).
-  - **Agent-friendly test runner** — `scripts/test.mjs` + `scripts/lib/suites.mjs` run named suites
-    with stdin closed, a per-step timeout, transcripts, and a PASS/FAIL summary (`npm test`,
-    `verify`, …).
-- **[Steam-Vault] Milestone M4: Custom Artwork Manager (DELIVERED):**
-  - **Artwork view** — inspect and replace the five custom-artwork slots Steam reads from
-    `userdata/<id3>/config/grid/` (portrait grid, landscape grid, hero, logo, icon) for **Steam games
-    and non-Steam shortcuts alike**.
-  - **SteamGridDB by app id** — real Steam games are matched by their exact app id (no search
-    ambiguity); non-Steam shortcuts, which have no store page, are matched by name with an
-    exact-title preference.
-  - **Local-file import** — apply a PNG or JPEG directly; the image's real format is sniffed from its
-    magic bytes so Steam always loads it (with a 64 MiB cap).
-  - **Backup-on-replace** — every overwrite and removal archives the previous image into the
-    timestamped backup store first.
-  - Six new commands, `steam/artwork.rs` module (7 unit tests), and eight-item navigation.
-- **[Steam-Vault] Milestone M5: Platform, Emulators, VNDB & i18n Localization (DELIVERED):**
-  - Storefront launch URIs for Epic (`com.epicgames.launcher://apps/<id>`) and itch written as launch options.
-  - Per-game platform override command and UI selector.
-  - Microsoft Store / Xbox Game Pass detection with zero scraping.
-  - Keyless VNDB Kana API provider for visual novel developers, publishers, release dates, tags, and covers.
-  - Steam Store Search provider matching non-Steam/indie titles to official Steam app IDs.
-  - Local engine and game sniffer for itch.io `receipt.json`, Ren'Py, RPG Maker, and Windows PE VersionInfo.
-  - Emulator and ROM detection supporting 11 popular emulators with automated CLI launch arguments.
-  - Automatic artwork fetching for non-Steam shortcuts upon import and scan.
-  - Hand-rolled reactive i18n localization engine supporting all 30 official Valve/Steam languages with Arabic RTL layout.
-  - High-performance volume enumeration using `sysinfo::Disks` and pre-located emulators.
-- **[Steam-Vault] Milestone M6: Dynamic (Filter-Spec) Collections (DELIVERED):**
-  - Persist named filter presets (`filter-presets.json`) and evaluate dynamic matching rules.
-  - Native Valve `filterSpec` smart collections persisted directly to `cloud-storage-namespace-1.json`.
-  - "Smart Collection" badges and one-click "↻ Re-evaluate" in Collections view.
-- **[Steam-Vault] Milestone M7: SQLite Metadata Cache (DELIVERED):**
-  - Embedded SQLite database (`metadata.db`) via `rusqlite` bundled from source (zero system dependencies).
-  - WAL mode, multi-column indexing on `(provider, app_id)`, TTL handling, and zero-touch auto-migration from legacy JSON cache.
-- **[Steam-Vault] Milestone M8: Glassmorphism UI Pass (DELIVERED):**
-  - Complete modern dark obsidian glass styling pass across `app.css` and all 8 views with frosted panels, atmospheric gradients, tactile buttons, and refined glow borders.
-- **[Steam-Vault] Milestone M9: v1.0 Release Packaging (DELIVERED):**
-  - HELIX squircle 16:9 branding artwork (`static/steam-vault.svg`, `docs/assets/images/steam-vault.svg`, portal card).
-  - GitHub issue templates (`config.yml`, `1_bug_report.yml`, `2_feature_proposal.yml`).
-  - SemVer v1.0.0 release notes, CHANGELOG v1.0.0, and version bumps.
-- **[Steam-Vault] Milestone M10: Catalogue & Console Expansion v1.1.0 (DELIVERED):**
-  - Native integration with Community Game Catalogue (`Steam-Vault-Catalogue`) via embedded compressed SQLite seed (`catalog_seed.bin`, curated multi-platform games) and online sync.
-  - High-precision console platform determination (`determine_console_platform`) for emulated ROMs with Platforms view badges.
-  - Automated binary `shortcuts.vdf` `tags` injection for native Steam client console grouping and collection ingestion.
-  - Keyless MediaWiki wikitext infobox parser in `metadata::extra::wikipedia_game_lookup` for console titles and retro platforms.
-  - SemVer v1.1.0 release packaging, release notes, and documentation synchronization.
-- **[Steam-Vault] Milestone M11: Library Grid Launcher, Per-Game Management & Multi-Storefront Ingestion v1.2.0 (ACTIVE):**
-  - **Flexible Multi-Provider Metadata & Optional API Keys Architecture**: Official storefront integrations (Steam Store API / ACF manifests, GOG Galaxy DB, Epic manifests, Xbox AppxManifest / WindowsApps, itch receipts, PE headers) and the open Community Catalogue (`Steam-Vault-Catalogue`) provide extensive out-of-the-box baseline data without requiring API keys. Optional user-configured API keys (Steam Web API, SteamGridDB, IGDB) are fully supported and leveraged by the tabbed Artwork Manager and per-game details/management views to fetch missing cover art, high-resolution hero banners, and enriched metadata.
-  - **Redesigned Library Grid Launcher (`/library`)**: Vertical game capsule grid view as the central launcher hub with responsive cover artwork, platform badges, install status pills, and one-click play controls.
-  - **Collapsible Right Sidebar**: Instant sort controls (Name A-Z/Z-A, Playtime high/low, Last played, Size on disk) and granular filters (installation state, platform counts across Steam, GOG, Epic, Itch, Ubisoft, EA, Battle.net, Amazon, Xbox, Rockstar, Emulators, Other, collection dropdown, and favorites/hidden toggles).
-  - **Extensive Per-Game Management Sub-Page**: 10-image media gallery with fullscreen lightbox modal, meta links card (Store, PCGamingWiki, SteamDB, ProtonDB, Wikipedia, Community Catalogue), comprehensive details cards, playtime tracking, Play/Install button (via `steam://run/{app_id}`, `steam://install/{app_id}`, and native fallbacks), and Manage button opening a sub-window modal.
-  - **Per-Game Manage Sub-Window**: User display name customization (stored in `localStorage` without modifying disk manifests) and Steam-parity tabbed Artwork Manager supporting 5 visual slots (Portrait, Landscape, Hero, Logo, Icon), live search, multi-provider filters, static/animated filters, NSFW Safe Search toggle, and non-refusal artwork application.
-  - **Settings Navigation Consolidation & Tabbed Layout**: Top-level navigation streamlined to Dashboard, Library, Storage, and Settings. Consolidated Collections, Platforms & Launchers, and Library Organization into dedicated, modular section tabs within `/settings` with a balanced 2x2 grid layout and zero masonry height gaps.
-  - **Streamlined Storage Statistics (`/storage`)**: Dedicated storage statistics dashboard and Steam Library Folder management, removing redundant game lists.
-  - **Multi-Platform Owned Games Detection**: GOG Galaxy SQLite database reader (`galaxy-2.0.db`), Epic manifests, WindowsApps/Xbox packages, and platform launch URIs.
+- **[Universal-Game-Launcher] Milestone History (M1–M12 Delivered)**: Clean-room Depressurizer revival, whole-library aggregation, storage manager, custom artwork manager, 30-language localization engine, dynamic smart collections, SQLite metadata persistence, obsidian glassmorphism UI, Redis KV in-memory tier, and deals/free games engines (v1.0.0 – v1.3.1). Full architectural histories live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md#universal-game-launcher-formerly-steam-vault).
+- **[Universal-Game-Launcher] Milestone M13: Multi-Platform Hardening, WinGet Packaging & Hygiene v1.3.2 - v1.3.3 (DELIVERED):**
+  - Elimination of all cross-platform compiler warnings across POSIX (Linux/macOS) and Windows targets.
+  - Dedicated standalone WinGet package workflow (`publish-winget.yml`) and official initial package submission to `microsoft/winget-pkgs` (PR #453830).
+  - Automated Microsoft Contributor License Agreement (CLA) bot signature.
+  - Upgraded WinGet manifest generation to Microsoft Schema 1.12.0 with local validation tooling.
+  - Full adherence to organizational `main:sub:option` script hierarchy (`winget:manifest:generate`, `winget:manifest:verify`, `winget:manifest:install`).
+  - IDE untracking and hygiene enforcement (`.vscode/` removal and comprehensive `.gitignore` rules).
+- **[Universal-Game-Launcher] Milestone M14: Self-Contained Drop-In Plugin Engine, Steam/GOG Launcher UI, System Locale & Modern Visual Identity v1.4.0 (ACTIVE):**
+  - **Complete Product Rebranding**: Renamed package to `universal-game-launcher`, product to `Universal Game Launcher`, crate to `universal_game_launcher_lib`, and bundle identifier to `org.helixorigin.universal-game-launcher`.
+  - **Self-Contained Drop-In Plugin Engine**: Extensible architecture where all platform providers (Steam, GOG, Epic, Itch, Xbox, EA, Ubisoft, Battle.net, etc.), metadata engines, and utilities run as self-contained drop-in plugins loaded dynamically from manifest files (`index.json`). Includes support for installing community-hosted plugins directly from GitHub repository entry points without touching core app code.
+  - **Dedicated Official Plugins Repository (`Universal-Game-Launcher-Plugins`)**: Established public repository `HELIX-Origin/Universal-Game-Launcher-Plugins` hosting 28 official drop-in plugins (11 platform discovery & launch plugins, 17 rich metadata providers including VNDB, IndieDB/ModDB, IGDB, SteamGridDB, PCGamingWiki, Wikipedia, MobyGames, RAWG, Giant Bomb, ProtonDB, HowLongToBeat, Metacritic, OpenCritic), canonical JSON Schema (`schemas/plugin.schema.json`) supporting user-configurable settings & API keys, automated validation suite (`scripts/validate.mjs`), and comprehensive developer documentation.
+  - **Steam & GOG Galaxy Launcher UI**:
+    - **Title Bar Navigation Menu**: Primary application tabs (`Dashboard`, `Library`, `Platforms`, `Storage`, `Settings`) moved directly into the title bar right beside the brand logo, mirroring Steam's top bar navigation.
+    - **Steam/GOG Left Game List Sidebar**: Global interactive game list with instant name/platform search filter, quick filter pills (`All`, `Installed`, `★ Favorites`), manual asynchronous platform scan button (`↻ Scan`), and live selection tree.
+    - **Single-Game Dedicated Showcase View**: Completely eliminated the heavy multi-card grid layout in `/library` to eliminate UI hangs and missing artwork. Directly showcases the selected title with hero banner, capsule cover, 10-image screenshot media gallery with fullscreen lightbox, meta reference links, game details, storage footprint, and display name manager.
+  - **Generic SQLite Database Schema (`database.sqlite`)**: Decoupled database file naming from branding lock-in; standardizes on `database.sqlite` / `database.db` with automated seamless migration from legacy `steam-vault/metadata.db`.
+  - **Native Launcher Integration & Auth Architecture**: Rely on official native desktop clients (`steam://`, `com.epicgames.launcher://`, `goggalaxy://`, `uplay://`) for game discovery, installation, launch, uninstallation, and update triggers. Zero user password storage or scraping while preserving official client overlays, cloud synchronization, friend lists, playtime, and achievements.
+  - **Dropped WinGet Publication Plans**: Dropped the WinGet package submission and workflow pipeline; removed `publish-winget.yml`, `scripts/generate-winget-manifest.mjs`, and `winget/` directory.
+  - **System Locale Out-of-the-Box**: Dropped complex 30-language hand-rolled dictionary files and localization test scripts. Defaults cleanly to the host system locale (`navigator.language`) out of the box; community developers can provide hand-rolled or custom localization dictionaries via drop-in plugins.
+  - **Modern Visual Identity**:
+    - Branded 16:9 vector artwork (`universal-game-launcher.svg`, 1920×1080) with dark futuristic purple controller on futuristic dark purple background.
+    - Vector squircle logo (`static/logo.svg`, 256×256) and multi-resolution icon suite.
+    - Standard Tauri v2 NSIS installer sidebar bitmap (`src-tauri/windows/sidebar.bmp`, strictly 164×314 pixels, BMP3).
+    - Animated pulsing controller splash screen transition at application startup (minimum 850ms duration with smooth 450ms fade/scale exit).
+  - **Discontinued Offline Catalogue Database Purge**: Completely purged deprecated `game_catalog` and `catalog_lookups` tables from SQLite, dropped `catalog_seed.bin` embedded asset (saving ~363 KB binary overhead), eliminated dead network calls to defunct `Steam-Vault-Catalogue`, and wiped catalog endpoints.
+  - **Native App Isolation & Zero Steam Writes Invariant**: Universal Game Launcher operates as an independent launcher and library manager. All game records, collections, categories, display names, and user modifications persist exclusively in our local SQLite database and in-memory KV tier. All writes to Steam files (`shortcuts.vdf`, `cloud-storage-namespace-1.json`) and `ensure_steam_closed` requirements are permanently eliminated.
+  - **Data & Performance Optimization Pass (True Instant Loading)**: Native `games` and `collections` tables in `database.sqlite` preloaded at startup into the in-memory serverless Redis-compatible KV tier (`mem_kv`), coupled with SQLite WAL mode and aggressive memory pragma tuning (`cache_size = -64000`, `temp_store = MEMORY`, `synchronous = NORMAL`, `mmap_size = 256MB`) ensuring sub-millisecond (<1ms) retrieval and instantaneous navigation without disk blocking or TTL dropouts.
 
 ---
 
-### 7. [Steam-Vault-Catalogue] — Community Game Catalogue & Crawler
-*Target Path: `projects/Steam-Vault-Catalogue` · Open Metadata Ingestion Engine*
-
-- **[Steam-Vault-Catalogue] Milestone M1: Catalog Foundation & CI Release Pipeline (DELIVERED):**
-  - Formal JSON schema (`schema/game.schema.json`), initial curated game database in `games/*.json`.
-  - Automated CI crawler querying IGDB, SteamGridDB, Steam Store API, and VNDB.
-  - Living `index.json` compiled for client lookup and distribution.
-- **[Steam-Vault-Catalogue] Milestone M2: Modular Catalogue Engine, Standardized Scripts & Living Index v1.1.0 (ACTIVE):**
-  - **Modular TypeScript ESM Catalogue Manager** (`scripts/manage-catalogue.ts`, `scripts/modules/*`): Ingestion engine, schema validator, and index builder.
-  - **Direct Root Index Access**: Living `index.json` committed directly in repository root for zero-dependency client access.
-  - **Standardized `main:sub:option` NPM Scripts**: `catalogue:update:all`, `catalogue:update:missing`, `catalogue:populate:games`, `catalogue:populate:seeds`, `catalogue:validate`, and `catalogue:build:index`.
-  - **Multi-Storefront Schema Expansion**: Official integration identifiers (`gogId`, `epicAppName`, `ubisoftId`, `eaOfferId`, `xboxPackageFamily`) and launch URIs.
-  - **Documentation Site (`docs/`)**: Jekyll site powered by `HELIX-Origin/helix-docs` with 5-section vCard homepage and squircle branding artwork.
-
----
-
-### 8. [Theme-Toolkit] — Dedicated Cross-Platform Theme Engineering Suite (ACTIVE / SCAFFOLDED)
+### 6. [Theme-Toolkit] — Dedicated Cross-Platform Theme Engineering Suite (ACTIVE / SCAFFOLDED)
 *Target Path: `projects/Theme-Toolkit` · Tauri v2 / Rust / SvelteKit Desktop App · v0.1.0-alpha*
 
 - **Core Vision & Invariants:**

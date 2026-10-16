@@ -25,8 +25,10 @@
 3. **Keep the tracking docs current.** `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`
    at workspace root are the session handoff mechanism. Update them any time you start,
    finish, or re-scope a work item. Every tracked item across all four documents must be
-   explicitly prefixed with its project tag (`[<project-name>] (<project-path>)`). If credits
-   run out mid-task, the next session resumes from these files.
+   explicitly prefixed with its project tag (`[<project-name>] (<project-path>)`). Maintain
+   living ledgers lean and bare-minimal; historical completed/closed records are archived into
+   `.github/` (`.github/ROADMAP-ARCHIVE.md`, `.github/TODO-ARCHIVE.md`, `.github/BUGS-ARCHIVE.md`)
+   to prevent cluttering the workspace root. If credits run out mid-task, the next session resumes from these files.
 
 4. **No scope creep.** Repos under `projects/` that are not part of the active task are
    someone else's work. Don't touch them unless asked.
@@ -66,8 +68,11 @@
 ├── clone-org-repos-windows.ps1<- Clone all HELIX-Origin repos into projects/ (Windows)
 ├── clone-org-repos-linux.sh   <- Clone all HELIX-Origin repos into projects/ (Linux)
 ├── clone-org-repos-macos.sh   <- Clone all HELIX-Origin repos into projects/ (macOS)
-├── .github/                   <- GitHub configuration & Copilot instructions
-│   └── copilot-instructions.md<- Universal workspace guidance for GitHub Copilot
+├── .github/                   <- GitHub configuration, Copilot instructions & completed archives
+│   ├── copilot-instructions.md<- Universal workspace guidance for GitHub Copilot
+│   ├── BUGS-ARCHIVE.md        <- Historical resolved bugs & post-mortems archive
+│   ├── ROADMAP-ARCHIVE.md     <- Historical delivered milestones archive
+│   └── TODO-ARCHIVE.md        <- Completed workstreams & historical task archive
 ├── .opencode/                 <- OpenCode configuration & workflow commands
 │   ├── opencode.jsonc         <- Tool permissions, plugins, and compaction config
 │   ├── dcp.jsonc              <- Dynamic context pruning rules
@@ -81,8 +86,7 @@
 │   ├── helix-docs/            <- the shared Jekyll theme (+ its preview site)
 │   ├── helix-origin.github.io/ <- GitHub Pages portal (docs/ in scope)
 │   ├── NH-Reader/             <- Tauri v2 desktop reader (scripts, core, and docs in scope)
-│   ├── Steam-Vault/           <- Tauri v2 Steam library organizer (Depressurizer revival)
-│   ├── Steam-Vault-Catalogue/ <- Community-maintained open game catalogue & crawler
+│   ├── Steam-Vault/           <- Tauri v2 Universal Game Launcher (multi-platform library & launcher)
 │   ├── Theme-Toolkit/         <- Tauri v2 desktop theme studio & applicator (Windows, macOS, Linux)
 │   └── Windhawk-Themes/       <- (docs/ in scope)
 └── (other projects)           <- out of scope unless asked
@@ -138,6 +142,8 @@
 | Template: Bug tracker ledger | `.agents/templates/bugs-template.md` |
 | Template: Cleanup failed runs workflow | `.agents/templates/cleanup-failed-runs-workflow-template.yml` |
 | Template: NSIS hooks (Tauri v2 Windows) | `.agents/templates/nsis-hooks-template.nsh` |
+| Template: macOS uninstaller script | `.agents/templates/uninstall-macos-template.sh` |
+| Template: Linux uninstaller script | `.agents/templates/uninstall-linux-template.sh` |
 | Tauri & Rust desktop engineering | `.agents/skills/tauri-desktop-engineering.md` |
 | Windhawk styler mod engineering | `.agents/skills/windhawk-styler-engineering.md` |
 | Windows deskthemepack & theme packaging | `.agents/skills/windows-deskthemepack-engineering.md` |

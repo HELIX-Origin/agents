@@ -7,7 +7,7 @@
 ## 1. Workspace Identity & Scope
 
 - **Organization Focus:** All software and theme engineering belongs to the **HELIX Origin** organization (`https://github.com/HELIX-Origin`).
-- **Organization Repositories:** All projects reside under the gitignored `projects/` directory (`projects/helix-docs`, `projects/helix-origin.github.io`, `projects/NH-Reader`, `projects/Windhawk-Themes`, `projects/Hentai-Senpai-Multi-DE-Theme`).
+- **Organization Repositories:** All projects reside under the gitignored `projects/` directory (`projects/helix-docs`, `projects/helix-origin.github.io`, `projects/NH-Reader`, `projects/Steam-Vault`, `projects/Theme-Toolkit`, `projects/Windhawk-Themes`).
 - **Forbidden Directories:** Never explore, modify, or reference non-organization directories (specifically `ramensoftware/`).
 
 ---
@@ -27,8 +27,9 @@
 
 - **`projects/helix-docs`**: Shared Jekyll theme mirroring `just-the-docs` component structure (`_includes/components/`), frontmatter-driven navigation, precompiled Dart Sass (`assets/css/site.css`), and 18-language Google Translate switcher.
 - **`projects/NH-Reader`**: Cross-platform desktop client built with Tauri (Rust) and SvelteKit (Svelte 5 runes). Version manifests (`package.json`, `tauri.conf.json`, `Cargo.toml`) must move together.
+- **`projects/Steam-Vault`**: Tauri v2 Universal Game Launcher for cross-platform library management, native launcher integration, artwork management, and disk storage reorganization.
+- **`projects/Theme-Toolkit`**: Cross-platform desktop theme authoring and packaging studio for Windows, macOS, and Linux.
 - **`projects/Windhawk-Themes`**: Windows 11 styling suites for 5 target styler mods. Uses `WindhawkBlur` and vertical gradient rim borders. Releases use milestone tags (`M.NN`) with zero attached assets.
-- **`projects/Hentai-Senpai-Multi-DE-Theme`**: Nord-themed multi-DE GTK 2/3/4, GNOME Shell, Cinnamon, and Plank themes.
 - **`projects/helix-origin.github.io`**: Organization portal site powered by GitHub Pages and `helix-docs` remote theme.
 
 ---
@@ -39,5 +40,5 @@
 |---|---|
 | Theme (`helix-docs` & portal) | `bundle exec jekyll build` (0 errors, 0 warnings) |
 | Desktop App (`NH-Reader`) | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` |
+| Universal Game Launcher (`Steam-Vault`) | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` |
 | Windows 11 Mods (`Windhawk-Themes`) | `pwsh -NoProfile -File projects/Windhawk-Themes/tools/Test-WindhawkStyles.ps1` |
-| GTK Themes (`Hentai-Senpai`) | `bash -n install.sh`, `bash -n scripts/*.sh` |

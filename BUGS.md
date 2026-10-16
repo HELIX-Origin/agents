@@ -1,23 +1,20 @@
 # BUGS.md — HELIX Origin Consolidated Bug Tracker
 
-> 🐛 **Living Source of Truth**: Unified tracking ledger for active bugs, environment quirks, external limitations, and verified fixes across all repositories in the **HELIX Origin** organization.
+> 🐛 **Living Source of Truth**: Unified tracking ledger for active bugs, environment quirks, and platform limitations across all repositories in the **HELIX Origin** organization.
 >
 > Pair with [`ROADMAP.md`](./ROADMAP.md) (direction), [`PLAN.md`](./PLAN.md) (sprint execution), and [`TODO.md`](./TODO.md) (task ledger).
-> Last updated: 2026-10-14
+> Complete historical post-mortems for resolved bugs live in [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md).
+> Last updated: 2026-10-16
 
 ---
 
 ## 📜 Tracking Rules
 
+- **Bare Minimal Ledger**: Resolved bugs are recorded as concise single-line entries here. Detailed root-cause analyses, scopes, and post-mortems are archived in [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md) to keep this living document clean and focused.
 - **No Typo Duplication**: When recording user reports, clean and fix all typos to preserve professional quality.
-- **Consistent Formatting**: Maintain consistent formatting and style throughout all documentation to ensure readability and professionalism.
-- **Clear Sectioning**: Use clear and descriptive headers for each section to improve navigation and readability.
 - **Mandatory Project Tagging**: **Every bug, quirk, and resolved issue must explicitly state its project name and repository path** (`[<project-name>] (<project-path>)`). Unscoped entries are strictly prohibited so agents never conflate repositories.
-- **Active Items First**: The currently active milestone, sprint, task, or workstream must always be placed at the top of the content sections.
-- **Regular Updates**: Ensure that this file is regularly updated to reflect the latest developments and changes in the project.
-- **Improve User Directives**: Continuously refine and clarify user directives to ensure they are easily understood and actionable.
+- **Active Items First**: The currently active bugs and workstreams must always precede resolved and closed archives.
 - **Tracking Docs Stay True**: Update `ROADMAP.md`, `TODO.md`, `BUGS.md`, and `PLAN.md` first or in lockstep with code changes so a stale ledger counts as a bug.
-- **Always Track Everything**: Every new feature request, enhancement, or bug report must be logged before execution.
 
 ---
 
@@ -27,7 +24,7 @@
 - ⚠️ **open** — reproducible, needs fixing.
 - 🚧 **investigating / fix applied** — repro, root cause, or initial code fix in progress (pending live verification).
 - 🚫 **wontfix** — accepted platform limitations or deliberate architectural trade-offs.
-- ✅ **resolved** — verified and fixed (moved to closed with release version or commit hash).
+- ✅ **resolved** — verified and fixed (archived with release version or commit hash).
 
 ### 🚨 Severity
 - 🔴 **Critical**: Shell or app crashes, data loss, total unreadability.
@@ -40,7 +37,7 @@
 ## 🚫 Known Quirks & External Limitations (wontfix bucket)
 
 ### [Ecosystem & helix-docs] (projects/helix-docs)
-- 💎 **[helix-docs] ENV-1 — Ruby not on PATH in agent shell:** Ruby is installed to `C:\Ruby33-x64\bin` but the default shell PATH may be stale. Prepend `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"`.
+- 💎 **[helix-docs] ENV-1 — Ruby not on PATH in agent shell:** Ruby is installed to `C:\Ruby33-x64\bin` but default shell PATH may be stale. Prepend `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"`.
 - 💎 **[helix-docs] ENV-2 — Precompiled Theme CSS:** `helix-docs` commits precompiled `assets/css/site.css` so GitHub Pages remote-theme consumers don't compile SCSS at build time. Always regenerate with Dart Sass after SCSS edits.
 - 💎 **[helix-docs] ENV-3 — Missing Source Map:** `site.css` references `site.css.map` which is not committed. Cosmetic only; browsers ignore missing maps.
 - 💎 **[helix-docs] ENV-4 — Explicit Paths in Shell Commands:** Use absolute/explicit paths for shell tools (`git -C <repo>`, `jekyll --source <abs> --destination <abs>`).
@@ -57,298 +54,37 @@
 - 🔍 **[NH-Reader] Search Semantics:** Syntax and range logic follow nhentai's query engine.
 - 🔐 **[NH-Reader] Code Signing Identity:** Automated CI release packaging does not publish unsigned or self-signed release binaries without a trusted organization certificate. Local signing commands are provided in `package.json`.
 
-### [Steam-Vault] (projects/Steam-Vault)
-- ☁️ **[Steam-Vault] Steam Cloud Collection Sync:** Modern Steam collections are stored in a cloud-synced namespace file (`userdata/<id3>/config/cloudstorage/cloud-storage-namespace-1.json`). Editing while Steam is running, or while another device changes collections, can cause a sync conflict. Mitigation: writes are refused while Steam is running, and every write is preceded by a timestamped backup.
-- 🧩 **[Steam-Vault] Legacy Tags Are Often Empty:** On modern accounts the old `localconfig.vdf` `apps/<appid>/tags` categories are empty (collections moved to `cloudstorage`). Legacy tag import is therefore best-effort and may surface nothing.
-- 🔑 **[Steam-Vault] Steam Web API Profile Visibility:** `IPlayerService/GetOwnedGames` returns data only when the profile's game details are public; otherwise Steam returns `403`. Local library data is unaffected.
-- 🔌 **[Steam-Vault] Provider Fragility (keyless sources):** PCGamingWiki and Wikipedia are keyless, best-effort providers and may change shape; the Steam Store `appdetails` endpoint is keyless but rate-limited. These are supplementary and never required.
-- 🏷️ **[Steam-Vault] Metadata Warming Is Network-Heavy and Rate-Limited:** Warming a large owned library issues many Steam Store `appdetails` requests (one per app id, with bounded concurrency) plus one `actions/ajaxgetstoretags` request per app, which can trip Steam's rate limiting; cached entries are reused within the TTL and per-app failures are skipped rather than fatal. Categorization now fetches metadata on demand (`fetchMetadata`, default `true`), so rules that need genre/tag/other metadata can trigger network calls implicitly — cache warming for a full owned library is best run deliberately via the Organize view's **Sync metadata** button.
-- 🖥️ **[Steam-Vault] Platform Detection Depends on Local Sources:** External-platform detection reads only local data — launcher manifests, the GOG registry, the itch app library, Windows AppModel registry/WindowsApps packages (Xbox/Microsoft Store), and the Windows Uninstall registry. All detection runs entirely offline without external account logins.
-- 🌐 **[Steam-Vault] Owned-Library Sync Needs a Public Profile:** `refresh_owned_games` uses `IPlayerService/GetOwnedGames`, which requires a Steam Web API key and a public "game details" profile setting. Installed games are always read locally regardless, and the cached owned list is only used to broaden the ordering surface.
-- 🎭 **[Steam-Vault] Shortcut Platform Attribution Is Best-Effort:** A non-Steam shortcut added outside Steam Vault has no recorded platform and is shown as "Other" until it is re-imported. Attribution is kept in `<config>/steam-vault/platform-map.json`.
-- 💽 **[Steam-Vault] Storage Moves Are Real File Operations:** Moving a game or a whole library physically copies data cross-drive (a same-drive move is an instant rename). Steam must be closed, a library that still holds installed games cannot be removed, and the destination must have enough free space (plus a safety margin). Every copy of `libraryfolders.vdf` is rewritten — with backups — so Steam does not re-download a relocated game.
-- 🔑 **[Steam-Vault] Multi-Provider Metadata & Optional API Keys Architecture:** Steam Vault utilizes official storefront sources (Steam Store API / ACF manifests, GOG Galaxy DB, Epic manifests, Xbox AppxManifest) and the offline Community Game Catalogue (`Steam-Vault-Catalogue`) for out-of-the-box keyless baseline data. Optional third-party API keys (Steam Web API, SteamGridDB, IGDB) are supported in Settings and utilized by the Artwork Manager and per-game details pages to fetch missing assets, custom grids, heroes, logos, and enriched metadata.
-- 🎮 **[Steam-Vault] Anti-Piracy Invariant & Manual Emulation Configuration:** Automated disk scanning or heuristic discovery of installed emulators and ROMs is permanently disabled. Due to anti-piracy and user privacy principles, users must explicitly register emulator executables and specify ROM folder locations in Settings. Steam Vault supports EmulationStation Desktop Edition (`ES-DE`) folder structures (`ROMs/<system>/...`) and provides built-in scaffolding to create canonical system directories.
+### [Universal-Game-Launcher] (formerly Steam-Vault) (projects/Steam-Vault)
+- 🚫 **[Universal-Game-Launcher] Zero External File Writes (Native App Isolation Invariant):** Universal Game Launcher never writes to, modifies, or backs up Steam's internal files (`shortcuts.vdf` or `cloud-storage-namespace-1.json`). Game records, collections, categories, display names, and user preferences persist exclusively in our own SQLite database (`database.sqlite`) and in-memory Redis KV tier (`mem_kv`).
+- 🧩 **[Universal-Game-Launcher] Legacy Steam Tags/Collections Read-Only Discovery:** Steam tags and cloud collection files are read solely for initial one-time discovery. All user edits, additions, and deletions are saved strictly in our internal database.
+- 🔑 **[Universal-Game-Launcher] Steam Web API Profile Visibility:** `IPlayerService/GetOwnedGames` returns data only when profile game details are public; otherwise Steam returns `403`. Local library data is unaffected.
+- 🔌 **[Universal-Game-Launcher] Provider Fragility (keyless sources):** PCGamingWiki and Wikipedia are keyless, best-effort providers and may change shape; Steam Store `appdetails` is rate-limited. These are supplementary and never required.
+- 🏷️ **[Universal-Game-Launcher] Metadata Warming Is Network-Heavy:** Full library sync can trip Steam Store rate limits; cached entries are reused and failures skipped. Run deliberately via Organize view's **Sync metadata**.
+- 🖥️ **[Universal-Game-Launcher] Platform Detection Depends on Local Sources:** Launcher manifests, GOG registry, itch app library, Windows AppModel/WindowsApps packages, and Uninstall registry are read offline without external logins.
+- 🌐 **[Universal-Game-Launcher] Owned-Library Sync Needs a Public Profile:** `refresh_owned_games` uses `IPlayerService/GetOwnedGames` requiring an API key and public profile. Installed games are always read locally.
+- 🎭 **[Universal-Game-Launcher] Manually Added Game Attribution Is Best-Effort:** Standalone executables and custom games added outside official storefronts have no launcher platform recorded and show as "Other" until attributed in `<config>/universal-game-launcher/platform-map.json`.
+- 💽 **[Universal-Game-Launcher] Storage Moves Are Real File Operations:** Cross-drive moves physically copy data. Steam must be closed and adequate free space verified.
+- 🔑 **[Universal-Game-Launcher] Minimized External Metadata Providers & Optional API Keys:** Out of the box, relies on official storefront sources (Steam Store API / ACF manifests, GOG Galaxy DB, Epic manifests, Xbox AppxManifest). Optional external API keys (Steam Web API, SteamGridDB, IGDB) are used primarily for manually added titles and missing artwork.
+- 🛡️ **[Universal-Game-Launcher] Discontinued WinGet Plans & Zero-Emulation Invariant:** WinGet publication plans and automated workflows have been dropped to focus on independent distribution. Emulation and ROM management tools remain permanently purged across the entire codebase.
+- 🧩 **[Universal-Game-Launcher] Drop-In Self-Contained Plugin Engine:** All platform integrations, metadata engines, and utilities run as self-contained drop-in plugins loaded dynamically via `index.json`. The app core contains zero hardcoded plugin code. Support for GitHub-hosted repository entry points enables community developers to distribute and maintain independent plugins.
+- 🌐 **[Universal-Game-Launcher] Out-of-the-Box System Locale:** UI language defaults directly to the host system locale (`navigator.language`) out of the box, eliminating the need for bulky hand-rolled localization files in core. Custom translation packages can be authored as drop-in plugins.
+- 🖼️ **[Universal-Game-Launcher] Single-Game Showcase View & Zero-Grid Architecture:** The heavy multi-card grid layout in `/library` has been completely eliminated in favor of a Steam/GOG-style dedicated showcase view and left game list sidebar, completely eliminating missing artwork, WebView2 layout thrashing, and composite hangs.
+- 💾 **[Universal-Game-Launcher] Generic SQLite Database Schema (`database.sqlite`):** Database persistence standardizes on `database.sqlite` / `database.db` decoupled from product branding, with automatic migration from legacy `steam-vault/metadata.db`.
+- 🚀 **[Universal-Game-Launcher] Native Launcher Delegation Architecture:** Game installation, updates, uninstallation, and launches delegate strictly to installed official client protocols (`steam://`, `com.epicgames.launcher://`, `goggalaxy://`, `uplay://`), eliminating password storage and security liabilities while preserving official launcher overlays, cloud synchronization, friend lists, playtime tracking, and achievement unlocks.
+- 💳 **[Universal-Game-Launcher] Storefront Delegation & Zero In-App Transactions:** In any future Store integration, transactions and checkout flows must strictly delegate to official platform clients or verified external browser tabs. No financial transactions, card details, or payment processing are ever conducted within the app.
 
 ---
-
-### [Steam-Vault-Catalogue] (projects/Steam-Vault-Catalogue)
-- 🗃️ **[Steam-Vault-Catalogue] Script Naming Taxonomy (`main:sub:option`):** All package commands must adhere strictly to the canonical `main:sub:option` namespace format (`catalogue:update:all`, `catalogue:update:missing`, `catalogue:populate:games`, `catalogue:populate:seeds`, `catalogue:validate`, `catalogue:build:index`). Duplicate aliases or flat un-scoped commands are strictly prohibited.
 
 ## 💡 Explicitly Not Bugs
 
 - 💡 **[NH-Reader] Blacklisted Galleries Accessible via Direct Link:** Blacklists govern search discovery, grids, and feeds, but do not prevent opening direct gallery URLs.
 - 💡 **[Windhawk-Themes] Different Radii on Taskbar vs Start Menu:** Taskbar uses compact radii (`R1=6`, `R2=20`) because of its compact bar height, whereas Start Menu uses large panel radii (`CornerRadius=35`). This is an intentional design scale hierarchy.
 - 💡 **[Windhawk-Themes] Win32 Scrollbars in File Explorer:** DirectUI scrollbars follow system mode rather than custom XAML templates.
-- 💡 **[Steam-Vault] RAWG Is Not Supported:** RAWG is defunct, so no RAWG provider exists. This is intentional, per user directive.
+- 💡 **[Universal-Game-Launcher] RAWG Is Not Supported:** RAWG is defunct, so no RAWG provider exists. This is intentional.
 
 ---
 
 ## ⚠️ Active & Open Bugs
-
-### [Windhawk-Themes] (projects/Windhawk-Themes)
-
-#### [Windhawk-Themes] 2026-10-10 — Start Menu Styler Overrides Native High-Contrast Borders
-- **Project Identifier:** `[Windhawk-Themes]`
-- **Repository Path:** `projects/Windhawk-Themes`
-- **Severity**: 🟠 High (accessibility violation)
-- **Status**: 🚧 superseded by the 2026-10-13 refactor — pending live verification
-- **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-start-menu-styler.yml`
-- **Reported Issue**: The Start Menu theme forces `Visibility=Collapsed` on `Border#MainMenuHighContrastBorder` / `Border#RightCompanionHighContrastBorder`, stripping Windows' native high-contrast accessibility boundary. This is not a high-contrast theme and must not style high-contrast UI.
-- **Attempted Fix (`64711d2`, rolled back)**: Removed the high-contrast border target entirely and synced `docs/_wiki/start-menu-styler/targets/elements.md`.
-- **Why Rolled Back**: The removal was not purely cosmetic — it damaged the actual Start Menu styling. The borders had no visible effect until a shell refresh, after which the glass styling was broken. They participate in normal (non-HC) rendering, so a blind removal is not a valid fix.
-- **Current State**: The `Visibility=Collapsed` override was restored after the `64711d2` rollback. **Update (2026-10-13, `f9f228b`)**: the user's Start Menu refactor removes both `*HighContrastBorder` targets from `windows-11-start-menu-styler.yml` entirely, superseding the rollback. The high-contrast styling concern is moot unless the targets are reintroduced; needs live verification that normal glass styling remains intact.
-
-#### [Windhawk-Themes] 2026-10-10 — Random explorer.exe Crash During File/Folder Actions
-- **Project Identifier:** `[Windhawk-Themes]`
-- **Repository Path:** `projects/Windhawk-Themes`
-- **Severity**: 🔴 Critical (shell crash)
-- **Status**: ⚠️ open — root cause external (companion mod); upstream report pending
-- **Scope**: external Windhawk mod `file-operations-styler` (suite companion config: `projects/Windhawk-Themes/projects/command-center/extras/file-operations-styler.yml`)
-- **Reported Issue**: Random `explorer.exe` crash, most often during file/folder actions and when File Explorer opens (freeze then immediate crash).
-- **Root Cause (confirmed)**: The external companion Windhawk mod **`file-operations-styler`** (hooks copy/move/delete dialogs in `explorer.exe`). Reproduced by deleting a folder: explorer froze then crashed as soon as the "provide administrator permission" prompt appeared. It is a mod bug, not a suite styling issue.
-- **Resolution**: In-repo mitigation is to disable the `file-operations-styler` mod until an upstream fix ships. Report to be filed with the Windhawk mods team (maintainer action).
-- **Related Rollback**: The taskbar hypothesis edits from `64711d2` (bare-type flyout/menu target removal + two `RenderTransform` removals) were reverted — they were not the crash source and their removal undid intended styling.
-
-#### [Windhawk-Themes] 2026-10-07 — Notification / Action Center Quick Settings Split Button Color Mismatch
-- **Project Identifier:** `[Windhawk-Themes]`
-- **Repository Path:** `projects/Windhawk-Themes`
-- **Severity**: 🟠 High (visual state mismatch)
-- **Status**: 🚧 investigating / fix applied (pending user desktop verification)
-- **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-notification-center-styler.yml`
-- **Reported Issue**: Section buttons in Action Center Quick Settings show color mismatches across split buttons (Wi-Fi, Bluetooth chevrons show high-contrast blue while the toggle half displays accent color; ref `media_1791431699608_c575da8b.png`).
-- **Root Cause**: Quick Settings split buttons (`SplitL2Button`, `PaginatedToggleButton`) have multi-part visual trees where toggle and chevron inherit separate visual state brushes (`CommonStates` vs `CheckedStates`).
-- **Resolution Applied**: Reset outer button backgrounds to `Transparent`, route state styling through `ContentPresenter#ContentPresenter@CommonStates` across both buttons, and apply canonical `$ElementBackground` and `$BorderBrush` tokens.
-
-#### [Windhawk-Themes] 2026-10-07 — Taskbar Snap Layout Internal Elements Theming
-- **Project Identifier:** `[Windhawk-Themes]`
-- **Repository Path:** `projects/Windhawk-Themes`
-- **Severity**: 🟡 Medium (incomplete theme coverage)
-- **Status**: ⚠️ open
-- **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-taskbar-styler.yml`
-- **Reported Issue**: Snap layout container internal elements lack full Command Center glass theming.
-- **Root Cause**: Snap layout elements in `snaplayout.dll` depend on strict internal margins and hit-test bounds. Selectors must theme visual properties (`Background`, `BorderBrush`, `CornerRadius`) on `LayoutBorder` without altering layout calculations.
-
-#### [Windhawk-Themes] 2026-10-07 — Taskbar System Tray Overflow Flyout Missing Glass Background
-- **Project Identifier:** `[Windhawk-Themes]`
-- **Repository Path:** `projects/Windhawk-Themes`
-- **Severity**: 🟡 Medium (visual regression)
-- **Status**: ⚠️ open
-- **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-taskbar-styler.yml`
-- **Reported Issue**: System tray overflow flyout renders with a solid/missing background instead of frosted glass (ref `media_1791432063085_e18460b5.png`).
-- **Resolution**: Restore `$Background`, `$BorderBrush`, and corner radius to `Grid#OverflowRootGrid > Border` and `Border#OverflowFlyoutBackgroundBorder`.
-- **Update (2026-10-13, `f9f228b`)**: the taskbar refactor instead sets `Grid#OverflowRootGrid > Border` to `Background:=Transparent`, `BorderBrush:=Transparent`, `BorderThickness=0` (fully transparent overflow). Confirm intent (intentional design change vs regression).
-
-#### [Windhawk-Themes] 2026-10-13 — Static Gate Warnings: Duplicate Target Selectors After Suite Refactor
-- **Project Identifier:** `[Windhawk-Themes]`
-- **Repository Path:** `projects/Windhawk-Themes`
-- **Severity**: 🟢 Low (config hygiene; superseded style blocks)
-- **Status**: ✅ resolved — gate now **0 errors / 0 warnings**
-- **Scope**: `projects/Windhawk-Themes/projects/command-center/windows-11-start-menu-styler.yml`, `windows-11-taskbar-styler.yml`
-- **Reported Issue**: `tools/Test-WindhawkStyles.ps1` reported **0 errors, 8 warnings** after the 2026-10-13 refactor (`f9f228b`) — duplicate `target` selectors: `Border#AppBorder`, `Border#LayerBorder`, `Grid#AllListHeading > TextBlock#AllListHeadingText`, `TextBlock#PinnedListHeaderText`, `Border@CommonStates > … Grid#LogoContainer > Image`; `Rectangle#HorizontalTrackRect`, `Rectangle#HorizontalDecreaseRect`, `Border#SnapBarBorder`.
-- **Resolution**: Merged each pair into a single entry as a **behavior-preserving union** (Windhawk applies every matching entry; later wins per property), then re-ran the gate → **0 errors, 0 warnings**. Note: the two `Border#AppBorder` entries were a collapse plus a glass style — the union keeps both, but the element is likely meant to be collapsed only (the glass panel is `Grid#Root > Border`).
-
-#### [Windhawk-Themes] 2026-10-13 — Suite Config Hygiene Findings (post-refactor review)
-- **Project Identifier:** `[Windhawk-Themes]`
-- **Repository Path:** `projects/Windhawk-Themes`
-- **Severity**: 🟢 Low
-- **Status**: ⚠️ open — user decision
-- **Scope**: `projects/command-center/windows-11-start-menu-styler.yml`, `windows-11-notification-center-styler.yml`
-- **Findings** (surfaced while syncing the suite README + docs; none block the gate):
-  - **NC radii/vocabulary drift:** the Notification Center config still uses `PanelRadius=13` / `CardRadius=10` / `ChipRadius=6`, while the refactored Start Menu + Taskbar moved to the new token scale. Decide whether to refactor NC (behavioral — needs live desktop verification) or leave it and document the divergence. `projects/command-center/README.md` currently documents the per-file truth.
-  - **Dead token:** Start Menu `HoverCornerRadius=15` is declared in `styleConstants` but referenced by no `controlStyles` rule (hover/list surfaces resolve through `$ElementCornerRadius` = 10).
-  - **Selector ambiguity:** `Grid#CompanionRoot > Border#AcrylicBorder` gets glass styling, but a more specific selector (`StartDocked.StartMenuCompanion#RightCompanion > Grid#CompanionRoot > Border#AcrylicBorder`) sets `Visibility=1` on the same element.
-  - **Redundant styling:** `Border#AppBorder` is both collapsed (`Visibility=1`) and glass-styled in the merged dedup entry.
-
----
-
-### [Steam-Vault] (projects/Steam-Vault)
-
-#### [Steam-Vault] 2026-10-15 — Microsoft Store / Xbox UWP Games Undetected, Missing Custom NSIS Hooks, and Lacking Tray Support
-- **Project Identifier:** `[Steam-Vault]`
-- **Repository Path:** `projects/Steam-Vault`
-- **Severity**: 🟠 High (functional defect & installer parity)
-- **Status**: 🚧 investigating / fix applied
-- **Scope**: `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/commands.rs`, `src-tauri/src/lib.rs`, `src-tauri/Cargo.toml`, `src-tauri/tauri.conf.json`, `src-tauri/windows/hooks.nsh`, `src-tauri/windows/sidebar.bmp`
-- **Reported Issues**:
-  1. Xbox/Microsoft Store games (e.g. Microsoft Solitaire Collection) are not detected because detector only scanned `XboxGames` directory and missed Windows AppModel registry packages and `WindowsApps` locations.
-  2. Windows installer lacks custom NSIS script and branded sidebar bitmap used by NH-Reader (`hooks.nsh`, `sidebar.bmp`).
-  3. Steam Vault lacks system tray support for minimizing to background, toggling visibility, and clean close-to-tray handling.
-- **Resolution**:
-  1. Implemented Windows AppModel repository registry enumeration and `WindowsApps` scanning in `detect_xbox`, detecting titles with `xboxservices.config`, `MicrosoftGame.config`, or Xbox manifest protocols, resolving valid `shell:AppsFolder\<FamilyName>!<AppId>` AUMIDs and wiring `explorer.exe` execution for Steam shortcuts.
-  2. Ported NH-Reader custom NSIS script (`hooks.nsh`) for process termination and clean uninstallation; generated 164x314 branded obsidian BMP (`sidebar.bmp`); updated `tauri.conf.json` with `bundle.windows.nsis`.
-  3. Added `tray-icon` and `image-png` Tauri features, created 32x32 `tray-icon.png`, implemented system tray with Show/Minimize/Quit menu and click toggle, and added window close-to-tray prevention in `lib.rs`.
-
-#### [Steam-Vault] 2026-10-15 — Windows Uninstall Registry Scan Ingesting Uninstallers & Duplicating Library Titles
-- **Project Identifier:** `[Steam-Vault]`
-- **Repository Path:** `projects/Steam-Vault`
-- **Severity**: 🟠 High (library pollution & duplicates)
-- **Status**: ✅ resolved — verified across platform scan tests
-- **Scope**: `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/cache.rs`, `src-tauri/src/commands.rs`
-- **Reported Issue**: Platform scan was picking up uninstaller binaries (`unins000.exe`, `Uninstall.exe`, setup wrappers) and duplicating games across GOG, Epic, and other storefronts.
-- **Root Cause**: `detect_registry_based()` directly enumerated Windows Uninstall registry entries as platform games, using `DisplayIcon` and `UninstallString` which frequently point to uninstallation utilities.
-- **Resolution**:
-  1. Removed `detect_registry_based()` from active game scans entirely.
-  2. Implemented `ingest_uninstall_metadata()` in `cache.rs`, using the uninstall registry purely as passive metadata (indexing clean game titles and publishers into `game_catalog` without creating platform games).
-  3. Added real library directory scanners for Ubisoft Connect, Battle.net, and Rockstar Games.
-
-#### [Steam-Vault] 2026-10-15 — EA Games Subfolder Working Directory & Odd Entry Discovery
-- **Project Identifier:** `[Steam-Vault]`
-- **Repository Path:** `projects/Steam-Vault`
-- **Severity**: 🟠 High (launch failure & folder pollution)
-- **Status**: ✅ resolved
-- **Scope**: `src-tauri/src/platforms/detectors.rs`, `src-tauri/src/commands.rs`
-- **Reported Issue**: EA game scan surfaced weird entries (`530c1147...`, `InstallData`, `Logs`, `PLR`) and broke working directories for nested binaries (e.g. Dragon Age II in `bin_ship/DragonAge2.exe`).
-- **Root Cause**: EA directory search did not score binaries by directory depth, and shortcut creation defaulted working directory (`start_dir`) to the root install folder instead of the binary's immediate parent directory.
-- **Resolution**:
-  1. Blacklisted EA metadata and log directories (`InstallData`, `Logs`, `PLR`, `__Installer`, `Support`).
-  2. Filtered out hex/hash-named directories.
-  3. Scored candidate binaries prioritizing deep main game executables over root setup wrappers.
-  4. Fixed `import_platform_games` so `start_dir` always prioritizes the executable's immediate directory (`parent()`).
-
-#### [Steam-Vault] 2026-10-15 — Itch.io Electron Cache/Internal Directory Ingestion & Indie Engine Support
-- **Project Identifier:** `[Steam-Vault]`
-- **Repository Path:** `projects/Steam-Vault`
-- **Severity**: 🟡 Medium (false positives & missing indie titles)
-- **Status**: ✅ resolved
-- **Scope**: `src-tauri/src/platforms/detectors.rs`
-- **Reported Issue**: Itch.io scanning produced false positive entries from Electron cache and internal folders (`Code Cache`, `db`, `Local Storage`, `logs`), while missing games built on indie engines with non-standard entry points.
-- **Root Cause**: Recursive file walking in itch folders traversed cache directories, and binary filters only checked standard Windows PE executables.
-- **Resolution**:
-  1. Blacklisted Electron, Chromium, and framework cache folders (`Code Cache`, `GPUCache`, `blob_storage`, `Local Storage`, `Session Storage`, `IndexedDB`, `logs`, `cache`).
-  2. Implemented multi-engine detection for HTML5 (`index.html`, `package.json`), NW.js, Ren'Py (`*.rpy`, `game/*.rpa`), RPG Maker (`Game.rpgproject`, `data/System.json`), Godot (`project.godot`, `*.pck`), Love2D (`*.love`, `main.lua`), Java (`*.jar`), Python (`*.py`), and custom shell/batch wrappers.
-
-#### [Steam-Vault] 2026-10-15 — Emulator System/BIOS Files False Positives & Automatic Config-Based ROM Discovery
-- **Project Identifier:** `[Steam-Vault]`
-- **Repository Path:** `projects/Steam-Vault`
-- **Severity**: 🟡 Medium (spurious ROM detection)
-- **Status**: ✅ resolved
-- **Scope**: `src-tauri/src/platforms/detectors.rs`
-- **Reported Issue**: Emulator scans picked up internal files, BIOS, and DSP dumps (`codehandler`, `dsp coef`, `misc`) as games, while requiring manual ROM path entry.
-- **Root Cause**: File extension matching for `.bin`, `.elf`, `.iso` without directory and file stem blacklisting, plus lack of emulator configuration parsing.
-- **Resolution**:
-  1. Blacklisted BIOS and system filenames (`dsp_coef*`, `codehandler*`, `IPL.BIN`, `bios*`, `firmware*`, `system*`, `misc*`).
-  2. Implemented config-based ROM library path auto-detection from emulator configuration files for Dolphin (`Dolphin.ini`), PCSX2 (`PCSX2.ini`), DuckStation (`settings.ini`), Ryujinx (`Config.json`), Cemu (`settings.xml`), and RetroArch (`retroarch.cfg`).
-
----
-
-### [Steam-Vault-Catalog] (projects/Steam-Vault-Catalog)
-
-#### [Steam-Vault-Catalog] 2026-10-15 — CI Population Workflow Git Tracking of Local Dist & SemVer Tagging
-- **Project Identifier:** `[Steam-Vault-Catalog]`
-- **Repository Path:** `projects/Steam-Vault-Catalog`
-- **Severity**: 🟠 High (workflow failure)
-- **Status**: ✅ resolved — verified in CI run `d6c70b2`
-- **Scope**: `.github/workflows/populate-catalog.yml`, `scripts/build-index.js`, `.gitignore`
-- **Reported Issue**: The catalog population workflow failed trying to `git add dist/`, which is git-ignored as a build-only directory. Additionally, release tagging and documentation updates did not follow proper SemVer.
-- **Root Cause**: `populate-catalog.yml` attempted to commit `dist/`, while GitHub Actions checkout lacked push credentials and automated release version bumping.
-- **Resolution**:
-  1. Removed `dist/` from git tracking and workflow commit steps (release assets are uploaded directly to GitHub Releases by `build-release.yml`).
-  2. Authenticated git remote via `PAT_TOKEN` with write permissions.
-  3. Added automated SemVer patch version bumping in `package.json`, automated `CHANGELOG.md` and `README.md` game count updates, and automated git tagging (`v1.0.X`) which triggers the release workflow.
-
-#### [Steam-Vault-Catalog] 2026-10-15 — VNDB String IDs Written into igdbId Integer Schema Field
-- **Project Identifier:** `[Steam-Vault-Catalog]`
-- **Repository Path:** `projects/Steam-Vault-Catalog`
-- **Severity**: 🟠 High (schema type violation)
-- **Status**: ✅ resolved — verified across all catalog files via `npm run validate`
-- **Scope:** `scripts/populate.js`, `scripts/validate.js`, `games/*.json`
-- **Reported Issue**: Game JSON files failed schema validation with type errors (`igdbId must be integer or null`) because string VNDB IDs (such as `"v239"`) were being populated into `externalIds.igdbId`.
-- **Root Cause**: `scripts/populate.js` used `igdbId: data.id || null` where `data.id` was a string for VNDB API records.
-- **Resolution**:
-  1. Migrated all affected visual novel game JSON files in `games/`: preserved VNDB IDs in `externalIds.vndbId` and reset `externalIds.igdbId` to `null`.
-  2. Patched `scripts/populate.js` line 664 to enforce `(typeof data.id === "number" && Number.isInteger(data.id))` before assigning to `igdbId`, keeping `vndbId` as a string.
-  3. Extended `scripts/validate.js` to enforce strict type assertions matching `schema/game.schema.json`.
-
-#### [Steam-Vault-Catalog] 2026-10-15 — Single-Platform Incompleteness & "emulator" Category in Game Platforms Array
-- **Project Identifier:** `[Steam-Vault-Catalog]`
-- **Repository Path:** `projects/Steam-Vault-Catalog`
-- **Severity**: 🟡 Medium (data taxonomy incompleteness)
-- **Status**: ✅ resolved — verified across all catalog files
-- **Scope:** `schema/game.schema.json`, `scripts/populate.js`, `scripts/validate.js`, `games/*.json`
-- **Reported Issue**: Games were only populating `"windows"` in the `platforms` array despite being released on macOS, Linux, or classic consoles. In addition, `"emulator"` was incorrectly used as a platform in some records when it represents a software category.
-- **Root Cause**: The catalog crawler defaulted to single-platform tags without inspecting multi-platform release arrays or console hardware categories, and lacked validation against software categories in `platforms`.
-- **Resolution**:
-  1. Updated all game JSON files to enumerate all supported operating systems (`windows`, `macos`, `linux`) and specific console hardware (`PlayStation`, `PlayStation 2`, `GameCube`, `Wii`, `Nintendo 64`, `Super Nintendo`, `Game Boy Advance`, `Genesis`, `Dreamcast`, etc.).
-  2. Strictly prohibited `"emulator"` from the `platforms` array in `schema/game.schema.json` and `scripts/validate.js`.
-  3. Added cross-platform operating system population logic in `scripts/populate.js`.
-
-#### [Steam-Vault-Catalogue] 2026-10-15 — Catalogue Command Format & De-Duplication (`main:sub:option`)
-- **Project Identifier:** `[Steam-Vault-Catalogue]`
-- **Repository Path:** `projects/Steam-Vault-Catalogue`
-- **Severity**: 🟡 Medium (script naming inconsistency & redundancy)
-- **Status**: ✅ resolved — verified across package.json and workflows
-- **Scope:** `package.json`, `.github/workflows/populate-catalogue.yml`, `README.md`, `CONTRIBUTING.md`
-- **Reported Issue**: NPM commands contained redundant entries (`catalogue:update`, `catalogue:populate`) that did not follow the organization namespace convention `main:sub:option`.
-- **Root Cause**: Scripts in `package.json` had two-part names and duplicate aliases without clear sub/option flags.
-- **Resolution**:
-  1. Standardized all scripts to canonical `main:sub:option` format: `catalogue:validate`, `catalogue:build:index`, `catalogue:populate:games`, `catalogue:populate:seeds`, `catalogue:update:missing`, and `catalogue:update:all`.
-  2. Removed redundant unformatted commands (`catalogue:update`, `catalogue:populate`).
-  3. Updated `.github/workflows/populate-catalogue.yml`, `README.md`, and `CONTRIBUTING.md` to reference the canonical commands.
-
----
-
-### [Steam-Vault] (projects/Steam-Vault)
-
-#### [Steam-Vault] 2026-10-14 — Missing Developer/Publisher/Metadata Collections for Non-Steam Shortcuts & Multi-Entity Strings
-- **Project Identifier:** `[Steam-Vault]`
-- **Repository Path:** `projects/Steam-Vault`
-- **Severity**: 🟠 High (functional defect)
-- **Status**: ✅ resolved — verified across 30 unit tests and full suite
-- **Scope**: `src-tauri/src/commands.rs`, `src-tauri/src/autocat.rs`, `src-tauri/src/metadata/*`, `src-tauri/src/platforms/*`
-- **Reported Issue**: When organizing by Developer, Publisher, Genre, or Release Year, non-Steam games and certain Steam games do not have their metadata detected. As a result, no collections are created for them.
-- **Root Cause**:
-  1. `compute_categorization` and `compute_autocats` only requested metadata for `GameKind::Steam` and queried the cache solely under `steam-store` with synthetic shortcut app IDs. Shortcuts never had metadata populated, causing `AppMeta::default()` with empty fields.
-  2. Multi-developer/publisher comma-separated strings (e.g. `"Square Enix, PlatinumGames"`) were not split in `autocat::apply`, creating single monolithic collection names.
-  3. No fallback metadata providers (PCGamingWiki, VNDB, Steam Store Search, local engine/receipt inspection) were integrated into the categorization pipeline.
-- **Resolution**:
-  1. Built multi-provider metadata pipeline: keyless VNDB Kana API provider (`metadata::vndb`), keyless Steam Store Search (`metadata::steam_search`), offline engine sniffer (`metadata::local`), and PCGamingWiki queries with title sanitization.
-  2. Implemented `ensure_game_metadata` resolving metadata for both Steam games and non-Steam shortcuts, caching under both `shortcut-meta` and `steam-store` namespaces.
-  3. Added `split_entities` in `autocat.rs` to break comma/semicolon/slash-delimited entities into individual collections while protecting legal company suffixes (`Co., Ltd.`, `Inc.`), plus platform publisher fallbacks for non-Steam games.
-  4. Implemented automatic artwork downloading upon platform game/ROM import and added bulk auto-fetch missing artwork button.
-  5. Implemented emulator and ROM detection (`Platform::Emulator`) for 11 popular emulators with tailored launch arguments.
-
-#### [Steam-Vault] 2026-10-15 — Online Catalog Synchronization JSON Deserialization Type Mismatch & Metadata Case Normalization
-- **Project Identifier:** `[Steam-Vault]`
-- **Repository Path:** `projects/Steam-Vault`
-- **Severity**: 🟠 High (functional defect)
-- **Status**: ✅ resolved — verified across unit tests and full 7-suite runner
-- **Scope**: `src-tauri/src/cache.rs`, `src-tauri/src/steam/models.rs`, `projects/Steam-Vault-Catalog/scripts/build-index.js`
-- **Reported Issue**: When synchronizing the online catalog via `sync_online_catalog`, deserialization failed with `JSON error: invalid type: sequence, expected a string at line 1 column 79`.
-- **Root Cause**:
-  1. `CatalogExportRecord` in `cache.rs` expected stringified JSON fields (`platforms: String`, `known_exes: String`, `meta_json: String`). `Steam-Vault-Catalog`'s `build-index.js` outputs JSON sequences (`platforms: [...]`, `known_exes: [...]`) and nested `meta: { ... }` objects.
-  2. `AppMeta` field names used `rename_all = "camelCase"` without aliases or defaults for snake_case keys present in catalog export metadata (`app_id`, `release_year`, etc.).
-- **Resolution**:
-  1. Implemented untagged `StringOrSeq` enum in `cache.rs` and `Option<serde_json::Value>` for `meta_json` / `meta`, allowing seamless deserialization of both stringified and structured sequence/object formats.
-  2. Added serde aliases (`app_id`, `release_date`, `release_year`, `user_score`, etc.) and `#[serde(default)]` to `AppMeta` in `models.rs` ensuring resilient deserialization across camelCase and snake_case representations.
-  3. Recomputed normalized title and lookups (`alias` and `exe`) during catalog ingestion to guarantee exact title and alias matching in `find_catalog_by_title`.
-  4. Updated `build-index.js` to emit both camelCase and snake_case properties in `meta` objects, rebuilt `catalog.db.gz`, updated `catalog_seed.bin`, and validated all 7 test suites pass.
-
-#### [Steam-Vault] 2026-10-15 — Library 500 Error, Artwork Application Refusal, and Settings Navigation & Layout Consolidation
-- **Project Identifier:** `[Steam-Vault]`
-- **Repository Path:** `projects/Steam-Vault`
-- **Severity**: 🔴 Critical (app render failure & layout regressions)
-- **Status**: ✅ resolved — verified with `npm run check` (0 errors, 0 warnings) and `npm run build`
-- **Scope**: `src/lib/stores.ts`, `src/routes/library/+page.svelte`, `src-tauri/src/steam/artwork.rs`, `src-tauri/src/metadata/steamgriddb.rs`, `src-tauri/src/commands.rs`, `src/routes/settings/+page.svelte`, `src/routes/+layout.svelte`, `src/lib/components/settings/*`, `src/styles/*`
-- **Reported Issues**:
-  1. Library page broke completely displaying a 500 error.
-  2. Selected artwork refused to apply due to strict dimension checks and CORS HEAD fetch failures. Safe search could not be disabled to retrieve NSFW results.
-  3. Per-game artwork manager and game display name customization were missing from the per-game management sub-window.
-  4. Collections, platforms, and organize tabs remained in the primary navigation instead of being organized into dedicated sections within Settings.
-  5. Settings tab suffered from severe layout inconsistencies: uneven 2-column masonry with large vertical gaps, missing section tabs, and monolithic layout.
-- **Root Cause**:
-  1. Missing `loading` writable store export in `stores.ts` referenced by pages, plus untracked/corrupted `LibraryGrid.svelte` component.
-  2. Client-side dimension validation rejected non-standard aspect ratios, and client-side `fetch(HEAD)` failed on cross-origin image CDNs. Backend SGDB queries forced safe search without an NSFW parameter.
-  3. Standalone routes (`/collections`, `/platforms`, `/organize`) were exposed in primary sidebar instead of consolidated within `/settings`.
-  4. Settings page used an unconstrained `grid two` where cards of drastically different heights caused masonry height gaps.
-- **Resolution**:
-  1. Restored `loading` store in `stores.ts` and purged untracked corrupted components.
-  2. Updated backend artwork sniffing to support PNG, JPEG, WebP, and ICO; added `nsfw: Option<bool>` parameter to SGDB queries (`nsfw=any&humor=any` when Safe Search is disabled); removed client-side CORS HEAD checks and dimension restrictions to match Steam's non-refusal policy.
-  3. Integrated tabbed Steam-parity Artwork Manager (Portrait, Landscape, Hero, Logo, Icon) and custom display name override (persisted in `localStorage`) into the per-game Manage modal.
-  4. Removed `/collections`, `/platforms`, and `/organize` from sidebar nav and consolidated them into dedicated, modular section tabs inside `/settings`.
-  5. Built responsive tab bar navigation for `/settings` with a balanced 2x2 grid for General & Storage settings and scoped section components (`CollectionsSection`, `PlatformsSection`, `OrganizeSection`), eliminating all layout gaps.
-
----
 
 ### [helix-docs] (projects/helix-docs)
 
@@ -357,9 +93,9 @@
 - **Repository Path:** `projects/helix-docs`
 - **Severity**: 🟢 Low (cosmetic warning)
 - **Status**: ⚠️ open
-- **Scope**: `projects/helix-docs/_sass/support/_functions.scss`
-- **GitHub Issue**: [#3](https://github.com/HELIX-Origin/helix-docs/issues/3)
-- **Symptom**: Dart Sass warns about `/` division (`($px / 16px)`). Compiles cleanly.
+- **Scope:** `projects/helix-docs/_sass/support/_functions.scss`
+- **GitHub Issue:** [#3](https://github.com/HELIX-Origin/helix-docs/issues/3)
+- **Symptom:** Dart Sass warns about `/` division (`($px / 16px)`). Compiles cleanly.
 - **Resolution**: Replace with `math.div` or `calc()`.
 
 #### [helix-docs] BUG-13 — Default layout home page section cards vs index markup
@@ -367,9 +103,9 @@
 - **Repository Path:** `projects/helix-docs`
 - **Severity**: 🟡 Medium (markup constraint)
 - **Status**: ⚠️ open / outstanding
-- **Scope**: `projects/helix-docs/_layouts/default.html`
-- **GitHub Issue**: [#1](https://github.com/HELIX-Origin/helix-docs/issues/1)
-- **Symptom**: Inability to have `default.html` automatically partition arbitrary markdown into modular `.doc-section` cards without manual HTML in index files. Wrapping in `.landing-content` left headings bare, while wrapping in a single `.doc-section` collapsed the page into one monolith.
+- **Scope:** `projects/helix-docs/_layouts/default.html`
+- **GitHub Issue:** [#1](https://github.com/HELIX-Origin/helix-docs/issues/1)
+- **Symptom:** Inability to have `default.html` automatically partition arbitrary markdown into modular `.doc-section` cards without manual HTML in index files. Wrapping in `.landing-content` left headings bare, while wrapping in a single `.doc-section` collapsed the page into one monolith.
 - **Current Pattern**: Home/landing pages author their modular card sections directly in index files using `<section class="doc-section">` with flush-left indentation.
 
 #### [helix-docs] BUG-14 — Broken in-page Table of Contents in standalone docs layout
@@ -377,39 +113,61 @@
 - **Repository Path:** `projects/helix-docs`
 - **Severity**: 🟡 Medium (layout limitation)
 - **Status**: ⚠️ open / deferred
-- **Scope**: `projects/helix-docs/_layouts/docs.html`
-- **GitHub Issue**: [#2](https://github.com/HELIX-Origin/helix-docs/issues/2)
-- **Symptom**: Dynamic client-side DOM TOC generation in `components/toc.html` was fragile and stripped the left sidebar.
+- **Scope:** `projects/helix-docs/_layouts/docs.html`
+- **GitHub Issue:** [#2](https://github.com/HELIX-Origin/helix-docs/issues/2)
+- **Symptom:** Dynamic client-side DOM TOC generation in `components/toc.html` was fragile and stripped the left sidebar.
 - **Resolution**: Standalone single-column `docs.html` delegates to `layout: wiki` and defaults set `layout: wiki` for `type: docs`, providing the dual sticky sidebar tree across all docs.
 
 ---
 
-## ✅ Closed & Resolved Bugs
+## ✅ Closed & Resolved Bugs (Bare-Minimal Ledger)
+
+> 📖 **Full Archive Details**: For root-cause investigations, code diffs, and deep technical post-mortems, see [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md).
 
 ### [Ecosystem] (workspace root)
-- **[Ecosystem] 2026-10-14 — CRLF line-ending churn across every repository:** The machine's **system** git config (`C:/Program Files/Git/etc/gitconfig`) sets `core.autocrlf=true`, which rewrote LF→CRLF on checkout and produced spurious working-tree churn and phantom "modified" files that repeatedly confused agents. Resolved by adding a per-repo `.gitattributes` (`* text=auto eol=lf`; explicit text types; explicit binary types; `*.bat`/`*.cmd` → `text eol=crlf`) to the workspace root (`4e70f4a`) and every org repo — FFXIV-Config (`93ebb89`), helix-docs (`58adc1e`), helix-origin.github.io (`4cd863a`), Hentai-Senpai-Multi-DE-Theme (`20ed6aa`), NH-Reader (`179bd22`), Windhawk-Themes (`0255193`); Steam-Vault already had one. All working trees were force-normalized to LF (a plain `git checkout -- .` is a no-op because the new `eol=lf` attribute makes CRLF and LF equivalent to git, so the files must be removed and re-checked-out). `core.autocrlf=input` was set in the **user-global** config (`C:/Users/Joshu/.gitconfig`) to override the system `true` without needing admin. Note: `.cff` is Citation File Format (text), not a font — do not mark it binary.
+- **[Ecosystem] 2026-10-14 — CRLF Line-Ending Churn:** Machine system git config (`core.autocrlf=true`) rewrote line endings. Resolved by adding explicit `.gitattributes` to all repos and setting user-global `core.autocrlf=input`. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#ecosystem--workspace).
+- **[Ecosystem-Wide] 2026-10-15 — Chromium / WebView2 Window Class Teardown Error (1412):** Clean Win32 HWND unregistration on app exit via atomic `IS_QUITTING` flag and explicit `window.destroy()`. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#ecosystem--workspace).
 
-### [NH-Reader] (projects/NH-Reader)
-- **[NH-Reader] 2026-10-02 — Blacklist page filling & dynamic stream buffer:** In blacklist "Hide" mode, client-side filtering left pages partially empty. Resolved in v0.7.4 with continuous stream buffering in `src/lib/api.ts` (`streamBackfilledList`) and reactive `blacklistVersion` tracking.
-- **[NH-Reader] 2026-10-02 — NSIS installer finish page text legibility:** Finish page retained black text on dark background (NSIS bug #443). Resolved in v0.7.5 by reverting to stock MUI palette while keeping branded sidebar bitmap. Synchronous uninstaller execution fixed with `_?=$INSTDIR` and `ExecWait`.
-- **[NH-Reader] 2026-10-02 — NSIS Korean language string fallbacks:** Missing `MULTIUSER_INSTALLMODEPAGE` strings produced warnings. Added translations to `hooks.nsh` in v0.7.4.
+### [Universal-Game-Launcher] (formerly Steam-Vault) (projects/Steam-Vault)
+- **[Universal-Game-Launcher] 2026-10-16 — Cache Miss Latency, Lack of Persistent Game/Collection Schema, and External Steam Writes (v1.4.0):** Decoupled app from Steam file writes; implemented internal collection and KV persistence in `database.sqlite` and `mem_kv` for 0ms transitions; eliminated all `ensure_steam_closed()` locks; purged unneeded external scrapers; updated styling across all pages to modern dark purple with hardware-accelerated animations (`translateZ(0)`) and zero backdrop blur overhead. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#universal-game-launcher-formerly-steam-vault).
+- **[Universal-Game-Launcher] 2026-10-16 — Network Choking & UI Freezing from Defunct Offline Catalogue & Blocking Dashboard Waterfalls (v1.4.0):** Purged discontinued offline catalogue database schema (`game_catalog`, `catalog_lookups`), deleted 363 KB binary seed, removed dead network lookups to deleted repository `HELIX-Origin/Steam-Vault-Catalogue`, added SQLite WAL/cache PRAGMAs, added sub-millisecond Redis KV library caching, batched artwork state reactivity, and unblocked dashboard mounting from background notification feeds. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#universal-game-launcher-formerly-steam-vault).
+- **[Universal-Game-Launcher] 2026-10-16 — WinGet Emulation Rejection Risk & Product Rebranding (v1.4.0):** Purged all emulation code and ROM scanners for WinGet repository compliance; rebranded product to Universal Game Launcher; standardized SQLite on generic `database.sqlite` / `database.db`. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#universal-game-launcher-formerly-steam-vault).
+- **[Steam-Vault] 2026-10-16 — WinGet Publish Workflow Installer Download Pattern Mismatch (v1.3.3):** Updated `publish-winget.yml` to accept glob pattern `*x64-setup.exe`.
+- **[Steam-Vault] 2026-10-16 — Package Scripts Violation of `main:sub:option` Standard (v1.3.3):** Realigned scripts to canonical `main:sub:option` hierarchy (`winget:manifest:generate`, `winget:manifest:verify`, `winget:manifest:install`).
+- **[Steam-Vault] 2026-10-16 — Cross-Platform Compiler Warnings on Linux/macOS (v1.3.2):** Resolved unused `imp` re-export module and unneeded mutable variables.
+- **[Steam-Vault] 2026-10-15 — CSP Image-Src Domain Restriction & Lack of Local Artwork Disk Cache:** Expanded CSP `img-src` to include all store CDN domains; built local disk cache `art_cache/` in Rust.
+- **[Steam-Vault] 2026-10-15 — Free Game Promotion False Positives (v1.3.1):** Validated `discountPrice == 0` and active promotion windows; modularized checkers into per-platform files.
+- **[Steam-Vault] 2026-10-15 — Microsoft Store / Xbox UWP Games Undetected & NSIS Hooks:** Added AppModel registry enumeration, NSIS process termination hooks (`hooks.nsh`), 164x314 sidebar bitmap, and tray minimize.
+- **[Steam-Vault] 2026-10-15 — Windows Uninstall Registry Scan Ingesting Uninstallers:** Removed uninstall registry from active game scans; relegated to passive metadata indexing.
+- **[Steam-Vault] 2026-10-15 — EA Games Subfolder Working Directory:** Scored candidate executables by depth; set `start_dir` to immediate parent directory.
+- **[Steam-Vault] 2026-10-15 — Itch.io Electron Cache / Internal Directory Ingestion:** Blacklisted Electron cache folders; added multi-engine game detection.
+- **[Steam-Vault] 2026-10-14 — Missing Metadata Collections for Manually Added Games:** Implemented keyless multi-provider metadata pipeline and entity splitting in `autocat.rs`.
+- **[Steam-Vault] 2026-10-15 — Library 500 Error & Settings Navigation Consolidation:** Restored missing writable store export; integrated tabbed Steam-parity Artwork Manager; consolidated Settings view into 2x2 grid.
 
 ### [Windhawk-Themes] (projects/Windhawk-Themes)
-- **[Windhawk-Themes] 2026-10-06 — Start Menu Pins Centering & Right Drift:** Pinned apps drifted rightward in 3-column layout. Centered pins with balanced padding and restored 470px width.
-- **[Windhawk-Themes] 2026-10-06 — Phone Link Companion Vertical Misalignment:** Companion cards hung lower than main menu top. Adjusted margin offsets flush with search box.
+- **[Windhawk-Themes] 2026-10-16 — Reversion of Regressive Start Menu & Taskbar Style Overhauls:** All Start Menu high-contrast border overrides, Quick Settings split button color mismatches, Snap layout container theming regressions, and taskbar overflow flyout background loss were completely eliminated when the maintainer reverted regressive experimental changes in favor of fixing and refining the original, proven Command Center styles. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#windhawk-themes).
+- **[Windhawk-Themes] 2026-10-10 — Random explorer.exe Crash During File/Folder Actions:** Confirmed caused by external companion mod `file-operations-styler` hooking Explorer copy/delete dialogs, not Windhawk-Themes stylers. Resolved by disabling the external mod. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#windhawk-themes).
+- **[Windhawk-Themes] 2026-10-13 — Static Gate Warnings (Duplicate Target Selectors):** Merged duplicate selector declarations into unified behavior-preserving blocks; static validation gate now passes with 0 errors and 0 warnings.
+- **[Windhawk-Themes] 2026-10-06 — Start Menu Pins Centering & Right Drift:** Centered pins with balanced padding and restored 470px width.
+- **[Windhawk-Themes] 2026-10-06 — Phone Link Companion Vertical Misalignment:** Aligned companion card top margin flush with search box.
+
+### [NH-Reader] (projects/NH-Reader)
+- **[NH-Reader] 2026-10-02 — Blacklist Page Filling & Dynamic Stream Buffer (v0.7.4):** Implemented continuous stream buffering in `api.ts`.
+- **[NH-Reader] 2026-10-02 — NSIS Installer Finish Page Text Legibility (v0.7.5):** Reverted finish page to stock MUI palette while keeping branded sidebar bitmap.
+- **[NH-Reader] 2026-10-02 — NSIS Korean Language Fallbacks (v0.7.4):** Added Korean translations to `hooks.nsh`.
 
 ### [helix-docs] (projects/helix-docs)
-- **[helix-docs] BUG-1 / BUG-2 — Sass compiler failure:** Ruby sass and liblibsass failed on CSS Color 4 and CSS min/max math. Fixed by adopting Dart Sass (`sass-embedded` 1.105.1). Parity verified (432/432 rules).
-- **[helix-docs] BUG-3 — sass-embedded binstub conflict:** Overwrote conflicting binstub with `--force`.
-- **[helix-docs] BUG-5 — Missing faraday-retry gem:** Octokit silently skipped retry middleware. Added `gem "faraday-retry"` to Gemfile outside `:jekyll_plugins`.
-- **[helix-docs] BUG-6 — jekyll-titles-from-headings collection title override:** Overwrote collection document titles and broke breadcrumb matching. Dropped plugin; canonical `title` frontmatter enforced.
-- **[helix-docs] BUG-7 — Jekyll 3.x where_exp multi-condition syntax error:** Replaced multi-condition `where_exp` with `for` + `if` loops.
-- **[helix-docs] BUG-8 — Liquid array subscript filter precedence:** Pager arithmetic coerced Document to integer 0. Pre-computed subscript offsets.
-- **[helix-docs] BUG-9 — Primer theme leak:** Switched nav pages set to `site.html_pages`.
-- **[helix-docs] BUG-10 — Defaults scope syntax linter warnings:** Standardized `{path: "", type: ...}` across all configs.
-- **[helix-docs] BUG-11 — Duplicate layout frontmatter:** Cleaned duplicate keys across companion doc pages.
-- **[helix-docs] BUG-12 — XAML curly brace Kramdown interpolation:** Wrapped XAML bindings in `{% raw %}` blocks.
-- **[helix-docs] BUG-15 — Mermaid diagrams rendered as raw code blocks:** Made the `components/mermaid.html` loader opt-out (`site.mermaid == false`). Live-verified the `mermaid@11.12.0` ESM loader on Windhawk-Themes, NH-Reader, Hentai-Senpai and helix-origin.github.io (`05b9943`).
-- **[helix-docs] BUG-16 — Sidebar nav tree had no hierarchy:** Level-1 category emoji + indented sub-page bullets with left-aligned markers; icons resolved from `nav_icon` front matter → `nav_icons` map → heuristic. Live-verified `nav-bullet`/`nav-icon`/category markers on consuming wiki trees (`05b9943`).
-- **[helix-docs] BUG-17 — Sidebar footer links were centered:** Footer switched to `justify-items: start` + `text-align: left`. Live-verified in the served `site.css` (`05b9943`).
-- **[helix-docs] BUG-18 — Brand logo & favicon used raw relative paths:** `logo`/`favicon` now resolve from the site root in `head.html`/`header.html`/`sidebar.html` (absolute and protocol-relative URLs pass through); `apple-touch-icon` added. Live-verified on nested helix-docs routes and on Windhawk-Themes (`05b9943`, Windhawk `eb4b2a6`).
+- **[helix-docs] BUG-1 / BUG-2 — Sass Compiler Failure (v1.0.0):** Migrated to Dart Sass (`sass-embedded`).
+- **[helix-docs] BUG-3 — sass-embedded Binstub Conflict (v1.0.0):** Overwrote conflicting binstub with `--force`.
+- **[helix-docs] BUG-5 — Missing faraday-retry Gem (v1.0.0):** Added `gem "faraday-retry"` to Gemfile.
+- **[helix-docs] BUG-6 — jekyll-titles-from-headings Title Override (v1.0.0):** Dropped plugin; enforced canonical `title` frontmatter.
+- **[helix-docs] BUG-7 — Jekyll 3.x where_exp Syntax Error (v1.0.0):** Replaced multi-condition `where_exp` with `for` + `if` loops.
+- **[helix-docs] BUG-8 — Liquid Subscript Filter Precedence (v1.0.0):** Pre-computed subscript offsets before indexing.
+- **[helix-docs] BUG-9 — Primer Theme Leak (v1.0.0):** Switched navigation page set to `site.html_pages`.
+- **[helix-docs] BUG-10 — Defaults Scope Syntax Linter Warnings (v1.0.0):** Standardized `{path: "", type: ...}` across all configs.
+- **[helix-docs] BUG-11 — Duplicate Layout Frontmatter (v1.0.0):** Cleaned duplicate keys across companion doc pages.
+- **[helix-docs] BUG-12 — XAML Curly Brace Kramdown Interpolation (v1.0.0):** Wrapped XAML bindings in `{% raw %}` blocks.
+- **[helix-docs] BUG-15 — Mermaid Diagrams Rendered as Raw Code Blocks (v1.0.0):** Made `mermaid.html` opt-out (`site.mermaid == false`).
+- **[helix-docs] BUG-16 — Sidebar Nav Tree Had No Hierarchy (v1.0.0):** Level-1 category emoji and indented bullet dots with left-aligned markers.
+- **[helix-docs] BUG-17 — Sidebar Footer Links Centered (v1.0.0):** Switched footer to `justify-items: start` and `text-align: left`.
+- **[helix-docs] BUG-18 — Brand Logo & Favicon Used Raw Relative Paths (v1.0.0):** Resolved from site root across all layout partials.

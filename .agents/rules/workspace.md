@@ -19,7 +19,6 @@ the *currently active* work set (repos where only `docs/` is in scope are marked
 - `projects/helix-origin.github.io` — portal; **only `docs/` is in scope**.
 - `projects/NH-Reader` — Tauri v2 desktop manga reader; **full repository in scope** (scripts, workflows, desktop core, and `docs/`).
 - `projects/Steam-Vault` — Tauri v2 desktop app & library launcher; **full repository in scope**.
-- `projects/Steam-Vault-Catalogue` — open community game catalogue & crawler; **full repository in scope**.
 - `projects/Theme-Toolkit` — cross-platform desktop theme studio & applicator; **full repository in scope**.
 - `projects/Windhawk-Themes` — **only `docs/` is in scope**.
 
@@ -36,6 +35,7 @@ The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs 
 - `TODO.md` — actionable checklist; **toggle items from `- [ ]` to `- [x]` as they complete** and add
   new unchecked items before starting new work.
 - `BUGS.md` — known issues, quirks, and workarounds. Move entries from Open to Resolved when fixed.
+- **Bare Minimal Living Ledgers & Dedicated Archival**: Maintain `ROADMAP.md`, `TODO.md`, and `BUGS.md` lean, sharp, and focused on active workstreams. Detailed historical task checklists, delivered milestone technical narratives, and resolved bug post-mortems are preserved in `.github/` (`.github/ROADMAP-ARCHIVE.md`, `.github/TODO-ARCHIVE.md`, `.github/BUGS-ARCHIVE.md`) to avoid cluttering the workspace root.
 - **Mandatory Project Tagging**: In workspace root tracking documents (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`),
   every milestone, sprint, task, workstream, quirk, or bug MUST be explicitly prefixed with its project tag
   and relative path (`[<project-name>] (<project-path>)`, e.g. `[NH-Reader] (projects/NH-Reader)`). Never omit
