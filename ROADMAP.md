@@ -51,6 +51,7 @@ flowchart TB
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
 | **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | [v1.2.0](https://github.com/HELIX-Origin/Steam-Vault/releases/tag/v1.2.0) | 🚀 Active | Per-platform lib isolation, per-platform tauri config, WinGet package registration, opt-in code signing |
 | **[Steam-Vault-Catalogue]** | `projects/Steam-Vault-Catalogue` | SemVer | [v1.1.0](https://github.com/HELIX-Origin/Steam-Vault-Catalogue/releases/tag/v1.1.0) | 🚀 Active | Community open game catalogue, modular TypeScript manager, main:sub:option scripts & living index |
+| **[Theme-Toolkit]** | `projects/Theme-Toolkit` | SemVer | [v0.1.0-alpha](https://github.com/HELIX-Origin/Theme-Toolkit) | 🚀 Active | M1: Framework scaffolded, Per-Platform Lib isolation, native packaging blueprints |
 | **[Hentai-Senpai]** | `projects/Hentai-Senpai-Multi-DE-Theme` | SemVer | Archived | 🛑 Discontinued | Discontinued and archived; unmaintained legacy reference |
 
 ---
@@ -127,16 +128,12 @@ flowchart LR
 
 ---
 
-### 5. [Hentai-Senpai-Multi-DE-Theme] — Nord GTK Theme
+### 5. [Hentai-Senpai-Multi-DE-Theme] — Nord GTK Theme (DISCONTINUED & ARCHIVED)
 *Target Path: `projects/Hentai-Senpai-Multi-DE-Theme` · Linux Desktop Customization*
 
-- **[Hentai-Senpai-Multi-DE-Theme] v1.0.0 Delivery (SHIPPED):**
-  - Unified installer script supporting GNOME, Cinnamon, XFCE, Budgie, and MATE.
-  - Vector icon asset suite (`icon.svg`, `logo.ico`, `my-avatar.png`).
-  - Documentation migrated to `helix-docs` remote theme with frontmatter navigation.
-- **[Hentai-Senpai-Multi-DE-Theme] Future Roadmap:**
-  - Automated libadwaita / GTK4 user override configuration scripts.
-  - Optional custom accent color generator presets.
+- **[Hentai-Senpai-Multi-DE-Theme] Archival Status:**
+  - Discontinued and archived. Development and maintenance ceased due to lack of Linux testbeds and maintenance capacity.
+  - Repository is archived on GitHub (`isArchived: true`), documentation portal pages decommissioned, and all active agent tasks completed.
 
 ---
 
@@ -275,3 +272,30 @@ flowchart LR
   - **Standardized `main:sub:option` NPM Scripts**: `catalogue:update:all`, `catalogue:update:missing`, `catalogue:populate:games`, `catalogue:populate:seeds`, `catalogue:validate`, and `catalogue:build:index`.
   - **Multi-Storefront Schema Expansion**: Official integration identifiers (`gogId`, `epicAppName`, `ubisoftId`, `eaOfferId`, `xboxPackageFamily`) and launch URIs.
   - **Documentation Site (`docs/`)**: Jekyll site powered by `HELIX-Origin/helix-docs` with 5-section vCard homepage and squircle branding artwork.
+
+---
+
+### 8. [Theme-Toolkit] — Dedicated Cross-Platform Theme Engineering Suite (ACTIVE / SCAFFOLDED)
+*Target Path: `projects/Theme-Toolkit` · Tauri v2 / Rust / SvelteKit Desktop App · v0.1.0-alpha*
+
+- **Core Vision & Invariants:**
+  - Dedicated cross-platform desktop theme authoring and packaging application named **Theme Toolkit**, built as a **Tauri v2 application** that utilizes a modern GUI as its primary interface to replace Microsoft's broken settings export integration and provide native theme authoring across all major desktop operating systems.
+  - **Zero Store / Zero Catalogue Invariant:** Unlike previous attempts, Theme Toolkit contains **strictly NO remote store or catalogue**. It is designed purely for creating, customizing, and applying desktop themes locally on the user's machine.
+  - **Themepack Exporting:** Exporting to standard themepack formats (`.deskthemepack`, `.soundpack`, FreeDesktop archives) is supported as a primary mechanism for users to save and package their themes for easy backup, sharing, and re-installation at a later time.
+  - Strict adherence to official platform specifications: Microsoft Win32 desktop theming and Visual Styles, macOS Dynamic Desktop and Soundset architectures, and FreeDesktop/XDG specifications for Linux.
+- **Detailed Feature Scope:**
+  - **Windows Native Packaging:** Utilizes Microsoft `makecab.exe` Diamond Directive Files (`.ddf`) with MSZIP compression, guaranteeing valid cabinet headers, accurate relative paths, and zero asset stripping for `.deskthemepack` archives.
+  - **macOS Native Tooling:** Packages Dynamic Desktop timed/solar HEIC wallpapers, system alert soundsets (`.soundpack`), custom cursor bundles, and system accent/highlight preferences.
+  - **Linux Native Tooling:** Packages FreeDesktop Sound Theme compliant audio sets, XDG cursor and icon themes, and desktop environment background XML manifests (GNOME, KDE Plasma, XFCE, Cinnamon).
+  - **Sound Schemes:** Complete `.wav` audio asset bundling and registration with Windows Sound Event keys (`HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default`) and POSIX sound specifications.
+  - **Wallpapers & Slideshows:** Single static wallpapers or multi-image slideshows with configurable intervals (in milliseconds), shuffle modes, and multi-monitor alignment options (Fill, Fit, Stretch, Tile, Center, Span).
+  - **Cursor Schemes:** Full packaging for all 15 Win32 standard cursor roles with support for static (`.cur`) and animated (`.ani`) pointers, as well as native macOS and X11/Wayland cursor sets.
+  - **Color Editing:** Live DWM accent colorization control (`ColorizationColor` ARGB hex), Windows 10/11 system/app dark and light modes (`SystemMode`, `AppMode`), and Control Panel color palette overrides.
+  - **Delivery Form Factor:** Dedicated **Tauri v2 GUI application** (`Theme Toolkit`) with interactive asset previews (wallpaper viewport, audio player, animated cursor canvas, real-time color pickers) backed by a native Rust Per-Platform Lib Architecture (`windows.rs`, `macos.rs`, `linux.rs`), alongside optional headless CLI automation (`theme-toolkit pack:theme:release`).
+- **Scaffolded State:**
+  - Repository created at `HELIX-Origin/Theme-Toolkit`, cloned into `projects/Theme-Toolkit`, and initial base framework committed and pushed to `origin/main`.
+  - Feature implementation will be scheduled for a subsequent sprint.
+
+
+
+

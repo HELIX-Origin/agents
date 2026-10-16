@@ -18,7 +18,53 @@
 
 ## 🎯 Active Sprints
 
-### 🚀 [Hentai-Senpai] & [helix-origin.github.io] Sprint 14: Hentai Senpai Discontinuation, Repository Archival Notice, and Portal Delisting
+### 🚀 [Theme-Toolkit] & [Ecosystem-Wide] Sprint 16: Theme Toolkit Repository Creation, Base Framework Scaffolding, and Dedicated Agent Suite (Completed)
+- **Project Identifiers:** `[Theme-Toolkit]` (`projects/Theme-Toolkit`), `[Ecosystem-Wide]`
+- **Target Components:** `projects/Theme-Toolkit/*`, `.agents/rules/theme-engineering-standards.md`, `.agents/skills/macos-theme-engineering.md`, `.agents/skills/linux-theme-engineering.md`, `.agents/agents/desktop-theme-engineer/*`, `AGENTS.md`, `.agents/rules/workspace.md`, `ROADMAP.md`
+
+#### 📝 Execution Tasks
+1. **[Theme-Toolkit] (projects/Theme-Toolkit) W.39a — GitHub Repository Creation & Local Clone (Completed)**: Created public organization repository `HELIX-Origin/Theme-Toolkit` via GitHub CLI and cloned locally into `projects/Theme-Toolkit`.
+2. **[Theme-Toolkit] (projects/Theme-Toolkit) W.39b — Tauri v2 Base Framework Scaffolding (Completed)**: Scaffolding of complete Tauri v2 project structure:
+   - SvelteKit / Vite frontend studio layout (`src/app.html`, `src/routes/+layout.svelte`, `src/routes/+page.svelte`).
+   - Standardized `package.json` with `main:sub:option` command hierarchy and native `.mjs` scripts runner under `scripts/`.
+   - `src-tauri/Cargo.toml` with `theme-toolkit` crate, `tauri.conf.json`, and per-platform targets (`tauri.windows.conf.json`, `tauri.macos.conf.json`, `tauri.linux.conf.json`).
+   - Universal `.github/workflows/cleanup-failed-runs.yml` maintenance workflow.
+3. **[Theme-Toolkit] (projects/Theme-Toolkit) W.39c — Rust Per-Platform Lib Architecture (Completed)**: Implemented cross-platform packaging engine contracts under `src-tauri/src/platforms/`:
+   - `windows.rs`: Blueprint for `makecab.exe` Diamond Directive File (`.ddf`) generation and MSZIP cabinet packaging.
+   - `macos.rs`: Dynamic Desktop HEIC container creation and `.soundpack` bundle assembly.
+   - `linux.rs`: FreeDesktop Sound Theme v0.8 and XDG `xcursorgen` compilation pipelines.
+4. **[Ecosystem-Wide] W.39d — Specialized Subagent Suite & Skills (Completed)**:
+   - Created rule `.agents/rules/theme-engineering-standards.md`.
+   - Created skills `.agents/skills/macos-theme-engineering.md` and `.agents/skills/linux-theme-engineering.md`.
+   - Created subagents `.agents/agents/desktop-theme-engineer/theme-packager.md`, `cursor-packager.md`, and `sound-packager.md`.
+   - Updated master agent profile `desktop-theme-engineer.md`.
+5. **[Theme-Toolkit] (projects/Theme-Toolkit) W.39f — Documentation Placeholder Setup (Completed)**: Created `projects/Theme-Toolkit/docs/README.md` defining the documentation purpose and explicitly stating its on-hold status until core features mature.
+6. **[Ecosystem-Wide] W.39e — Core Architectural Invariants Codification (Completed)**:
+   - Codified **Zero Store / Zero Catalogue Invariant** (pure local studio & applicator; export to themepacks for easy re-installation).
+   - Codified **Agents Ecosystem Isolation Invariant** (the agents ecosystem is never stored in project repositories and never referenced in them).
+   - Committed and pushed initial framework to `origin/main` in `projects/Theme-Toolkit`.
+
+---
+
+### 🚀 [Ecosystem-Wide] & [Theme-Toolkit] Sprint 15: GTK Theming Removal, Desktop Theme Engineer Repurposing & Windows Deskthemepack Engineering Suite Planning (Completed)
+- **Project Identifiers:** `[Ecosystem-Wide]`, `[Windhawk-Themes]`, `[Theme-Toolkit]` (`projects/Theme-Toolkit`)
+- **Target Components:** `.agents/skills/gtk-desktop-theming.md`, `.agents/skills/windows-deskthemepack-engineering.md`, `.agents/agents/desktop-theme-engineer/desktop-theme-engineer.md`, `.agents/rules/verification.md`, `.agents/rules/workspace.md`, `.agents/rules/project-artwork.md`, `.agents/rules/release-notes.md`, `AGENTS.md`, `ROADMAP.md`
+
+#### 📝 Execution Tasks
+1. **[Ecosystem-Wide] W.38a — Complete Purge of GTK Theming Artifacts (Completed)**: Deleted `.agents/skills/gtk-desktop-theming.md`. Purged all references to GTK theming from `.agents/rules/verification.md`, `.agents/rules/workspace.md`, `.agents/rules/project-artwork.md`, `.agents/rules/release-notes.md`, `.agents/templates/release-notes-template.md`, `.agents/skills/project-artwork-generation.md`, `.agents/skills/helix-theme.md`, `.agents/skills/clone-org-repos.md`, and `.agents/agents/docs-site-engineer/frontmatter-fixer.md`.
+2. **[Ecosystem-Wide] W.38b — Repurpose Desktop Theme Engineer Profile (Completed)**: Re-anchored `.agents/agents/desktop-theme-engineer/desktop-theme-engineer.md` around Windows 11 Windhawk styler mods, standard-compliant Windows 10/11 `.deskthemepack` packaging via Microsoft `makecab.exe`, and planning for the dedicated Theme Toolkit Tauri v2 application.
+3. **[Ecosystem-Wide] W.38c — Windows Deskthemepack Engineering Skill (Completed)**: Created authoritative `.agents/skills/windows-deskthemepack-engineering.md` codifying Diamond Directive Files (`.ddf`), MSZIP cabinet packaging, `.theme` INI syntax, and strict adherence to Microsoft Win32 theming documentation.
+4. **[Theme-Toolkit] (projects/Theme-Toolkit) W.38d — Dedicated Theme Toolkit App Planning (Completed)**: Documented detailed feature requirements and architecture for future development as a dedicated **Tauri v2 GUI application** (`Theme Toolkit`):
+   - Comprehensive Sound Schemes packaging with Windows Sound Event registry mapping.
+   - Wallpapers and multi-monitor dynamic Slideshows (transitions, intervals, shuffle, alignment styles).
+   - Cursor Schemes (15 standard Win32 pointer roles, `.cur` & `.ani`).
+   - Color editing (Aero glass, accent colorization, Windows 10/11 dark/light modes).
+   - Dedicated GUI as primary interface utilizing `makecab.exe` for lossless cabinet packaging adhering to Microsoft Win32 theming docs.
+5. **[Ecosystem-Wide] W.38e — Workspace Reference & Roadmap Synchronization (Completed)**: Updated `AGENTS.md` quick reference table and layout tree, updated `ROADMAP.md` milestone matrix and project roadmap.
+
+---
+
+### 🚀 [Hentai-Senpai] & [helix-origin.github.io] Sprint 14: Hentai Senpai Discontinuation, Repository Archival Notice, and Portal Delisting (Completed)
 - **Project Identifiers:** `[Hentai-Senpai]` (`projects/Hentai-Senpai-Multi-DE-Theme`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`), `[Ecosystem-Wide]`
 - **Target Components:** `projects/Hentai-Senpai-Multi-DE-Theme/README.md`, `projects/Hentai-Senpai-Multi-DE-Theme/docs/`, `projects/helix-origin.github.io/docs/index.md`, `projects/helix-origin.github.io/README.md`, `AGENTS.md`, `.agents/rules/workspace.md`, `ROADMAP.md`
 

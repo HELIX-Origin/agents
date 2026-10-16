@@ -1,4 +1,4 @@
-﻿# Skill: helix-docs theme — structure, consumption, repair
+# Skill: helix-docs theme — structure, consumption, repair
 
 > Everything an agent needs to work on the shared Jekyll theme `helix-docs`, or to fix any
 > site that consumes it. Applies to **all** projects under `` that use GitHub
@@ -84,7 +84,6 @@ flowchart TB
 | --- | --- | --- |
 | NH-Reader | "Documentation Home" | "NH Reader Technical Wiki" |
 | Steam-Vault | "Documentation Home" | "Steam Vault Technical Wiki" |
-| Hentai-Senpai-Multi-DE-Theme | "Documentation Directory" | "Technical Wiki & Reference" |
 | Windhawk-Themes | "Documentation Directory" | "Target & Configuration Wiki" |
 | FFXIV-Config | "Documentation Directory" | — |
 | helix-origin.github.io | portal root (`/`, layout `default`) | — |

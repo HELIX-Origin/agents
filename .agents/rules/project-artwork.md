@@ -59,7 +59,7 @@ Artwork must honor the specific project's visual identity while staying grounded
 | **helix-docs** | `#07111f` / `#040a14` | `#48d8f2` (Cyan) | `#b06cff` (Purple) |
 | **Windhawk-Themes** | `#081426` / `#050c18` | `#48d8f2` (Specular Glass) | `#b06cff` (Windhawk Accent) |
 | **NH-Reader** | `#171424` / `#101820` | `#9275ff` (Violet) | `#65d6df` (Teal) |
-| **Hentai-Senpai** | `#2e3440` / `#1c2530` | `#8fbcbb` (Nord Frost) | `#81a1c1` (Nord Polar Blue) |
+| **Steam-Vault** | `#0e141b` / `#0a0f14` | `#1a9fff` (Electric Blue) | `#66c0f4` (Steam Sky Blue) |
 
 ---
 

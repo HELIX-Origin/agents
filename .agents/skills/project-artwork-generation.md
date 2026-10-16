@@ -72,7 +72,8 @@ All internal artwork lives inside `<g clip-path="url(#icon)">` within `(218, 315
    - **Documentation / IDE:** Window frames, title bar controls, sidebar tree, code syntax cards.
    - **Shell & Theming:** Mica/acrylic glass windows, styler mod pills, docked taskbar items.
    - **Reader / Content:** Open book silhouette, pages, bookmarks, image thumbnail previews.
-   - **Desktop Environment:** Overlapping GTK windows, menu bars, toggle buttons.
+   - **Game Organizer / Vault:** Game library grid, categorization tag badges, platform badges, launch controls.
+   - **Theme & Deskthemepack:** Desktop wallpaper frame, palette color swatch pills, cursor pointer motif.
 4. **Outer Border:** Crisp border outline matching the icon plate:
    ```xml
    <rect x="218" y="315" width="450" height="450" rx="72" fill="none" stroke="<primary-accent>" stroke-opacity=".3" stroke-width="3"/>

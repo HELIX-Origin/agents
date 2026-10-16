@@ -57,9 +57,6 @@
 - 🔍 **[NH-Reader] Search Semantics:** Syntax and range logic follow nhentai's query engine.
 - 🔐 **[NH-Reader] Code Signing Identity:** Automated CI release packaging does not publish unsigned or self-signed release binaries without a trusted organization certificate. Local signing commands are provided in `package.json`.
 
-### [Hentai-Senpai-Multi-DE-Theme] (projects/Hentai-Senpai-Multi-DE-Theme)
-- 🐧 **[Hentai-Senpai] Desktop Environment Variations:** GTK4/libadwaita theming overrides and desktop specifics (GNOME, XFCE, Cinnamon, MATE, Budgie) depend on individual DE version capabilities and user window managers.
-
 ### [Steam-Vault] (projects/Steam-Vault)
 - ☁️ **[Steam-Vault] Steam Cloud Collection Sync:** Modern Steam collections are stored in a cloud-synced namespace file (`userdata/<id3>/config/cloudstorage/cloud-storage-namespace-1.json`). Editing while Steam is running, or while another device changes collections, can cause a sync conflict. Mitigation: writes are refused while Steam is running, and every write is preceded by a timestamped backup.
 - 🧩 **[Steam-Vault] Legacy Tags Are Often Empty:** On modern accounts the old `localconfig.vdf` `apps/<appid>/tags` categories are empty (collections moved to `cloudstorage`). Legacy tag import is therefore best-effort and may surface nothing.
@@ -83,7 +80,6 @@
 - 💡 **[NH-Reader] Blacklisted Galleries Accessible via Direct Link:** Blacklists govern search discovery, grids, and feeds, but do not prevent opening direct gallery URLs.
 - 💡 **[Windhawk-Themes] Different Radii on Taskbar vs Start Menu:** Taskbar uses compact radii (`R1=6`, `R2=20`) because of its compact bar height, whereas Start Menu uses large panel radii (`CornerRadius=35`). This is an intentional design scale hierarchy.
 - 💡 **[Windhawk-Themes] Win32 Scrollbars in File Explorer:** DirectUI scrollbars follow system mode rather than custom XAML templates.
-- 💡 **[Hentai-Senpai] Host Build Dependencies:** System requirements (`sassc`, `optipng`, `inkscape`) are build prerequisites, not theme bugs.
 - 💡 **[Steam-Vault] RAWG Is Not Supported:** RAWG is defunct, so no RAWG provider exists. This is intentional, per user directive.
 
 ---

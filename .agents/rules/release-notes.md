@@ -21,7 +21,6 @@ Projects in this workspace do not all use Semantic Versioning (`vX.Y.Z`). Agents
 | **NH-Reader** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.7.5`) | ✅ Yes (Windows, macOS, Linux desktop installers; unsigned) | `CHANGELOG.md`, `ROADMAP.md` |
 | **Steam-Vault** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ✅ Yes (Windows, macOS, Linux desktop installers) | `CHANGELOG.md`, `ROADMAP.md` |
 | **Windhawk-Themes** | **Milestone-Based Releases** | `M.<NN>` or `M.<NN><suffix>` (e.g. `M.01`, `M.02b`) | ❌ No (Zero attached assets; git tag only) | `ROADMAP.md`, `PLAN.md`, `CHANGELOG.md` |
-| **Hentai-Senpai-Multi-DE-Theme** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.1`) | ❌ No (Source git repository + install script) | `CHANGELOG.md` |
 | **helix-docs** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.1.0`) | ❌ No (Remote Jekyll theme & Ruby gem) | `changelog.md` |
 | **helix-origin.github.io** | **Milestone / Chronological** | Date-based or Portal Milestones (e.g. `2026-10-09` or `M.01`) | ❌ No (GitHub Pages portal root) | `docs/` commit log / index |
 

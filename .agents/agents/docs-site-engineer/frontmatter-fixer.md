@@ -24,7 +24,7 @@ and nav order.
 | Project | docs parent | wiki parent |
 | --- | --- | --- |
 | NH-Reader | "Documentation Home" | "NH Reader Technical Wiki" |
-| Hentai-Senpai-Multi-DE-Theme | "Documentation Directory" | "Technical Wiki & Reference" |
+| Steam-Vault | "Documentation Home" | "Steam Vault Technical Wiki" |
 | Windhawk-Themes | "Documentation Directory" | "Target & Configuration Wiki" |
 
 ## Traps

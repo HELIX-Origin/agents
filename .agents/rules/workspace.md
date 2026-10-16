@@ -20,10 +20,14 @@ the *currently active* work set (repos where only `docs/` is in scope are marked
 - `projects/NH-Reader` — Tauri v2 desktop manga reader; **full repository in scope** (scripts, workflows, desktop core, and `docs/`).
 - `projects/Steam-Vault` — Tauri v2 desktop app & library launcher; **full repository in scope**.
 - `projects/Steam-Vault-Catalogue` — open community game catalogue & crawler; **full repository in scope**.
+- `projects/Theme-Toolkit` — cross-platform desktop theme studio & applicator; **full repository in scope**.
 - `projects/Windhawk-Themes` — **only `docs/` is in scope**.
-- `projects/Hentai-Senpai-Multi-DE-Theme` — **DISCONTINUED & ARCHIVED** (unmaintained, read-only).
 
 Everything else outside `projects/` is presumptively out of scope.
+
+## Agents ecosystem isolation invariant
+
+The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) lives strictly at the workspace root (`projects/agents`). It is **never** stored inside the individual project repositories under `projects/` and **must never be mentioned, referenced, or linked** inside any project repository (e.g. in `README.md`, documentation, code comments, or configuration files). Project repositories are public, standalone open-source codebases whose documentation must remain completely self-contained for external human contributors.
 
 ## Tracking docs contract
 

@@ -71,7 +71,57 @@ Commands in `package.json` must adhere strictly to **`main:sub:option`**:
 
 ---
 
-## 3. Code Signing Architecture
+## 3. Standard Windows NSIS Installer & UI Format
+
+Across all HELIX-Origin Tauri v2 desktop applications, the **NH Reader NSIS installer configuration is the authoritative ecosystem standard**. This configuration guarantees flexible installation options and a cohesive, modern dark obsidian user interface.
+
+### Canonical NSIS Configuration (`tauri.windows.conf.json`)
+
+```json
+{
+  "bundle": {
+    "windows": {
+      "nsis": {
+        "installMode": "both",
+        "installerIcon": "icons/icon.ico",
+        "sidebarImage": "windows/sidebar.bmp",
+        "installerHooks": "windows/hooks.nsh",
+        "languages": [
+          "English",
+          "Japanese",
+          "SimpChinese",
+          "TradChinese",
+          "Korean",
+          "Spanish",
+          "French",
+          "German",
+          "Russian",
+          "Portuguese"
+        ],
+        "displayLanguageSelector": true
+      }
+    }
+  }
+}
+```
+
+### Core Capabilities & UI Standards
+
+1. **Dual Installation Mode (`installMode: "both"`):**
+   - Gives the user explicit choice between installing for the current user (`%LOCALAPPDATA%\Programs\<app>`) without admin elevation, or installing for all users (`%PROGRAMFILES%\<app>`) with standard UAC elevation.
+2. **Improved Dark Obsidian UI (`sidebarImage`):**
+   - Custom 164x314 24-bit BMP graphic (`src-tauri/windows/sidebar.bmp`) placed on the Welcome and Finish wizard pages.
+   - Header images (`headerImage`) are intentionally avoided because wide banners render as cramped top-bar icons in modern NSIS layouts.
+3. **Pre-Install Process Termination & Cleanup (`windows/hooks.nsh`):**
+   - Automatically terminates any running instances prior to file extraction to prevent file-locking errors.
+   - Synchronously runs previous version uninstallers (`$INSTDIR\uninstall.exe /S`) to prevent orphaned binary or asset files.
+   - Authoritative template maintained in [`.agents/templates/nsis-hooks-template.nsh`](../templates/nsis-hooks-template.nsh).
+4. **Multi-Language Accessibility:**
+   - 10 international languages with automatic system locale detection and an interactive language selector fallback (`displayLanguageSelector: true`).
+
+---
+
+## 4. Code Signing Architecture
 
 Both local manual builds and CI releases support opt-in code signing:
 1. **Windows:**
@@ -86,7 +136,7 @@ Both local manual builds and CI releases support opt-in code signing:
 
 ---
 
-## 4. WinGet Package Repository Registration
+## 5. WinGet Package Repository Registration
 
 For non-NSFW desktop applications (`Steam-Vault`), automated release and distribution through the official Windows Package Manager repository (`microsoft/winget-pkgs`) is standard:
 - **Package Identifier:** `HELIXOrigin.<AppName>` (e.g. `HELIXOrigin.SteamVault`).
@@ -96,7 +146,7 @@ For non-NSFW desktop applications (`Steam-Vault`), automated release and distrib
 
 ---
 
-## 5. Workflow Standards
+## 6. Workflow Standards
 
 All desktop repositories must maintain:
 1. `.github/workflows/cleanup-failed-runs.yml`: Universal workflow from `.agents/templates/cleanup-failed-runs-workflow-template.yml` to automatically purge cancelled or failed workflow runs.
@@ -104,7 +154,7 @@ All desktop repositories must maintain:
 
 ---
 
-## 6. Verification Checklist
+## 7. Verification Checklist
 
 Before committing any desktop changes:
 1. `npm run check --prefix projects/<project>` — Type check passed with 0 errors.

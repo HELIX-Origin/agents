@@ -25,6 +25,62 @@
 
 ## 🔥 Active Workstreams
 
+### 🎯 [Theme-Toolkit] & [Ecosystem-Wide] Workstream W.39: Theme Toolkit Repository Creation, Base Framework Scaffolding, and Dedicated Agent Suite (Completed)
+- **Project Identifiers:** `[Theme-Toolkit]` (`projects/Theme-Toolkit`), `[Ecosystem-Wide]`, `[NH-Reader]` (`projects/NH-Reader`), `[Steam-Vault]` (`projects/Steam-Vault`)
+- **Target Components:** `projects/Theme-Toolkit/*`, `.agents/rules/theme-engineering-standards.md`, `.agents/templates/nsis-hooks-template.nsh`, `.agents/skills/macos-theme-engineering.md`, `.agents/skills/linux-theme-engineering.md`, `.agents/skills/tauri-desktop-engineering.md`, `.agents/agents/desktop-theme-engineer/*`, `AGENTS.md`, `.agents/rules/workspace.md`, `ROADMAP.md`
+
+**Locked user directives:**
+- "We can actually go ahead and scaffold the Theme toolkit app frame right now alongside the agents it will need. This will just be to get the repo created and the base framework scaffolded and in place. the actual work will be delegated to another time."
+- "Unlike my previous attempts, this time there will be no store or catalogue. it will be for creating and applying themes and customizations on the user's local machine."
+- "exporting to themepacks will be supported as a way for users to save their themes for easy installation at a later time."
+- "the agents ecosystem is not stored in the project repositories and should never be mentioned in them."
+- "the nsi format we use in our NH Reader app should also be our standard NSI script format for all Tauri V2 repositories"
+- "this way the nsis installers have support for the different installation options it provcides as well as the improved UI."
+- "The docs folder for the Theme Toolkit app will be created but it will simply contain a README file explaining what it's purpose is and that it is currently on hold until the project is far enouugh along for it to be needed."
+
+**Implementation checklist:**
+- [x] `[Theme-Toolkit]` **GitHub Repository Creation & Local Clone** — created public organization repository `HELIX-Origin/Theme-Toolkit` and cloned into `projects/Theme-Toolkit`.
+- [x] `[Theme-Toolkit]` **Base Framework Scaffolding** — scaffolded Tauri v2 + SvelteKit base framework (`src/routes/+layout.svelte`, `src/routes/+page.svelte`, `package.json`, `svelte.config.js`, `vite.config.ts`, `tsconfig.json`).
+- [x] `[Theme-Toolkit]` **Rust Per-Platform Lib Architecture** — implemented `src-tauri/src/platforms/` (`windows.rs`, `macos.rs`, `linux.rs`) for native tool integration.
+- [x] `[Theme-Toolkit]` **Script Standards Runner Suite** — set up native `.mjs` scripts suite under `scripts/` (`build.mjs`, `dev.mjs`, `run.mjs`, `test.mjs`, `sign.mjs`, `lib/logger.mjs`, `lib/runner.mjs`, `lib/suites.mjs`).
+- [x] `[Theme-Toolkit]` **Universal Cleanup Workflow** — added `.github/workflows/cleanup-failed-runs.yml`.
+- [x] `[Theme-Toolkit]` **Documentation Placeholder Setup** — created `projects/Theme-Toolkit/docs/README.md` defining the documentation purpose and explicitly noting its on-hold status until core features mature.
+- [x] `[Ecosystem-Wide]` **Standard NSIS Installer Format & UI Codification** — codified NH Reader NSIS format in `.agents/skills/tauri-desktop-engineering.md` (`installMode: "both"`, `sidebarImage`, `installerHooks: "windows/hooks.nsh"`, 10-language selector), authored `.agents/templates/nsis-hooks-template.nsh`, and aligned NSIS configurations across `NH-Reader`, `Steam-Vault`, and `Theme-Toolkit`.
+- [x] `[Ecosystem-Wide]` **Theme Engineering & Packaging Rules** — authored `.agents/rules/theme-engineering-standards.md`.
+- [x] `[Ecosystem-Wide]` **Multi-Platform Theme Skills** — authored `.agents/skills/macos-theme-engineering.md` and `.agents/skills/linux-theme-engineering.md`.
+- [x] `[Ecosystem-Wide]` **Dedicated Subagent Suite** — authored `.agents/agents/desktop-theme-engineer/theme-packager.md`, `cursor-packager.md`, and `sound-packager.md`.
+- [x] `[Ecosystem-Wide]` **Agents Ecosystem Isolation Invariant** — codified Invariant 7 in `AGENTS.md` and `.agents/rules/workspace.md` strictly prohibiting `.agents` mentions in project repositories; verified and sanitized `projects/Theme-Toolkit/README.md`.
+- [x] `[Theme-Toolkit]` **Initial Framework Git Commit & Push** — committed initial scaffolded framework (`f003417`, `ddc7aba`, `c70add3`) and pushed to `HELIX-Origin/Theme-Toolkit` `main`.
+- [x] `[Ecosystem-Wide]` **Workspace Alignment** — updated `AGENTS.md`, `ROADMAP.md`, `PLAN.md`, and `TODO.md`.
+
+---
+
+### 🎯 [Ecosystem-Wide] & [Theme-Toolkit] Workstream W.38: GTK Theming Removal, Desktop Theme Engineer Repurposing & Windows Deskthemepack Engineering Suite Planning (Completed)
+- **Project Identifiers:** `[Ecosystem-Wide]`, `[Windhawk-Themes]`, `[Theme-Toolkit]` (`projects/Theme-Toolkit`)
+- **Target Components:** `.agents/skills/gtk-desktop-theming.md`, `.agents/skills/windows-deskthemepack-engineering.md`, `.agents/agents/desktop-theme-engineer/desktop-theme-engineer.md`, `.agents/rules/verification.md`, `.agents/rules/workspace.md`, `.agents/rules/project-artwork.md`, `.agents/rules/release-notes.md`, `AGENTS.md`, `ROADMAP.md`
+
+**Locked user directives:**
+- "We should remove the gtk themeing skills, agents, rules, and templates. there is no need to preserve those"
+- "desktop theme engineer can be repurposed for using makecab to properly package windows deskthemepacks. this should allow us to prepare plans to create a project for making a unified typescript esm toolkit for properly packaging windows 10 and 11 desktheempacks without having to deal with microsoft's broken garbage."
+- "The typescript toolkit repo will be in plans for now. we will work on it later. But it should have detailed extensive support: Sound Schemes, Wallpapers (including optional slideshow support), Cursor Schemes, Color editing, optional GUI, possibly a Tauri V2 app rather than a typescript toolkit."
+- "The idea is it will likely end up being a complete Theme toolkit app that serves to allow for a dedicated app to us in place of microsoft's broken integration. it will; utilize makecap to correctly package the deskthemepack archives without losing content and will strictly adhrere to the microsoft win32 themeing docs."
+- "The Tauri V2 GUI on it will actually be what it uses. So let's make sure the plans mark it as a future Tauri V2 project that will be named Theme Toolkit"
+
+**Implementation checklist:**
+- [x] `[Ecosystem-Wide]` **Purge GTK Theming Skill** — deleted `.agents/skills/gtk-desktop-theming.md`.
+- [x] `[Ecosystem-Wide]` **Purge GTK Rules & Templates** — removed all GTK theming references from `.agents/rules/verification.md`, `.agents/rules/workspace.md`, `.agents/rules/project-artwork.md`, `.agents/rules/release-notes.md`, `.agents/templates/release-notes-template.md`, `.agents/skills/project-artwork-generation.md`, `.agents/skills/helix-theme.md`, `.agents/skills/clone-org-repos.md`, and `.agents/agents/docs-site-engineer/frontmatter-fixer.md`.
+- [x] `[Ecosystem-Wide]` **Repurpose Desktop Theme Engineer Profile** — updated `.agents/agents/desktop-theme-engineer/desktop-theme-engineer.md` to specialize in Windows 11 Windhawk styler mods, standard-compliant Windows 10/11 `.deskthemepack` packaging via Microsoft `makecab.exe`, and planning for the dedicated Theme Toolkit Tauri v2 application.
+- [x] `[Ecosystem-Wide]` **Author Windows Deskthemepack Engineering Skill** — authored `.agents/skills/windows-deskthemepack-engineering.md` establishing Diamond Directive File (`.ddf`) specifications, MSZIP cabinet packaging, `.theme` INI syntax, and strict adherence to Microsoft Win32 Desktop Theming documentation.
+- [x] `[Theme-Toolkit]` **Theme Toolkit App Planning & Roadmap Specification** — codified comprehensive specifications for future development as a dedicated **Tauri v2 GUI application** (`Theme Toolkit`):
+  - Sound Schemes (`.wav` audio asset packaging and Windows Sound Event registry mappings).
+  - Wallpapers & multi-monitor Slideshows (intervals, shuffle mode, standard alignment metrics).
+  - Cursor Schemes (15 standard Win32 pointer roles, `.cur` & `.ani`).
+  - Color Editing (DWM accent colorization, Windows 10/11 dark/light mode toggles, Control Panel palettes).
+  - Dedicated GUI as primary interface utilizing `makecab.exe` for lossless cabinet packaging adhering to Microsoft Win32 theming docs.
+- [x] `[Ecosystem-Wide]` **Workspace Alignment** — updated `AGENTS.md` quick reference table and layout tree, updated `ROADMAP.md` milestone matrix and project roadmaps, and documented sprint in `PLAN.md`.
+
+---
+
 ### 🎯 [Hentai-Senpai] & [helix-origin.github.io] Workstream W.37: Hentai Senpai Discontinuation, Repository Archival Notice, and Portal Delisting
 - **Project Identifiers:** `[Hentai-Senpai]` (`projects/Hentai-Senpai-Multi-DE-Theme`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`), `[Ecosystem-Wide]`
 - **Target Components:** `projects/Hentai-Senpai-Multi-DE-Theme/README.md`, `projects/Hentai-Senpai-Multi-DE-Theme/docs/`, `projects/helix-origin.github.io/docs/index.md`, `projects/helix-origin.github.io/README.md`, `AGENTS.md`, `.agents/rules/workspace.md`, `ROADMAP.md`
@@ -841,8 +897,13 @@ Refine spatial alignment in the Start Menu and companion pane, resolve color mis
 - [ ] `[Windhawk-Themes]` **Theme Catalogue Integration**: Generate Jekyll showcase documentation in `docs/_catalogue/`.
 - [ ] `[Windhawk-Themes]` **Full Multi-Mod Windows 11 Verification**: Validate cohesive visual language across 22H2, 23H2, and 24H2.
 
-### [Hentai-Senpai-Multi-DE-Theme] (projects/Hentai-Senpai-Multi-DE-Theme) — Candidates
-- [ ] `[Hentai-Senpai]` **GTK4/libadwaita Script Synchronization**: Scripted color overrides for libadwaita desktop environments.
+### [Theme-Toolkit] (projects/Theme-Toolkit) — Candidates (Planned)
+- [ ] `[Theme-Toolkit]` **Core Tauri v2 Scaffolding**: Setup Tauri v2 app with SvelteKit frontend and Rust backend.
+- [ ] `[Theme-Toolkit]` **Makecab & DDF Packaging Engine**: Rust engine generating Diamond Directive Files (`.ddf`) and executing `makecab.exe`.
+- [ ] `[Theme-Toolkit]` **Sound Scheme Manager**: Win32 Sound Event mapping and `.wav` audio preview / bundling.
+- [ ] `[Theme-Toolkit]` **Wallpaper & Slideshow Studio**: Desktop background viewport, slideshow interval / shuffle controls, and alignment settings.
+- [ ] `[Theme-Toolkit]` **Cursor Scheme Inspector**: 15 standard Win32 cursor role configuration with `.ani` and `.cur` frame previews.
+- [ ] `[Theme-Toolkit]` **Color & Visual Style Editor**: Real-time DWM accent colorization and dark/light system mode toggles.
 
 ---
 
