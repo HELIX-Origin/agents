@@ -17,11 +17,11 @@ the *currently active* work set (repos where only `docs/` is in scope are marked
 
 - `projects/helix-docs` — theme repo (+ its own preview site).
 - `projects/helix-origin.github.io` — portal; **only `docs/` is in scope**.
-- `projects/NH-Reader` — **only `docs/` is in scope**.
+- `projects/NH-Reader` — Tauri v2 desktop manga reader; **full repository in scope** (scripts, workflows, desktop core, and `docs/`).
 - `projects/Steam-Vault` — Tauri v2 desktop app & library launcher; **full repository in scope**.
 - `projects/Steam-Vault-Catalogue` — open community game catalogue & crawler; **full repository in scope**.
 - `projects/Windhawk-Themes` — **only `docs/` is in scope**.
-- `projects/Hentai-Senpai-Multi-DE-Theme` — **only `docs/` is in scope**.
+- `projects/Hentai-Senpai-Multi-DE-Theme` — **DISCONTINUED & ARCHIVED** (unmaintained, read-only).
 
 Everything else outside `projects/` is presumptively out of scope.
 

@@ -18,7 +18,36 @@
 
 ## 🎯 Active Sprints
 
-### 🚀 [Steam-Vault] & [Steam-Vault-Catalogue] Sprint 12: Multi-Provider Metadata Parity, Lightweight Index Manifest, Settings & Per-Game Refresh Metadata, and Cross-Repo i18n Localization
+### 🚀 [Hentai-Senpai] & [helix-origin.github.io] Sprint 14: Hentai Senpai Discontinuation, Repository Archival Notice, and Portal Delisting
+- **Project Identifiers:** `[Hentai-Senpai]` (`projects/Hentai-Senpai-Multi-DE-Theme`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`), `[Ecosystem-Wide]`
+- **Target Components:** `projects/Hentai-Senpai-Multi-DE-Theme/README.md`, `projects/Hentai-Senpai-Multi-DE-Theme/docs/`, `projects/helix-origin.github.io/docs/index.md`, `projects/helix-origin.github.io/README.md`, `AGENTS.md`, `.agents/rules/workspace.md`, `ROADMAP.md`
+
+#### 📝 Execution Tasks
+1. **[Hentai-Senpai] (projects/Hentai-Senpai-Multi-DE-Theme) W.37a — Repository Archival Notice (Completed)**: Added prominent `DISCONTINUED & ARCHIVED` alert banner to `README.md` explicitly stating that the repository is discontinued, unmaintained, and archived.
+2. **[Hentai-Senpai] (projects/Hentai-Senpai-Multi-DE-Theme) W.37b — GitHub Pages Decommissioning (Completed)**: Removed `docs/` folder to disable GitHub Pages deployment.
+3. **[helix-origin.github.io] (projects/helix-origin.github.io) W.37c — Portal Delisting (Completed)**: Removed Hentai Senpai project card from `docs/index.md` and repository list item from `README.md`.
+4. **[Ecosystem-Wide] W.37d — Organization Architecture & Scope Alignment (Completed)**: Updated `AGENTS.md`, `.agents/rules/workspace.md`, and `ROADMAP.md` marking the project as discontinued and archived.
+
+---
+
+### 🚀 [Ecosystem-Wide] & [Steam-Vault] & [NH-Reader] Sprint 13: Ecosystem Scripts Standard, Platform Module Isolation, Opt-In Code Signing, and WinGet Registration (Completed)
+- **Project Identifiers:** `[Ecosystem-Wide]`, `[Steam-Vault]` (`projects/Steam-Vault`), `[NH-Reader]` (`projects/NH-Reader`), `[Steam-Vault-Catalogue]` (`projects/Steam-Vault-Catalogue`)
+- **Target Components:** `.agents/rules/script-standards.md`, `.agents/skills/tauri-desktop-engineering.md`, `.agents/templates/cleanup-failed-runs-workflow-template.yml`, `projects/Steam-Vault/scripts/*`, `projects/Steam-Vault/src-tauri/src/platforms/*`, `projects/Steam-Vault/src-tauri/tauri.*.conf.json`, `projects/Steam-Vault/package.json`, `projects/NH-Reader/scripts/*`, `projects/NH-Reader/package.json`
+
+#### 📝 Execution Tasks
+1. **[Ecosystem-Wide] W.36a — Authoritative Script Standards & Command Hierarchy (Completed)**: Created `.agents/rules/script-standards.md`, updated `AGENTS.md` and `workspace.md`. Codified Tauri v2 native `.mjs` scripts standard, non-Tauri TypeScript ESM scripts standard, and universal `main:sub:option` command hierarchy across `package.json`.
+2. **[Ecosystem-Wide] W.36b — Tauri Engineering Skill & Architecture Standards (Completed)**: Updated `.agents/skills/tauri-desktop-engineering.md` with Per-Platform Lib Architecture (`windows.rs`, `macos.rs`, `linux.rs`), Per-Platform Tauri Configuration Standard (`tauri.<platform>.conf.json` with base `tauri.conf.json`), opt-in local code signing, WinGet registration for non-NSFW apps, and universal `cleanup-failed-runs.yml` workflow template.
+3. **[Ecosystem-Wide] W.36c — Universal Failed Runs Cleanup Template (Completed)**: Created `.agents/templates/cleanup-failed-runs-workflow-template.yml` for inclusion across all org repos.
+4. **[Steam-Vault] (projects/Steam-Vault) W.36d — Per-Platform Lib Isolation & Rust Compilation (Completed)**: Split platform detection into `windows.rs`, `macos.rs`, `linux.rs`, export `Detection` as `pub(crate)` in `platforms/mod.rs`, resolved all registry field bindings (`id`, `name`, `path`, `exe`), verified `cargo check` passes with 0 errors and 0 warnings.
+5. **[Steam-Vault] (projects/Steam-Vault) W.36e — Per-Platform Tauri Configuration & Build Args (Completed)**: Created `tauri.windows.conf.json`, `tauri.macos.conf.json`, `tauri.linux.conf.json`, updated `.github/workflows/release.yml` matrix with per-platform `--config` flags.
+6. **[Steam-Vault] (projects/Steam-Vault) W.36f — Opt-In Multi-Platform Code Signing (Completed)**: Implemented `scripts/sign.mjs`, `scripts/setup-signing-secrets.ps1`, added `"sign"` and `"sign:local"` to `package.json`.
+7. **[Steam-Vault] (projects/Steam-Vault) W.36g — WinGet Package Registration & Automated Releases (Completed)**: Created `scripts/generate-winget-manifest.mjs`, generated initial manifests under `winget/manifests/h/HELIXOrigin/SteamVault/1.2.0/`, added `publish-winget` job (`vedantmgoyal9/winget-releaser@v2`) to `.github/workflows/release.yml`, documented `winget install HELIXOrigin.SteamVault` in `README.md`.
+8. **[NH-Reader] (projects/NH-Reader) W.36h — Unified Modular `.mjs` Scripts & `main:sub:option` Standard (Completed)**: Built `scripts/lib/logger.mjs`, `scripts/lib/runner.mjs`, `scripts/lib/suites.mjs`, `scripts/build.mjs`, `scripts/dev.mjs`, `scripts/run.mjs`, `scripts/test.mjs`, aligned `package.json` with `main:sub:option` hierarchy (`tauri:build:release`, `tauri:build:debug`, `test:rust`, `test:frontend`, `test:i18n`, `test:all`, `sign:local`), verified `node scripts/test.mjs i18n` (PASS, 17/17 community packs).
+9. **[NH-Reader] (projects/NH-Reader) W.36i — NSFW WinGet Policy Enforcement (Completed)**: Strictly excluded `NH-Reader` from WinGet repository in compliance with WinGet terms of service, documented as an absolute invariant.
+
+---
+
+### 🚀 [Steam-Vault] & [Steam-Vault-Catalogue] Sprint 12: Multi-Provider Metadata Parity, Lightweight Index Manifest, Settings & Per-Game Refresh Metadata, and Cross-Repo i18n Localization (Completed)
 - **Project Identifiers:** `[Steam-Vault]` (`projects/Steam-Vault`), `[Steam-Vault-Catalogue]` (`projects/Steam-Vault-Catalogue`)
 - **Target Components:** `projects/Steam-Vault/src-tauri/src/commands.rs`, `projects/Steam-Vault/src-tauri/src/lib.rs`, `projects/Steam-Vault/src/lib/api.ts`, `projects/Steam-Vault/src/lib/types.ts`, `projects/Steam-Vault/src/lib/i18n/*`, `projects/Steam-Vault/src/routes/settings/+page.svelte`, `projects/Steam-Vault/src/routes/library/+page.svelte`; `projects/Steam-Vault-Catalogue/scripts/modules/types.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/config.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/indexer.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/engine.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/providers/*`, `projects/Steam-Vault-Catalogue/index.json`, `projects/Steam-Vault-Catalogue/schema/game.schema.json`
 

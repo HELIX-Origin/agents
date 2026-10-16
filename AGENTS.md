@@ -70,11 +70,11 @@
 ├── projects/                  <- UNTRACKED: local git repositories
 │   ├── helix-docs/            <- the shared Jekyll theme (+ its preview site)
 │   ├── helix-origin.github.io/ <- GitHub Pages portal (docs/ in scope)
-│   ├── NH-Reader/             <- (docs/ in scope)
+│   ├── NH-Reader/             <- Tauri v2 desktop reader (scripts, core, and docs in scope)
 │   ├── Steam-Vault/           <- Tauri v2 Steam library organizer (Depressurizer revival)
 │   ├── Steam-Vault-Catalogue/ <- Community-maintained open game catalogue & crawler
 │   ├── Windhawk-Themes/       <- (docs/ in scope)
-│   └── Hentai-Senpai-Multi-DE-Theme/ <- (docs/ in scope)
+│   └── Hentai-Senpai-Multi-DE-Theme/ <- (DISCONTINUED / ARCHIVED)
 └── (other projects)           <- out of scope unless asked
 ```
 
@@ -105,6 +105,7 @@
 | Styling standards & SCSS-first | `.agents/rules/styling-standards.md` |
 | Documentation & content standards (theme-neutrality) | `.agents/rules/documentation-standards.md` |
 | Shell command rules | `.agents/rules/shell-commands.md` |
+| Project scripts & command standards | `.agents/rules/script-standards.md` |
 | Large task handling rules | `.agents/rules/large-task-handling.md` |
 | Background task execution rules | `.agents/rules/background-tasks.md` |
 | Session & context management rules | `.agents/rules/session-management.md` |
@@ -124,6 +125,7 @@
 | Template: Sprint plan ledger | `.agents/templates/plan-template.md` |
 | Template: Task checklist ledger | `.agents/templates/todo-template.md` |
 | Template: Bug tracker ledger | `.agents/templates/bugs-template.md` |
+| Template: Cleanup failed runs workflow | `.agents/templates/cleanup-failed-runs-workflow-template.yml` |
 | Tauri & Rust desktop engineering | `.agents/skills/tauri-desktop-engineering.md` |
 | Windhawk styler mod engineering | `.agents/skills/windhawk-styler-engineering.md` |
 | Linux & GTK theme engineering | `.agents/skills/gtk-desktop-theming.md` |

@@ -25,7 +25,54 @@
 
 ## 🔥 Active Workstreams
 
-### 🎯 [Steam-Vault] & [Steam-Vault-Catalogue] Workstream W.35: Multi-Provider Metadata Parity, Lightweight Catalogue Index Manifest, Settings & Per-Game Refresh Metadata, and i18n Localization
+### 🎯 [Hentai-Senpai] & [helix-origin.github.io] Workstream W.37: Hentai Senpai Discontinuation, Repository Archival Notice, and Portal Delisting
+- **Project Identifiers:** `[Hentai-Senpai]` (`projects/Hentai-Senpai-Multi-DE-Theme`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`), `[Ecosystem-Wide]`
+- **Target Components:** `projects/Hentai-Senpai-Multi-DE-Theme/README.md`, `projects/Hentai-Senpai-Multi-DE-Theme/docs/`, `projects/helix-origin.github.io/docs/index.md`, `projects/helix-origin.github.io/README.md`, `AGENTS.md`, `.agents/rules/workspace.md`, `ROADMAP.md`
+
+**Locked user directives:**
+- "Note: The Hentai Senpai multi-DE Theme is being discontinued going forward. I'm not on linux and as such I can't really provide updates or maintenence for that one. not to mention I simply don't know enough about linux themeing to gaurentee that one is safe to use at all. So we should remove it from out portal and prepare to archive the Hentai Senpai Multi-DE Theme Repo."
+- "A not will need to be added to the README in the Hentai Senpai Multi-DE theme repo and the docs folder for it will need to be removed so we can disable the GitHub Pages integration it has."
+- "the not should not sday prepared for archival, it should say archived. i'm pretty sure github cli can archive repositories and you can't edit files in a  archived repo."
+
+**Implementation checklist:**
+- [x] `[Hentai-Senpai]` **Repository Archival Notice** — added prominent `DISCONTINUED & ARCHIVED` alert banner to `projects/Hentai-Senpai-Multi-DE-Theme/README.md` explicitly stating development and maintenance have ceased and that the repo is archived and unmaintained.
+- [x] `[Hentai-Senpai]` **GitHub Pages Decommissioning** — deleted `projects/Hentai-Senpai-Multi-DE-Theme/docs/` directory to disable GitHub Pages deployment.
+- [x] `[helix-origin.github.io]` **Portal Delisting** — removed Hentai Senpai project card from `projects/helix-origin.github.io/docs/index.md` and repository link from `projects/helix-origin.github.io/README.md`.
+- [x] `[Ecosystem-Wide]` **Workspace Alignment** — updated `AGENTS.md`, `.agents/rules/workspace.md`, and `ROADMAP.md` marking `Hentai-Senpai-Multi-DE-Theme` as discontinued/archived and removing it from the active architecture flow.
+
+---
+
+### 🎯 [Ecosystem-Wide] & [Steam-Vault] & [NH-Reader] Workstream W.36: Ecosystem Scripts Standard, Platform Module Isolation, Opt-In Code Signing, and WinGet Registration (Completed)
+- **Project Identifiers:** `[Ecosystem-Wide]`, `[Steam-Vault]` (`projects/Steam-Vault`), `[NH-Reader]` (`projects/NH-Reader`), `[Steam-Vault-Catalogue]` (`projects/Steam-Vault-Catalogue`)
+- **Target Components:** `.agents/rules/script-standards.md`, `.agents/skills/tauri-desktop-engineering.md`, `.agents/templates/cleanup-failed-runs-workflow-template.yml`, `projects/Steam-Vault/scripts/*`, `projects/Steam-Vault/src-tauri/src/platforms/*`, `projects/Steam-Vault/src-tauri/tauri.*.conf.json`, `projects/Steam-Vault/package.json`, `projects/NH-Reader/scripts/*`, `projects/NH-Reader/package.json`
+
+**Locked user directives:**
+- "ok. next up we need to add support for manually signing in local builds to the Steam Vault project. This will be similar to how NH Reader handles manual signing."
+- "Note: since Steam Vault isn't a nsfw app, it should be within the tos of the winget package repository. so we can addd support for installing via winget by automatically registering out latest releases in the winget package repository."
+- "we need to seperate macos, linux, and window splatforms into seperate lib files to allow proper support for all three. Per platform lib files should actually be a standard in all of our Tauri projects. So this should be properly included in our agents ecosystem."
+- "using per platform tauri conf files is also a standard for us to allow full support per platfrom for all necessary entrees."
+- "tauri v2 also supports per platform toml files in place of json files. Although I'm not entirely sure what the difference is or if one is better than the other."
+- "i added a cleanup-failed-runs.yml workflow to the steam vault and steam vault catalogue workflows. this is used in all repos. so our agents need a template of it to ensure they know to add it to every repo."
+- "also our NH Reader scripts need to be rebuilt to match the style we used in the Steam vault repo. it did a much better job on the mjs scripts. we should make that script strcutre our standard, with the command standard being main:sub:option"
+- "Note: our Tauri V2 apps use mjs scripts, but non tauri apps that use scripts are done in typescript esm with modular nified scripts following the same main:sub:option command structure."
+- "We should mkae sure our agents ecosystem is updated with our scripts standards"
+- "Note: Updates to the agents ecosystem always take priority since it is the authoritive source for all projects."
+- "Note: the winget package repository does not allow NSDW apps, so for thi reason the NH Reader app does NOT get winget support."
+
+**Implementation checklist:**
+- [x] `[Ecosystem-Wide]` **Agents Ecosystem Scripts Standard & Rule Definition** — authored `.agents/rules/script-standards.md`, updated `AGENTS.md` and `.agents/rules/workspace.md`. Codified Tauri v2 native `.mjs` scripts standard, non-Tauri TypeScript ESM scripts standard, and universal `main:sub:option` command hierarchy across `package.json`.
+- [x] `[Ecosystem-Wide]` **Tauri Engineering Skill & Architecture Standards** — updated `.agents/skills/tauri-desktop-engineering.md` with Per-Platform Lib Architecture (`windows.rs`, `macos.rs`, `linux.rs`), Per-Platform Tauri Configuration Standard (`tauri.<platform>.conf.json` with base `tauri.conf.json`), opt-in local code signing, WinGet registration for non-NSFW apps, and universal `cleanup-failed-runs.yml` workflow template.
+- [x] `[Ecosystem-Wide]` **Universal Failed Runs Cleanup Template** — created `.agents/templates/cleanup-failed-runs-workflow-template.yml`.
+- [x] `[Steam-Vault]` **Per-Platform Lib Isolation & Rust Compilation** — split platform detection into `windows.rs`, `macos.rs`, `linux.rs`, export `Detection` as `pub(crate)` in `platforms/mod.rs`, resolved all registry field bindings (`id`, `name`, `path`, `exe`), verified `cargo check` passes with 0 errors and 0 warnings.
+- [x] `[Steam-Vault]` **Per-Platform Tauri Configuration & Build Args** — created `tauri.windows.conf.json`, `tauri.macos.conf.json`, `tauri.linux.conf.json`, updated `.github/workflows/release.yml` matrix with per-platform `--config` flags.
+- [x] `[Steam-Vault]` **Opt-In Multi-Platform Code Signing** — implemented `scripts/sign.mjs`, `scripts/setup-signing-secrets.ps1`, added `"sign"` and `"sign:local"` to `package.json`.
+- [x] `[Steam-Vault]` **WinGet Package Registration & Automated Releases** — created `scripts/generate-winget-manifest.mjs`, generated initial manifests under `winget/manifests/h/HELIXOrigin/SteamVault/1.2.0/`, added `publish-winget` job (`vedantmgoyal9/winget-releaser@v2`) to `.github/workflows/release.yml`, documented `winget install HELIXOrigin.SteamVault` in `README.md`.
+- [x] `[NH-Reader]` **Unified Modular `.mjs` Scripts & `main:sub:option` Standard** — built `scripts/lib/logger.mjs`, `scripts/lib/runner.mjs`, `scripts/lib/suites.mjs`, `scripts/build.mjs`, `scripts/dev.mjs`, `scripts/run.mjs`, `scripts/test.mjs`, aligned `package.json` with `main:sub:option` hierarchy (`tauri:build:release`, `tauri:build:debug`, `test:rust`, `test:frontend`, `test:i18n`, `test:all`, `sign:local`), verified `node scripts/test.mjs i18n` (PASS, 17/17 community packs).
+- [x] `[NH-Reader]` **NSFW WinGet Policy Enforcement** — strictly excluded `NH-Reader` from WinGet repository in compliance with WinGet terms of service, documented as an absolute invariant.
+
+---
+
+### 🎯 [Steam-Vault] & [Steam-Vault-Catalogue] Workstream W.35: Multi-Provider Metadata Parity, Lightweight Catalogue Index Manifest, Settings & Per-Game Refresh Metadata, and i18n Localization (Completed)
 - **Project Identifiers:** `[Steam-Vault]` (`projects/Steam-Vault`), `[Steam-Vault-Catalogue]` (`projects/Steam-Vault-Catalogue`)
 - **Target Components:** `projects/Steam-Vault/src-tauri/src/commands.rs`, `projects/Steam-Vault/src-tauri/src/lib.rs`, `projects/Steam-Vault/src/lib/api.ts`, `projects/Steam-Vault/src/lib/types.ts`, `projects/Steam-Vault/src/lib/i18n/*`, `projects/Steam-Vault/src/routes/settings/+page.svelte`, `projects/Steam-Vault/src/routes/library/+page.svelte`; `projects/Steam-Vault-Catalogue/scripts/modules/types.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/config.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/indexer.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/engine.ts`, `projects/Steam-Vault-Catalogue/scripts/modules/providers/*`, `projects/Steam-Vault-Catalogue/index.json`
 

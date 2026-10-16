@@ -24,13 +24,15 @@ flowchart TB
     Org[HELIX Origin Organization] --> DocsTheme["[helix-docs] Remote Jekyll Theme"]
     Org --> Portal["[helix-origin.github.io] Portal Hub"]
     Org --> DesktopApp["[NH-Reader] Desktop/Mobile App"]
+    Org --> SteamVault["[Steam-Vault] Desktop App"]
+    Org --> Catalogue["[Steam-Vault-Catalogue] Game Catalogue"]
     Org --> ShellMods["[Windhawk-Themes] Shell Styler Suite"]
-    Org --> LinuxTheme["[Hentai-Senpai] Multi-DE GTK Theme"]
 
     DocsTheme -.->|remote_theme| Portal
     DocsTheme -.->|remote_theme| DesktopApp
+    DocsTheme -.->|remote_theme| SteamVault
+    DocsTheme -.->|remote_theme| Catalogue
     DocsTheme -.->|remote_theme| ShellMods
-    DocsTheme -.->|remote_theme| LinuxTheme
 ```
 
 1. 🎨 **Unified Design Tokens**: A cohesive dark obsidian aesthetic (`#07111f` / `#0d1b2d`) with cyan (`#48d8f2`) and purple (`#b06cff`) accents across documentation, desktop apps, and OS styling suites.
@@ -45,10 +47,11 @@ flowchart TB
 |---|---|---|---|---|---|
 | **[helix-docs]** | `projects/helix-docs` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-docs/releases/tag/v1.0.0) | ✅ Shipped | Frontmatter nav engine, modular cards, universal navbar |
 | **[helix-origin.github.io]** | `projects/helix-origin.github.io` | Rolling Sprints | Portal v2 | 🚀 Active | 16:9 vector artwork integration, project showcase cards |
-| **[NH-Reader]** | `projects/NH-Reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/NH-Reader/releases/tag/v0.7.5) | ✅ Shipped (M12) | M13 Planning: unified sign script, multi-platform toolchain |
+| **[NH-Reader]** | `projects/NH-Reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/NH-Reader/releases/tag/v0.7.5) | 🚀 Active | M13: Unified `.mjs` scripts architecture, main:sub:option command hierarchy, local code signing |
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
-| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | [v1.2.0](https://github.com/HELIX-Origin/Steam-Vault/releases/tag/v1.2.0) | 🚀 Active | Library Grid launcher, per-game management sub-page, right sidebar filters, streamlined storage & multi-scope lists |
+| **[Steam-Vault]** | `projects/Steam-Vault` | SemVer | [v1.2.0](https://github.com/HELIX-Origin/Steam-Vault/releases/tag/v1.2.0) | 🚀 Active | Per-platform lib isolation, per-platform tauri config, WinGet package registration, opt-in code signing |
 | **[Steam-Vault-Catalogue]** | `projects/Steam-Vault-Catalogue` | SemVer | [v1.1.0](https://github.com/HELIX-Origin/Steam-Vault-Catalogue/releases/tag/v1.1.0) | 🚀 Active | Community open game catalogue, modular TypeScript manager, main:sub:option scripts & living index |
+| **[Hentai-Senpai]** | `projects/Hentai-Senpai-Multi-DE-Theme` | SemVer | Archived | 🛑 Discontinued | Discontinued and archived; unmaintained legacy reference |
 
 ---
 
