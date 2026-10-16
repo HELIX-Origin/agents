@@ -7,7 +7,7 @@
 ## 1. Owns
 
 - Windows 11 styler YAML mods (`projects/Windhawk-Themes`).
-- Linux GTK and GNOME theme packages (`projects/Hentai-Senpai-Multi-DE-Theme`).
+- Linux GTK themes (`projects/Hentai-Senpai-Multi-DE-Theme` — **DISCONTINUED & ARCHIVED**; out of active scope).
 - Design language consistency (acrylic/blur materials, rim borders, corner radiuses, color palettes).
 
 ---

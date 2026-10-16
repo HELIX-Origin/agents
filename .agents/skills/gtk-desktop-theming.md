@@ -1,5 +1,9 @@
 # Skill: Linux Desktop & GTK Theme Engineering
 
+> [!WARNING]
+> **DISCONTINUED & ARCHIVED**
+> `projects/Hentai-Senpai-Multi-DE-Theme` has been discontinued and archived. This skill is preserved strictly as an unmaintained historical reference. Do not perform active development on Linux/GTK theming.
+
 > Domain knowledge and engineering runbook for GTK2/3/4 and desktop environment theming (`projects/Hentai-Senpai-Multi-DE-Theme`).
 
 ---

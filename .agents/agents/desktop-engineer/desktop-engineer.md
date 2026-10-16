@@ -16,10 +16,11 @@
 ## 2. Reads
 
 - [`.agents/rules/git-operations.md`](../../rules/git-operations.md) — Git permissions (read-only default).
+- [`.agents/rules/script-standards.md`](../../rules/script-standards.md) — Project scripts standard & `main:sub:option` command hierarchy.
 - [`.agents/rules/verification.md`](../../rules/verification.md) — Mandatory verification check requirements.
 - [`.agents/rules/security-hygiene.md`](../../rules/security-hygiene.md) — Secret and keystore management.
 - [`.agents/rules/styling-standards.md`](../../rules/styling-standards.md) — SCSS-first styling standards & zero-hardcoding rules.
-- [`.agents/skills/tauri-desktop-engineering.md`](../../skills/tauri-desktop-engineering.md) — Tauri architecture and toolchains.
+- [`.agents/skills/tauri-desktop-engineering.md`](../../skills/tauri-desktop-engineering.md) — Tauri architecture, platform lib isolation, and toolchains.
 - [`.agents/skills/scss-architecture.md`](../../skills/scss-architecture.md) — Modern SCSS modular architecture and token systems.
 
 ---
@@ -28,15 +29,20 @@
 
 1. Inspects active requirements in `TODO.md` and `PLAN.md`.
 2. Implements features or bug fixes cleanly across frontend and backend codebases.
-3. Keeps versions strictly synchronized across `package.json`, `tauri.conf.json`, and `Cargo.toml`.
-4. Executes static gates: `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n`.
-5. Hands off completed work to the Security Reviewer and Git Auditor.
+3. Follows the **Per-Platform Lib Isolation Standard** (`windows.rs`, `macos.rs`, `linux.rs`) and **Per-Platform Tauri Configuration Standard** (`tauri.<platform>.conf.json` with base `tauri.conf.json`).
+4. Uses native `.mjs` modular scripts under `scripts/` (`runner.mjs`, `logger.mjs`, `suites.mjs`, `build.mjs`, `dev.mjs`, `test.mjs`) and adheres to the `main:sub:option` command hierarchy in `package.json`.
+5. Supports opt-in multi-platform code signing (`scripts/sign.mjs`) and configures WinGet package registration for non-NSFW applications (`HELIXOrigin.SteamVault`).
+6. Ensures `.github/workflows/cleanup-failed-runs.yml` is present from the universal template.
+7. Keeps versions strictly synchronized across `package.json`, `tauri.conf.json`, and `Cargo.toml`.
+8. Executes static gates: `cargo check`, `cargo test`, `npm run check`, `node scripts/test.mjs`.
+9. Hands off completed work to the Security Reviewer and Git Auditor.
 
 ---
 
 ## 4. Never
 
 - Never commit signing keys, keystores, certificates, or personal user paths.
+- Never add WinGet package repository registration to NSFW applications (`projects/NH-Reader`).
 - Never bump versions in only one file; all project manifests must move together.
 - Never push changes without explicit human authorization for that exact repository, in the current conversation.
 
