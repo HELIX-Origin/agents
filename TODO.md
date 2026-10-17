@@ -131,6 +131,11 @@ flowchart TD
   - [x] `[Ecosystem]` Replicate shared legacy `PAT_TOKEN` secret across all organization repositories via `gh secret set`.
   - [x] `[agents]` Protect `.env` in root `.gitignore` and save `PAT_TOKEN` / `GITHUB_TOKEN` to local untracked `.env` file for agent automation.
   - [x] `[agents]` Create `provision-repo-secrets.ps1` helper script to instantly provision new repositories as they are created.
+- [x] **[helix-gaming-db-00] & [Ecosystem] 10. Cloudflare Edge Rate Limiting, GitHub Push Webhooks (`/_webhook/github`) & Unified Client / Documentation Synchronization**:
+  - [x] `[helix-gaming-api]` Configure Cloudflare edge rate-limiting rules (100 req/min for general endpoints, 20 req/min for bulk endpoints).
+  - [x] `[helix-gaming-db-00..03]` Create and verify GitHub push webhooks (`https://api.helix-origin.club/_webhook/github`) on all 4 database shards (`helix-gaming-db-00`, `01`, `02`, `03`) with automated cache purging.
+  - [x] `[universal-game-launcher]` Update client `src/lib/plugins/metadata/helix-db.ts` to aggregate multi-shard search indices, prioritize direct shard proxies, and cache data persistently in SQLite KV storage.
+  - [x] `[docs] & [wiki]` Update centralized documentation (`docs`) and technical wiki (`wiki`) to detail rate limiting rules, webhooks, multi-shard search aggregation, and the dynamic `i18next` architecture.
 
 
 ---
