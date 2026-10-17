@@ -10,15 +10,11 @@
 
 ## 📜 Tracking Rules
 
+- **100% Active Direction Accuracy (Root & Archives)**: `BUGS.md` and `.github/BUGS-ARCHIVE.md` must reflect the 100% current, active direction of all projects with zero contradictions. Immediately update or remove any quirk or bug entry superseded by a new architectural decision.
+- **Zero Non-Organization Mentions**: Never directly mention by name any external, third-party, or deleted projects or repositories outside the active `HELIX-Origin` organization.
 - **No Typo Duplication**: When recording user reports, clean and fix all typos to preserve professional quality.
-- **Consistent Formatting**: Maintain consistent formatting and style throughout all documentation to ensure readability and professionalism.
-- **Clear Sectioning**: Use clear and descriptive headers for each section to improve navigation and readability.
-- **Active Items First**: The currently active milestone, sprint, task, or workstream must always be placed at the top of the content sections.
-- **Regular Updates**: Ensure that this file is regularly updated to reflect the latest developments and changes in the project.
-- **Improve User Directives**: Continuously refine and clarify user directives to ensure they are easily understood and actionable.
-- **Explicit Project Tagging**: In multi-project or organization tracking ledgers, every quirk, open bug, and resolved bug entry header MUST be explicitly prefixed with its project name and repository path (e.g., `[{{PROJECT_NAME}}] ({{PROJECT_PATH}}): {{BUG_TITLE}}`) to prevent agent context confusion.
-- **Tracking Docs Stay True**: Update `ROADMAP.md`, `TODO.md`, `BUGS.md`, and `PLAN.md` first or in lockstep with code changes.
-- **Always Track Everything**: Every new feature request, enhancement, or bug report must be logged before execution.
+- **Explicit Project Tagging**: Every quirk, open bug, and resolved bug entry header MUST be explicitly prefixed with its current project name and repository path (`[{{PROJECT_NAME}}] ({{PROJECT_PATH}}): {{BUG_TITLE}}`).
+- **Bare Minimal Root & Normalized Archive**: Keep `BUGS.md` focused on active issues and current architectural invariants; move detailed post-mortems of resolved bugs to `.github/BUGS-ARCHIVE.md`.
 
 ---
 

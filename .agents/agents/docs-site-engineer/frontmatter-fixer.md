@@ -26,6 +26,8 @@ and nav order.
 | NH-Reader | "Documentation Home" | "NH Reader Technical Wiki" |
 | Universal-Game-Launcher | "Documentation Home" | "Universal Game Launcher Technical Wiki" |
 | Windhawk-Themes | "Documentation Directory" | "Target & Configuration Wiki" |
+| Theme-Toolkit | "Documentation Home" | "Theme Toolkit Technical Wiki" |
+| helix-origin.github.io | portal root (`/`, layout `default`) | — |
 
 ## Traps
 

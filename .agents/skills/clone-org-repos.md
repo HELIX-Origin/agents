@@ -8,7 +8,7 @@
 
 - **Organization Repositories Only:** All active engineering and documentation projects belong to the `HELIX-Origin` organization on GitHub (`https://github.com/HELIX-Origin/<repo>`).
 - **Clone Destination:** Every organization repository must be cloned inside `projects/<repo>` (e.g., `projects/helix-docs/`). The `projects/` directory is untracked in the root repository.
-- **Never Touch Non-Organization Repositories:** Any directory outside the `HELIX-Origin` organization (such as `ramensoftware`) is strictly off-limits and must never be explored, tracked, or modified.
+- **Never Touch Non-Organization Repositories:** Any directory or repository outside the `HELIX-Origin` organization is strictly off-limits and must never be explored, tracked, modified, or mentioned.
 - **Git Authorization:** Cloning new repositories or checking out branches requires explicit user authorization for that exact operation, in the current conversation. Task scope alone is never authorization.
 
 ---
@@ -19,10 +19,10 @@
 |---|---|---|---|
 | **helix-docs** | `https://github.com/HELIX-Origin/helix-docs.git` | Shared Jekyll theme & preview site | `projects/helix-docs` |
 | **helix-origin.github.io** | `https://github.com/HELIX-Origin/helix-origin.github.io.git` | Organization portal & project directory | `projects/helix-origin.github.io` |
-| **NH-Reader** | `https://github.com/HELIX-Origin/NH-Reader.git` | Cross-platform desktop reader for nhentai.net | `projects/NH-Reader` |
+| **NH-Reader** | `https://github.com/HELIX-Origin/NH-Reader.git` | Cross-platform desktop manga reader | `projects/NH-Reader` |
 | **Windhawk-Themes** | `https://github.com/HELIX-Origin/Windhawk-Themes.git` | Windows 11 Windhawk styler mod suites | `projects/Windhawk-Themes` |
 | **Universal-Game-Launcher** | `https://github.com/HELIX-Origin/Universal-Game-Launcher.git` | Tauri v2 cross-platform universal game library & launcher | `projects/Universal-Game-Launcher` |
-| **FFXIV-Config** | `https://github.com/HELIX-Origin/FFXIV-Config.git` | Custom FFXIV Config UI (Fr4nsson's base, 8.x jobs) | `projects/FFXIV-Config` |
+| **Theme-Toolkit** | `https://github.com/HELIX-Origin/Theme-Toolkit.git` | Tauri v2 cross-platform desktop theme studio & applicator | `projects/Theme-Toolkit` |
 | **agents** | `https://github.com/HELIX-Origin/agents.git` | This workspace: agent rules, skills & CTL | `projects/agents` *(skipped by default)* |
 | **.github** | `https://github.com/HELIX-Origin/.github.git` | Organization profile & community health files | `projects/.github` |
 
@@ -69,13 +69,13 @@ Options:
 # Windows
 ./clone-org-repos-windows.ps1
 ./clone-org-repos-windows.ps1 -DryRun
-./clone-org-repos-windows.ps1 -Update -Exclude FFXIV-Config
+./clone-org-repos-windows.ps1 -Update -Exclude Theme-Toolkit
 ```
 
 ```bash
 # Linux
 bash clone-org-repos-linux.sh
-bash clone-org-repos-linux.sh --dry-run --exclude FFXIV-Config,NH-Reader
+bash clone-org-repos-linux.sh --dry-run --exclude Theme-Toolkit,NH-Reader
 
 # macOS  (chmod +x once, then ./clone-org-repos-macos.sh)
 bash clone-org-repos-macos.sh --update

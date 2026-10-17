@@ -10,15 +10,11 @@
 
 ## 📜 Tracking Rules
 
-- **No Typo Duplication**: When recording user reports, clean and fix all typos to preserve professional quality.
-- **Consistent Formatting**: Maintain consistent formatting and style throughout all documentation to ensure readability and professionalism.
-- **Clear Sectioning**: Use clear and descriptive headers for each section to improve navigation and readability.
-- **Active Items First**: The currently active milestone, sprint, task, or workstream must always be placed at the top of the content sections.
-- **Regular Updates**: Ensure that the roadmap is regularly updated to reflect the latest developments and changes in the project.
-- **Improve User Directives**: Continuously refine and clarify user directives to ensure they are easily understood and actionable.
-- **Explicit Project Tagging**: In multi-project or organization tracking ledgers, every milestone, sprint, task, or deliverable header and row MUST explicitly include its project name and repository path (e.g., `[{{PROJECT_NAME}}] ({{PROJECT_PATH}})`) to prevent agent context confusion.
-- **Tracking Docs Stay True**: Update `ROADMAP.md`, `TODO.md`, `BUGS.md`, and `PLAN.md` first or in lockstep with code changes so a stale ledger counts as a bug.
-- **Always Track Everything**: Every new feature request, enhancement, or bug report must be logged in [`BUGS.md`](./BUGS.md), [`TODO.md`](./TODO.md), and [`ROADMAP.md`](./ROADMAP.md) before execution.
+- **100% Active Direction Accuracy (Root & Archives)**: `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`, and `.github/*-ARCHIVE.md` must reflect the 100% current, active direction of all projects with zero contradictions. Immediately replace or remove superseded statements across both root and archive files.
+- **Zero Non-Organization Mentions**: Never directly mention by name any external, third-party, or deleted projects or repositories outside the active `HELIX-Origin` organization.
+- **No Typo Duplication**: When recording user reports or directives, clean and fix all typos to preserve professional quality.
+- **Explicit Project Tagging**: Every milestone, sprint, task, or deliverable header and row MUST explicitly include its current project name and repository path (e.g., `[{{PROJECT_NAME}}] ({{PROJECT_PATH}})`).
+- **Bare Minimal Root & Normalized Archive**: Keep `ROADMAP.md` focused on active and upcoming milestones; archive delivered milestone narratives into `.github/ROADMAP-ARCHIVE.md` in normalized format.
 
 ---
 

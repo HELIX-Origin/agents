@@ -19,6 +19,7 @@ No change, feature, bug fix, or documentation update is complete without running
 | **helix-origin.github.io** | `bundle exec jekyll build` | 0 errors, 0 warnings. |
 | **NH-Reader** | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` | 0 Rust errors, 0 test failures, 0 Svelte errors, all i18n keys valid. |
 | **Universal-Game-Launcher** | `node scripts/test.mjs check rust frontend build` | 0 Rust errors, 0 test failures, 0 Svelte errors/warnings. |
+| **Theme-Toolkit** | `node scripts/test.mjs check rust frontend build` | 0 Rust errors, 0 test failures, 0 Svelte errors/warnings. |
 | **Windhawk-Themes** | `pwsh -NoProfile -File tools/Test-WindhawkStyles.ps1` | 0 errors. All styler YAML definitions parse correctly. |
 | **Deskthemepack / Packaging** | `makecab.exe /F <theme>.ddf`, asset existence check | Valid cabinet archive, 0 missing assets, valid .theme INI. |
 

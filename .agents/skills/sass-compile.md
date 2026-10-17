@@ -1,6 +1,6 @@
-﻿# Skill: Recompiling helix-docs CSS with dart-sass
+# Skill: Recompiling helix-docs CSS with dart-sass
 
-> Helm-docs serves a **precompiled** `assets/css/site.css`. `_sass/` is the source of truth.
+> `helix-docs` serves a **precompiled** `assets/css/site.css`. `_sass/` is the source of truth.
 > After ANY `_sass` edit, regenerate `site.css` and commit the result (only with git
 > authorization). Do NOT add a committed `assets/css/site.scss` entrypoint — it breaks the
 > GitHub Pages build (see BUGS.md).
@@ -16,8 +16,7 @@
 
 Prereq: `$env:PATH = "<ruby-bin-dir>;$env:PATH"` if `ruby`/`gem` are not on PATH.
 
-1. Edit files under `projects/helix-docs\_sass\` (entrypoint = `helix-docs.scss`,
-   mirroring just-the-docs' `just-the-docs.scss`).
+1. Edit files under `projects/helix-docs\_sass\` (entrypoint = `helix-docs.scss`).
 2. Compile (from `projects/helix-docs`):
 
    ```
@@ -33,11 +32,11 @@ Prereq: `$env:PATH = "<ruby-bin-dir>;$env:PATH"` if `ruby`/`gem` are not on PATH
    rule level (see `compare.rb`) — expect **0 lost rules**; only intended additions.
 4. Confirm the file is valid compressed CSS (single line, no Liquid artifacts).
 
-## `_sass/` structure (mirrors just-the-docs)
+## `_sass/` structure
 
 ```
 _sass/
-  helix-docs.scss        entrypoint (mirrors just-the-docs.scss)
+  helix-docs.scss        entrypoint
   layout.scss            site shell grid
   color_schemes/dark.scss  HELIX palette tokens (:root)
   custom/setup.scss      user setup overrides (imported early)

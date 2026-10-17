@@ -22,7 +22,7 @@ flowchart LR
 
 - [ ] `remote_theme: HELIX-Origin/helix-docs` present.
 - [ ] `plugins:` includes `jekyll-remote-theme`.
-- [ ] Defaults scopes are by **type** (`scope: { type: docs }`), never `path: /docs/:path/`.
+- [ ] Defaults scopes are by **type** with match-all path (`scope: { path: "", type: docs }`), never `path: /docs/:path/`.
 - [ ] Collections `docs`/`wiki` have `output: true` when the site uses `_docs/` / `_wiki/`.
 - [ ] Any `_data/navigation.yml` is **deleted**.
 - [ ] Index permalinks set (`/docs/`, `/wiki/`, portal `/`).

@@ -14,10 +14,11 @@
 - **Consistent Formatting**: Maintain consistent formatting and style throughout all documentation to ensure readability and professionalism.
 - **Clear Sectioning**: Use clear and descriptive headers for each section to improve navigation and readability.
 - **Active Items First**: The currently active milestone, sprint, task, or workstream must always be placed at the top of the content sections.
+- **Active Sprints Only in Top Section**: `## 🎯 Active Sprints` must contain ONLY the currently active sprint(s). Once a sprint is completed, move it immediately to `## ✅ Completed Sprints` (newest first).
 - **Regular Updates**: Ensure that this file is regularly updated to reflect the latest developments and changes in the project.
-- **Improve User Directives**: Continuously refine and clarify user directives to ensure they are easily understood and actionable.
-- **Full History**: Every planned item from project history is represented here as a completed sprint, newest first.
-- **Explicit Project Tagging**: In multi-project or organization tracking ledgers, every sprint header, task, and execution deliverable MUST be explicitly prefixed with its project name and repository path (e.g., `[{{PROJECT_NAME}}] ({{PROJECT_PATH}})`) to prevent agent context confusion.
+- **100% Active Direction Accuracy**: Continuously refine and synchronize sprint tasks with the current active direction of each project; immediately update or remove superseded tasks rather than leaving contradictory statements.
+- **Full History**: Every planned item from project history is represented under `## ✅ Completed Sprints`, newest first.
+- **Explicit Project Tagging**: In multi-project or organization tracking ledgers, every sprint header, task, and execution deliverable MUST be explicitly prefixed with its current project name and repository path (e.g., `[{{PROJECT_NAME}}] ({{PROJECT_PATH}})`) to prevent agent context confusion.
 - **Tracking Docs Stay True**: Update `ROADMAP.md`, `TODO.md`, `BUGS.md`, and `PLAN.md` first or in lockstep with code changes.
 - **Always Track Everything**: Every new feature request, enhancement, or bug report must be logged before execution.
 

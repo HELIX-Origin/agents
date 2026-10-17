@@ -1,8 +1,8 @@
 # Skill: helix-docs theme — structure, consumption, repair
 
 > Everything an agent needs to work on the shared Jekyll theme `helix-docs`, or to fix any
-> site that consumes it. Applies to **all** projects under `` that use GitHub
-> Pages. The theme repo mirrors **just-the-docs**' structure while keeping its own HELIX
+> site that consumes it. Applies to **all** projects under `projects/` that use GitHub
+> Pages. The theme repo uses a modular component structure while keeping its own HELIX
 > style and palette.
 
 ## What helix-docs is
@@ -12,7 +12,7 @@
 - GitHub Pages serves the theme's **precompiled** `assets/css/site.css`; the theme never
   compiles SCSS at build time (see skill `sass-compile`).
 
-## Theme repo layout (mirrors just-the-docs)
+## Theme repo layout
 
 ```
 projects/helix-docs/
@@ -85,7 +85,7 @@ flowchart TB
 | NH-Reader | "Documentation Home" | "NH Reader Technical Wiki" |
 | Universal-Game-Launcher | "Documentation Home" | "Universal Game Launcher Technical Wiki" |
 | Windhawk-Themes | "Documentation Directory" | "Target & Configuration Wiki" |
-| FFXIV-Config | "Documentation Directory" | — |
+| Theme-Toolkit | "Documentation Home" | "Theme Toolkit Technical Wiki" |
 | helix-origin.github.io | portal root (`/`, layout `default`) | — |
 
 ## Repair checklist for a consuming site

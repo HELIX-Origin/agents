@@ -1,6 +1,6 @@
 # Skill: Universal Game Launcher Architecture & Design System
 
-> Authoritative architectural specification, UI navigation model, visual palette, and plugin engine engineering standard for **Universal Game Launcher** (`projects/Universal-Game-Launcher` / `projects/Steam-Vault`).
+> Authoritative architectural specification, UI navigation model, visual palette (`src/styles/_tokens.scss`), and Universal Core Plugins + Global Helpers engineering standard for **Universal Game Launcher** (`projects/Universal-Game-Launcher`).
 
 ---
 
@@ -11,167 +11,180 @@ Universal Game Launcher is a standalone, fast, privacy-focused cross-platform un
 ### Absolute Invariants — Never Violate
 1. **Core Launcher Non-Invasive Invariant:**
    - Universal Game Launcher's core binary operates completely non-invasively.
-   - The core binary never directly writes to or modifies Steam's local files (`shortcuts.vdf`, `cloud-storage-namespace-1.json`, or `appmanifest.acf`) and never requires Steam or other clients to be closed (`ensure_steam_closed()` eliminated from core).
-   - If store management (e.g. managing the Steam library) is desired, it is encapsulated cleanly in an opt-in plugin.
-2. **Official Depressurizer Plugin Architecture:**
-   - Legacy Depressurizer concepts and hardcoded AutoCat logic are decoupled from the core launcher binary.
-   - Features that Depressurizer had (reference: `https://github.com/Depressurizer/Depressurizer`) will be provided via an official, dedicated **Depressurizer plugin** within the native modular plugins library.
-3. **Internal Modular Library Architecture (Zero Detached Crate Overhead):**
-   - The plugin engine operates cleanly as an internal library module within `universal_game_launcher_lib` (`src-tauri/src/plugins/`) on the backend and native TypeScript framework on the frontend (`src/lib/plugins/engine.ts`). No detached cargo crates (`crates/plugin-engine`) are required.
-4. **Native Client Delegation & Zero Credential Invariant:**
-   - Game launching, installing, updating, and uninstallation always delegate to official client protocols (`steam://rungameid/{id}`, `com.epicgames.launcher://apps/{id}?action=launch`, `goggalaxy://openGameView/{id}`, etc.) or directly execute standalone binaries with configured working directories.
-   - Applications must never handle, scrape, or store third-party user credentials or passwords.
+   - The core binary never writes to or modifies Steam's local files (`shortcuts.vdf`, `cloud-storage-namespace-1.json`, or `appmanifest.acf`) and never requires Steam or other clients to be closed (`ensure_steam_closed()` eliminated from core).
+2. **Internal Modular Library Architecture (Zero Detached Crate Overhead):**
+   - The plugin engine operates cleanly as an internal library module within `universal_game_launcher_lib` (`src-tauri/src/plugins/` and `src-tauri/src/metadata/`) on the backend and native TypeScript framework on the frontend (`src/lib/plugins/`). No detached cargo crates (`crates/plugin-engine`) are used.
+3. **Native Client Delegation & Zero Credential Invariant:**
+   - Game launching, installing, updating, and uninstallation always delegate to official client protocols (`steam://rungameid/{id}`, `com.epicgames.launcher://apps/{id}?action=launch`, `goggalaxy://openGameView/{id}`, `uplay://launch/{id}/0`, `origin2://game/launch?offerIds={id}`, `battlenet://{code}`, `shell:AppsFolder\{pfn}!{appId}`, `itch://games/{id}/launch`, etc.) or directly execute standalone binaries / emulator command lines with configured working directories.
+   - The application never scrapes or stores third-party user account passwords.
    - Preserves official game overlays, cloud synchronization, community friend lists, playtime tracking, and achievements.
-5. **Generic SQLite & In-Memory KV Persistence:**
-   - All library data, custom collections, custom tags, favorite flags, playtime counters, custom artwork mappings, and plugin settings are persisted locally in `database.sqlite` (with fallback to `database.db`) using SQLite WAL mode.
+4. **Generic SQLite & In-Memory KV Persistence:**
+   - All library data (`library:default`, `library:custom_games`), game metadata (`game_meta:<appId>`), custom display names (`customNames`), favorite flags, playtime counters, and plugin settings (`plugin_config:<id>`) are persisted locally in `database.sqlite` (with fallback to `database.db`) using SQLite WAL mode.
    - Backed by an in-memory fast KV tier (`mem_kv`) for sub-millisecond (<1ms) responsive transitions.
-6. **Emulation & ROM Support via Drop-In Plugins:**
-   - Emulation platforms and ROM library organizers are decoupled into the plugin ecosystem. The core binary is not restricted by WinGet policies, and ROM/emulator features are cleanly installed and maintained as drop-in plugins.
-7. **Native In-App Modular Plugins Framework (Zero Network/Cloudflare Liabilities):**
-   - All game platform integrations (Steam, Epic, GOG, Xbox, EA, Ubisoft, Battle.net, itch, Amazon, Rockstar, Standalone, EmulationStation), metadata providers (Steam Store, GOG, Epic, itch, IGDB, SteamGridDB, TheGamesDB, ScreenScraper, PCGamingWiki, HowLongToBeat, ProtonDB), and feeds (GamerPower Free Game alerts, Store Promotions & Deals, Library Patch Notes) are built directly into the app under `src/lib/plugins/` (`platforms/`, `metadata/`, `utility/`, and `media/`).
-   - Visibly called **"Plugins"** across all user-facing interfaces and documentation due to their drop-in modularity, while internally managed as native modules via the in-app plugin engine framework.
-   - Every supported platform and metadata provider is authored as its own **dedicated file** (zero monolithic bundle files).
-   - Platform plugins integrate all native launcher features outside the store: game launching with official overlays/cloud saves/playtime/achievements, game installation/uninstallation protocols, friends list integration, and native authoritative metadata and artwork fetching.
-   - **Cache Reset Invariant**: Game providers are strictly prohibited from overwriting metadata contributed by metadata providers unless the user explicitly chooses to reset the metadata cache. Enhanced records are marked with `userEnhanced: true`.
-   - Completely eliminates Cloudflare network blockages, CDN rate limits, runtime `.mjs` in-memory eval liabilities, and fragile external JSON manifests.
+5. **Universal Core Plugins + Global Helper Modules Architecture:**
+   - Instead of dozens of fragmented per-platform or per-service plugin files, core capabilities are consolidated into **Universal Core Plugins** paired with **Global Helper Modules/Functions** under `src/lib/plugins/` and `src-tauri/src/`:
+     - **Universal Platform Plugin (`platform-universal`)**: `src/lib/plugins/platforms/universal.ts`
+     - **Universal Metadata & Artwork Plugin (`metadata-universal`)**: `src/lib/plugins/metadata/universal.ts` + `src-tauri/src/metadata/universal.rs`
+     - **Dedicated Title Normalizer Utility Plugin (`utility-title-normalizer`)**: `src/lib/plugins/utility/title-normalizer.ts` + `src-tauri/src/plugins/title_normalizer.rs`
+     - **Universal Media Plugin (`media-universal`)**: `src/lib/plugins/media/universal.ts`
+     - **Utility Feed & Storage Plugins**: `src/lib/plugins/utility/gamerpower.ts` (`utility-gamerpower`) & `src/lib/plugins/utility/storage-analyzer.ts` (`utility-storage`)
+6. **Automatic Metadata Enhancement & Settings-Only Cache Refresh/Purge Invariant:**
+   - Metadata providers (`metadata-universal`) **automatically** fetch and enhance metadata and artwork for all games (including emulated console ROMs, standalone games, and itch.io games) during library scanning and when selecting a game with incomplete metadata.
+   - There are **no** manual "Refresh Metadata" or "Enhance Metadata" buttons in the `/library` game showcase topbar or Manage modal.
+   - Cache refresh and cache purge buttons live **exclusively in Settings** (`/settings` → `Storage & Cache` tab) for refreshing or purging the app's data cache.
+   - Game providers are strictly prohibited from overwriting user customizations or metadata contributed by metadata providers (`userEnhanced: true`) unless the user explicitly resets or purges the metadata cache in Settings.
 
 ---
 
 ## 2. Navigation & UI Layout Architecture
 
-The user interface mirrors the proven, ergonomic layout of **Steam and GOG Galaxy**, customized with our high-contrast obsidian purple visual identity.
+The user interface combines a custom frameless titlebar with a conditional left game-list sidebar (active only on `/library`) and high-contrast obsidian purple surfaces (`src/routes/+layout.svelte`).
 
 ```
-+---------------------------------------------------------------------------------------------------------+
-| [LOGO] Universal Game Launcher  < >   DASHBOARD   LIBRARY   STORAGE   PLUGINS   SETTINGS    [Search] [_][#][X]|  <- Custom Title Bar
-+------------------------------------+--------------------------------------------------------------------+
-|  [🔍 Filter library...           ] |  HERO WALLPAPER BANNER (16:9 / 21:9 with dark vignette)            |
-|  [All (142)] [Installed] [★ Favs]  |  +---------------------------------------------------------------+ |
-|                                    |  | [Capsule]  TITLE LOGO TYPOGRAPHY                              | |
-|  ▼ STEAM (84)                      |  |            By Developer · Published by Publisher · 2024       | |
-|    • Cyberpunk 2077                |  |            [▶ PLAY NOW]  [★] [⚙ Manage]   Playtime: 48.2 hrs  | |
-|    • Elden Ring                    |  +---------------------------------------------------------------+ |
-|    • Hades II                      |                                                                    |
-|  ▼ GOG GALAXY (28)                 |  MEDIA GALLERY (Screenshots & Videos with Fullscreen Lightbox)     |
-|    • The Witcher 3: Wild Hunt      |  [Img 1] [Img 2] [Img 3] [Img 4] [Img 5]                           |
-|    • Hollow Knight                 |                                                                    |
-|  ▼ EPIC GAMES (18)                 |  GAME DETAILS & OVERVIEW                                           |
-|    • Alan Wake 2                   |  Full description, community tags, store links, install folder.   |
-|  ▼ STANDALONE / INDIE (12)         |                                                                    |
-|    • Custom Game                   |  CUSTOM ARTWORK STUDIO                                             |
-|                                    |  Portrait Capsule · Hero Wallpaper · Transparent Logo · Icon       |
-+------------------------------------+--------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------------+
+| [LOGO] Universal Game Launcher      Dashboard   Library   Store   Social   Storage   Settings   [_][□][✕]| <- Custom Title Bar
++------------------------------------+---------------------------------------------------------------------+
+|  [🔍 Filter games...     ] [+] [↻] |  TOP ACTION BAR (details-topbar)                                    |
+|  [All 142] [Installed 68] [★ 12]   |  Title  [Console/Platform] [Installed]   [▶ Play] [⚙ Manage] [★] [+]|
+|                                    +---------------------------------------------------------------------+
+|  ▾ ♨ Steam (84)                    |  HERO BANNER (details-hero — 16:9 backdrop + dark vignette)         |
+|    ● Cyberpunk 2077             ★  |  +----------------------------------------------------------------+ |
+|    ● Elden Ring                    |  | [2:3 Capsule]  GAME TITLE                                      | |
+|  ▾ ◈ GOG Galaxy (28)               |  |                Short description summary...                    | |
+|    ● The Witcher 3: Wild Hunt      |  |                [Platform] [App ID] [Playtime] [Size on Disk]   | |
+|  ▾ ⌗ itch.io (14)                  |  +----------------------------------------------------------------+ |
+|    ● My Futa Family                |                                                                     |
+|    ● Relicts of Aeson              |  DETAILS GRID (2-Column Responsive Layout)                          |
+|  ▾ 🎲 Nintendo GameCube (5)        |  +----------------------------------------+-----------------------+ |
+|    ● The Legend of Zelda:          |  | MEDIA GALLERY (Up to 10 images + zoom) | META & REFERENCE LINKS| |
+|      The Wind Waker                |  | VIDEO TRAILERS & PREVIEWS (<video>)    | GAME INFORMATION      | |
+|    ● The Legend of Zelda:          |  | GAME AUDIO & SOUNDTRACKS (<audio>)     | INSTALLATION & STORAGE| |
+|      Twilight Princess             |  |                                        | PLAYTIME TRACKING     | |
+|                                    |  +----------------------------------------+-----------------------+ |
+|  68 of 142 installed               |                                                                     |
++------------------------------------+---------------------------------------------------------------------+
 ```
 
-### 1. Title Bar Navigation (Steam / GOG style)
-The custom frameless window title bar serves as the primary top-level navigation:
-- **Left:** App squircle logo (`static/logo.svg`), brand title `Universal Game Launcher`, and browser history back/forward navigation arrows (`<` / `>`).
-- **Center Navigation Tabs:**
-  - **DASHBOARD (`/`)**: Executive gaming cockpit featuring Jump Back In / Quick Launch carousel, total library statistics, drive utilization snapshot, top played titles, and real-time Free Games giveaways and Store Deals.
-  - **LIBRARY (`/library`)**: The primary gaming cockpit and game showcase.
-  - **STORAGE (`/storage`)**: Storage metrics, drive capacity usage bars across connected volumes, and multi-platform installed games disk explorer.
-  - **PLUGINS (`/settings?tab=plugins`)**: Comprehensive drop-in plugin manager (Installed, Discover Catalog, Repositories).
-  - **SETTINGS (`/settings`)**: Preferences, System Locale, Cache reset, and Per-Plugin Configuration.
-- **Right:** Quick filter search box, Settings gear shortcut (`⚙`), and native window controls (Minimize, Maximize, Close).
+### 1. Custom Frameless Title Bar (`src/routes/+layout.svelte`)
+The custom frameless window title bar (`header.titlebar`) provides top-level navigation with **no** right-side search input or quick-filter bar:
+- **Left (`tb-brand`):** App logo (`/logo.svg`), brand title (`Universal Game Launcher`), and brand subtitle (`All-in-One Game Library`).
+- **Center Navigation Links (`nav.tb-nav` — `titlebarNav`):**
+  1. **Dashboard (`/`)**: Executive gaming cockpit featuring Jump Back In carousel, library & playtime stats, connected drive utilization snapshot, notifications drawer (Free Games, Store Deals, Library Patch Notes), and active tool/overlay downloads status.
+  2. **Library (`/library`)**: The primary game library and showcase view (activates the Left Game List Sidebar).
+  3. **Store (`/store`)**: Multi-platform store discovery featuring a Steam-style Hero Carousel, live Free Game giveaways, Store Deals filterable by platform/price/discount/DRM-free, and direct store page delegation.
+  4. **Social (`/social`)**: Cross-platform friends roster and presence status (`in-game`, `online`, `offline`) with one-click protocol shortcuts to open native client friend overlays (`steam://friends/status`, `goggalaxy://openFriends`, etc.).
+  5. **Storage (`/storage`)**: Multi-drive capacity usage bars and unified installed games disk explorer filterable by platform and sortable by disk footprint.
+  6. **Settings (`/settings`)**: Categorized configuration workspace with 5 tabs: `General`, `Providers`, `API & Credentials`, `Media & Audio`, and `Storage & Cache`.
+- **Right:** Flexible drag spacer (`tb-spacer`) and native window controls (`<WindowControls position="right" />`: Minimize, Maximize/Restore, Close).
 
-### 2. Left Sidebar — The Games List (Steam & GOG Galaxy style)
-The persistent left sidebar is dedicated to organizing and selecting games instantly:
-- **Quick Filter Header:**
-  - Instant text filter search input.
-  - Filter pills: `All` (with total count), `Installed` (installed on disk only), `★ Favorites`.
-  - Asynchronous background platform refresh trigger (`↻ Scan`).
-- **Platform Sections (GOG Galaxy style):**
-  - Collapsible platform headers with platform badge and game count: Steam, Epic Games, GOG Galaxy, Xbox / Microsoft Store, itch.io, EA App, Ubisoft Connect, Battle.net, Amazon Games, Standalone.
-  - Clicking any platform collapses/expands its list of titles.
-- **Collections Section (Steam style):**
-  - Collapsible user collections with game count badges and `+ New Collection` action.
-- **Instant Selection:** Clicking any game in the sidebar immediately renders that game in the Main Showcase View with zero page reloads.
+### 2. Left Sidebar — The Games List (`aside.sidebar`, Active on `/library` Only)
+Rendered conditionally when `isLibraryPage` is true (`page.url.pathname === "/library"`):
+- **Sidebar Top (`sidebar-top`):**
+  - Search row (`sidebar-search-row`): Instant filter input (`🔍 Filter games...` with `×` clear button), `+` Add Local Game button (`add-game-action-btn`), and `↻` Scan All Platforms button (`scan-action-btn`).
+  - Quick Filter Pills (`sidebar-filters`): `All <count>`, `Installed <count>`, and `★ <count>` (Favorites).
+- **Live Game List (`sidebar-game-list`):**
+  - When a search query is active: renders a flat filtered list of matching games.
+  - When browsing normally: renders collapsible **Platform & Console Accordions** (`platform-group-accordion`), sorted with PC platforms first (`Steam`, `GOG Galaxy`, `Epic Games`, `itch.io`, `Xbox`, `EA App`, `Ubisoft Connect`, `Battle.net`, `Amazon Games`, `Rockstar Games`, `Standalone`), followed by **Emulation Console Sections** grouped by each game's specific console (`🎲 Nintendo GameCube`, `🎮 PlayStation`, `🕹️ Nintendo 64`, etc.).
+  - Games inside each group are sorted alphabetically by display name (`$customNames[game.appId] ?? game.name`) and show an installed status dot (`status-dot.is-installed`) and favorite star (`★`).
+- **Sidebar Footer (`sidebar-footer`):**
+  - Displays `{installedCount} of {$games.length} installed`.
 
-### 3. Main Showcase View (`/library`)
-Directly showcases the selected game without cumbersome nested cards:
-- **Hero Wallpaper Banner:** High-resolution 16:9 or 21:9 backdrop with smooth purple gradient vignette overlay.
-- **Primary Action Header:**
-  - Game capsule cover thumbnail (aspect ratio 2:3).
-  - Transparent game logo or bold title typography.
-  - Big prominent **PLAY / LAUNCH** button that triggers native launcher delegation or executable spawn.
-  - Favorite star toggle and Manage dropdown.
-  - Live Playtime counter and Last Played timestamp.
-- **Media Gallery:** Interactive screenshot gallery with fullscreen lightbox modal.
-- **Game Metadata & Overview:** Developer, Publisher, Release Date, Official Store URI, and Custom Tags pills.
-- **Custom Artwork Studio:** Slot inspector allowing users to view and replace portrait capsule, hero banner, transparent logo, and app icon via SteamGridDB or local file import.
+### 3. Main Showcase View (`src/routes/library/+page.svelte`)
+Displays the selected game in a rich, non-blocking layout:
+- **Top Action Bar (`details-topbar`):**
+  - Left: Localized/custom game title (`topbar-game-name`), Console/Platform pill (`pill-accent2`), and `Installed` / `Not Installed` pill.
+  - Right (`topbar-action-group`): `▶ Play` (or `Install`) primary button, `⚙ Manage` button, `★` Favorite toggle button, and `➕ Add Game` button. (No manual Refresh/Enhance buttons in the topbar.)
+- **Hero Banner (`details-hero`):**
+  - High-resolution 16:9 / 21:9 hero backdrop (`hero-backdrop`) with gradient overlay (`hero-overlay`).
+  - Left: 2:3 Portrait Capsule image (`hero-capsule`, `130px × 195px`) or styled platform icon fallback (`hero-capsule-fallback`).
+  - Right (`hero-meta`): Game title (`hero-title`), localized/custom short description (`hero-desc`), and metadata pills (Platform label, App ID, Playtime, Last played date, Size on disk).
+- **Main Content Grid (`details-grid`):**
+  - **Left / Main Column:**
+    1. **Media Gallery Card (`media-gallery-card`):** Up to 10 high-resolution screenshots and official artwork with thumbnail strip (`gallery-thumbnails`) and click-to-expand Fullscreen Lightbox modal (`lightbox-backdrop`).
+    2. **Video Trailers & Previews Card (`trailers-card`):** HTML5 `<video>` player for HD trailers and gameplay previews with trailer selector chips (`Trailer 1`, `Trailer 2`, ...).
+    3. **Game Audio & Soundtracks Card (`soundtracks-card`):** Built-in `<audio>` player with `▶ Play Theme` / `⏸ Pause Theme`, volume slider, `🔁 Loop` toggle, and track selector list.
+  - **Right Column (`details-sidebar`):**
+    1. **Meta & Reference Links Card:** Direct external links to Steam Store, SteamDB, ProtonDB, GOG Store, PCGamingWiki Fixes & Settings, and Wikipedia Article.
+    2. **Game Information Card:** Platform/Console, Developers, Publishers, Release Date, Metascore badge, Storage size, Install Folder, Executable path, and Genre pills.
+    3. **Installation & Storage Card:** Installed/Cloud status badge, Disk Footprint, full Install Folder path, Executable path, Library Host path, and `📂 Open Folder` button.
+    4. **Playtime Tracking Card:** Total Playtime and Last Played stat boxes.
+- **Per-Game Management & Customization Modal (`⚙ Manage`):**
+  - Allows customizing the game's **Display Name / Title**, **Short Description**, **Developers**, **Publishers**, **Release Date**, **Genres**, and **Custom Artwork URLs / Local Paths** (Portrait Capsule Cover, Hero Wallpaper Banner, Transparent Logo).
+  - Saves custom title overrides to `customNames` and custom metadata/artwork fields to `game_meta:<appId>` with `userEnhanced: true`.
 
 ---
 
-## 3. UI Design System & Color Palette
+## 3. UI Design System & Color Palette (`src/styles/_tokens.scss`)
 
-The interface features an **obsidian dark futuristic purple visual identity** optimized for zero GPU stutter and zero composite hang:
+The interface uses the **HELIX Origin Futuristic Dark Purple Design System** defined in `src/styles/_tokens.scss` and `src/styles/app.scss`:
 
-| Token | Hex / CSS Value | Semantic Role |
+| CSS Custom Property | Value | Semantic Role |
 |---|---|---|
-| `--bg-canvas` | `#080511` | Root application background under frameless window |
-| `--bg-base` | `#0f0920` | Base workspace and sidebar background |
-| `--bg-card` | `#160e2e` | Elevated cards, sidebar rows, and surface panels |
-| `--bg-card-hover` | `#221646` | Active hover surface for cards and buttons |
-| `--border-subtle` | `rgba(255, 255, 255, 0.08)` | Hairline 1px border for cards and dividers |
-| `--border-accent` | `rgba(168, 85, 247, 0.40)` | Focused input and active navigation border |
-| `--accent-primary` | `#a855f7` | Neon electric purple (primary brand accent, buttons, active tabs) |
-| `--accent-secondary` | `#38bdf8` | Cyber sky blue / cyan (secondary accents, links, info badges) |
-| `--accent-glow` | `0 0 20px rgba(168, 85, 247, 0.35)` | Subtle hardware-accelerated glow for active tabs and play button |
-| `--text-main` | `#f8fafc` | High-contrast crisp white typography |
-| `--text-muted` | `#94a3b8` / `#64748b` | Subtitle text, metadata labels, and secondary hints |
-| `--color-success` | `#22c55e` | Installed state, verification pass, online status |
-| `--color-warning` | `#f59e0b` | Missing credentials, pending update, disk capacity warning |
-| `--color-error` | `#ef4444` | Failure message, process error, remove action |
+| `--bg-0` | `#080511` | Deepest obsidian root background |
+| `--bg-1` | `#0e091e` | Primary app gradient base background |
+| `--bg-2` | `#150e2a` | Secondary elevated background |
+| `--panel` | `#140d28` | Standard glass/card surface background |
+| `--panel-subtle` | `#0f0a1f` | Subtle recessed surface background |
+| `--panel-strong` | `#1b1236` | Elevated card, modal, and button surface |
+| `--panel-hover` | `#221743` | Interactive hover surface for cards and buttons |
+| `--panel-active` | `#2d1f56` | Active/selected surface state |
+| `--border` | `rgba(168, 85, 247, 0.18)` | Standard neon violet hairline border |
+| `--border-subtle` | `rgba(168, 85, 247, 0.10)` | Subtle divider border |
+| `--border-strong` | `rgba(192, 132, 252, 0.35)` | Emphasized / hovered border |
+| `--border-glow` | `rgba(192, 132, 252, 0.60)` | Active glow border |
+| `--text` | `#f5f3ff` | Primary violet-tinted high-contrast white text |
+| `--text-dim` | `#c4b5fd` | Secondary lavender subtitle text |
+| `--text-mute` | `#8b7ca6` | Muted labels, hints, and metadata captions |
+| `--accent` | `#a855f7` | Primary neon electric purple accent |
+| `--accent-hover` | `#c084fc` | Lighter purple hover accent |
+| `--accent-2` | `#e879f9` | Secondary fuchsia/magenta highlight |
+| `--accent-cyan` | `#38bdf8` | Cyber cyan accent for links and info badges |
+| `--ok` | `#34d399` | Installed badge, online status, verification pass |
+| `--warn` | `#fbbf24` | Warning state |
+| `--danger` | `#f87171` | Error banner, destructive action |
+
+### Per-Platform Theme Tokens (`$platforms` SCSS map in `_tokens.scss`) & Authentic Vector SVG Platform Icons
+- Each platform (`steam`, `itch`, `gog`, `epic`, `xbox`, `ubisoft`, `ea`, `battlenet`, `amazon`, `rockstar`, `other`) automatically generates:
+  - `--platform-<id>-gradient`
+  - `--platform-<id>-accent`
+  - `--platform-<id>-glow`
+- **Authentic Vector SVG Platform & Console Icons (`src/lib/components/PlatformIcon.svelte` & `PLATFORM_SPECS`):**
+  - Instead of generic Unicode shapes (`♨`, `◈`, `▲`, `●`, etc.), all platform headers, badges, and fallback capsules across the Library sidebar (`+layout.svelte`), Library Showcase (`/library`), Dashboard (`/`), Store (`/store`), Social (`/social`), Storage (`/storage`), and Settings (`/settings`) render crisp, recognizable vector SVG variants (`<PlatformIcon platform={...} />`) representing each actual provider and console brand mark (Steam piston crank, GOG Galaxy ring/G, Epic Games shield, itch.io storefront/gamepad, Xbox sphere X, EA monogram, Ubisoft swirl, Battle.net crest, Amazon smile arrow, Rockstar R★, Nintendo GameCube cube, PlayStation mark, Nintendo Switch, etc.).
 
 ### High-Performance Rendering Standard
-- **Zero `backdrop-filter: blur(...)` Overhead:** Blurring large regions triggers GPU composite stalls on high-refresh displays. Surfaces use solid obsidian tones with clean 1px borders instead.
-- **Hardware Acceleration:** All animated elements use `transform: translateZ(0)` and `will-change: transform`.
+- **Zero Blur on Cards (`--blur: 0px`, `--blur-strong: 0px`):** Avoids WebView2 GPU composite lag across scrollable lists and cards by using solid obsidian-violet surfaces (`--panel`, `--panel-strong`) paired with inset highlights (`--glass-highlight`).
+- **Hardware Acceleration:** Interactive buttons and cards use `transform: translateY(-1px) translateZ(0)`.
 
 ---
 
-## 4. Native In-App Modular Plugins Framework
+## 4. Native In-App Universal Core Plugins & Global Helpers Framework
 
-The application employs a native, in-app modular plugins framework (`src/lib/plugins/`) where platforms and metadata providers are compiled directly into the application. This ensures instant offline loading, immunity to Cloudflare blocks, and zero external JSON manifests.
+The application employs a native, in-app **Universal Core Plugins + Global Helper Modules** architecture (`src/lib/plugins/` paired with `src-tauri/src/plugins/` and `src-tauri/src/metadata/`). Instead of maintaining dozens of separate per-platform or per-service plugin files, core functional domains are consolidated into cohesive **Universal Plugins** backed by global helper functions.
 
-### Dedicated Per-Plugin Architecture (Zero Monolithic Files)
-Every supported platform and metadata provider lives in its own dedicated, isolated file:
-- **Platform Integrations (`src/lib/plugins/platforms/`):**
-  - `steam.ts`: Steam library VDF detection, `steam://rungameid/{id}` launch, install/uninstall protocols, and friends status.
-  - `gog.ts`: GOG Galaxy registry detection, direct DRM-free executable launch, and `goggalaxy://` protocols.
-  - `epic.ts`: Epic Games manifests and Legendary CLI integration with headless DRM-free launch, cloud sync, and auth status.
-  - `itch.ts`: itch.io app database and `itch://games/{id}` launch protocols.
-  - `xbox.ts`: Xbox Game Pass and `shell:AppsFolder\{id}!App` package launch.
-  - `ea.ts`: EA Desktop and `origin2://game/launch?offerIds={id}` launch protocols.
-  - `ubisoft.ts`: Ubisoft Connect and `uplay://launch/{id}/0` protocols.
-  - `battlenet.ts`: Blizzard Battle.net and `battlenet://{id}` protocols.
-  - `amazon.ts`: Amazon Games client and `amazon-games://play/{id}` protocols.
-  - `rockstar.ts`: Rockstar Games Launcher and `rockstar://launch/{id}` protocols.
-  - `standalone.ts`: Direct standalone and emulator executable launcher with working directory inheritance.
-- **Metadata Providers (`src/lib/plugins/metadata/`):**
-  - `steam-store.ts`: Store metadata & CDN artwork + Steam Web API key settings & keyless public mode.
-  - `steamgriddb.ts`: High-res covers, heroes, logos, dimensions select, NSFW/Humor toggles, and live connection test.
-  - `igdb.ts`: Twitch/IGDB client ID & secret, OAuth token test connection, and taxonomy queries.
-  - `itch-store.ts`: itch.io indie game metadata & optional API key.
-  - `howlongtobeat.ts`: HowLongToBeat completion metrics & preferred metric selector.
-  - `pcgamingwiki.ts`: PCGamingWiki bugfixes, FOV fixes, and controller flags.
-  - `protondb.ts`: Proton & Steam Deck compatibility tiers and badge settings.
-  - `rawg.ts`: RAWG database with optional API key.
-  - `gog-catalog.ts`: Official GOG store catalog & CDN artwork.
-  - `epic-store.ts`: Epic Games Store catalog & promotional artwork.
+### Universal Core Plugins (`src/lib/plugins/`)
+1. **Universal Platform Providers Plugin (`src/lib/plugins/platforms/universal.ts` — `id: "platform-universal"`):**
+   - Consolidates support for all 12 game providers (`steam`, `gog`, `epic`, `itch`, `xbox`, `ea`, `ubisoft`, `battlenet`, `amazon`, `rockstar`, `emulationstation`, `standalone`) into a single declarative `PLATFORM_SPECS` registry (including authentic vector SVG icon paths) and unified `platformUniversalPlugin`.
+   - Paired with **Global Platform Helper Functions**:
+     - `getAllPlatformSpecs()` / `getPlatformSpec(platformId)` / `getPlatformMetadata(platformId)` / `getAllPlatformMetadata()`: Returns canonical platform metadata, authentic SVG icon definitions (`svgPath` / `viewBox`), colors, known folders, and launcher capabilities.
+     - `detectPlatformLauncher(platformId, config?)`: Unified binary, PATH, system store, and CLI (`legendary`, `butler`, `nile`) detection.
+     - `installPlatformLauncher(platformId, options?, config?)`: Unified silent WinGet installation, CLI bootstrap, and official download fallback.
+     - `getPlatformLaunchSpec(platformId, game, config?)`: Unified protocol URI, headless CLI, and standalone/emulator executable launch specification resolver.
+     - `getPlatformUris(platformId, game)`: Unified `installUri`, `uninstallUri`, `storePageUri`, `friendsListUri`, and `achievementsUri` helpers.
+2. **Universal Metadata & Artwork Plugin (`src/lib/plugins/metadata/universal.ts` — `id: "metadata-universal"`, backed by `src-tauri/src/metadata/universal.rs`):**
+   - Consolidates all metadata and artwork providers into a single **Universal Metadata & Artwork Engine** with field-by-field cascade resolution.
+   - Automatically enriches games using keyless multi-source resolution (Local Engine/Receipt Inspector, Steam Store & CDN, GOG Catalog v1 & Products API, Wikipedia + Wikidata MediaWiki API, Libretro Thumbnails CDN, Epic Catalog, itch.io, PCGamingWiki Cargo, ProtonDB) and optional authenticated sources (SteamGridDB, IGDB, TheGamesDB, ScreenScraper) through native Rust `reqwest` (`fetch_external_json`) with zero WebView CORS failures.
+   - **Detailed Provider API Architecture Reference**: Always consult [`.agents/skills/game-metadata-providers.md`](./game-metadata-providers.md) when working on metadata resolution, title normalization, or artwork pipelines.
+3. **Universal Title Normalizer Utility Plugin (`src/lib/plugins/utility/title-normalizer.ts` — `id: "utility-title-normalizer"`, backed by `src-tauri/src/plugins/title_normalizer.rs`):**
+   - Dedicated utility plugin and global helper functions (`normalizeGameTitle`, `normalizeRomTitle`, `canonicalTitleKey`) handling article inversion (`", The"` → `"The ...: "`), subtitle separator unification, No-Intro/GoodTools dump tag stripping, version/promotional noise removal (`Relicts of Aeson`), and slug/PascalCase/compound word splitting (`My Futa Family`).
+4. **Universal Media, Feeds & Storage Plugins (`src/lib/plugins/media/` & `src/lib/plugins/utility/`):**
+   - `media/universal.ts` (`media-universal`): Unified video trailer streaming and ambient soundtrack playback engine + global media helpers.
+   - `utility/gamerpower.ts` (`utility-gamerpower`): Unified free games, store deals, and patch notes alerts.
+   - `utility/storage-analyzer.ts` (`utility-storage`): Multi-drive storage footprint analyzer.
 
-### Full Launcher Feature Integration
-Platform plugins are not simple launchers; they integrate all features the native client provides (outside of the store):
-1. **Game Launching:** Protocol-based or headless CLI execution with native client overlays, cloud save sync, and playtime recording.
-2. **Installation & Uninstallation Protocols:** Direct native install and uninstall URIs (e.g. `steam://install/{id}`, `steam://uninstall/{id}`).
-3. **Friends List Integration:** Protocol shortcuts to open official client friend rosters and social hubs (e.g. `steam://friends/status`, `goggalaxy://openFriends`).
-4. **Achievements & Stats:** Direct hooks to view official client achievement pages.
-
-### Dedicated Tabbed Plugin Settings Sub-Window (`PluginSettingsDialog.svelte`)
-- Clicking **Plugin Settings** in Settings (or ⚙ **Configure** on any plugin card) opens a dedicated sub-window dialog with a tabbed UI.
-- Displays a distinct configuration tab for each enabled plugin that declares configurable settings.
-- Features:
-  - Live password visibility eye toggles.
-  - Direct "Get API Key ↗" help links opening the official credential portal in the default browser.
-  - Real-time in-memory **"🔌 Test Connection"** verification testing API keys or client status on the fly.
-  - Direct persistence to the Redis KV tier (`plugin_cfg:<id>`) and SQLite database.
-- **Decoupled API Keys Invariant:** All API keys (Steam Web API, SteamGridDB, IGDB, itch.io) are strictly housed in their respective plugin settings tabs and completely purged from the General Settings view.
+### Categorized Settings View (`/settings`) & Cache Management
+- All settings live inside `/settings` across 5 functional tabs:
+  1. `General`: Language/locale, country code, Steam root path, and default startup behavior.
+  2. `Providers`: Per-platform enable/disable toggles, installation status, silent installer actions, and library root directories (`PlatformsSection.svelte`).
+  3. `API & Credentials`: Optional API keys for Steam Web API, SteamGridDB, IGDB, and ScreenScraper with password visibility toggles, "Get API Key ↗" links, and live **"🔌 Test Connection"** verification.
+  4. `Media & Audio`: Trailer autoplay/mute preferences and ambient soundtrack volume/loop controls (`media-universal`).
+  5. `Storage & Cache`: Background storage sync toggle, **Refresh Metadata Cache** button (`refreshAllMetadata`), and **Purge / Reset Metadata Cache** button (`handleClearCache`).

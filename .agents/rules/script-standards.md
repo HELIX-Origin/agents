@@ -28,7 +28,7 @@
      - Tauri development: `tauri:dev`, `tauri:dev:watch`, `tauri:dev:raw`
      - Testing suites: `test:rust`, `test:frontend`, `test:i18n`, `test:all`
      - Type checks & linters: `check:types`, `check:watch`, `check:all`
-     - Signing & release: `sign:local`, `sign:windows`, `sign:macos`, `sign:linux`
+     - Signing & release: `sign:windows`, `sign:macos`, `sign:linux`
      - Package repositories: `winget:manifest:generate`, `winget:manifest:verify`
      - Crawlers & data: `crawler:run:all`, `crawler:sync:steam`, `db:migrate:up`, `db:seed:full`
    - Top-level single-word aliases (e.g. `dev`, `build`, `test`, `check`, `preview`) are permitted solely as ergonomic forwarders to their canonical `main:sub:option` counterparts for compatibility with CI and Vite tooling.
@@ -96,5 +96,7 @@
 | `test:i18n` | Verify translation key completeness | `node scripts/test.mjs i18n` |
 | `test:all` | Run all test suites in sequence | `node scripts/test.mjs all` |
 | `check:types` | Run Svelte & TypeScript check | `svelte-kit sync && svelte-check` |
-| `sign:local` | Manually sign local build binaries | `node scripts/sign.mjs` |
+| `sign:windows` | Sign Windows binaries and installers via SignTool | `node scripts/sign.mjs windows` |
+| `sign:linux` | Sign Linux packages via GPG detached signatures | `node scripts/sign.mjs linux` |
+| `sign:macos` | Sign and notarize macOS bundles | `node scripts/sign.mjs macos` |
 | `winget:manifest` | Generate WinGet package manifests | `node scripts/generate-winget-manifest.mjs` |

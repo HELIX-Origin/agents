@@ -1,6 +1,6 @@
-﻿# Skill: GitHub Flavored Markdown content (GFM)
+# Skill: GitHub Flavored Markdown content (GFM)
 
-> Rules for writing and repairing content in every docs site under ``.
+> Rules for writing and repairing content in every docs site under `projects/`.
 > Markdown first; raw HTML only where markdown cannot express the structure
 > (cards, grids, buttons, embedded media, spanning tables).
 
@@ -34,7 +34,7 @@
 
 ## Mermaid diagrams (GFM)
 
-GitHub (and the helix-docs theme, which ships just-the-docs-style mermaid support) renders
+GitHub (and the helix-docs theme, which ships built-in mermaid support) renders
 ` ```mermaid ` fences. Use them anywhere a diagram clarifies structure, flow, or hierarchy
 — in both agent docs and site documentation. **Keep them legible:**
 

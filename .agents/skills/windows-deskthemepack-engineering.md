@@ -114,9 +114,9 @@ SchemeName=CustomNord
 
 ---
 
-## 4. Planned Project: Theme Toolkit (Tauri v2 Desktop App)
+## 4. Theme Toolkit (`projects/Theme-Toolkit` — Tauri v2 Desktop App)
 
-To completely eliminate manual DDF authoring and Microsoft GUI export bugs, HELIX-Origin plans a dedicated future desktop application named **Theme Toolkit** (`projects/Theme-Toolkit`). The app will utilize a modern **Tauri v2 GUI as its primary interface** to serve as a robust replacement for Microsoft's broken settings export integration.
+To completely eliminate manual DDF authoring and Microsoft GUI export bugs, HELIX-Origin maintains the dedicated desktop application **Theme Toolkit** (`projects/Theme-Toolkit`). The app utilizes a modern **Tauri v2 GUI as its primary interface** to serve as a robust replacement for Microsoft's broken settings export integration.
 
 ### Comprehensive Feature Scope
 

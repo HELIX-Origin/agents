@@ -49,7 +49,7 @@
 - Never attach prebuilt binaries to Windhawk theme releases (zero attached assets rule).
 - Never use broken Microsoft Settings GUI theme exports that corrupt cabinet structures, strip assets, or hardcode user-specific paths.
 - Never write ad-hoc distro shell scripts modifying root directories; follow FreeDesktop and XDG standards for user-space installation.
-- Never modify non-organization directories (`ramensoftware`).
+- Never modify or reference non-organization directories or repositories outside `HELIX-Origin`.
 
 ---
 

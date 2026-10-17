@@ -16,19 +16,19 @@
    When in doubt: **ask first.** Rationale: prevents pushing unverified or half-finished
    code to the user's projects. See `.agents/rules/git-operations.md`.
 
-2. **Organization scope invariant & ignore non-org directories.**
-   This agents ecosystem is engineered exclusively for repositories within the `HELIX-Origin`
-   organization (`https://github.com/HELIX-Origin`). Never work with, read, explore, or modify
-   projects that are not part of the organization. Specifically, **`ramensoftware`** is
-   strictly off-limits and must be completely ignored unless explicitly authorized.
+2. **Organization scope invariant — never mention non-org projects or repositories.**
+   This agents ecosystem is engineered exclusively for active repositories within the `HELIX-Origin`
+   GitHub organization (`https://github.com/HELIX-Origin`): `helix-docs`, `helix-origin.github.io`,
+   `NH-Reader`, `Universal-Game-Launcher`, `Theme-Toolkit`, and `Windhawk-Themes`. Never work with,
+   read, explore, modify, or **directly mention by name** any external, third-party, or deleted
+   projects or repositories that are not part of the `HELIX-Origin` organization across rules,
+   skills, playbooks, or tracking files. This is mandatory to prevent agents from getting mixed up.
 
-3. **Keep the tracking docs current.** `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`
-   at workspace root are the session handoff mechanism. Update them any time you start,
-   finish, or re-scope a work item. Every tracked item across all four documents must be
-   explicitly prefixed with its project tag (`[<project-name>] (<project-path>)`). Maintain
-   living ledgers lean and bare-minimal; historical completed/closed records are archived into
-   `.github/` (`.github/ROADMAP-ARCHIVE.md`, `.github/TODO-ARCHIVE.md`, `.github/BUGS-ARCHIVE.md`)
-   to prevent cluttering the workspace root. If credits run out mid-task, the next session resumes from these files.
+3. **Keep the tracking docs and `.github/*-ARCHIVE.md` files 100% accurate, normalized, and current.** `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`, and their archival counterparts (`.github/ROADMAP-ARCHIVE.md`, `.github/TODO-ARCHIVE.md`, `.github/BUGS-ARCHIVE.md`) are the workspace memory and must reflect the **100% current, active direction** of all projects with zero contradictions:
+   - **Active Direction Accuracy (Root & Archives)**: When a user decision supersedes or changes an earlier direction, immediately replace or remove the superseded statements across all root tracking files AND `.github/*-ARCHIVE.md` files. Never leave raw chat logs, obsolete project names, deleted repository references, or superseded features in either active or archived ledgers.
+   - **Normalized & Categorized Locked User Directives**: Rewrite all user directives (in both `TODO.md` and `.github/TODO-ARCHIVE.md`) into clean, typo-free engineering specifications grouped under explicit bold domain sub-headers so it is immediately clear what goes to what. Never dump raw chronological chat quotes into `TODO.md` or `.github/TODO-ARCHIVE.md`.
+   - **Atomic Checklist Groups & Archival**: Organize `TODO.md` and `.github/TODO-ARCHIVE.md` checklists and `PLAN.md` execution tasks into categorized component groups with atomic items. Move completed workstreams to `.github/TODO-ARCHIVE.md` and completed sprints to `## ✅ Completed Sprints`.
+   - **Mandatory Project Tagging**: Every tracked item across all root and archive documents must be explicitly prefixed with its current active project tag (`[<project-name>] (<project-path>)`). See `.agents/rules/workspace.md`.
 
 4. **No scope creep.** Repos under `projects/` that are not part of the active task are
    someone else's work. Don't touch them unless asked.
@@ -160,6 +160,7 @@
 | Template: Linux uninstaller script | `.agents/templates/uninstall-linux-template.sh` |
 | Tauri & Rust desktop engineering | `.agents/skills/tauri-desktop-engineering.md` |
 | Universal Game Launcher architecture & design system | `.agents/skills/universal-game-launcher.md` |
+| Game metadata providers & multi-source enrichment | `.agents/skills/game-metadata-providers.md` |
 | Windhawk styler mod engineering | `.agents/skills/windhawk-styler-engineering.md` |
 | Windows deskthemepack & theme packaging | `.agents/skills/windows-deskthemepack-engineering.md` |
 | macOS desktop theme engineering | `.agents/skills/macos-theme-engineering.md` |

@@ -60,6 +60,7 @@ Artwork must honor the specific project's visual identity while staying grounded
 | **Windhawk-Themes** | `#081426` / `#050c18` | `#48d8f2` (Specular Glass) | `#b06cff` (Windhawk Accent) |
 | **NH-Reader** | `#171424` / `#101820` | `#9275ff` (Violet) | `#65d6df` (Teal) |
 | **Universal-Game-Launcher** | `#120e24` / `#0a0814` | `#9d4edd` (Neon Purple) | `#38bdf8` (Cyan Blue) |
+| **Theme-Toolkit** | `#0a121e` / `#050911` | `#38bdf8` (Sky Cyan) | `#a855f7` (Orchid Purple) |
 
 ---
 

@@ -5,7 +5,7 @@ Primary agent: **theme-engineer** · Repo: `helix-docs` · Skill: `sass-compile`
 ## Mission
 
 Own `helix-docs/_sass/` and the compiled `assets/css/site.css`. Keep the stylesheet
-structurally aligned with just-the-docs while preserving the HELIX look and palette.
+structurally modular while preserving the HELIX look and palette.
 
 ## Compile flow
 

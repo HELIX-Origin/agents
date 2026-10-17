@@ -16,9 +16,10 @@
 - **Clear Sectioning**: Use clear and descriptive headers for each section to improve navigation and readability.
 - **Active Items First**: The currently active milestone, sprint, task, or workstream must always be placed at the top of the content sections.
 - **Regular Updates**: Ensure that this file is regularly updated to reflect the latest developments and changes in the project.
-- **Improve User Directives**: Continuously refine and clarify user directives to ensure they are easily understood and actionable.
+- **Improve & Categorize User Directives**: Rewrite user directives into clean, self-contained engineering requirements grouped by domain sub-headers (e.g., **Architecture & Plugins**, **UI & Icons**, **Data & Cache**) so it is immediately clear what goes to what. Never dump raw chronological chat quotes or leave contradictory superseded statements.
+- **100% Active Direction Accuracy**: Whenever a requirement pivots or supersedes an earlier decision, replace the superseded directive in place across `ROADMAP.md`, `PLAN.md`, `TODO.md`, and `BUGS.md`.
 - **Same-Change Updates**: When a task changes behavior or scope, update this file **in the same change**.
-- **Done Moves Down**: When a task is done, check it off and archive completed sections under Completed Workstreams.
+- **Done Moves Down**: When a workstream is done, check it off and archive detailed checklists to `.github/TODO-ARCHIVE.md`, leaving a concise single-line summary under Completed Workstreams.
 - **Explicit Project Tagging**: In multi-project or organization tracking ledgers, every workstream header, checklist group, and individual checkbox item MUST be explicitly prefixed with its project name and repository path (e.g., `[{{PROJECT_NAME}}] ({{PROJECT_PATH}})` or `- [ ] [{{PROJECT_NAME}}] ...`) to prevent agent context confusion.
 - **Tracking Docs Stay True**: Update `ROADMAP.md`, `TODO.md`, `BUGS.md`, and `PLAN.md` first or in lockstep with code changes.
 - **Always Track Everything**: Every new feature request, enhancement, or bug report must be logged before execution.
@@ -39,9 +40,13 @@ flowchart TD
     W_Step3 --> W_Gate["[{{PROJECT_NAME}}] Quality Verification Gate"]
 ```
 
-**Locked user directives:**
-- "{{LOCKED_USER_DIRECTIVE_1}}"
-- "{{LOCKED_USER_DIRECTIVE_2}}"
+**Locked user directives (normalized by domain):**
+- **{{DOMAIN_CATEGORY_1}}**:
+  - {{NORMALIZED_DIRECTIVE_1A}}
+  - {{NORMALIZED_DIRECTIVE_1B}}
+- **{{DOMAIN_CATEGORY_2}}**:
+  - {{NORMALIZED_DIRECTIVE_2A}}
+  - {{NORMALIZED_DIRECTIVE_2B}}
 
 **Implementation checklist:**
 - [ ] **[{{PROJECT_NAME}}] {{CHECKLIST_GROUP_1}}**:

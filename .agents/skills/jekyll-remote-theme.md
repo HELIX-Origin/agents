@@ -1,6 +1,6 @@
-﻿# Skill: Jekyll remote theme + GitHub Pages configuration
+# Skill: Jekyll remote theme + GitHub Pages configuration
 
-> How any `*` site must be configured to consume `helix-docs` as a remote
+> How any `HELIX-Origin` project site under `projects/` must be configured to consume `helix-docs` as a remote
 > theme, and how to build/verify it locally. Workspace-wide.
 
 ## GitHub Pages (production)

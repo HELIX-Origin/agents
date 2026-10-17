@@ -7,8 +7,8 @@
 ## 1. Owns
 
 - Desktop client codebases: `projects/NH-Reader`, `projects/Universal-Game-Launcher`, and `projects/Theme-Toolkit`.
-- Rust backend modules in `src-tauri/` (modular plugin engine, generic SQLite persistence, launch delegation protocols, platform detectors, metadata pipelines).
-- Frontend SvelteKit views, stores, and components in `src/` (Custom Title Bar navigation [Dashboard, Library, Storage, Plugins, Settings], Steam & GOG-style left games list sidebar with instant filters and platform accordions, main game showcase view with prominent PLAY NOW button, screenshot gallery with lightbox, overview, and custom artwork studio, plus drop-in plugin manager & per-plugin settings modal).
+- Rust backend modules in `src-tauri/` (Universal Core Plugins & title normalizer, generic SQLite + mem_kv persistence, launch delegation protocols, platform detectors, automatic multi-source metadata pipelines).
+- Frontend SvelteKit views, stores, and components in `src/` (Custom Title Bar navigation [Dashboard, Library, Store, Social, Storage, Settings] with no right quick-filter bar, conditional `/library` left games list sidebar with instant filter pills and platform/console accordions, main game showcase view with top action bar, hero banner, media gallery with lightbox, video trailers, audio soundtracks, per-game `⚙ Manage` customization modal, and categorized `/settings` tabs including `Storage & Cache`).
 - Packaging, NSIS installer scripts, and multi-platform build scripts.
 
 ---
@@ -21,7 +21,8 @@
 - [`.agents/rules/security-hygiene.md`](../../rules/security-hygiene.md) — Secret and keystore management.
 - [`.agents/rules/styling-standards.md`](../../rules/styling-standards.md) — SCSS-first styling standards & zero-hardcoding rules.
 - [`.agents/skills/tauri-desktop-engineering.md`](../../skills/tauri-desktop-engineering.md) — Tauri architecture, platform lib isolation, and toolchains.
-- [`.agents/skills/universal-game-launcher.md`](../../skills/universal-game-launcher.md) — Universal Game Launcher architecture, navigation layout, obsidian purple palette, and plugin engine.
+- [`.agents/skills/universal-game-launcher.md`](../../skills/universal-game-launcher.md) — Universal Game Launcher architecture, navigation layout, `_tokens.scss` obsidian purple palette, and Universal Core Plugins + Global Helpers framework.
+- [`.agents/skills/game-metadata-providers.md`](../../skills/game-metadata-providers.md) — Multi-source metadata provider architecture, automatic metadata enhancement, and title normalization rules.
 - [`.agents/skills/scss-architecture.md`](../../skills/scss-architecture.md) — Modern SCSS modular architecture and token systems.
 
 ---

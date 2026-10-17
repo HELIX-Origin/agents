@@ -116,8 +116,8 @@ flowchart LR
 
 ---
 
-### 5. [Universal-Game-Launcher] (formerly Steam-Vault) — Universal Game Launcher
-*Target Path: `projects/Steam-Vault` · Tauri v2 / Rust / SvelteKit Desktop App*
+### 5. [Universal-Game-Launcher] — Universal Game Launcher
+*Target Path: `projects/Universal-Game-Launcher` · Tauri v2 / Rust / SvelteKit Desktop App*
 
 ```mermaid
 flowchart LR
@@ -129,46 +129,31 @@ flowchart LR
     M7 --> M9["M9: v1.0 Release ✅"]
     M9 --> M12["M12: Deals & News ✅"]
     M12 --> M13["M13: Multi-Platform & WinGet ✅"]
-    M13 --> M14["M14: Plugins, Social & Store Hub ✅"]
+    M13 --> M14["M14: Universal Core Plugins, Store & Social Hub ✅"]
     M14 -.-> M15["M15: Cloud Gaming (Planned) ⏳"]
 ```
 
-- **[Universal-Game-Launcher] Milestone History (M1–M12 Delivered)**: Clean-room Depressurizer revival, whole-library aggregation, storage manager, custom artwork manager, 30-language localization engine, dynamic smart collections, SQLite metadata persistence, obsidian glassmorphism UI, Redis KV in-memory tier, and deals/free games engines (v1.0.0 – v1.3.1). Full architectural histories live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md#universal-game-launcher-formerly-steam-vault).
+- **[Universal-Game-Launcher] Milestone History (M1–M12 Delivered)**: Multi-platform library aggregation, storage manager, custom artwork manager, localization engine, dynamic smart collections, SQLite metadata persistence, obsidian UI, Redis KV in-memory tier, and deals/free games engines (v1.0.0 – v1.3.1). Full architectural histories live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md).
 - **[Universal-Game-Launcher] Milestone M13: Multi-Platform Hardening, WinGet Packaging & Hygiene v1.3.2 - v1.3.3 (DELIVERED):**
   - Elimination of all cross-platform compiler warnings across POSIX (Linux/macOS) and Windows targets.
-  - Dedicated standalone WinGet package workflow (`publish-winget.yml`) and official initial package submission to `microsoft/winget-pkgs` (PR #453830).
-  - Automated Microsoft Contributor License Agreement (CLA) bot signature.
-  - Upgraded WinGet manifest generation to Microsoft Schema 1.12.0 with local validation tooling.
-  - Full adherence to organizational `main:sub:option` script hierarchy (`winget:manifest:generate`, `winget:manifest:verify`, `winget:manifest:install`).
-  - IDE untracking and hygiene enforcement (`.vscode/` removal and comprehensive `.gitignore` rules).
-- **[Universal-Game-Launcher] Milestone M14: Native In-App Modular Plugins Framework, Dedicated Per-Plugin Architecture, Steam/GOG Launcher UI, Decoupled Plugin Settings Sub-Window & Modern Visual Identity v1.4.0 (ACTIVE):**
+  - Full adherence to organizational `main:sub:option` script hierarchy and IDE untracking hygiene.
+- **[Universal-Game-Launcher] Milestone M14: Native Universal Core Plugins & Global Helpers Framework, Automatic Metadata Enhancement, Per-Game Customization Modal, Store & Social Hub v1.4.0 (ACTIVE):**
   - **Complete Product Rebranding**: Renamed package to `universal-game-launcher`, product to `Universal Game Launcher`, crate to `universal_game_launcher_lib`, and bundle identifier to `org.helixorigin.universal-game-launcher`.
-  - **Monolithic `launchers.rs` Purge & Per-Launcher Autonomy**: Deleted `src-tauri/src/platforms/launchers.rs`; moved detection, download, and installation into per-launcher plugins (`src/lib/plugins/platforms/*.ts`) with binary autodetection, custom path fallbacks, and user-configurable custom launcher directories (`custom_launchers_dir`).
-  - **Unified Social Hub (`/social`) & Dashboard Achievement Tracking**: Unified multi-provider friends roster and game presence across Steam, GOG, Epic, Xbox; integrated live trophy and milestone progress tracking into the Executive Dashboard.
-  - **Modern Storefront Catalog (`/store`) with Zero In-App Payment Invariant**: Steam & GOG-inspired modern store page featuring hero preview carousel, thumbnail switcher, discount ribbons, and multi-parameter filtering. Zero payment processing or credit card collection occurs in-app; all transactions safely pass to the default browser on official storefronts.
-  - **Native In-App Modular Plugins Framework (`src/lib/plugins/`)**: Built native plugin framework directly into the application under `src/lib/plugins/` (`platforms/` and `metadata/`), completely immune to Cloudflare blocks and eliminating remote script downloads, runtime `.mjs` eval liabilities, and fragile external JSON manifests.
-  - **Dedicated Per-Plugin Architecture (Zero Monolithic Files)**: Every supported platform (Steam, GOG, Epic, Xbox, EA, Ubisoft, Battle.net, itch, Amazon, Rockstar, Standalone) and metadata provider (Steam Store, GOG, Epic Store, Itch Store, SteamGridDB, IGDB, HowLongToBeat, PCGamingWiki, ProtonDB, RAWG) is authored as its own dedicated file.
-  - **Full Launcher Feature Integration**: Platform plugins integrate all features the native client provides outside the store: protocol and CLI launches with client overlays, cloud save sync, and playtime recording; game installation/uninstallation protocols (`steam://install/{id}`, `steam://uninstall/{id}`); friends list social hubs (`steam://friends/status`, `goggalaxy://openFriends`); and official achievement hooks.
-  - **Dedicated Tabbed Plugin Settings Sub-Window (`PluginSettingsDialog.svelte`)**: Implemented dedicated sub-window dialog with tabbed rail for each enabled plugin declaring configurable settings; includes live password visibility eye toggles, direct "Get API Key ↗" help links, real-time "🔌 Test Connection" verification, and instant persistence to Redis KV / SQLite.
-  - **Decoupled API Keys Invariant**: Purged all third-party API keys (Steam Web API, SteamGridDB, IGDB, itch.io) completely out of the General Settings view into their respective plugin settings tabs.
-  - **Internal Modular Engine (Zero Detached Crate Overhead)**: Decoupled custom cargo crate dependency (`crates/plugin-engine` eliminated); plugin engine functions cleanly as an internal module within `universal_game_launcher_lib` (`src-tauri/src/plugins/`) and frontend TypeScript manager (`src/lib/plugins/engine.ts`).
-  - **Official Depressurizer Plugin Architecture**: Core launcher operates non-invasively without hardcoded VDF writes or process locks; features that Depressurizer had (reference: `https://github.com/Depressurizer/Depressurizer`) will be provided via an official, dedicated Depressurizer plugin.
-  - **Steam & GOG Galaxy Launcher UI**:
-    - **Title Bar Navigation Menu**: Primary application tabs (`Dashboard`, `Library`, `Storage`, `Plugins`, `Settings`) moved directly into the custom frameless title bar.
-    - **Steam/GOG Left Game List Sidebar**: Global interactive game list with instant search filter, quick filter pills (`All`, `Installed`, `★ Favorites`), background scan button (`↻ Scan`), and collapsible platform/collection accordions.
-    - **Single-Game Dedicated Showcase View**: Completely eliminated the heavy multi-card grid layout in `/library` to eliminate UI hangs and missing artwork. Directly showcases the selected title with hero banner, capsule cover, 10-image screenshot media gallery with fullscreen lightbox, meta reference links, game details, storage footprint, and custom artwork studio.
-  - **Generic SQLite Database Schema (`database.sqlite`)**: Decoupled database file naming from branding lock-in; standardizes on `database.sqlite` / `database.db` with automated seamless migration from legacy `steam-vault/metadata.db`.
-  - **Native Launcher Integration & Auth Architecture**: Rely on official native desktop clients (`steam://`, `com.epicgames.launcher://`, `goggalaxy://`, `uplay://`) for game discovery, installation, launch, uninstallation, and update triggers. Zero user password storage or scraping while preserving official client overlays, cloud synchronization, friend lists, playtime, and achievements.
-  - **Dropped WinGet Publication Plans**: Dropped the WinGet package submission and workflow pipeline; removed `publish-winget.yml`, `scripts/generate-winget-manifest.mjs`, and `winget/` directory.
-  - **System Locale Out-of-the-Box**: Dropped complex 30-language hand-rolled dictionary files and localization test scripts. Defaults cleanly to the host system locale (`navigator.language`) out of the box; community developers can provide hand-rolled or custom localization dictionaries via drop-in plugins.
-  - **Modern Visual Identity**:
-    - Branded 16:9 vector artwork (`universal-game-launcher.svg`, 1920×1080) with dark futuristic purple controller on futuristic dark purple background.
-    - Vector squircle logo (`static/logo.svg`, 256×256) and multi-resolution icon suite.
-    - Standard Tauri v2 NSIS installer sidebar bitmap (`src-tauri/windows/sidebar.bmp`, strictly 164×314 pixels, BMP3).
-    - Animated pulsing controller splash screen transition at application startup (minimum 850ms duration with smooth 450ms fade/scale exit).
-  - **EmulationStation Modular Platform Plugin**: First-class support for EmulationStation / ES-DE (`src/lib/plugins/platforms/emulationstation.ts`) with user-selectable ROM directory placement, automated scaffolding of standardized system subfolders (`nes`, `snes`, `n64`, `gc`, `wii`, `wiiu`, `switch`, `gb`, `gba`, `gbc`, `nds`, `3ds`, `psx`, `ps2`, `ps3`, `psp`, `psvita`, `megadrive`, `saturn`, `dreamcast`, `arcade`, `mame`, `neogeo`), and intelligent ROM title normalization (stripping region dump tags like `(USA)`, `[!]`, multi-disc grouping, underscore replacement, and clean title capitalization).
-  - **Complete Legacy Relic & Dead Code Purge**: Completely purged deprecated `game_catalog`, `catalog_lookups`, `AutoCatAssignment`, `AutoCatPlan`, `ensure_steam_closed`, and legacy VDF modification references.
-  - **Data & Performance Optimization Pass (True Instant Loading)**: Native collections and custom overrides in `database.sqlite` preloaded at startup into the in-memory serverless Redis-compatible KV tier (`mem_kv`), coupled with SQLite WAL mode and aggressive memory pragma tuning (`cache_size = -64000`, `temp_store = MEMORY`, `synchronous = NORMAL`, `mmap_size = 256MB`) ensuring sub-millisecond (<1ms) retrieval.
+  - **Native In-App Universal Core Plugins & Global Helpers Framework (`src/lib/plugins/` & `src-tauri/src/`)**: Consolidated platform integrations, metadata providers, title normalization, and media playback into cohesive **Universal Core Plugins** paired with **Global Helper Modules/Functions**:
+    - `platform-universal` (`src/lib/plugins/platforms/universal.ts`): Unified support and global helpers (`getAllPlatformSpecs`, `detectPlatformLauncher`, `installPlatformLauncher`, `getPlatformLaunchSpec`, `getPlatformUris`) across all 12 game providers (`steam`, `gog`, `epic`, `itch`, `xbox`, `ea`, `ubisoft`, `battlenet`, `amazon`, `rockstar`, `emulationstation`, `standalone`).
+    - `metadata-universal` (`src/lib/plugins/metadata/universal.ts` + `src-tauri/src/metadata/universal.rs`): Automatic multi-source metadata and artwork engine with field-by-field cascade resolution, combining Local Engine/Receipt Inspector, Steam Store, GOG Catalog v1 API, Wikipedia + Wikidata MediaWiki API (`P178` developer, `P123` publisher, `P136` genre, `P577` release date), Libretro Thumbnails CDN (`Named_Boxarts`, `Named_Titles`, `Named_Snaps`, `Named_Logos`), PCGamingWiki, ProtonDB, and optional authenticated providers (SteamGridDB, IGDB, TheGamesDB, ScreenScraper) via native Rust `reqwest` (`fetch_external_json`).
+    - `utility-title-normalizer` (`src/lib/plugins/utility/title-normalizer.ts` + `src-tauri/src/plugins/title_normalizer.rs`): Dedicated title normalization utility plugin and global helpers (`normalizeGameTitle`, `normalizeRomTitle`, `canonicalTitleKey`) handling article inversion, subtitle separator unification, dump tag stripping, promotional/version noise removal (`Relicts of Aeson`), and compound word splitting (`My Futa Family`).
+    - `media-universal` (`src/lib/plugins/media/universal.ts`): Unified HD video trailer streaming and ambient soundtrack audio playback engine.
+    - `utility-gamerpower` & `utility-storage`: Free games/deals/patch notes feeds and multi-drive storage analyzer.
+  - **Automatic Metadata Enhancement & Settings-Only Cache Refresh/Purge**: Metadata providers automatically fetch and enhance game metadata and artwork on library scan and game selection. Manual refresh/enhance buttons are removed from `/library`; cache refresh and cache purge buttons reside exclusively in `/settings` (`Storage & Cache`).
+  - **Per-Game Customization Modal (`⚙ Manage` in `/library`)**: Each game's `⚙ Manage` modal provides full customization of its Title (Display Name), Short Description, Developers, Publishers, Release Date, Genres, and Custom Artwork URLs/paths (Portrait Capsule Cover, Hero Wallpaper Banner, Transparent Logo).
+  - **Navigation & Showcase UI Architecture**:
+    - **Custom Frameless Title Bar (`+layout.svelte`)**: Brand logo + title on the left, primary navigation links (`Dashboard`, `Library`, `Store`, `Social`, `Storage`, `Settings`) in the center, and window controls on the right (no right quick-filter bar).
+    - **Conditional Left Games List Sidebar (Active on `/library` Only)**: Filter search input (`+` Add Game, `↻` Scan), quick filter pills (`All`, `Installed`, `★`), and collapsible Platform & Emulation Console accordions (grouping emulated games by console such as `Nintendo GameCube`).
+    - **Authentic Vector SVG Platform & Console Icons (`PlatformIcon.svelte`)**: Replaced generic Unicode shapes (`♨`, `◈`, `▲`, `●`, etc.) with custom vector SVG variants representing each actual provider and console logo across the Library sidebar, Showcase, Dashboard, Store, Social, Storage, and Settings views.
+    - **Single-Game Showcase View (`/library`)**: Top action bar (`▶ Play`, `⚙ Manage`, `★`, `➕ Add Game`), 16:9 Hero Banner with 2:3 Portrait Capsule, Media Gallery with fullscreen lightbox, Video Trailers player, Game Audio & Soundtracks player, Meta & Reference Links, Game Information, Installation & Storage, and Playtime Tracking cards.
+  - **Unified Social Hub (`/social`) & Storefront Catalog (`/store`)**: Cross-platform friends roster with native protocol shortcuts and zero-payment storefront discovery hub.
+  - **Generic SQLite Database (`database.sqlite`) & In-Memory KV (`mem_kv`)**: Sub-millisecond (<1ms) retrieval with WAL mode and non-blocking background worker (`src/lib/worker.ts`) + headless CLI (`--cli`).
 
 ---
 

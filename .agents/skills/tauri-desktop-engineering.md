@@ -252,14 +252,14 @@ All desktop repositories must maintain:
    - Universal launchers operate completely non-invasively. Never write to, modify, or corrupt storefront client files (e.g. Steam's `shortcuts.vdf`, `cloud-storage-namespace-1.json`, `appmanifest.acf`, or GOG/Epic/EA manifests).
    - Never require storefront clients to be closed during operation.
 
-2. **Zero Emulation / No ROM Scrapers**:
-   - Focus exclusively on official PC storefronts and local standalone executables. No bundled emulator execution engines, ROM directory scrapers, or emulation platform types.
+2. **Universal Core Plugins & Global Helper Modules (`src/lib/plugins/`)**:
+   - Platform providers, EmulationStation / ES-DE ROM support, metadata enrichment, title normalization, and media players are delivered via native in-app Universal Core Plugins (`platform-universal`, `metadata-universal`, `utility-title-normalizer`, `utility-gamerpower`, `utility-storage`, `media-universal`) paired with global helper modules.
 
 3. **Native Launcher Integration & Zero Credential Invariant**:
    - Universal launchers should integrate with official platform launchers (Steam, Epic Games, GOG Galaxy, EA App, Ubisoft Connect, Battle.net, Xbox, Amazon Games, itch.io) to detect owned and installed games for the authenticated user on the host system.
    - **Zero Password Storage:** Applications must never handle, scrape, or store third-party user credentials or authentication tokens. All game installations, updates, uninstalls, and launches delegate to official launcher protocols (`steam://`, `com.epicgames.launcher://`, `goggalaxy://`, `uplay://`, etc.).
    - **Full Platform Feature Preservation:** Delegating to official launchers preserves official game overlays, cloud synchronization, community friend lists, playtime counters, and achievement unlocks.
-   - **Metadata Architecture:** External metadata providers (e.g., IGDB, SteamGridDB, PCGamingWiki) serve primarily to enrich missing high-resolution artwork (heroes, logos, icons, screenshots) and provide metadata for manually added non-store titles.
+   - **Metadata Architecture:** The Universal Metadata Engine (`metadata-universal`, backed by `src-tauri/src/metadata/universal.rs`) resolves missing metadata and high-resolution artwork across keyless and optional authenticated providers via native Rust `reqwest` with zero WebView CORS failures.
 
 4. **Store & Order Delegation Invariant**:
    - If an in-app store or deals browser is provided, it is strictly mandatory that order placement, purchasing, and payment processing are never performed within the application.

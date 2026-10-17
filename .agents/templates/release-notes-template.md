@@ -1,10 +1,10 @@
 # Workspace Release Notes Templates
 
-This document provides ready-to-use release notes templates for all projects in ``, adapted from the `NH-Reader` canonical release notes standard.
+This document provides ready-to-use release notes templates for all projects in `projects/`, adapted from the `NH-Reader` canonical release notes standard.
 
 ---
 
-## 1. Semantic Versioning Template (NH-Reader, Universal-Game-Launcher, helix-docs)
+## 1. Semantic Versioning Template (NH-Reader, Universal-Game-Launcher, Theme-Toolkit, helix-docs)
 
 Use this format for software and themes adhering to Semantic Versioning (`v<major>.<minor>.<patch>`).
 
