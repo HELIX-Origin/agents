@@ -164,6 +164,7 @@
 | Tauri & Rust desktop engineering | `.agents/skills/tauri-desktop-engineering.md` |
 | Universal Game Launcher architecture & design system | `.agents/skills/universal-game-launcher.md` |
 | Game metadata providers & multi-source enrichment | `.agents/skills/game-metadata-providers.md` |
+| HELIX Gaming DB multi-platform expansion & ingestion | `.agents/skills/helix-gaming-db-expansion.md` |
 | Windhawk styler mod engineering | `.agents/skills/windhawk-styler-engineering.md` |
 | Windows deskthemepack & theme packaging | `.agents/skills/windows-deskthemepack-engineering.md` |
 | macOS desktop theme engineering | `.agents/skills/macos-theme-engineering.md` |

@@ -7,6 +7,45 @@
 
 ---
 
+### 🎯 [universal-game-launcher] (`projects/universal-game-launcher`) Workstream W.53: Helix Gaming DB Three-Tier REST API Integration & Hand-Rolled Catalog Deprecation (Release v1.4.1)
+- **Project Identifiers:** `[universal-game-launcher]` (`projects/universal-game-launcher`)
+- **Target Components:** `src/lib/plugins/metadata/helix-db.ts`, `src/lib/plugins/metadata/developers/`, `src/lib/plugins/metadata/universal.ts`
+
+**Locked user directives (normalized by domain):**
+- **Three-Tier REST API Client**: Fully integrate `universal-game-launcher` with the new Three-Tier REST API (`/api/manifest.json`, `/api/v2/` relational discovery, `/api/v3/` dedicated adult tier) deployed on `https://api.helix-origin.club/helix-gaming-db`.
+- **Hand-Rolled Metadata Replacement**: Completely replace the 28 hardcoded per-developer static game files in `src/lib/plugins/metadata/developers/*.ts` with dynamic API client calls and local cache.
+- **Offline Resilience & KV Persistence**: Guarantee seamless offline capability by caching dual-tier search indices and detailed game payloads via the client's persistent serverless KV tier (`api.kvSetJson` / `api.kvGetJson`).
+
+**Implementation checklist:**
+- [x] **[universal-game-launcher] Three-Tier REST Client Implementation (`helix-db.ts`)**: Upgraded `src/lib/plugins/metadata/helix-db.ts` to support `/api/manifest.json`, `/api/v2/` relational search index and games, and `/api/v3/` dedicated adult tier with rich payload mapping (soundtracks, movies, user scores) and configurable settings (`endpoint_url`, `include_adult_content`, `api_tier`).
+- [x] **[universal-game-launcher] Dual-Tier Index Caching & Serverless KV Persistence**: Implemented in-memory caching (`cachedV2Index`, `cachedV3Index`) and persistent KV fallback (`api.kvSetJson`, `api.kvGetJson`) with index fallback synthesis when offline.
+- [x] **[universal-game-launcher] Hand-Rolled Metadata Purge**: Deleted all 28 redundant static developer files (`bandai-namco.ts`, `bethesda.ts`, `blizzard.ts`, `capcom.ts`, `caribdis.ts`, `cd-projekt.ts`, `dr-pink-cake.ts`, `electronic-arts.ts`, `falcom.ts`, `fromsoftware.ts`, `io-interactive.ts`, `koei-tecmo.ts`, `kompas.ts`, `konami.ts`, `microsoft.ts`, `neyor.ts`, `nintendo.ts`, `nlt-media.ts`, `proxxie.ts`, `remedy.ts`, `rockstar.ts`, `sega-atlus.ts`, `sierra-lee.ts`, `sony.ts`, `spike-chunsoft.ts`, `square-enix.ts`, `ubisoft.ts`, `valve.ts`, saving 3,000+ lines of static code).
+- [x] **[universal-game-launcher] Streamlined Studio & Title Validation (`developers/index.ts`)**: Streamlined `developers/index.ts` with lightweight studio profiles preserving `detectKnownDeveloper`, `validateMetadataCandidate`, and `titlesMatchStrict` without hardcoded game arrays.
+- [x] **[universal-game-launcher] Universal Waterfall Integration (`universal.ts`)**: Updated `universal.ts` to query `queryHelixGamingDb` with options and removed unused hand-rolled imports.
+- [x] **[universal-game-launcher] Verification Gate**: Passed `svelte-check` (0 errors, 0 warnings), `npm run check` (0 errors), and `node scripts/test.mjs frontend` (100% passing).
+
+---
+
+### 🎯 [helix-gaming-db] (`projects/helix-gaming-db`) Workstream W.52: REST Metadata API Expansion — Comprehensive Endpoints, Contributor Fork/PR Tooling, Expanded Catalog & GitHub Issue Templates (Release v1.1.0)
+- **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`)
+- **Target Components:** `scripts/build-search-index.mjs`, `api/v1/`, `api/v2/`, `api/v3/`, `schemas/`, `.github/ISSUE_TEMPLATE/`, `.github/workflows/`
+
+**Locked user directives (normalized by domain):**
+- **Three-Tier REST Architecture**: Expand `helix-gaming-db` into three purpose-built tiers: Root gateway (`/api/manifest.json`), v1 Client API, v2 Relational Discovery & Contributor API, and v3 Dedicated Adult / 18+ Gaming API.
+- **Contributor Fork/PR Suite**: Provide starter schemas and developer templates for forking the repository and submitting pull requests.
+- **Database Catalog Expansion**: Expand curated catalog to 80 verified titles and 42 developers across PC indie gems, adult visual novels, and emulation classics.
+- **Automated PR Reviews & Issue Triage**: Author structured GitHub Issue forms, PR templates, and automated verification workflows (`pr-automation.yml`, `issue-triage.yml`, `verify-pr.mjs`).
+
+**Implementation checklist:**
+- [x] **[helix-gaming-db] Three-Tier Endpoint & Generator Suite**: Expanded `scripts/build-search-index.mjs` generating `/api/manifest.json`, `/api/v1/`, `/api/v2/`, and `/api/v3/`.
+- [x] **[helix-gaming-db] Contributor Starter Templates & Schemas**: Authored `api/v2/contribute/templates/game.json`, `developer.json`, and schemas.
+- [x] **[helix-gaming-db] Curated Catalog Expansion**: Expanded catalog to 80 verified games and 42 developers; schema validation (`npm test`) passing with 100% compliance.
+- [x] **[helix-gaming-db] Community Issue Forms & PR Template Suite**: Created `.github/ISSUE_TEMPLATE/` forms and `pull_request_template.md`.
+- [x] **[helix-gaming-db] PR Automation & Issue Triage Workflows**: Authored `scripts/verify-pr.mjs`, deployed `.github/workflows/pr-automation.yml` (automated reviews and labels) and `issue-triage.yml`.
+- [x] **[helix-docs] Documentation & Technical Wiki Sync**: Updated `endpoints.md`, `contributing.md`, `index.md`, and `architecture.md`.
+
+---
+
 ### 🎯 [helix-gaming-db] (`projects/helix-gaming-db`) & [Universal-Game-Launcher] (`projects/Universal-Game-Launcher`) Workstream W.50: HELIX Gaming DB REST API Foundation, Static v1 Endpoints, JSON Schemas, Remote Theme Docs / Wiki & UGL Integration (Release v1.0.0)
 - **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`), `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`)
 - **Target Components:** `api/v1/`, `schemas/`, `scripts/`, `_config.yml`, `_docs/`, `_wiki/`, `src/lib/plugins/metadata/helix-db.ts`

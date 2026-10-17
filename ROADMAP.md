@@ -56,7 +56,7 @@ flowchart TB
 | **[windhawk-themes]** | `projects/windhawk-themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
 | **[universal-game-launcher]** | `projects/universal-game-launcher` | SemVer | [v1.4.0](https://github.com/HELIX-Origin/universal-game-launcher) | 🚀 Active | M14: Universal Game Launcher Rebranding, Steam/GOG UI, Native In-App Modular Plugins Framework, Generic SQLite Persistence & Modern Visual Identity |
 | **[theme-toolkit]** | `projects/theme-toolkit` | SemVer | [v0.1.0-alpha](https://github.com/HELIX-Origin/theme-toolkit) | 🚀 Active | M1: Framework scaffolded, Per-Platform Lib isolation, native packaging blueprints |
-| **[helix-gaming-db]** | `projects/helix-gaming-db` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-gaming-db) | 🚀 Active | M1: REST API v1 endpoints (`manifest`, `search`, `games`, `developers`), GitHub Pages deployment, `helix-docs` portal & wiki |
+| **[helix-gaming-db]** | `projects/helix-gaming-db` | SemVer | [v1.1.0](https://github.com/HELIX-Origin/helix-gaming-db) | 🚀 Active | M.02: Three-Tier REST Architecture (Root, v1 client, v2 relational, v3 adult), PR verification automation; M.03: Multi-platform automated ingestion pipeline |
 | **[ffxiv-config]** | `projects/ffxiv-config` | Rolling Releases | [v1.0.0](https://github.com/HELIX-Origin/ffxiv-config) | 🚀 Active | Information-dense HUD, hotbars, job macros, and FFC integration |
 
 ---
@@ -147,7 +147,8 @@ flowchart LR
   - **Complete Product Rebranding**: Renamed package to `universal-game-launcher`, product to `Universal Game Launcher`, crate to `universal_game_launcher_lib`, and bundle identifier to `org.helixorigin.universal-game-launcher`.
   - **Native In-App Universal Core Plugins & Global Helpers Framework (`src/lib/plugins/` & `src-tauri/src/`)**: Consolidated platform integrations, metadata providers, title normalization, and media playback into cohesive **Universal Core Plugins** paired with **Global Helper Modules/Functions**:
     - `platform-universal` (`src/lib/plugins/platforms/universal.ts`): Unified support and global helpers (`getAllPlatformSpecs`, `detectPlatformLauncher`, `installPlatformLauncher`, `getPlatformLaunchSpec`, `getPlatformUris`) across all 12 game providers (`steam`, `gog`, `epic`, `itch`, `xbox`, `ea`, `ubisoft`, `battlenet`, `amazon`, `rockstar`, `emulationstation`, `standalone`).
-    - `metadata-universal` (`src/lib/plugins/metadata/universal.ts` + `src-tauri/src/metadata/universal.rs`): Automatic multi-source metadata and artwork engine with field-by-field cascade resolution, combining Local Engine/Receipt Inspector, Steam Store, GOG Catalog v1 API, Wikipedia + Wikidata MediaWiki API (`P178` developer, `P123` publisher, `P136` genre, `P577` release date), Libretro Thumbnails CDN (`Named_Boxarts`, `Named_Titles`, `Named_Snaps`, `Named_Logos`), PCGamingWiki, ProtonDB, and optional authenticated providers (SteamGridDB, IGDB, TheGamesDB, ScreenScraper) via native Rust `reqwest` (`fetch_external_json`).
+    - `metadata-helix` (`src/lib/plugins/metadata/helix-db.ts`): Authoritative client for HELIX Gaming DB Three-Tier REST API (`/api/manifest.json`, `/api/v2/` relational discovery, `/api/v3/` dedicated adult tier) with dual-tier search index caching, persistent serverless KV offline fallback, and full replacement of legacy hand-rolled static game files.
+    - `metadata-universal` (`src/lib/plugins/metadata/universal.ts` + `src-tauri/src/metadata/universal.rs`): Automatic multi-source metadata and artwork engine with field-by-field cascade resolution, combining HELIX Gaming DB, Local Engine/Receipt Inspector, Steam Store, GOG Catalog v1 API, Wikipedia + Wikidata MediaWiki API (`P178` developer, `P123` publisher, `P136` genre, `P577` release date), Libretro Thumbnails CDN (`Named_Boxarts`, `Named_Titles`, `Named_Snaps`, `Named_Logos`), PCGamingWiki, ProtonDB, and optional authenticated providers (SteamGridDB, IGDB, TheGamesDB, ScreenScraper) via native Rust `reqwest` (`fetch_external_json`).
     - `utility-title-normalizer` (`src/lib/plugins/utility/title-normalizer.ts` + `src-tauri/src/plugins/title_normalizer.rs`): Dedicated title normalization utility plugin and global helpers (`normalizeGameTitle`, `normalizeRomTitle`, `canonicalTitleKey`) handling article inversion, subtitle separator unification, dump tag stripping, promotional/version noise removal (`Relicts of Aeson`), and compound word splitting (`My Futa Family`).
     - `media-universal` (`src/lib/plugins/media/universal.ts`): Unified HD video trailer streaming and ambient soundtrack audio playback engine.
     - `utility-gamerpower` & `utility-storage`: Free games/deals/patch notes feeds and multi-drive storage analyzer.
@@ -186,27 +187,39 @@ flowchart LR
 
 ---
 
-### 7. [helix-gaming-db] — Open REST Metadata API & Community Gaming Database (ACTIVE / SCAFFOLDED)
-*Target Path: `projects/helix-gaming-db` · REST API / GitHub Pages / Jekyll Remote Theme · v1.0.0*
+### 7. [helix-gaming-db] — Open REST Metadata API & Community Gaming Database (ACTIVE)
+*Target Path: `projects/helix-gaming-db` · Three-Tier REST API / GitHub Pages / Jekyll Remote Theme · v1.1.0*
 
 - **Core Vision & Invariants:**
-  - Dedicated, open, community-extensible gaming metadata repository and REST API named **HELIX Gaming DB** (`helix-gaming-db`), hosted directly via GitHub Pages (`https://www.helix-origin.club/helix-gaming-db/`).
-  - Provides reliable, verified metadata and high-resolution official CDN artwork for indie, Patreon, obscure, and emulation titles that are missing from or mismatched by mainstream storefronts.
-  - Serves static, cacheable JSON endpoints under `/api/v1/` allowing both `universal-game-launcher` and external clients to query manifest data, search indices, game metadata, and developer studio profiles.
+  - Dedicated, open, community-extensible gaming metadata repository and REST API named **HELIX Gaming DB** (`helix-gaming-db`), hosted directly via GitHub Pages (`https://helix-origin.club/helix-gaming-db/`) with Cloudflare edge proxying (`https://api.helix-origin.club/helix-gaming-db/`).
+  - Provides reliable, verified metadata and high-resolution official CDN artwork for indie, Patreon, obscure, commercial, and emulation titles that are missing from or mismatched by mainstream storefronts.
+  - Serves static, cacheable JSON endpoints across three purpose-built tiers:
+    - Root gateway (`/api/manifest.json`): Version capabilities and endpoint directory.
+    - Tier v1 (`/api/v1/`): Client consumption tier.
+    - Tier v2 (`/api/v2/`): Rich relational discovery (genres, platforms, tags, developers, publishers, stats, starter templates).
+    - Tier v3 (`/api/v3/`): Dedicated Adult / 18+ gaming catalog for uncensored indie and Patreon visual novels and sandbox titles.
   - Pairs with a dedicated documentation portal and technical wiki powered by `helix-docs` (`remote_theme: HELIX-Origin/helix-docs`), following strict documentation theme-neutrality rules.
-- **Detailed Feature Scope:**
-  - **REST API v1 Endpoints (`api/v1/`)**:
-    - `api/v1/manifest.json`: Database version, game count, developer count, schema version, and updated timestamp.
-    - `api/v1/search/index.json`: Lightweight index mapping normalized title slugs and aliases to metadata payloads for instant client-side search.
-    - `api/v1/games/{slug}.json`: Complete metadata payload for each game (title, aliases, developers, publishers, releaseDate, releaseYear, genres, categories, tags, ageRating, userScore, capsuleImage, heroImage, logoImage, headerImage, screenshots, movies, soundtracks, detailedDescription).
-    - `api/v1/developers/{slug}.json`: Developer studio profiles, aliases, websites, and associated game slugs.
-  - **JSON Schema Validation & Testing**:
-    - Strict JSON schemas (`schemas/game.schema.json`, `schemas/developer.schema.json`, `schemas/manifest.schema.json`) with automated build validation (`node scripts/validate.mjs`).
-  - **Documentation & Wiki (`docs/`)**:
-    - REST API reference, endpoints specification, payload examples, and client integration guide.
-    - Community contribution guide for submitting new game and developer records via GitHub Pull Requests.
-  - **Client Integration**:
-    - Directly integrated into `universal-game-launcher` as the primary authoritative metadata provider with offline hand-rolled fallback.
+- **Delivered Milestones:**
+  - **Milestone M.01 (Delivered v1.0.0)**: REST API v1 foundation, initial schemas, 62 curated games, 28 studio profiles, Jekyll documentation and wiki.
+  - **Milestone M.02 (Delivered v1.1.0)**: Three-Tier REST Architecture (Root, v1, v2, v3), catalog expansion to 80 verified titles and 42 developers, contributor fork/PR starter templates and schemas, GitHub Issue forms (`01_new_game_request.yml`, `02_metadata_correction.yml`, `03_new_developer_request.yml`), automated PR validation workflow (`pr-automation.yml` with `scripts/verify-pr.mjs`), and issue triage automation (`issue-triage.yml`).
+- **Milestone M.03: Multi-Platform Metadata Expansion & Automated Ingestion Pipeline (v1.2.0 - v2.0.0) (ACTIVE / PLANNED):**
+  - **Automated Ingestion Scripts (`scripts/ingest/`)**:
+    - `ingest-steam.mjs`: Automated ingestion for Steam PC games with 600×900 vertical capsules, 16:9 hero banners, tags, and reviews.
+    - `ingest-gog.mjs`: Automated ingestion for GOG DRM-free PC classics and modern releases.
+    - `ingest-libretro-rdb.mjs`: Canonical ROM database parser mapping retro console games (NES, SNES, N64, GB/GBA, DS, GameCube, PS1, PS2, PSP, Genesis, Dreamcast) to Libretro CDN assets (`Named_Boxarts`, `Named_Snaps`, `Named_Logos`).
+    - `ingest-screenscraper.mjs`: Rate-limited retro and arcade metadata extractor.
+    - `ingest-patreon-itch.mjs`: Specialized scraper for independent, Patreon, and itch.io creations, with automatic mature-tag detection and routing to the v3 tier.
+    - `check-drift.mjs`: Outdated metadata and artwork detector scanning catalog entries against live storefronts to refresh descriptions, resolve broken/outdated image URLs, and capture newly released updates for actively maintained games.
+  - **Scheduled GitHub Actions Ingestion & Maintenance Workflows**:
+    - `.github/workflows/scheduled-ingest.yml`: Weekly scheduled cron job executing platform batch ingestion, running schema verification, rebuilding search indices, and opening automated pull requests.
+    - `.github/workflows/enrich-artwork.yml`: Bi-weekly background run backfilling missing hero banners, vertical box art, and transparent logos across the catalog.
+    - `.github/workflows/update-metadata-drift.yml`: Bi-weekly background maintenance workflow scanning for outdated images and information on actively updated games and submitting automated refresh pull requests.
+  - **5-Phase Progressive Rollout Strategy**:
+    - Phase 1: Top PC Indie & Digital Hits (~250 games in `v2`).
+    - Phase 2: Golden Age 16-bit & 32-bit Consoles (SNES, Genesis, PS1, GBA) (~500 games in `v2`).
+    - Phase 3: Dedicated Adult & Patreon 18+ Visual Novels & RPGs (~150 games in `v3`).
+    - Phase 4: 6th & 7th Generation 3D Classics (GameCube, PS2, Dreamcast, Wii, PSP) (~500 games in `v2`).
+    - Phase 5: Long-Tail Storefronts & Retro Arcade (Epic, EA, Ubisoft, Battle.net, Arcade) (~1,000+ games).
 
 ---
 

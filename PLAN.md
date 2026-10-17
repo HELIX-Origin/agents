@@ -20,40 +20,42 @@
 
 ## 🎯 Active Sprints
 
-### 🚀 Sprint 29: [helix-gaming-db] (projects/helix-gaming-db) — REST Metadata API Expansion: Three-Tier Endpoints, Contributor Fork/PR Suite, Dedicated Adult (18+) API, Expanded 80-Game Catalog & GitHub Issue Templates (v1.1.0)
+### 🚀 Sprint 31: [helix-gaming-db] (projects/helix-gaming-db) — Multi-Platform Metadata Ingestion Automation, Platform Scrapers & Scheduled Enrichment Pipeline (v1.2.0)
 - **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`)
-- **Target Objective:** Expand `helix-gaming-db` into a versatile, multidimensional gaming metadata REST API organized across three purpose-built tiers: Root gateway (`/api/manifest.json`), v1 Client API (`/api/v1/`), v2 Relational & Contributor API (`/api/v2/`), and v3 Dedicated Adult / 18+ Gaming API (`/api/v3/`). Provide starter schemas and developer templates for forking and pull request submissions. Expand the curated game catalog to 80 verified titles and 42 developers across PC indie, adult visual novels, and emulation classics. Author structured GitHub issue forms and PR templates, and synchronize documentation and wiki.
+- **Target Objective:** Develop an automated ingestion suite and scheduled GitHub Actions workflows to progressively expand HELIX Gaming DB to cover every game across all supported platforms (PC storefronts: Steam, GOG, Epic, Itch.io, EA, Ubisoft, Battle.net, Standalone/Patreon; Emulation/Retro: NES, SNES, N64, GB/GBC/GBA, DS, 3DS, GameCube, Wii, Wii U, Switch, PS1, PS2, PS3, PSP, PS Vita, Genesis, Saturn, Dreamcast, Xbox, Arcade/MAME). Implement modular ingestion scrapers (`scripts/ingest/`), canonical slug generation, duplicate detection, Draft 2020-12 schema validation, and two-tier routing (v2 general vs v3 adult).
 
 ```mermaid
 flowchart TD
-    S29_1["[helix-gaming-db] W.52a: Three-Tier Endpoint & Index Generator (Root, v1, v2, v3)"] --> S29_2["[helix-gaming-db] W.52b: Developer Contributor Starter Templates & PR Workflow"]
-    S29_2 --> S29_3["[helix-gaming-db] W.52c: Database Catalog Expansion (80 Games & 42 Studios)"]
-    S29_3 --> S29_4["[helix-gaming-db] W.52d: GitHub Issue Forms & PR Template Suite"]
-    S29_4 --> S29_5["[helix-gaming-db] W.52e: Documentation & Wiki Sync"]
+    S31_1["[helix-gaming-db] W.54a: Ingestion Scripts Suite (Steam, GOG, Libretro, ScreenScraper, Patreon)"] --> S31_2["[helix-gaming-db] W.54b: Batch Runner, Deduplication & Validation Engine"]
+    S31_2 --> S31_3["[helix-gaming-db] W.54c: Scheduled Ingestion Workflow (.github/workflows/scheduled-ingest.yml)"]
+    S31_3 --> S31_4["[helix-gaming-db] W.54d: Artwork Backfill Workflow (.github/workflows/enrich-artwork.yml)"]
+    S31_4 --> S31_5["[helix-gaming-db] W.54e: Multi-Stage Progressive Platform Catalog Rollout"]
 ```
 
 #### 📝 Execution Tasks
 
-1. **[helix-gaming-db] (projects/helix-gaming-db) W.52a — Three-Tier Endpoint & Index Generator (Done)**:
-   - `[helix-gaming-db]` Expand `scripts/build-search-index.mjs` to generate:
-     - `/api/manifest.json`: Root entrypoint declaring version capabilities and routing.
-     - `/api/v1/`: Flat client consumption tier (`manifest.json`, `search/index.json`, `games/`, `developers/`).
-     - `/api/v2/`: Relational discovery & contributor tier (`manifest.json`, `catalog/`, `search/`, `genres/`, `platforms/`, `tags/`, `publishers/`, `developers/`, `stats/`, `contribute/`).
-     - `/api/v3/`: Dedicated adult (18+) gaming tier (`manifest.json`, `catalog/`, `search/`, `games/`, `developers/`, `tags/`, `platforms/`, `stats/`).
-2. **[helix-gaming-db] (projects/helix-gaming-db) W.52b — Developer Contributor Starter Templates & CI (Done)**:
-   - `[helix-gaming-db]` Provide starter payloads and schemas at `api/v2/contribute/templates/game.json`, `api/v2/contribute/templates/developer.json`, `api/v2/contribute/schemas/`, and `api/v2/contribute/guide.json`.
-   - `[helix-gaming-db]` Deploy GitHub Actions CI workflow (`.github/workflows/ci.yml`) validating schemas and index building on push/PR.
-3. **[helix-gaming-db] (projects/helix-gaming-db) W.52c — Database Catalog Expansion & Validation (Done)**:
-   - `[helix-gaming-db]` Expand catalog to 80 curated games and 42 developer studios across PC indie gems, adult visual novels, and emulation classics.
-   - `[helix-gaming-db]` Run multi-tier validation test suite (`npm test`) passing with 0 errors.
-4. **[helix-gaming-db] (projects/helix-gaming-db) W.52d — GitHub Issue Forms & PR Template Suite (Done)**:
-   - `[helix-gaming-db]` Author `.github/ISSUE_TEMPLATE/01_new_game_request.yml`, `02_metadata_correction.yml`, `03_new_developer_request.yml`, `config.yml`, and `.github/pull_request_template.md`.
-5. **[helix-gaming-db] (projects/helix-gaming-db) W.52e — Documentation & Wiki Sync (Done)**:
-   - `[helix-gaming-db]` Update `_docs/endpoints.md`, `_docs/contributing.md`, `_docs/index.md`, and `_wiki/architecture.md` with complete 3-tier REST architecture and diagrams.
-6. **[helix-gaming-db] (projects/helix-gaming-db) W.52f — Automated PR Verification, Review & Issue Triage Workflows (Done)**:
-   - `[helix-gaming-db]` Create `scripts/verify-pr.mjs` verifying JSON schema, slug naming, HTTPS artwork validity, and studio cross-referencing.
-   - `[helix-gaming-db]` Deploy `.github/workflows/pr-automation.yml` (scans PRs, comments with diagnostic table, labels `status: validated` / `needs-work`, and submits APPROVE or REQUEST_CHANGES reviews).
-   - `[helix-gaming-db]` Deploy `.github/workflows/issue-triage.yml` (auto-triages issue templates with domain labels and guidance comments).
+1. **[helix-gaming-db] (projects/helix-gaming-db) W.54a — Platform Ingestion Scripts Suite (`scripts/ingest/`)**:
+   - `[helix-gaming-db]` Create `scripts/ingest/ingest-steam.mjs`: Steam App Details & Store API scraper extracting title, synopsis, creators, tags, release dates, screenshots, videos, and 600×900 capsule artwork.
+   - `[helix-gaming-db]` Create `scripts/ingest/ingest-gog.mjs`: GOG Catalog v1 & Product Details scraper extracting DRM-free metadata and high-res cover art.
+   - `[helix-gaming-db]` Create `scripts/ingest/ingest-libretro-rdb.mjs`: Libretro OpenVGDB database parser resolving canonical titles and mapping to Libretro Thumbnails CDN assets.
+   - `[helix-gaming-db]` Create `scripts/ingest/ingest-screenscraper.mjs`: ScreenScraper API client with rate-limiting and cache checks for retro arcade/console platforms.
+   - `[helix-gaming-db]` Create `scripts/ingest/ingest-patreon-itch.mjs`: Specialized scraper for independent, Patreon, and itch.io creations with automatic mature tag detection and routing to the v3 tier.
+2. **[helix-gaming-db] (projects/helix-gaming-db) W.54b — Batch Runner, Deduplication & Validation Pipeline (`scripts/ingest/run-batch.mjs`)**:
+   - `[helix-gaming-db]` Author `run-batch.mjs` orchestrating batch ingestion with CLI args (`--platform=<id>`, `--limit=<n>`, `--tier=<v2|v3>`), slug collision resolution, and automated `build-search-index.mjs` compilation.
+   - `[helix-gaming-db]` Enforce strict Draft 2020-12 schema validation (`npm test`) on all newly emitted payloads.
+3. **[helix-gaming-db] (projects/helix-gaming-db) W.54c — Scheduled Ingestion GitHub Actions Workflow (`.github/workflows/scheduled-ingest.yml`)**:
+   - `[helix-gaming-db]` Deploy scheduled cron workflow running weekly platform ingestion batches, rebuilding search indices, verifying schemas, and automatically opening pull requests.
+4. **[helix-gaming-db] (projects/helix-gaming-db) W.54d — Artwork Backfill & Health Check Workflow (`.github/workflows/enrich-artwork.yml`)**:
+   - `[helix-gaming-db]` Deploy bi-weekly background workflow identifying games with missing artwork slots (capsules, hero banners, logos) and searching authorized CDNs to backfill assets.
+5. **[helix-gaming-db] (projects/helix-gaming-db) W.54e — Multi-Stage Progressive Platform Catalog Rollout**:
+   - `[helix-gaming-db]` Execute Phase 1: Top PC Indie & Digital Hits (~250 games in `v2`).
+   - `[helix-gaming-db]` Execute Phase 2: Golden Age 16-bit & 32-bit Consoles (SNES, Genesis, PS1, GBA) (~500 games in `v2`).
+   - `[helix-gaming-db]` Execute Phase 3: Dedicated Adult & Patreon 18+ Visual Novels & RPGs (~150 games in `v3`).
+   - `[helix-gaming-db]` Execute Phase 4: 6th & 7th Generation 3D Classics (GameCube, PS2, Dreamcast, Wii, PSP) (~500 games in `v2`).
+   - `[helix-gaming-db]` Execute Phase 5: Long-Tail Storefronts & Retro Arcade (Epic, EA, Ubisoft, Battle.net, Arcade) (~1,000+ games).
+6. **[helix-gaming-db] (projects/helix-gaming-db) W.54f — Outdated Information & Artwork Refresh Pipeline (`check-drift.mjs` & `.github/workflows/update-metadata-drift.yml`)**:
+   - `[helix-gaming-db]` Create `scripts/ingest/check-drift.mjs` detecting outdated synopses, changed release dates, updated Steam capsules/heroes, and 404 image URLs.
+   - `[helix-gaming-db]` Deploy `.github/workflows/update-metadata-drift.yml` running bi-weekly drift scans and opening automated refresh PRs for actively updated games.
 
 ---
 
@@ -117,7 +119,21 @@ flowchart TD
 
 ## ✅ Completed Sprints
 
-### ✅ Sprint 27: [helix-gaming-db] (projects/helix-gaming-db) & [universal-game-launcher] (projects/universal-game-launcher) — HELIX Gaming DB REST API Foundation, GitHub Pages Deployment, Remote Theme Docs & UGL Client Provider (v1.0.0)
+### ✅ Sprint 30: [universal-game-launcher] (projects/universal-game-launcher) — Three-Tier REST API Client Integration & Hand-Rolled Catalog Deprecation (v1.4.1)
+- **Project Identifiers:** `[universal-game-launcher]` (`projects/universal-game-launcher`)
+- ✅ `[universal-game-launcher]` **Three-Tier REST Client Architecture (`metadata-helix`)**: Upgraded `src/lib/plugins/metadata/helix-db.ts` to fully leverage the three-tier REST API (`/api/manifest.json`, `/api/v2/` relational discovery, and `/api/v3/` dedicated adult tier) with dual-tier search index caching (`cachedV2Index`, `cachedV3Index`), rich payload mapping (soundtracks, trailers, user scores), and `include_adult_content` / `api_tier` settings.
+- ✅ `[universal-game-launcher]` **Persistent Serverless KV Offline Fallback**: Integrated `api.kvSetJson` and `api.kvGetJson` for multi-day local caching of search indices and game payloads, guaranteeing instant sub-millisecond retrieval and complete offline resilience without network dependencies.
+- ✅ `[universal-game-launcher]` **Hand-Rolled Metadata Purge**: Deprecated and deleted all 28 hardcoded per-developer data files (`src/lib/plugins/metadata/developers/*.ts`, 3,000+ lines of static code) in favor of dynamic API resolution; streamlined `developers/index.ts` to retain high-precision studio matching (`detectKnownDeveloper`) and algorithmic candidate validation (`validateMetadataCandidate`, `titlesMatchStrict`).
+- ✅ **Verification**: Passed `svelte-check` (0 errors, 0 warnings), `npm run check` (0 errors), and `node scripts/test.mjs frontend` (100% passing).
+
+### ✅ Sprint 29: [helix-gaming-db] (projects/helix-gaming-db) — REST Metadata API Expansion: Three-Tier Endpoints, Contributor Fork/PR Suite, Dedicated Adult (18+) API, Expanded 80-Game Catalog & GitHub Issue Templates (v1.1.0)
+- **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`)
+- ✅ `[helix-gaming-db]` **Three-Tier Automated Endpoint & Index Generator**: Expanded `scripts/build-search-index.mjs` to generate `/api/manifest.json` (root gateway), `/api/v1/` (flat client tier), `/api/v2/` (relational genres, platforms, tags, developers, publishers, stats, starter templates), and `/api/v3/` (dedicated adult 18+ gaming catalog, search index, developers, and tags).
+- ✅ `[helix-gaming-db]` **Contributor Fork/PR Suite & Starter Schemas**: Provided developer starter templates (`api/v2/contribute/templates/game.json`, `developer.json`) and schemas to streamline forking and community pull request submissions.
+- ✅ `[helix-gaming-db]` **Curated Catalog Expansion & Validation**: Expanded verified database to 80 games and 42 developers across PC indie gems, adult visual novels, and emulation classics; multi-tier validation (`npm test`) passing with 100% compliance.
+- ✅ `[helix-gaming-db]` **GitHub Issue Forms & PR Template Suite**: Authored `.github/ISSUE_TEMPLATE/01_new_game_request.yml`, `02_metadata_correction.yml`, `03_new_developer_request.yml`, `config.yml`, and `pull_request_template.md`.
+- ✅ `[helix-gaming-db]` **Automated PR Verification & Issue Triage Workflows**: Authored `scripts/verify-pr.mjs` scanning changed files for schema compliance, slug matching, and HTTPS artwork; deployed `.github/workflows/pr-automation.yml` (automated review verdicts and label management) and `issue-triage.yml`.
+- ✅ `[helix-docs]` **Documentation & Technical Wiki Sync**: Updated `_docs/endpoints.md`, `_docs/contributing.md`, `_docs/index.md`, and `_wiki/architecture.md` with complete 3-tier REST architecture and diagrams.
 - **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`), `[universal-game-launcher]` (`projects/universal-game-launcher`)
 - ✅ `[helix-gaming-db]` **Dedicated Gaming Metadata Repository & REST API Architecture**: Scaffolded repository with Draft 2020-12 JSON schemas (`manifest.schema.json`, `game.schema.json`, `developer.schema.json`), automated validation (`scripts/validate.mjs`), and search index generator (`scripts/build-search-index.mjs`).
 - ✅ `[helix-gaming-db]` **Static REST v1 Endpoints & Seed Datasets**: Authored 62 curated game payloads (`api/v1/games/*.json`), 28 studio profiles (`api/v1/developers/*.json`), `api/v1/search/index.json`, and `api/v1/manifest.json`.
