@@ -2,31 +2,49 @@
 
 **Status:** BINDING.
 **Scope:** All repositories under `projects/` belonging to the `HELIX-Origin` organization.
-**Base Reference:** Adapted from `NH-Reader` release notes and announcement standards.
+**Base Reference:** Adapted from `NH-Reader` and `Universal-Game-Launcher` canonical release standards.
 
 ---
 
 ## Purpose
 
-To establish a uniform, high-clarity release notes standard across all projects in the workspace. Each project presents human-friendly release notes that clearly communicate what changed, why it matters, how to verify it, and how to obtain or run it—while rigorously respecting each project's distinct version control system (Milestone-based vs. Semantic Versioning).
+To establish a uniform, detailed, human-readable, and universal release notes standard across all projects in the workspace. Every project publishes human-friendly release notes that clearly communicate what changed, why it matters, how to verify it, and how to obtain or run it—while strictly adhering to organization-wide Semantic Versioning and the release asset attachment policy.
 
 ---
 
-## 1. Project Versioning Taxonomy
+## 1. Universal Semantic Versioning & Release Asset Invariants (MANDATORY)
 
-Projects in this workspace do not all use Semantic Versioning (`vX.Y.Z`). Agents must determine and apply the exact versioning type designated for each project:
-
-| Repository / Project | Versioning Type | Version / Tag Identifier Pattern | Prebuilt Release Assets Published? | Primary Tracking Docs |
-|---|---|---|---|---|
-| **NH-Reader** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.7.5`) | ✅ Yes (Windows, macOS, Linux desktop installers; unsigned) | `CHANGELOG.md`, `ROADMAP.md` |
-| **Universal-Game-Launcher** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.4.0`) | ✅ Yes (Windows, macOS, Linux desktop installers) | `CHANGELOG.md`, `ROADMAP.md` |
-| **Theme-Toolkit** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ✅ Yes (Windows, macOS, Linux desktop installers) | `CHANGELOG.md`, `ROADMAP.md` |
-| **Windhawk-Themes** | **Milestone-Based Releases** | `M.<NN>` or `M.<NN><suffix>` (e.g. `M.01`, `M.02b`) | ❌ No (Zero attached assets; git tag only) | `ROADMAP.md`, `PLAN.md`, `CHANGELOG.md` |
-| **helix-jekyll-theme** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.1.0`) | ❌ No (Remote Jekyll theme & Ruby gem) | `changelog.md` |
-| **helix-origin.github.io** | **Milestone / Chronological** | Date-based or Portal Milestones (e.g. `2026-10-09` or `M.01`) | ❌ No (GitHub Pages portal root) | `docs/` commit log / index |
-
+### Universal Semantic Versioning (SemVer)
 > [!IMPORTANT]
-> **Never invent SemVer tags for milestone-based projects.** In `Windhawk-Themes`, releases are tagged strictly by Milestone identifier (`M.NN`), and external mod versions (e.g., Taskbar Styler `1.10+`) are compatibility markers, not repo versions.
+> **Every repository in the `HELIX-Origin` organization strictly adheres to Semantic Versioning (`vMAJOR.MINOR.PATCH`).**
+> - Milestone-based releases (e.g. `M.01`, `M.02b`) and milestone git tags are **strictly prohibited** organization-wide.
+> - Git tags, GitHub Release titles, version manifests, and changelog headers must consistently use SemVer (e.g. `v1.0.0`, `v0.1.0`).
+> - Milestone and sprint identifiers are internal project management constructs only within `ROADMAP.md` and `PLAN.md` and must never serve as release versions.
+
+### Release Asset Attachment Invariant
+> [!IMPORTANT]
+> **Assets must ONLY be uploaded to repositories that distribute a packaged application or resource.**
+> - **Packaged Repositories (Assets Allowed):** `universal-game-launcher`, `nh-reader`, `theme-toolkit` (desktop installers/binaries) and `ffxiv-config` (packaged configuration archive).
+> - **Zero-Asset Repositories (No Uploaded Assets):** `docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `agents`, and `.github`. These repositories publish GitHub Releases with comprehensive release notes, changelog highlights, and git tags, but **never attach binary or zip assets**.
+
+### Repository Versioning & Asset Matrix
+
+| Repository / Project | Versioning Standard | Tag Identifier Pattern | Prebuilt Release Assets Uploaded? | Primary Tracking Docs |
+|---|---|---|---|---|
+| **universal-game-launcher** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.3.3`) | ✅ Yes (Windows, macOS, Linux desktop installers & packages) | `CHANGELOG.md`, `ROADMAP.md` |
+| **nh-reader** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.7.5`) | ✅ Yes (Windows, macOS, Linux installers, Android APK) | `CHANGELOG.md`, `ROADMAP.md` |
+| **theme-toolkit** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ✅ Yes (Windows, macOS, Linux desktop installers & packages) | `CHANGELOG.md`, `ROADMAP.md` |
+| **ffxiv-config** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ✅ Yes (Packaged configuration archive `ffxiv-config.zip`) | `README.md` |
+| **windhawk-themes** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ❌ No (Zero attached assets; git tag only) | `ROADMAP.md`, `PLAN.md`, `CHANGELOG.md` |
+| **helix-jekyll-theme** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.1.0`) | ❌ No (Zero attached assets; git remote theme & gem) | `changelog.md` |
+| **helix-origin.github.io** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; portal site checkpoint) | `docs/index.md` |
+| **docs** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; documentation hub) | `README.md` |
+| **wiki** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; technical wiki hub) | `README.md` |
+| **helix-gaming-db-00** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v2.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
+| **helix-gaming-db-01** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
+| **helix-gaming-db-02** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
+| **helix-gaming-db-03** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
+| **agents** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; AI governance ecosystem) | `ROADMAP.md`, `PLAN.md` |
 
 ---
 
@@ -34,74 +52,113 @@ Projects in this workspace do not all use Semantic Versioning (`vX.Y.Z`). Agents
 
 Never conflate release notes with discussion announcements or changelog files:
 
-1. **Release Notes** (`scratch/release-notes.md` or attached to GitHub Releases):
-   - Concise technical and user-centric summary.
-   - Designed for someone deciding whether to update or inspect changes.
-   - Includes Highlights, Key Improvements, Changes, Fixes, Verification, and Local Build/Install instructions.
+1. **Release Notes** (Attached directly to GitHub Releases or drafted in `scratch/release-notes.md`):
+   - Detailed, human-readable, and universal structure designed for humans deciding whether to update, adopt, or inspect changes.
+   - Includes Overview, Highlights, Distribution & Assets, Detailed Changes, Compatibility Matrix, Verification, and Commit History.
    - Never committed to remote if stored in `scratch/`.
 2. **Changelog Entry** (`CHANGELOG.md` or `changelog.md`):
    - Persistent chronological record in git history.
-   - Categorized under `Added`, `Changed`, `Fixed`, `Removed`, `Security`.
+   - Grouped by release version and categorized under `Added`, `Changed`, `Fixed`, `Removed`, `Security`.
 3. **Release Announcements** (e.g. GitHub Discussions announcements where enabled):
-   - Editorial, long-form community narrative explaining the thematic impact of the release.
+   - Editorial, community narrative explaining the broader theme and ecosystem impact of the release.
    - *Note*: Repositories that do not use GitHub Discussions (such as `helix-jekyll-theme`) do not produce discussion announcements.
 
 ---
 
-## 3. Standard Release Notes Structure
+## 3. Universal Release Notes Specification
 
-Every release notes document across the workspace must follow this uniform structure, adapted to the project's versioning type:
+Every release notes document published to GitHub Releases across the organization must follow this uniform, detailed, and human-readable format:
 
 ```markdown
-# <Project Name> <Version-Or-Milestone-Tag>
+# <Project Name> v<MAJOR.MINOR.PATCH>
 
-**Release date:** YYYY-MM-DD
-**Version Type:** <Semantic Versioning | Milestone Release>
+> <High-impact one-sentence subtitle summarizing the primary theme or breakthrough of this release.>
 
-## ✨ Highlights
-
-<1–2 paragraphs: what this release represents in plain language, key themes, and what users get.>
-
-## 🚀 Key Improvements & Features
-
-- **<Feature name>** — <Description of feature, user benefits, and how it works>.
-- **<Feature name>** — <Description of feature, user benefits, and how it works>.
-
-## ✅ Changed
-
-- **<Component / Area>** — <Behavioral, architectural, or documentation change>.
-
-## 🐛 Fixed
-
-- **<Bug summary>** — <What was broken and how it behaves now>.
-
-## 🔍 Platform / Compatibility Matrix
-
-<For SemVer apps: OS support matrix or target platforms>
-<For Windhawk-Themes: Per-Surface Compatibility Record with external mod versions & Windows 11 builds>
-<For Theme / Web projects: Jekyll / GitHub Pages / Browser compatibility>
-
-## 🛠️ Build, Installation & Verification
-
-<Explicit commands to build, sign, or install locally. Never claim prebuilt binaries exist if none are published.>
-
-### Verification Results
-- <Checks executed and passed (e.g., test suites, linters, static validators, schema checks)>.
-
-## 📄 Changes & Commits
-
-- `<short-sha>` `<commit message>`
-- `<short-sha>` `<commit message>`
-
-Full commit history: `git log --oneline <previous-tag>..<current-tag>`
-```
+| Attribute | Value |
+|---|---|
+| **Release Version** | `v<MAJOR.MINOR.PATCH>` |
+| **Release Date** | YYYY-MM-DD |
+| **Release Classification** | <Packaged Application Release \| Zero-Asset Source Release> |
+| **License** | [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause) |
+| **Release Channel** | <Stable / Production \| Preview / Alpha> |
 
 ---
 
-## 4. Invariants & Rules
+## 📖 Overview
 
-1. **Lead with what the user notices:** Write release notes for humans, not raw git logs.
-2. **Honesty regarding assets:** If a project does not publish prebuilt signed binaries or release assets, explicitly document local build/run steps. Never claim downloadable installers exist when they do not.
-3. **No credentials or personal data:** Never include signing keys, tokens, passwords, or personal local user paths in release notes.
-4. **No unauthorized git operations:** Release notes may be prepared locally in `scratch/release-notes.md` or staged when requested, but git tagging or pushing requires explicit user approval for that exact operation on that exact repository, in the current conversation.
-5. **Theme repo precedence:** When releasing theme changes that affect consuming projects, `helix-jekyll-theme` must always be tagged/pushed first.
+<1–2 clear, well-structured paragraphs written for human readers explaining what this release represents, why it matters, core themes, and key benefits to end-users or integrators.>
+
+---
+
+## ✨ Highlights
+
+- **<Key Feature / Milestone>** — <Concise description of the breakthrough, functional improvement, or architectural upgrade>.
+- **<Key Feature / Milestone>** — <Concise description of the breakthrough, functional improvement, or architectural upgrade>.
+- **<Key Feature / Milestone>** — <Concise description of the breakthrough, functional improvement, or architectural upgrade>.
+
+---
+
+## 📦 Distribution & Packaging
+
+### For Packaged Application / Resource Repositories:
+| Artifact Name | Platform / Target | Architecture | Format | Checksum (SHA256) |
+|---|---|---|---|---|
+| `<app>-<version>-setup.exe` | Windows 10/11 | x64 | NSIS Installer | `<sha256-hash>` |
+| `<app>-<version>.dmg` | macOS | Universal / Apple Silicon | Apple Disk Image | `<sha256-hash>` |
+| `<app>-<version>.AppImage` | Linux | x86_64 | AppImage | `<sha256-hash>` |
+| `<app>-<version>.deb` | Linux (Debian/Ubuntu) | amd64 | Debian Package | `<sha256-hash>` |
+
+### For Zero-Asset Repositories:
+> [!NOTE]
+> **Zero-Asset Source Release:** In accordance with organization release policy, this repository does not publish prebuilt binary assets. All changes are tagged directly in git and consumed via <package manager / git clone / GitHub Pages remote theme / REST API gateway>.
+>
+> **Consumption / Installation:**
+> ```bash
+> <commands to clone, bundle, npm install, or consume the repository>
+> ```
+
+---
+
+## 🚀 What's Changed
+
+### 🌟 Added
+- **<Feature / Component>** — <Detailed, user-facing explanation of the addition>.
+
+### 🔄 Changed
+- **<Feature / Component>** — <Behavioral, architectural, or design modification>.
+
+### 🐛 Fixed
+- **<Issue / Bug>** — <What was broken, edge conditions, and how it behaves now>.
+
+### 🗑️ Removed & Deprecated
+- **<Feature / Component>** — <Explanation of what was removed or scheduled for deprecation and alternative recommendations>.
+
+### 🛡️ Security, Hygiene & Compliance
+- **<Compliance / Security Item>** — <License harmonization, secret hygiene, dependency audits, or permission lockdowns>.
+
+---
+
+## 🔍 Compatibility & Environment Matrix
+
+| Surface / Dependency | Target Requirement | Status / Notes |
+|---|---|---|
+| <Target Platform / OS> | <e.g. Windows 11 (23H2 / 24H2), macOS 14+, Linux> | ✅ Verified |
+| <Runtime / Framework> | <e.g. Node.js 20+, Rust 1.80+, Ruby 3.2+> | ✅ Supported |
+| <Ecosystem Component> | <e.g. helix-jekyll-theme v1.1.0, Cloudflare Gateway v2.0> | ✅ Compatible |
+
+---
+
+## 🧪 Quality Gates & Verification
+
+All changes in this release satisfied repository quality gates before publication:
+
+- [x] **Test Suites**: `<e.g. npm test / cargo test / static linters>` passed with **0 errors, 0 warnings**.
+- [x] **Schema Validation**: All JSON / YAML definitions validated against Draft 2020-12 specifications.
+- [x] **License Compliance**: Confirmed canonical BSD-3-Clause licensing across all manifests and source headers.
+- [x] **Clean Tree**: Staged, verified, and tagged on clean branch `main`.
+
+---
+
+## 📄 Commit History
+
+Full commit comparison: [`https://github.com/HELIX-Origin/<repo>/compare/<previous-tag>...v<current-tag>`](https://github.com/HELIX-Origin/<repo>/compare/<previous-tag>...v<current-tag>)

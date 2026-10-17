@@ -51,6 +51,12 @@ flowchart TD
   - Deploy automated scheduled workflows to run ingestion batches in the background and open pull requests for validation.
 - **4. HTML Badge Standards**:
   - Always use raw HTML `<a><img src="..." alt="..." height="20" /></a>` for shields.io and status badges across all Markdown files to allow better control over their rendering sizes and prevent layout shifts across high-DPI displays. Never use Markdown badge syntax (`[![alt](src)](url)`).
+- **5. Organization Release & Asset Attachment Invariant**:
+  - All repositories across the organization must publish GitHub Releases to track versions, milestones, and deployments.
+  - Release assets must strictly ONLY be uploaded to repositories distributing packaged applications or resources (`universal-game-launcher`, `nh-reader`, `theme-toolkit`, `ffxiv-config`). All other repositories (`docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `agents`) publish zero-asset releases.
+- **6. Universal Semantic Versioning & Universal Human-Readable Release Notes**:
+  - All repositories strictly use Semantic Versioning (`vMAJOR.MINOR.PATCH`). Milestone-based releases are prohibited organization-wide.
+  - Release notes standards must follow a detailed, human-readable, and universal format that works seamlessly across all repositories.
 
 **Implementation checklist:**
 - [x] **[Ecosystem] 0a. Universal HTML Badge Standards Migration**:
@@ -62,6 +68,12 @@ flowchart TD
   - [x] Synchronize manifests (`package.json`, `Cargo.toml`, `helix-docs.gemspec`) and badges to strictly use `BSD-3-Clause`.
   - [x] Update GitHub repository metadata (descriptions, homepages pointing to `docs.helix-origin.club` / `wiki.helix-origin.club`, and topic tags) across all 15 repositories in the `HELIX-Origin` organization.
   - [x] Update portal repo (`helix-origin.github.io`) to strictly link to Docs Hub and Wiki Hub, removing raw API JSON gateway links and letting Docs and Wiki handle all project-specific information.
+
+- [ ] **[Ecosystem] 0c. Organization-Wide Semantic Versioning, Detailed Universal Release Notes & Baseline Releases**:
+  - [x] Codify Universal Semantic Versioning Invariant and Release Asset Invariant across `AGENTS.md`, `.github/copilot-instructions.md`, `.agents/rules/release-notes.md`, and `.agents/templates/release-notes-template.md`.
+  - [x] Migrate `windhawk-themes` and `docs` from milestone-based release framing to Semantic Versioning (`vMAJOR.MINOR.PATCH`).
+  - [ ] Publish baseline GitHub Releases for all repositories currently missing releases (`docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `agents`) adhering strictly to SemVer and the zero-asset policy.
+
 
 
 - [x] **[helix-gaming-db-00] 0. Volume-Sharded Multi-Repository Federation, Centralized Docs/Wiki Split & Cloudflare Worker Gateway (00, 01, 02, 03, docs, wiki, api)**:

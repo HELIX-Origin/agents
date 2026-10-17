@@ -1,111 +1,99 @@
-# Workspace Release Notes Templates
+# Workspace Release Notes Template
 
-This document provides ready-to-use release notes templates for all projects in `projects/`, adapted from the `NH-Reader` canonical release notes standard.
+This template provides the authoritative, detailed, human-readable, and universal release notes blueprint for all repositories in the **HELIX Origin** organization (`projects/`).
+
+Every repository uses Semantic Versioning (`vMAJOR.MINOR.PATCH`). Use this template for drafting GitHub Releases, adapting the packaging section depending on whether the project distributes prebuilt binaries or zero-asset source trees.
 
 ---
 
-## 1. Semantic Versioning Template (NH-Reader, Universal-Game-Launcher, Theme-Toolkit, helix-docs)
-
-Use this format for software and themes adhering to Semantic Versioning (`v<major>.<minor>.<patch>`).
-
-````markdown
+```markdown
 # {{ project.name }} v{{ version }}
 
-**Release date:** {{ YYYY-MM-DD }}
-**Version Type:** Semantic Versioning (`v{{ version }}`)
+> {{ release.tagline }}
 
-## ✨ Highlights
-
-{{ highlights.paragraph }}
-
-## 🚀 Key Improvements & Features
-
-- **{{ feature.title }}** — {{ feature.description }}
-- **{{ feature.title }}** — {{ feature.description }}
-
-## ✅ Changed
-
-- Bumped project version to `{{ version }}` across project manifests and documentation.
-- **{{ change.area }}** — {{ change.description }}
-
-## 🐛 Fixed
-
-- **{{ bug.summary }}** — {{ bug.fix_details }}
-
-## 🔍 Platform / Compatibility Matrix
-
-| Platform / Target | Minimum Version | Status |
-|---|---|---|
-| {{ target.name }} | {{ target.version }} | ✅ Supported |
-
-## 🛠️ Build, Installation & Verification
-
-{{ local.build.instructions }}
-
-### Verification Results
-
-- `{{ check.command }}` — {{ check.status }}
-
-## 📄 Changes & Commits
-
-- `{{ short.sha }}` {{ commit.message }}
-
-Full commit history: `git log --oneline v{{ previous.version }}..v{{ version }}`
-````
+| Attribute | Value |
+|---|---|
+| **Release Version** | `v{{ version }}` |
+| **Release Date** | {{ YYYY-MM-DD }} |
+| **Release Classification** | {{ Packaged Application Release | Zero-Asset Source Release }} |
+| **License** | [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause) |
+| **Release Channel** | {{ Stable / Production | Preview / Alpha }} |
 
 ---
 
-## 2. Milestone Release Template (Windhawk-Themes, Portal Milestones)
+## 📖 Overview
 
-Use this format for projects that track progress and releases via **Milestones** (`M.<NN>`) with zero attached release assets.
+{{ overview.paragraphs }}
 
-````markdown
-# {{ project.name }} Milestone {{ milestone.id }}: {{ milestone.title }}
-
-**Release date:** {{ YYYY-MM-DD }}
-**Release Tag:** `{{ milestone.id }}` (Zero attached assets)
-**Version Type:** Milestone-Based Release
+---
 
 ## ✨ Highlights
 
-{{ milestone.highlights }}
+- **{{ highlight.title }}** — {{ highlight.description }}
+- **{{ highlight.title }}** — {{ highlight.description }}
+- **{{ highlight.title }}** — {{ highlight.description }}
 
-## 🚀 Surface Enhancements & Features
+---
 
-- **{{ surface.name }}** — {{ surface.enhancement_description }}
-- **{{ feature.title }}** — {{ feature.description }}
+## 📦 Distribution & Packaging
 
-## ✅ Changed
+{% if project.is_packaged %}
+### Prebuilt Installation Packages
+| Artifact Name | Platform / Target | Architecture | Format | Checksum (SHA256) |
+|---|---|---|---|---|
+| `{{ artifact.filename }}` | {{ artifact.platform }} | {{ artifact.arch }} | {{ artifact.format }} | `{{ artifact.sha256 }}` |
+{% else %}
+> [!NOTE]
+> **Zero-Asset Source Release:** In accordance with organization release policy, this repository does not publish prebuilt binary assets. All changes are tagged directly in git and consumed via {{ package.manager / remote_theme / git clone / API gateway }}.
+>
+> **Consumption / Installation:**
+> ```bash
+> {{ consumption.instructions }}
+> ```
+{% endif %}
 
+---
+
+## 🚀 What's Changed
+
+### 🌟 Added
+- **{{ feature.area }}** — {{ feature.description }}
+
+### 🔄 Changed
 - **{{ change.area }}** — {{ change.description }}
 
-## 🐛 Fixed
+### 🐛 Fixed
+- **{{ bug.summary }}** — {{ bug.fix_details }}
 
-- **{{ bug.summary }}** — {{ bug.fix_details }} (tracked in `BUGS.md`)
+### 🗑️ Removed & Deprecated
+- **{{ deprecation.summary }}** — {{ deprecation.details }}
 
-## 🔍 Per-Surface Compatibility Record
+### 🛡️ Security, Hygiene & Compliance
+- **{{ compliance.summary }}** — {{ compliance.details }}
 
-| Surface / Styler File | Windhawk Mod (ID) | External Mod Version | Windows 11 Build(s) | Status |
-|---|---|---|---|---|
-| `projects/<project>/windows-11-taskbar-styler.yml` | Taskbar Styler | 1.10+ | 23H2 / 24H2 | ✅ Supported |
-| `projects/<project>/windows-11-start-menu-styler.yml` | Start Menu Styler | 1.7+ | 23H2 / 24H2 | ✅ Supported |
-| `projects/<project>/windows-11-notification-center-styler.yml` | Notification Center Styler | 1.7+ | 23H2 / 24H2 | ✅ Supported |
-| `projects/<project>/windows-11-settings-styler.yml` | Settings Styler | 1.0+ | 23H2 / 24H2 | ✅ Supported |
+---
 
-*Note: Mod versions reflect external Windhawk mod releases, not repository suite versions.*
+## 🔍 Compatibility & Environment Matrix
 
-## 🛠️ Validation & Verification Gate
+| Surface / Dependency | Target Requirement | Status / Notes |
+|---|---|---|
+| {{ target.name }} | {{ target.version_range }} | ✅ Verified |
+| {{ runtime.name }} | {{ runtime.version_range }} | ✅ Supported |
 
-There are zero attached compiled assets. Releases strictly verify repository source styles and YAML definitions.
+---
 
-### Verification Results
+## 🧪 Quality Gates & Verification
 
-- [ ] **Static Validation Gate**: `pwsh -NoProfile -File tools/Test-WindhawkStyles.ps1` passed with 0 errors.
-- [ ] **Live Surface Checklist**: Completed for all surfaces modified during this milestone.
+All changes in this release satisfied repository quality gates before publication:
 
-## 📄 Changes & Commits
+- [x] **Test Suites**: `{{ verification.test_command }}` passed with **0 errors, 0 warnings**.
+- [x] **Schema Validation**: Verified against canonical schemas.
+- [x] **License Compliance**: Canonical BSD-3-Clause headers and license files verified.
+- [x] **Clean Tree**: Tagged on clean branch `main`.
 
-- `{{ short.sha }}` {{ commit.message }}
+---
 
-Full commit history: `git log --oneline {{ previous.milestone }}..{{ milestone.id }}`
-````
+## 📄 Commit History
+
+Full commit comparison: [`https://github.com/HELIX-Origin/{{ repo.name }}/compare/{{ previous.tag }}...v{{ version }}`](https://github.com/HELIX-Origin/{{ repo.name }}/compare/{{ previous.tag }}...v{{ version }})
+```

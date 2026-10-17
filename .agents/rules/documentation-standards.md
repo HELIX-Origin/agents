@@ -2,92 +2,98 @@
 
 **Status:** BINDING — GLOBAL.
 **Scope:** Every agent, every project under `projects/`, and the workspace tracking docs.
-**Applies to:** `docs/` sites, `docs/_docs/`, `docs/_wiki/`, `docs/_catalogue/`, `docs/_store/`,
-project `README.md` files, and root Markdown.
+**Applies to:** The centralized `docs` repository (`projects/docs`), the centralized `wiki` repository (`projects/wiki`), project `README.md` entry points, and workspace root Markdown.
 
 ---
 
 ## Purpose
 
-Documentation must explain **how to work with the mods/software**, in a deliberately generic,
-theme-neutral way. An author's own theme/suite — its token names, values, radius scales, colours,
-and geometry — lives **only** in the catalogue/store. This separation is intentional and
-non-negotiable: users must be free to build their own themes from the docs without the docs
-prescribing one author's styling.
+To establish authoritative documentation standards across the **HELIX Origin** organization following our centralized documentation and wiki architecture. All detailed documentation, user manuals, and technical wikis live in dedicated organization hubs (`docs.helix-origin.club` and `wiki.helix-origin.club`), while project repositories remain clean, minimal codebases with concise entry-point READMEs.
 
 ---
 
-## 1. Theme-Neutrality Invariant (CORE — NEVER VIOLATE)
+## 1. Centralized Documentation Hub Architecture
 
-Three surfaces with strictly separated responsibilities:
-
-| Surface | Responsibility |
-|---|---|
-| `docs/` — documentation site (`docs/_docs/`, `docs/_wiki/`, root guides) | **Theme-neutral & mod-agnostic.** Describe valid visual-tree targets, official settings/schema, and *how to work with the mod*. General and reusable. |
-| `docs/_catalogue/` + `docs/_store/` | **Theme-specific.** The *only* place an author's own theme/suite, its token names, values, geometries, and palettes may be described. This is where users share their themes. |
-| Project `README.md` + `CHANGELOG.md` / `ROADMAP.md` | **Project-canonical.** Describe the project's own current behaviour and state. Neither a theme-neutral surface nor a catalogue surface. |
-
-### Hard prohibitions
-
-1. **Never treat a catalogue theme/suite (e.g. the Command Center suite) as the source of truth for the `docs/`.** The docs are intentionally ambiguous so users can build *their own* themes.
-2. **Never copy a catalogue theme's token names, token values, radius scales, colours, or geometry into `docs/` or `docs/_wiki/`.** If a doc needs an example, use the mod's own documented settings plus generic/illustrative placeholders — never a specific shared theme's vocabulary.
-3. **Never rewrite `docs/` to "match" the current state of an author's theme.** The direction is backwards: a suite may change freely, but the docs' general contract does not track it.
-4. **Never present a catalogue theme as "the" way to style the mod.** Docs describe the mechanism; the catalogue illustrates one possible result.
-5. **The catalogue may reference the docs; the docs must never reference the catalogue.**
-
-### Correct direction of information flow
+The organization enforces a strict separation of documentation surfaces across dedicated repositories:
 
 ```
-mod schema / visual targets  ──▶  docs/    ──▶  generic, reusable guidance for all users
-author theme / suite configs ──▶  catalogue/  (self-contained; never leaks into docs/)
+┌───────────────────────────────────────────────────────────────────────────────────┐
+│                           HELIX Origin Web Ecosystem                              │
+├──────────────────────────┬──────────────────────────┬─────────────────────────────┤
+│   Organization Portal    │    Documentation Hub     │     Technical Wiki Hub      │
+│ (helix-origin.github.io) │          (docs)          │           (wiki)            │
+│ www.helix-origin.club    │ docs.helix-origin.club   │ wiki.helix-origin.club      │
+├──────────────────────────┼──────────────────────────┼─────────────────────────────┤
+│ Central landing portal   │ User manuals, getting    │ Technical architecture,     │
+│ and central gateway      │ started guides, feature  │ API specs, visual trees,    │
+│ links to Docs & Wiki.    │ walkthroughs & catalogue │ schemas & dev references    │
+│                          │ organized by project.    │ organized by project.       │
+└──────────────────────────┴──────────────────────────┴─────────────────────────────┘
 ```
 
----
+### Surface Responsibilities
 
-## 2. Decision Test (run before every doc edit)
-
-Ask, in order:
-
-- Am I describing **how the mod works** (targets, settings, mechanism)? → `docs/`.
-- Am I describing **a specific theme/suite an author made**? → `catalogue/`.
-- Am I stating **the project's own current state/behaviour**? → project `README.md` / `CHANGELOG.md`.
-
-If an edit would make a `docs/` page resemble a particular catalogue entry — **STOP and revert it.**
-When genuinely unsure whether content is "docs" or "catalogue", **ask the user**; do not guess.
+| Surface / Repository | Path & Scope | Primary Responsibility |
+|---|---|---|
+| **Documentation Hub (`docs`)** | `projects/docs/` (`_docs/<project>/`, `_catalogue/`) | **User-Centric & Theme-Neutral.** Product documentation, installation guides, user manuals, and the theme showcase catalogue (`_catalogue/`). |
+| **Technical Wiki Hub (`wiki`)** | `projects/wiki/` (`_wiki/<project>/`) | **Deep Technical & Architectural.** In-depth technical specifications, developer APIs, schema definitions, visual tree topologies, and curation guidelines. |
+| **Organization Portal (`helix-origin.github.io`)** | `projects/helix-origin.github.io/` (`docs/index.md`) | **Central Discovery Gateway.** Links directly to Docs Hub and Wiki Hub; never hosts project-specific docs or raw JSON API endpoints. |
+| **Project Code Repositories** | `projects/<project>/` (`README.md`) | **Minimal Entry Points.** Standalone open-source codebases; contain **NO** embedded `docs/` folders and **NO** GitHub Pages sites. Root `README.md` links directly to `docs` and `wiki`. |
 
 ---
 
-## 3. General Content Standards
+## 2. Documentation Theme-Neutrality Invariant (CORE)
 
-- Root Markdown files and per-project `README.md` files are the canonical indexes; the `docs/` site is the published documentation; the `catalogue/`/`store/` are the community showcase.
-- Use GitHub-Flavored Markdown (see `.agents/skills/gfm-content.md`) and valid frontmatter/layouts (see `.agents/skills/helix-theme.md`).
-- Never hardcode absolute machine paths, secrets, tokens, or credentials (see `.agents/rules/security-hygiene.md`).
-- Keep internal links and frontmatter valid; pass the repository's verification gate before declaring done (see `.agents/rules/verification.md`).
+Within the centralized `docs` and `wiki` repositories:
+1. **Theme-neutral & mod-agnostic:** Documentation in `docs/_docs/` and `wiki/_wiki/` describes valid visual targets, mod schemas, engine mechanisms, and *how to use or build for the software*. It must remain general, reusable, and free of author-specific theme branding.
+2. **Catalogue isolation:** An author's specific theme/suite (its exact color palette, token names, radius scales, glass recipes, and specific geometries) lives **strictly in `docs/_catalogue/`**.
+3. **Hard Prohibitions:**
+   - Never make a catalogue theme or suite the source of truth for general documentation.
+   - Never copy a specific catalogue theme's token names or recipes into general `docs/_docs/` or `wiki/_wiki/` guides.
+   - The catalogue may link to docs/wiki; docs/wiki must never depend on the catalogue.
+
+---
+
+## 3. Repository README Minimal Entry Point Standard (MANDATORY)
+
+Every project repository under `projects/` must maintain a concise, minimal entry point `README.md` (~30–50 lines).
+
+### Invariant Rules:
+1. **Zero Embedded Docs Folders:** Project repositories (`universal-game-launcher`, `nh-reader`, `theme-toolkit`, `windhawk-themes`, `ffxiv-config`, `helix-gaming-db-00`–`03`) must **NEVER** contain local `docs/` or `wiki/` documentation folders, Jekyll site configs, or GitHub Pages deployments.
+2. **Direct Gateway Links:** Project `README.md` files must link directly to the centralized hubs:
+   - 📖 **Documentation**: `https://docs.helix-origin.club/<project>/`
+   - 🧠 **Technical Wiki**: `https://wiki.helix-origin.club/<project>/`
+   - 🌐 **Organization Portal**: `https://www.helix-origin.club/`
+3. **Structure of a Minimal Entry Point README:**
+   - **Header & Tagline**: Project name, vector banner (if available), and one-sentence mission.
+   - **Compliant HTML Badges**: Version/Release, License (`BSD-3-Clause`), Docs badge, Wiki badge, CI/Status.
+   - **Overview**: 1–2 paragraphs introducing the project's purpose and core capabilities.
+   - **Primary Gateways**: Direct links to documentation and wiki hubs.
+   - **Quick Start / Installation**: Minimal 2–5 line command snippet to clone, build, or run locally.
+   - **Verification & Quality Gate**: Standard test command (`npm test`, `cargo test`, `pwsh ...`).
+   - **License**: Canonical link to `LICENSE` (`BSD-3-Clause`).
 
 ---
 
 ## 4. HTML Badge Standards (MANDATORY)
 
-All badges (shields.io, status, release, documentation, license, CI/CD) across all Markdown documents (`README.md`, `docs/`, `wiki/`, and root tracking files) **must** use raw HTML `<a>` and `<img>` tags rather than Markdown syntax (`[![alt](src)](url)`).
+All badges across all Markdown files (`README.md`, `docs/`, `wiki/`, and root tracking files) **must** use raw HTML `<a>` and `<img>` tags rather than Markdown syntax (`[![alt](src)](url)`).
 
-- **Rationale:** Markdown image syntax does not support explicit dimension attributes (`height`, `width`). This leads to visual inconsistency, uncontrolled badge expansion/stretching across high-DPI displays, and cumulative layout shifts. Raw HTML enables strict control over rendering dimensions and layout alignment.
-- **Standard Height:** Badges must explicitly declare `height="20"` on their `<img>` tag:
+- **Explicit Dimensions:** Badges must declare `height="20"` on their `<img>` tag to guarantee size consistency across high-DPI displays and eliminate layout shifts:
   ```html
-  <a href="https://example.com"><img src="https://img.shields.io/badge/Status-Live-brightgreen" alt="Status" height="20" /></a>
+  <a href="https://docs.helix-origin.club/universal-game-launcher/"><img src="https://img.shields.io/badge/Docs-docs.helix--origin.club-brightgreen" alt="Documentation" height="20" /></a>
+  <a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD--3--Clause-blue.svg" alt="License: BSD-3-Clause" height="20" /></a>
   ```
-- **Grouping & Alignment:** When grouping badges at the top of a document or centered under a hero banner, wrap them inside `<p align="center">` or `<div align="center">`:
-  ```html
-  <p align="center">
-    <a href="https://example.com/docs"><img src="https://img.shields.io/badge/Docs-Live-brightgreen" alt="Documentation" height="20" /></a>
-    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="20" /></a>
-  </p>
-  ```
+- **Centered Alignment:** Group top-level badges inside `<p align="center">` or `<div align="center">`.
 
 ---
 
-## 5. Enforcement
+## 5. Universal Semantic Versioning in Documentation
 
-Any documentation change that violates Section 1 or Section 4 must be rejected or reverted before commit,
-regardless of how "accurate to the current theme" it appears. Accuracy to a theme is **not** a
-goal of `docs/`.
+All documentation, wiki pages, release references, and badges must consistently use **Semantic Versioning** (`vMAJOR.MINOR.PATCH`, e.g. `v1.0.0`, `v0.1.0`). Milestone-based versioning (`M.01`, etc.) is strictly prohibited across all documentation surfaces.
 
+---
+
+## 6. Enforcement
+
+Any documentation change that creates embedded `docs/` folders in project repositories, violates theme neutrality, introduces Markdown badge syntax, or creates bloated `README.md` files must be rejected and corrected immediately before committing.

@@ -31,4 +31,4 @@ Every modification to styler YAML files must pass the static linter:
 pwsh -NoProfile -File projects/Windhawk-Themes/tools/Test-WindhawkStyles.ps1
 ```
 
-A milestone or sprint is only complete when this gate passes with **0 errors**. Releases carry **zero attached binary assets** and use milestone identifiers (e.g. `M.01`, `M.02b`).
+A milestone or sprint is only complete when this gate passes with **0 errors**. Releases carry **zero attached binary assets** and use Semantic Versioning (e.g. `v0.1.0`, `v0.2.0`).

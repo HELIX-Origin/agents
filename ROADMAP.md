@@ -13,7 +13,7 @@
 - **Single Pane of Glass:** All repository roadmaps, sprints, tasks, and bugs are synchronized here at workspace root.
 - **Mandatory Project Tagging Invariant:** Every tracked milestone, sprint, task, bug, and backlog candidate **must explicitly state its project name and repository path** (`[<project-name>] (<project-path>)`). Unscoped items are strictly prohibited so agents never conflate repositories.
 - **Active Milestones First:** Active workstreams and upcoming milestones must always precede completed historical records.
-- **Strict Typing:** Differentiate explicitly between **SemVer repositories** (`helix-jekyll-theme`, `NH-Reader`, `Universal-Game-Launcher`, `Theme-Toolkit`) and **Milestone/Sprint-tracked repositories** (`Windhawk-Themes`, `helix-origin.github.io`).
+- **Universal Semantic Versioning Invariant:** Every repository across the organization strictly adheres to Semantic Versioning (`vMAJOR.MINOR.PATCH`). Milestone-based releases and milestone git tags are prohibited. Internal project planning milestones (e.g. M1, M2) map directly to planned SemVer versions.
 - **No Stale Ledgers:** Updates to roadmap milestones must occur before or alongside code and configuration changes.
 
 ---
@@ -24,20 +24,18 @@
 flowchart TB
     Org[HELIX Origin Organization] --> DocsTheme["[helix-jekyll-theme] Remote Jekyll Theme"]
     Org --> Portal["[helix-origin.github.io] Portal Hub"]
+    Org --> DocsHub["[docs] Documentation Hub"]
+    Org --> WikiHub["[wiki] Technical Wiki Hub"]
     Org --> DesktopApp["[nh-reader] Desktop/Mobile App"]
     Org --> UniversalLauncher["[universal-game-launcher] Desktop App"]
     Org --> ThemeToolkit["[theme-toolkit] Theme Suite"]
     Org --> ShellMods["[windhawk-themes] Shell Styler Suite"]
-    Org --> GamingDB["[helix-gaming-db] REST Metadata API & Database"]
+    Org --> GamingDB["[helix-gaming-db-00..03] REST Metadata API & Database"]
     Org --> FFXIVConfig["[ffxiv-config] HUD & Macro Suite"]
 
     DocsTheme -.->|remote_theme| Portal
-    DocsTheme -.->|remote_theme| DesktopApp
-    DocsTheme -.->|remote_theme| UniversalLauncher
-    DocsTheme -.->|remote_theme| ThemeToolkit
-    DocsTheme -.->|remote_theme| ShellMods
-    DocsTheme -.->|remote_theme| GamingDB
-    DocsTheme -.->|remote_theme| FFXIVConfig
+    DocsTheme -.->|remote_theme| DocsHub
+    DocsTheme -.->|remote_theme| WikiHub
 ```
 
 1. 🎨 **Unified Design Tokens**: A cohesive dark obsidian aesthetic (`#07111f` / `#0d1b2d`) with cyan (`#48d8f2`) and purple (`#b06cff`) accents across documentation, desktop apps, and OS styling suites.
@@ -48,16 +46,22 @@ flowchart TB
 
 ## 🗺️ Master Milestone & Project Status Matrix
 
-| Project Identifier | Target Repository Path | Tracking Model | Current Milestone / Release | Status | Primary Focus |
+| Project Identifier | Target Repository Path | Tracking Model | Current Release | Status | Primary Focus |
 |---|---|---|---|---|---|
-| **[helix-jekyll-theme]** | `projects/helix-jekyll-theme` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-jekyll-theme/releases/tag/v1.0.0) | ✅ Shipped | Frontmatter nav engine, modular cards, universal navbar |
-| **[helix-origin.github.io]** | `projects/helix-origin.github.io` | Rolling Sprints | Portal v2 | 🚀 Active | 16:9 vector artwork integration, project showcase cards |
-| **[nh-reader]** | `projects/nh-reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/nh-reader/releases/tag/v0.7.5) | 🚀 Active | M13: Unified `.mjs` scripts architecture, main:sub:option command hierarchy, local code signing |
-| **[windhawk-themes]** | `projects/windhawk-themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
-| **[universal-game-launcher]** | `projects/universal-game-launcher` | SemVer | [v1.4.0](https://github.com/HELIX-Origin/universal-game-launcher) | 🚀 Active | M14: Universal Game Launcher Rebranding, Steam/GOG UI, Native In-App Modular Plugins Framework, Generic SQLite Persistence & Modern Visual Identity |
-| **[theme-toolkit]** | `projects/theme-toolkit` | SemVer | [v0.1.0-alpha](https://github.com/HELIX-Origin/theme-toolkit) | 🚀 Active | M1: Framework scaffolded, Per-Platform Lib isolation, native packaging blueprints |
-| **[helix-gaming-db]** | `projects/helix-gaming-db` | SemVer | [v1.1.0](https://github.com/HELIX-Origin/helix-gaming-db) | 🚀 Active | M.02: Three-Tier REST Architecture (Root, v1 client, v2 relational, v3 adult), PR verification automation; M.03: Multi-platform automated ingestion pipeline |
-| **[ffxiv-config]** | `projects/ffxiv-config` | Rolling Releases | [v1.0.0](https://github.com/HELIX-Origin/ffxiv-config) | 🚀 Active | Information-dense HUD, hotbars, job macros, and FFC integration |
+| **[helix-jekyll-theme]** | `projects/helix-jekyll-theme` | SemVer | [v1.1.0](https://github.com/HELIX-Origin/helix-jekyll-theme/releases/tag/v1.1.0) | ✅ Shipped | Frontmatter nav engine, modular cards, universal navbar |
+| **[helix-origin.github.io]** | `projects/helix-origin.github.io` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-origin.github.io/releases/tag/v1.0.0) | 🚀 Active | Organization portal connecting to Docs and Wiki hubs |
+| **[docs]** | `projects/docs` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/docs/releases/tag/v1.0.0) | 🚀 Active | Centralized organization documentation hub |
+| **[wiki]** | `projects/wiki` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/wiki/releases/tag/v1.0.0) | 🚀 Active | Centralized organization technical wiki & curation guidelines |
+| **[nh-reader]** | `projects/nh-reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/nh-reader/releases/tag/v0.7.5) | 🚀 Active | Post-v0.7.5: Unified `.mjs` scripts architecture, local code signing |
+| **[windhawk-themes]** | `projects/windhawk-themes` | SemVer | [v0.1.0](https://github.com/HELIX-Origin/windhawk-themes/releases/tag/v0.1.0) | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons (`v0.2.0`) |
+| **[universal-game-launcher]** | `projects/universal-game-launcher` | SemVer | [v1.3.3](https://github.com/HELIX-Origin/universal-game-launcher/releases/tag/v1.3.3) | 🚀 Active | Universal Game Launcher Rebranding, Modular Plugins Framework (`v1.4.0`) |
+| **[theme-toolkit]** | `projects/theme-toolkit` | SemVer | [v0.1.0](https://github.com/HELIX-Origin/theme-toolkit/releases/tag/v0.1.0) | 🚀 Active | Framework scaffolded, Per-Platform Lib isolation, native packaging blueprints |
+| **[helix-gaming-db-00]** | `projects/helix-gaming-db-00` | SemVer | [v2.0.0](https://github.com/HELIX-Origin/helix-gaming-db-00/releases/tag/v2.0.0) | 🚀 Active | Volume shard 00 (core), automated multi-platform ingestion pipeline |
+| **[helix-gaming-db-01]** | `projects/helix-gaming-db-01` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-gaming-db-01/releases/tag/v1.0.0) | 🚀 Active | Volume shard 01 provisioning, cross-shard deduplication |
+| **[helix-gaming-db-02]** | `projects/helix-gaming-db-02` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-gaming-db-02/releases/tag/v1.0.0) | 🚀 Active | Volume shard 02 provisioning, cross-shard deduplication |
+| **[helix-gaming-db-03]** | `projects/helix-gaming-db-03` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-gaming-db-03/releases/tag/v1.0.0) | 🚀 Active | Volume shard 03 provisioning, cross-shard deduplication |
+| **[ffxiv-config]** | `projects/ffxiv-config` | SemVer | [v0.1.0](https://github.com/HELIX-Origin/ffxiv-config/releases/tag/0.1.0) | 🚀 Active | Information-dense HUD, hotbars, job macros, and FFC integration |
+| **[agents]** | `./` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/agents/releases/tag/v1.0.0) | 🚀 Active | AI governance ecosystem, binding rules, skills, and templates |
 
 ---
 

@@ -38,13 +38,14 @@
    this workspace live in `.agents/`. If a rule there conflicts with anything else, the
    `.agents/rules` files win.
 
-6. **Documentation theme-neutrality invariant.**
-   The `docs/` documentation site — including `docs/_docs/`, `docs/_wiki/`, and root guides — is
-   deliberately **theme-neutral and mod-agnostic**. It explains *how to work with the mods*, never
-   any author's theme. A specific theme/suite (its token names, values, radius scales, colours,
-   geometry) may be described **only** in the **catalogue/store** (`docs/_catalogue/`,
-   `docs/_store/`). **Never make a catalogue theme the source of truth for the docs, and never copy
-   its style references into the docs.** See `.agents/rules/documentation-standards.md`.
+6. **Documentation theme-neutrality & centralized hubs invariant.**
+   All documentation and technical wikis live centrally in the dedicated `docs` (`docs.helix-origin.club`)
+   and `wiki` (`wiki.helix-origin.club`) repositories. Content in `docs/_docs/` and `wiki/_wiki/` is
+   deliberately **theme-neutral and mod-agnostic**. It explains *how to work with the software and mods*,
+   never any author's theme. A specific theme/suite (its token names, values, radius scales, colours,
+   geometry) may be described **only** in the **catalogue/store** (`docs/_catalogue/`).
+   **Never make a catalogue theme the source of truth for the docs, and never copy its style references
+   into the docs.** Project repositories contain no local `docs/` folders. See `.agents/rules/documentation-standards.md`.
 
 7. **Agents ecosystem isolation invariant.**
    The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs `ROADMAP.md`,
@@ -75,6 +76,31 @@
    Never use MIT or other licenses. Any occurrence of MIT in `package.json`, `Cargo.toml`,
    `.gemspec`, `LICENSE*`, or `README.md` must be corrected immediately to `BSD-3-Clause`.
    See `.agents/rules/workspace.md`.
+
+10. **Organization release & asset attachment invariant.**
+   Every repository across `HELIX-Origin` must make use of GitHub Releases. However,
+   release assets must **only** be uploaded to repositories distributing a packaged application
+   or resource (`universal-game-launcher`, `nh-reader`, `theme-toolkit`, `ffxiv-config`).
+   All other repositories (`docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`,
+   `windhawk-themes`, `helix-gaming-db-00` through `03`, `agents`, `.github`) publish
+   zero-asset GitHub Releases with release notes and tags. See `.agents/rules/release-notes.md`.
+
+11. **Organization-wide Semantic Versioning invariant.**
+   All repositories across the `HELIX-Origin` organization strictly adhere to **Semantic
+   Versioning** (`vMAJOR.MINOR.PATCH`, e.g. `v1.0.0`, `v0.1.0`) for all releases, git tags,
+   changelog headers, and version manifests. Milestone-based releases (e.g. `M.01`, `M.02b`)
+   are strictly prohibited organization-wide. Milestone and sprint identifiers may only exist
+   as internal planning scopes within workspace tracking documents (`ROADMAP.md`, `PLAN.md`).
+   See `.agents/rules/release-notes.md`.
+
+12. **Repository README minimal entry point invariant.**
+   Repository root `README.md` files across all project repositories must be concise,
+   minimal entry points (~30–50 lines). Since the organization provides dedicated, centralized
+   documentation (`https://docs.helix-origin.club/<project>/`) and technical wiki
+   (`https://wiki.helix-origin.club/<project>/`) hubs, project READMEs must link directly
+   to these hubs rather than duplicating exhaustive technical specifications, schemas, or
+   manuals. See `.agents/rules/documentation-standards.md`.
+
 
 
 
