@@ -156,6 +156,7 @@
 | Template: Task checklist ledger | `.agents/templates/todo-template.md` |
 | Template: Bug tracker ledger | `.agents/templates/bugs-template.md` |
 | Template: Cleanup failed runs workflow | `.agents/templates/cleanup-failed-runs-workflow-template.yml` |
+| Template: CI workflow (Tauri v2) | `.agents/templates/ci-tauri-workflow-template.yml` |
 | Template: NSIS hooks (Tauri v2 Windows) | `.agents/templates/nsis-hooks-template.nsh` |
 | Template: macOS uninstaller script | `.agents/templates/uninstall-macos-template.sh` |
 | Template: Linux uninstaller script | `.agents/templates/uninstall-linux-template.sh` |

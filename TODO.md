@@ -21,61 +21,45 @@
 
 ## 🔥 Active Workstreams
 
-### 🎯 [helix-gaming-db] & [Universal-Game-Launcher] Workstream W.50: HELIX Gaming DB REST API Foundation, Static v1 Endpoints, JSON Schemas, Remote Theme Docs / Wiki & UGL Integration (Release v1.0.0)
-- **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`), `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`)
+### 🎯 [Universal-Game-Launcher] & [Ecosystem] Workstream W.51: Organization-Wide CI Standards & Continuous Verification Workflows
+- **Project Identifiers:** `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`), `[NH-Reader]` (`projects/NH-Reader`), `[Theme-Toolkit]` (`projects/Theme-Toolkit`), `[helix-docs]` (`projects/helix-docs`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`)
 - **Target Components:**
-  - **Gaming DB API & Schemas (`projects/helix-gaming-db/`)**: `api/v1/manifest.json`, `api/v1/search/index.json`, `api/v1/games/`, `api/v1/developers/`, `schemas/game.schema.json`, `schemas/developer.schema.json`, `schemas/manifest.schema.json`, `scripts/validate.mjs`, `scripts/build-search-index.mjs`, `package.json`
-  - **Gaming DB Documentation & Wiki (`projects/helix-gaming-db/`)**: `_config.yml`, `index.md`, `_docs/`, `_wiki/`, `_data/nav.yml`
-  - **UGL Client Provider (`projects/Universal-Game-Launcher/`)**: `src/lib/plugins/metadata/helix-db.ts`, `src/lib/plugins/metadata/universal.ts`, `src-tauri/src/metadata/universal.rs`, `src/routes/settings/+page.svelte`
+  - **UGL CI (`projects/Universal-Game-Launcher/`)**: `.github/workflows/ci.yml`
+  - **NH-Reader CI (`projects/NH-Reader/`)**: `.github/workflows/ci.yml`
+  - **Theme Toolkit CI (`projects/Theme-Toolkit/`)**: `.github/workflows/ci.yml`
+  - **Helix Docs CI (`projects/helix-docs/`)**: `.github/workflows/ci.yml`
+  - **Portal CI (`projects/helix-origin.github.io/`)**: `.github/workflows/ci.yml`
+  - **Template Architecture (`.agents/templates/`)**: `ci-tauri-workflow-template.yml`
 
 ```mermaid
 flowchart TD
-    W50_1["[helix-gaming-db] 1. Agent Ecosystem Synchronization"] --> W50_2["[helix-gaming-db] 2. Repo Scaffolding & JSON Schemas"]
-    W50_2 --> W50_3["[helix-gaming-db] 3. Static REST v1 Endpoints (Manifest, Search, Games, Devs)"]
-    W50_3 --> W50_4["[helix-gaming-db] 4. Jekyll Remote Theme Docs & Technical Wiki"]
-    W50_4 --> W50_5["[Universal-Game-Launcher] 5. Client Metadata Provider (metadata-helix)"]
-    W50_5 --> W50_Gate["[Ecosystem] 6. Verification Gate (Validation, Jekyll, Tests)"]
+    W51_1["[Universal-Game-Launcher] 1. Tauri v2 CI Workflow Implementation"] --> W51_2["[Universal-Game-Launcher] 2. Push & Actions Verification Gate"]
+    W51_2 --> W51_3["[NH-Reader] 3. Tauri v2 CI Workflow Deployment"]
+    W51_3 --> W51_4["[Theme-Toolkit] 4. Theme Studio CI Deployment"]
+    W51_4 --> W51_5["[helix-docs] 5. Jekyll Theme CI Deployment"]
+    W51_5 --> W51_6["[helix-origin.github.io] 6. Organization Portal CI Deployment"]
 ```
 
 **Locked user directives (normalized by domain):**
-- **1. Dedicated Gaming Metadata Repository & REST API Architecture (`helix-gaming-db`)**:
-  - Establish `helix-gaming-db` as a dedicated repository in the `HELIX-Origin` GitHub organization (`https://github.com/HELIX-Origin/helix-gaming-db`) hosted via GitHub Pages (`https://helix-origin.github.io/helix-gaming-db/`).
-  - Serve static, cacheable JSON endpoints under `/api/v1/` mimicking a production REST API:
-    - `/api/v1/manifest.json`: Database metadata, total game count, total developer count, schema version, and updated timestamp.
-    - `/api/v1/search/index.json`: Lightweight index mapping normalized title slugs and aliases to metadata payloads for instant client-side search.
-    - `/api/v1/games/{slug}.json`: Complete metadata payload for each game (title, aliases, developers, publishers, releaseDate, releaseYear, genres, categories, tags, ageRating, userScore, capsuleImage, heroImage, logoImage, headerImage, screenshots, movies, soundtracks, detailedDescription).
-    - `/api/v1/developers/{slug}.json`: Developer studio profiles, aliases, websites, and associated game slugs.
-- **2. Documentation & Technical Wiki Powered by `helix-docs`**:
-  - Build a rich documentation portal and wiki using `remote_theme: HELIX-Origin/helix-docs`.
-  - Maintain strict documentation theme-neutrality: the docs explain the REST API specifications, endpoints, schema definitions, and contribution workflows without coupling to any theme styling.
-- **3. Curation Standards & Initial Seed Datasets**:
-  - Populate initial high-fidelity seed datasets from our curated hand-rolled catalog (Square Enix, Falcom, Nintendo, Neyor, Sierra Lee, NLT Media, Dr PinkCake, Proxxie, Caribdis, Kompas Productions) with verified Steam CDN and itch artwork.
-  - Implement automated JSON schema validation (`scripts/validate.mjs`) ensuring zero schema drift.
-- **4. Client Integration in Universal Game Launcher**:
-  - Integrate `helix-gaming-db` as a primary high-priority metadata provider (`metadata-helix`) in `Universal-Game-Launcher`, querying the REST API endpoints and falling back gracefully to local offline datasets when disconnected.
+- **1. Standardized Automated Continuous Integration**:
+  - Establish automated CI workflows as an official organization standard across all active repositories in `HELIX-Origin`.
+  - Execute frontend type-checks (`svelte-check` / TypeScript), Rust backend checks (`cargo check`, `cargo test --lib`), schema validations, and Jekyll build checks on every push and pull request.
+  - Implement sequentially, starting with `Universal-Game-Launcher` and progressing across projects one at a time to account for individual repository differences and specific tooling requirements.
 
 **Implementation checklist:**
-- [x] **[helix-gaming-db] 1. Agent Ecosystem & Tracking Ledger Synchronization**:
-  - [x] `[helix-gaming-db]` Register `helix-gaming-db` in `AGENTS.md`, `.agents/rules/workspace.md`, and `.github/copilot-instructions.md`.
-  - [x] `[helix-gaming-db]` Update `ROADMAP.md`, `PLAN.md`, `TODO.md`, and `BUGS.md` with normalized directives, milestone definitions, and atomic execution tasks.
-- [x] **[helix-gaming-db] 2. Repository Scaffolding, Package Manifest & JSON Schemas**:
-  - [x] `[helix-gaming-db]` Initialize `projects/helix-gaming-db` with `.gitignore`, `.gitattributes` (`eol=lf`), `package.json`, and `README.md`.
-  - [x] `[helix-gaming-db]` Create JSON schemas: `schemas/manifest.schema.json`, `schemas/game.schema.json`, `schemas/developer.schema.json`.
-  - [x] `[helix-gaming-db]` Implement `scripts/validate.mjs` and `scripts/build-search-index.mjs` for automated schema testing and index generation.
-- [x] **[helix-gaming-db] 3. Static REST v1 Endpoints & Seed Datasets (`api/v1/`)**:
-  - [x] `[helix-gaming-db]` Author initial developer profiles under `api/v1/developers/` (`square-enix.json`, `falcom.json`, `nintendo.json`, `neyor.json`, `sierra-lee.json`, `nlt-media.json`, `dr-pink-cake.json`, `proxxie.json`, `caribdis.json`, `kompas.json`).
-  - [x] `[helix-gaming-db]` Author initial comprehensive game payloads under `api/v1/games/` (`final-fantasy-xiv-a-realm-reborn.json`, `ys-viii-lacrimosa-of-dana.json`, `crossdressing-in-camelot.json`, `the-last-sovereign.json`, `third-crisis.json`, `the-genesis-order.json`, `treasure-of-nadia.json`, `being-a-dik.json`, `relicts-of-aeson.json`, `eternum.json`, `my-futa-family.json`, etc.).
-  - [x] `[helix-gaming-db]` Generate `api/v1/search/index.json` and `api/v1/manifest.json`.
-- [x] **[helix-gaming-db] 4. Jekyll Remote Theme Docs & Technical Wiki**:
-  - [x] `[helix-gaming-db]` Create `_config.yml` (`remote_theme: HELIX-Origin/helix-docs`), `index.md` (portal homepage and interactive API explorer).
-  - [x] `[helix-gaming-db]` Create documentation pages under `_docs/` (`index.md`, `endpoints.md`, `schemas.md`, `contributing.md`).
-  - [x] `[helix-gaming-db]` Create technical wiki under `_wiki/` (`index.md`, `architecture.md`, `metadata-standards.md`, `artwork-standards.md`).
-- [x] **[Universal-Game-Launcher] 5. Client Metadata Provider Integration (`metadata-helix`)**:
-  - [x] `[Universal-Game-Launcher]` Add `src/lib/plugins/metadata/helix-db.ts` querying `api/v1/search/index.json` and `api/v1/games/{slug}.json` via `api.fetchExternalJson`.
-  - [x] `[Universal-Game-Launcher]` Wire provider into `src/lib/plugins/metadata/universal.ts` as primary authoritative source with multi-domain fallback (`helix-origin.club` -> `helix-origin.github.io`) and local offline catalog backup.
-- [x] **[Ecosystem] 6. Verification Gate & Quality Assurance**:
-  - [x] `[helix-gaming-db]` Run `node scripts/validate.mjs` (0 errors, 100% schemas valid for 62 games and 28 developers).
-  - [x] `[Universal-Game-Launcher]` Run `cargo check`, `cargo test` (35 passing), `svelte-check` (0 errors, 0 warnings).
+- [ ] **[Universal-Game-Launcher] 1. Tauri v2 CI Workflow Deployment**:
+  - [x] `[Universal-Game-Launcher]` Create `.github/workflows/ci.yml` with dual-stage verification (`frontend` on Node 22, `backend` matrix on `windows-latest` and `ubuntu-22.04`).
+  - [x] `[Universal-Game-Launcher]` Run local test verification (`npm test`: check, rust, frontend passing cleanly).
+  - [ ] `[Universal-Game-Launcher]` Commit, push to remote `main`, and verify GitHub Actions CI run succeeds.
+- [ ] **[NH-Reader] 2. Tauri v2 CI Workflow Deployment**:
+  - [ ] `[NH-Reader]` Create `.github/workflows/ci.yml` tailored for desktop reader stack.
+  - [ ] `[NH-Reader]` Verify local compilation and push to remote.
+- [ ] **[Theme-Toolkit] 3. Theme Studio CI Deployment**:
+  - [ ] `[Theme-Toolkit]` Create `.github/workflows/ci.yml` tailored for desktop theme applicator.
+- [ ] **[helix-docs] 4. Jekyll Theme & SCSS CI Deployment**:
+  - [ ] `[helix-docs]` Create `.github/workflows/ci.yml` verifying Ruby/Bundler Jekyll builds and dart-sass stylesheets.
+- [ ] **[helix-origin.github.io] 5. Organization Portal CI Deployment**:
+  - [ ] `[helix-origin.github.io]` Create `.github/workflows/ci.yml` validating portal links and Jekyll site builds.
 
 ---
 
@@ -108,6 +92,9 @@ flowchart TD
 ## ✅ Completed Workstreams (Bare-Minimal Index)
 
 > 📖 **Full Archive Details**: For complete task checklists, locked user directives, and technical scope notes, see [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
+
+### [helix-gaming-db] (projects/helix-gaming-db)
+- **[helix-gaming-db] W.50 — HELIX Gaming DB REST API Foundation, Static v1 Endpoints, JSON Schemas, Remote Theme Docs / Wiki & UGL Integration (v1.0.0)**: Dedicated gaming metadata API and database hosted via GitHub Pages (`api/v1/`), Draft 2020-12 schemas, automated validation, 62 curated games, 28 studio profiles, Jekyll documentation and wiki, and `metadata-helix` client provider in `Universal-Game-Launcher`. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
 
 ### [Universal-Game-Launcher] (projects/Universal-Game-Launcher)
 - **[Universal-Game-Launcher] W.49 — Universal Core Plugins & Global Helpers Architecture, Authentic Vector SVG Platform Icons, Automatic Metadata Engine & Per-Game Customization (v1.4.0)**: Consolidated Universal Core Plugins, Authentic Vector SVG Platform Icons (`PlatformIcon.svelte`), multi-source automatic metadata cascade, `⚙ Manage` per-game customization modal, client discovery across all 7 desktop platforms outside Steam, and modular hand-rolled developer catalog. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
