@@ -136,8 +136,13 @@ flowchart TD
   - [x] `[helix-gaming-api]` Configure Cloudflare edge rate-limiting rules (100 req/min for general endpoints, 20 req/min for bulk endpoints).
   - [x] `[helix-gaming-db-00..03]` Create and verify GitHub push webhooks (`https://api.helix-origin.club/_webhook/github`) on all 4 database shards (`helix-gaming-db-00`, `01`, `02`, `03`) with automated cache purging.
   - [x] `[universal-game-launcher]` Update client `src/lib/plugins/metadata/helix-db.ts` to aggregate multi-shard search indices, prioritize direct shard proxies, and cache data persistently in SQLite KV storage.
-  - [x] `[docs] & [wiki]` Update centralized documentation (`docs`) and technical wiki (`wiki`) to detail rate limiting rules, webhooks, multi-shard search aggregation, and the dynamic `i18next` architecture.
-
+- [x] **[docs] & [wiki] 11. Centralized Documentation & Wiki Routing Normalization & Front Matter Permalinks Fix**:
+  - [x] `[docs]` Fix project index files (`universal-game-launcher`, `nh-reader`, `ffxiv-config`, `windhawk-themes`) that previously carried erroneous `permalink: /docs/`, causing routing collisions and HTTP 404s on project URLs.
+  - [x] `[docs]` Set explicit, predictable permalinks (`/<project>/` for root indices and `/<project>/<article>/` for all sub-articles) across all 56 markdown documentation files.
+  - [x] `[docs]` Establish unique `title:` identifiers and hierarchical `parent: <Project Documentation>` front matter to prevent cross-project navigation tree collisions in `helix-jekyll-theme`'s `nav.html`.
+  - [x] `[wiki]` Fix technical wiki index files (`universal-game-launcher`, `nh-reader`, `windhawk-themes`) that previously carried conflicting `permalink: /wiki/`.
+  - [x] `[wiki]` Normalize permalinks (`/<project>/` and `/<project>/<article>/`), sub-styler paths (`/windhawk-themes/<styler>/overview/`, `configurations/schema/`, `targets/elements/`), and hierarchical parents across all 40 markdown wiki files.
+  - [x] `[docs] & [wiki]` Convert internal cross-site links (`/wiki/...` in docs, `/docs/...` in wiki) to explicit, fully-qualified domain URLs (`https://wiki.helix-origin.club/...` and `https://docs.helix-origin.club/...`) and normalize all files to LF line endings.
 
 ---
 

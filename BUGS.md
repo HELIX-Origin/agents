@@ -129,6 +129,9 @@
 - **[Ecosystem] 2026-10-14 — CRLF Line-Ending Churn:** Machine system git config (`core.autocrlf=true`) rewrote line endings. Resolved by adding explicit `.gitattributes` to all repos and setting user-global `core.autocrlf=input`. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#ecosystem--workspace).
 - **[Ecosystem-Wide] 2026-10-15 — Chromium / WebView2 Window Class Teardown Error (1412):** Clean Win32 HWND unregistration on app exit via atomic `IS_QUITTING` flag and explicit `window.destroy()`. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#ecosystem--workspace).
 
+### [docs] & [wiki] (projects/docs & projects/wiki)
+- **[docs] & [wiki] 2026-10-17 — Project Pages HTTP 404 & Navigation Tree Collision via Overridden Permalinks:** Project index pages (`universal-game-launcher`, `nh-reader`, `ffxiv-config`, `windhawk-themes`) hardcoded `permalink: /docs/` and `permalink: /wiki/` in front matter, colliding with root paths and preventing `/<project>/index.html` generation; generic parent titles (`Documentation Home`, `Documentation Directory`) merged unrelated project documentation sub-pages into a single tangled sidebar tree. Resolved by setting explicit permalinks (`/<project>/` for roots, `/<project>/<article>/` for sub-pages), assigning project-specific parent titles, fixing internal cross-site URLs, and normalizing LF line endings.
+
 ### [helix-gaming-db] (projects/helix-gaming-db)
 - **[helix-gaming-db] 2026-10-17 — GitHub Actions Workflow Failures (`issue-triage.yml` & `ci.yml`):** Unindented multiline template literals in `issue-triage.yml` inline script caused YAML block scalar truncation and syntax errors on push; missing `npm ci` and untracked `package-lock.json` caused runtime module import errors (`i18next`) in `ci.yml`. Fixed by converting inline multiline strings to cleanly indented arrays, tracking `package-lock.json`, and executing automated cleanup of historical failed runs via `cleanup-failed-runs.yml`.
 

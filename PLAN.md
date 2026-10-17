@@ -96,6 +96,13 @@ flowchart TD
    - `[helix-gaming-db-00..03]` Created and verified GitHub push webhooks (`https://api.helix-origin.club/_webhook/github`) on all database shards (`helix-gaming-db-00`, `01`, `02`, `03`) with automated cache purging.
    - `[universal-game-launcher]` Updated client `src/lib/plugins/metadata/helix-db.ts` to aggregate multi-shard search indices, prioritize direct shard proxies, and cache data persistently in SQLite KV storage.
    - `[docs] & [wiki]` Updated centralized documentation (`docs`) and technical wiki (`wiki`) to detail rate limiting rules, webhooks, multi-shard search aggregation, and the dynamic `i18next` architecture.
+11. **[docs] & [wiki] W.54k — Centralized Documentation & Wiki Routing Normalization & Front Matter Permalinks Fix (Delivered)**:
+    - `[docs]` Fixed project index files (`universal-game-launcher`, `nh-reader`, `ffxiv-config`, `windhawk-themes`) that previously carried erroneous `permalink: /docs/`, causing routing collisions and HTTP 404s on project URLs.
+    - `[docs]` Set explicit, predictable permalinks (`/<project>/` for root indices and `/<project>/<article>/` for all sub-articles) across all 56 markdown documentation files.
+    - `[docs]` Established unique `title:` identifiers and hierarchical `parent: <Project Documentation>` front matter to prevent cross-project navigation tree collisions in `helix-jekyll-theme`'s `nav.html`.
+    - `[wiki]` Fixed technical wiki index files (`universal-game-launcher`, `nh-reader`, `windhawk-themes`) that previously carried conflicting `permalink: /wiki/`.
+    - `[wiki]` Normalized permalinks (`/<project>/` and `/<project>/<article>/`), sub-styler paths (`/windhawk-themes/<styler>/overview/`, `configurations/schema/`, `targets/elements/`), and hierarchical parents across all 40 markdown wiki files.
+    - `[docs] & [wiki]` Converted internal cross-site links (`/wiki/...` in docs, `/docs/...` in wiki) to explicit, fully-qualified domain URLs (`https://wiki.helix-origin.club/...` and `https://docs.helix-origin.club/...`) and normalized all files to LF line endings.
 
 ---
 
