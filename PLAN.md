@@ -63,10 +63,10 @@ flowchart TD
 4. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54d — Artwork Backfill & Health Check Workflow (`.github/workflows/enrich-artwork.yml`) (Delivered)**:
    - `[helix-gaming-db-00]` Authored `scripts/enrich-artwork.mjs` and deployed bi-weekly scheduled workflow across all 4 database shards verifying artwork health and backfilling missing assets.
 5. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54e — Multi-Stage Progressive Platform Catalog Rollout (Active)**:
-   - `[helix-gaming-db-01]` Delivered Phase 1 Initial: Top PC Indie & Digital Hits (29 games & 30 developers in `v2`, 100% verified).
-   - `[helix-gaming-db-02]` Delivered Phase 2 Initial: Golden Age 16-bit & 32-bit Consoles (SNES, Genesis, PS1, N64, GBA) (23 games & 12 developers in `v2`, 100% verified).
-   - `[helix-gaming-db-03]` Delivered Phase 3 Initial: Dedicated Visual Novels & Independent Adult Creations (7 games & 7 developers across `v1`, `v2`, and `v3`, 100% verified).
-   - `[helix-gaming-db-00]` Phase 4 Expansion: 6th & 7th Generation 3D Classics (GameCube, PS2, Dreamcast, Wii, PSP) (~500 games in `v2`).
+   - `[helix-gaming-db-01]` Delivered Phase 1 Expansion: Top PC Indie & Digital Hits (46 games & 42 developers in `v2`, 100% verified).
+   - `[helix-gaming-db-02]` Delivered Phase 2 Expansion & 6th/7th Gen 3D Classics: SNES, Genesis, PS1, N64, GBA, PS2, GameCube, Dreamcast, Wii, PSP, DS (42 games & 20 developers in `v2`, 100% verified).
+   - `[helix-gaming-db-03]` Delivered Phase 3 Expansion: Acclaimed Visual Novels & Independent Adult Creations (15 games & 11 developers across `v2` and `v3`, 100% verified).
+   - `[helix-gaming-db-00]` Core Catalog & Shard Ingestion: 80 flagship AAA & PC titles, achieving 183 unique verified games & 119 developers across shards.
    - `[helix-gaming-db-00]` Phase 5 Expansion: Long-Tail Storefronts & Retro Arcade (Epic, EA, Ubisoft, Battle.net, Arcade) (~1,000+ games).
 6. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54f — Outdated Information & Artwork Refresh Pipeline (`check-drift.mjs` & `.github/workflows/update-metadata-drift.yml`)**:
    - `[helix-gaming-db-00]` Create `scripts/ingest/check-drift.mjs` detecting outdated synopses, changed release dates, updated Steam capsules/heroes, and 404 image URLs.
