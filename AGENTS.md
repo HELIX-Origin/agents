@@ -69,6 +69,14 @@
    - Updating and maintaining the agents ecosystem is the **#1 highest priority** above all
      project implementation tasks. See `.agents/rules/workspace.md`.
 
+9. **Organization license invariant — BSD 3-Clause everywhere.**
+   Every repository, project, package, and document across the `HELIX-Origin` organization
+   is strictly licensed under the **BSD 3-Clause "New" or "Revised" License** (`BSD-3-Clause`).
+   Never use MIT or other licenses. Any occurrence of MIT in `package.json`, `Cargo.toml`,
+   `.gemspec`, `LICENSE*`, or `README.md` must be corrected immediately to `BSD-3-Clause`.
+   See `.agents/rules/workspace.md`.
+
+
 
 ## Workspace layout
 
@@ -140,7 +148,7 @@
 | Verification standards | `.agents/rules/verification.md` |
 | Security & secret hygiene | `.agents/rules/security-hygiene.md` |
 | Styling standards & SCSS-first | `.agents/rules/styling-standards.md` |
-| Documentation & content standards (theme-neutrality) | `.agents/rules/documentation-standards.md` |
+| Documentation & content standards (theme-neutrality, HTML badges) | `.agents/rules/documentation-standards.md` |
 | Theme engineering & packaging standards | `.agents/rules/theme-engineering-standards.md` |
 | Shell command rules | `.agents/rules/shell-commands.md` |
 | Project scripts & command standards | `.agents/rules/script-standards.md` |

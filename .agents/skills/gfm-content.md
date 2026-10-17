@@ -57,13 +57,15 @@ flowchart TB
 
 ## When raw HTML is allowed
 
-Only for constructs markdown cannot express:
-- Card/grid layouts, columns, badges, buttons.
+Only for constructs markdown cannot express or cannot adequately control:
+- **Badges (HTML Badge Standard)**: Always use HTML `<a><img src="..." alt="..." height="20" /></a>` instead of Markdown badge syntax (`[![alt](src)](url)`). Specifying `height="20"` enforces uniform rendering dimensions and prevents layout shift across display densities. Wrap badge groups in `<p align="center">` or `<div align="center">` when centering.
+- Card/grid layouts, columns, and buttons.
 - Iframes / embedded media (YouTube etc.).
 - Tables needing `rowspan`/`colspan` or multi-paragraph cells.
 
 Keep HTML blocks isolated (blank line before and after) so Kramdown still renders the rest
 of the page as markdown.
+
 
 ## Verification pass
 

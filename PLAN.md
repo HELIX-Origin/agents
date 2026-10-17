@@ -47,6 +47,9 @@ flowchart TD
    - `[helix-gaming-api]` Deployed Cloudflare Worker Gateway (`helix-gaming-api` v2.0) on `api.helix-origin.club` supporting Mode 2 Unified Gateway (`/api/v{1,2,3}/...`) and Mode 1 Direct Shard Proxy (`/helix-gaming-db-{NN}/...`).
    - `[universal-game-launcher]` Updated `src/lib/plugins/metadata/helix-db.ts` to seamlessly query the Unified Gateway and cycle through shards (`helix-gaming-db-00`, `01`, `02`, `03`).
    - `[Ecosystem]` Purged `docs/` folders and disabled GitHub Pages across `universal-game-launcher`, `nh-reader`, `windhawk-themes`, and `ffxiv-config`.
+0b. **[Ecosystem] W.54_badges — Universal HTML Badge Standards Migration**:
+   - `[Ecosystem]` Established binding HTML Badge Standard across `.agents/rules/documentation-standards.md`, `.agents/skills/gfm-content.md`, `AGENTS.md`, and `.github/copilot-instructions.md`, requiring raw HTML `<a><img src="..." alt="..." height="20" /></a>` with explicit `height="20"` to prevent badge stretching and layout shift.
+   - `[Ecosystem]` Converted badges across all project READMEs (`docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `universal-game-launcher`, `nh-reader`, `theme-toolkit`, `windhawk-themes`, `ffxiv-config`, `helix-gaming-db-00` through `03`, and workspace root) to compliant HTML badges.
 1. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54a — Platform Ingestion Scripts Suite (`scripts/ingest/`)**:
    - `[helix-gaming-db-00]` Create `scripts/ingest/ingest-steam.mjs`: Steam App Details & Store API scraper extracting title, synopsis, creators, tags, release dates, screenshots, videos, and 600×900 capsule artwork.
    - `[helix-gaming-db-00]` Create `scripts/ingest/ingest-gog.mjs`: GOG Catalog v1 & Product Details scraper extracting DRM-free metadata and high-res cover art.

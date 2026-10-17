@@ -1,6 +1,14 @@
 # HELIX Origin — AI Agents Ecosystem & Workspace Governance
 
-> Centralized AI agent instructions, binding rules, engineering skills, templates, and workspace coordination framework for all repositories within the [HELIX Origin](https://github.com/HELIX-Origin) organization (`helix-docs`, `helix-origin.github.io`, `NH-Reader`, `Universal-Game-Launcher`, `Theme-Toolkit`, `Windhawk-Themes`).
+<p align="center">
+  <a href="https://github.com/HELIX-Origin"><img src="https://img.shields.io/badge/Organization-HELIX--Origin-blue?logo=github" alt="HELIX Origin" height="20" /></a>
+  <a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD--3--Clause-blue.svg" alt="License: BSD-3-Clause" height="20" /></a>
+  <a href="https://docs.helix-origin.club"><img src="https://img.shields.io/badge/Docs-docs.helix--origin.club-brightgreen" alt="Documentation Hub" height="20" /></a>
+  <a href="https://wiki.helix-origin.club"><img src="https://img.shields.io/badge/Wiki-wiki.helix--origin.club-brightgreen" alt="Technical Wiki" height="20" /></a>
+</p>
+
+
+> Centralized AI agent instructions, binding rules, engineering skills, templates, and workspace coordination framework for all active repositories within the [HELIX Origin](https://github.com/HELIX-Origin) organization (`helix-jekyll-theme`, `helix-origin.github.io`, `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `ffxiv-config`).
 
 ---
 
@@ -151,4 +159,4 @@ bash clone-org-repos-macos.sh
 
 ## 📄 License
 
-This repository is licensed under the [MIT License](LICENSE).
+This repository is licensed under the [BSD-3-Clause License](LICENSE).

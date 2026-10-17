@@ -66,8 +66,28 @@ When genuinely unsure whether content is "docs" or "catalogue", **ask the user**
 
 ---
 
-## 4. Enforcement
+## 4. HTML Badge Standards (MANDATORY)
 
-Any documentation change that violates Section 1 must be rejected or reverted before commit,
+All badges (shields.io, status, release, documentation, license, CI/CD) across all Markdown documents (`README.md`, `docs/`, `wiki/`, and root tracking files) **must** use raw HTML `<a>` and `<img>` tags rather than Markdown syntax (`[![alt](src)](url)`).
+
+- **Rationale:** Markdown image syntax does not support explicit dimension attributes (`height`, `width`). This leads to visual inconsistency, uncontrolled badge expansion/stretching across high-DPI displays, and cumulative layout shifts. Raw HTML enables strict control over rendering dimensions and layout alignment.
+- **Standard Height:** Badges must explicitly declare `height="20"` on their `<img>` tag:
+  ```html
+  <a href="https://example.com"><img src="https://img.shields.io/badge/Status-Live-brightgreen" alt="Status" height="20" /></a>
+  ```
+- **Grouping & Alignment:** When grouping badges at the top of a document or centered under a hero banner, wrap them inside `<p align="center">` or `<div align="center">`:
+  ```html
+  <p align="center">
+    <a href="https://example.com/docs"><img src="https://img.shields.io/badge/Docs-Live-brightgreen" alt="Documentation" height="20" /></a>
+    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="20" /></a>
+  </p>
+  ```
+
+---
+
+## 5. Enforcement
+
+Any documentation change that violates Section 1 or Section 4 must be rejected or reverted before commit,
 regardless of how "accurate to the current theme" it appears. Accuracy to a theme is **not** a
 goal of `docs/`.
+

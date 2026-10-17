@@ -20,6 +20,10 @@
 4. **Tracking & Archive Document Discipline:** Keep `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`, and `.github/*-ARCHIVE.md` 100% accurate with the active direction of all projects, with normalized, domain-categorized directives and zero non-org or deleted repo mentions.
 5. **Theme Release Precedence:** The shared Jekyll theme repository (`projects/helix-jekyll-theme`) must always be verified and released before consuming projects.
 6. **Documentation Theme-Neutrality:** Documentation (`docs/`, including `docs/wiki/`) must stay theme-neutral and mod-agnostic — it explains *how to work with the mods*, not any author's theme. Author-specific themes/suites (token names, values, radius scales, geometry) belong **only** in `docs/_catalogue/` and `docs/_store/`. Never make a catalogue theme the source of truth for the docs, and never copy its style references into the docs. See `.agents/rules/documentation-standards.md`.
+7. **HTML Badge Standard:** Always use raw HTML `<a><img src="..." alt="..." height="20" /></a>` for badges across all Markdown files (`README.md`, `docs/`, `wiki/`). Explicit `height="20"` ensures consistent sizing and prevents layout shifts. Never use Markdown badge syntax (`[![alt](src)](url)`). See `.agents/rules/documentation-standards.md`.
+8. **Organization License Invariant:** All repositories, packages, manifests (`package.json`, `Cargo.toml`, `.gemspec`), and documents across the `HELIX-Origin` organization are strictly licensed under the **BSD 3-Clause License** (`BSD-3-Clause`). Never use MIT or other licenses. All license badges must link to the BSD-3-Clause license. See `.agents/rules/workspace.md`.
+
+
 
 ---
 

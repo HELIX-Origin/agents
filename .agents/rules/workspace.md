@@ -40,6 +40,17 @@ Updating and maintaining the agents ecosystem (`AGENTS.md`, `.agents/rules/`, `.
 
 The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) lives strictly at the workspace root (`projects/agents`). It is **never** stored inside the individual project repositories under `projects/` and **must never be mentioned, referenced, or linked** inside any project repository (e.g. in `README.md`, documentation, code comments, or configuration files). Project repositories are public, standalone open-source codebases whose documentation must remain completely self-contained for external human contributors.
 
+## Organization License Invariant — BSD 3-Clause (BINDING)
+
+Every repository, project, package, and document across the `HELIX-Origin` organization is strictly licensed under the **BSD 3-Clause "New" or "Revised" License** (`BSD-3-Clause`).
+- **Never use MIT or other licenses.** Any occurrence of MIT or other license types in `package.json`, `Cargo.toml`, `.gemspec`, `LICENSE*`, or `README.md` is a violation of organization invariants and must be corrected immediately to `BSD-3-Clause`.
+- Every project repository and workspace root must contain a root `LICENSE.md` (or `LICENSE`) file with the standard BSD 3-Clause legal text copyright to `HELIX Origin`.
+- All license badges in `README.md` must use the HTML badge standard:
+  ```html
+  <a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD--3--Clause-blue.svg" alt="License: BSD-3-Clause" height="20" /></a>
+  ```
+
+
 ## Tracking docs contract
 
 - `ROADMAP.md` — master roadmap, milestone delivery history, organization architecture, and project direction.

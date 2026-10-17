@@ -49,8 +49,21 @@ flowchart TD
   - Automatically route family/general titles to `v2` and explicit adult (18+) creations to `v3`.
 - **3. Scheduled GitHub Actions Automation**:
   - Deploy automated scheduled workflows to run ingestion batches in the background and open pull requests for validation.
+- **4. HTML Badge Standards**:
+  - Always use raw HTML `<a><img src="..." alt="..." height="20" /></a>` for shields.io and status badges across all Markdown files to allow better control over their rendering sizes and prevent layout shifts across high-DPI displays. Never use Markdown badge syntax (`[![alt](src)](url)`).
 
 **Implementation checklist:**
+- [x] **[Ecosystem] 0a. Universal HTML Badge Standards Migration**:
+  - [x] Update agent rules (`documentation-standards.md`, `gfm-content.md`, `AGENTS.md`, `copilot-instructions.md`) to establish mandatory HTML badges with explicit `height="20"`.
+  - [x] Migrate all project and root README files from Markdown badges to standard HTML badges with `height="20"`.
+
+- [x] **[Ecosystem] 0b. Organization License & GitHub Repository Metadata Synchronization**:
+  - [x] Deploy canonical GitHub BSD-3-Clause `LICENSE` file across all 14 local repositories and workspace root.
+  - [x] Synchronize manifests (`package.json`, `Cargo.toml`, `helix-docs.gemspec`) and badges to strictly use `BSD-3-Clause`.
+  - [x] Update GitHub repository metadata (descriptions, homepages pointing to `docs.helix-origin.club` / `wiki.helix-origin.club`, and topic tags) across all 15 repositories in the `HELIX-Origin` organization.
+  - [x] Update portal repo (`helix-origin.github.io`) to strictly link to Docs Hub and Wiki Hub, removing raw API JSON gateway links and letting Docs and Wiki handle all project-specific information.
+
+
 - [x] **[helix-gaming-db-00] 0. Volume-Sharded Multi-Repository Federation, Centralized Docs/Wiki Split & Cloudflare Worker Gateway (00, 01, 02, 03, docs, wiki, api)**:
   - [x] `[docs]` Create dedicated public repository `HELIX-Origin/docs`, provision `PAT_TOKEN`, configure GitHub Pages (`docs.helix-origin.club`), and set up `remote_theme: HELIX-Origin/helix-jekyll-theme`.
   - [x] `[wiki]` Create dedicated public repository `HELIX-Origin/wiki`, provision `PAT_TOKEN`, configure GitHub Pages (`wiki.helix-origin.club`), and set up `remote_theme: HELIX-Origin/helix-jekyll-theme`.
