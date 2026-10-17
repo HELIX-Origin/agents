@@ -65,6 +65,10 @@ flowchart TD
   - [x] `[helix-docs]` Update `_docs/endpoints.md` with complete reference of Root, v1, v2, and v3 adult REST routes.
   - [x] `[helix-docs]` Update `_docs/contributing.md` with fork/PR developer workflow, starter templates, and issue template links.
   - [x] `[helix-docs]` Update `_docs/index.md` and `_wiki/architecture.md` with 3-tier architecture overview and Mermaid topology.
+- [x] **[helix-gaming-db] 5. Automated PR Verification, Review Decision & Issue Triage Workflows**:
+  - [x] `[helix-gaming-db]` Author `scripts/verify-pr.mjs` scanning changed game and developer payloads for schema conformity, slug matching, HTTPS artwork validity, and studio cross-referencing.
+  - [x] `[helix-gaming-db]` Deploy `.github/workflows/pr-automation.yml` with automated comment reporting, label management (`status: validated`, `ready-to-merge` vs `needs-work`), and `APPROVE` / `REQUEST_CHANGES` GitHub reviews.
+  - [x] `[helix-gaming-db]` Deploy `.github/workflows/issue-triage.yml` auto-labeling new game requests, metadata corrections, and developer studio requests with helpful fast-track contribution guidance.
 
 ---
 

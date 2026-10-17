@@ -50,6 +50,10 @@ flowchart TD
    - `[helix-gaming-db]` Author `.github/ISSUE_TEMPLATE/01_new_game_request.yml`, `02_metadata_correction.yml`, `03_new_developer_request.yml`, `config.yml`, and `.github/pull_request_template.md`.
 5. **[helix-gaming-db] (projects/helix-gaming-db) W.52e — Documentation & Wiki Sync (Done)**:
    - `[helix-gaming-db]` Update `_docs/endpoints.md`, `_docs/contributing.md`, `_docs/index.md`, and `_wiki/architecture.md` with complete 3-tier REST architecture and diagrams.
+6. **[helix-gaming-db] (projects/helix-gaming-db) W.52f — Automated PR Verification, Review & Issue Triage Workflows (Done)**:
+   - `[helix-gaming-db]` Create `scripts/verify-pr.mjs` verifying JSON schema, slug naming, HTTPS artwork validity, and studio cross-referencing.
+   - `[helix-gaming-db]` Deploy `.github/workflows/pr-automation.yml` (scans PRs, comments with diagnostic table, labels `status: validated` / `needs-work`, and submits APPROVE or REQUEST_CHANGES reviews).
+   - `[helix-gaming-db]` Deploy `.github/workflows/issue-triage.yml` (auto-triages issue templates with domain labels and guidance comments).
 
 ---
 
