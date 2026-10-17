@@ -126,8 +126,8 @@ flowchart TD
   - [x] `[helix-gaming-db-00]` Architect multi-repo volume sharding and cycling framework (`/api/v2/federation/index.json` and `shards.json`) to prevent GitHub free user storage and file count ceilings.
   - [x] `[docs] & [wiki]` Decouple Jekyll documentation and wiki sites out of metadata shards into dedicated repositories `HELIX-Origin/docs` and `HELIX-Origin/wiki`.
   - [x] `[helix-gaming-db-00]` Register volume shards (`helix-gaming-db-00`, `01`, `02`, `03`) where each shard supports all platforms and providers.
-  - [x] `[helix-gaming-db-00]` Update root manifest (`/api/manifest.json`), v1, v2, and v3 manifests with `federation` metadata.
-  - [x] `[universal-game-launcher]` Add multi-repo cycling to `helix-db.ts` across `helix-gaming-db-00`, `01`, `02`, and `03`.
+  - [x] `[universal-game-launcher]` Add multi-repo dynamic federation discovery to `helix-db.ts` (`getActiveShards()`) cycling across all active and future volume shards (`00` through `03`, `04`, ...) with 7-day SQLite KV fallback.
+  - [x] `[universal-game-launcher]` Milestone M14 Patch Release v1.4.1: Bump version to 1.4.1, document dynamic discovery in CHANGELOG.md, author `.github/releases/v1.4.1.md`, verify local test suites, commit, tag `v1.4.1`, and push to origin.
 - [x] **[Ecosystem] 9. Automated Secret & PAT Replication Across Projects**:
   - [x] `[Ecosystem]` Replicate shared legacy `PAT_TOKEN` secret across all organization repositories via `gh secret set`.
   - [x] `[agents]` Protect `.env` in root `.gitignore` and save `PAT_TOKEN` / `GITHUB_TOKEN` to local untracked `.env` file for agent automation.

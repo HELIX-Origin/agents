@@ -165,6 +165,9 @@ flowchart LR
     - **Single-Game Showcase View (`/library`)**: Top action bar (`▶ Play`, `⚙ Manage`, `★`, `➕ Add Game`), 16:9 Hero Banner with 2:3 Portrait Capsule, Media Gallery with fullscreen lightbox, Video Trailers player, Game Audio & Soundtracks player, Meta & Reference Links, Game Information, Installation & Storage, and Playtime Tracking cards.
   - **Unified Social Hub (`/social`) & Storefront Catalog (`/store`)**: Cross-platform friends roster with native protocol shortcuts and zero-payment storefront discovery hub.
   - **Generic SQLite Database (`database.sqlite`) & In-Memory KV (`mem_kv`)**: Sub-millisecond (<1ms) retrieval with WAL mode and non-blocking background worker (`src/lib/worker.ts`) + headless CLI (`--cli`).
+- **[universal-game-launcher] Milestone M14 Patch v1.4.1: Dynamic Federation Discovery & Multi-Shard Scaling (DELIVERED):**
+  - **Dynamic Shard Resolution (`getActiveShards()`)**: Replaced static 4-shard constraint with dynamic federation manifest querying (`/api/v2/federation/shards.json`), enabling real-time scaling to newly provisioned volume shards (`helix-gaming-db-04`, `05`, etc.) without requiring application updates.
+  - **Multi-Tier Resilient Offline Caching**: Persists active shard rosters in local SQLite key-value storage for up to 7 days, maintaining instant 0ms offline startup and transparent error recovery.
 
 ---
 
