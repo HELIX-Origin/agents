@@ -12,7 +12,7 @@
 
 - **100% Active Direction Accuracy**: This file and its companion ledgers (`ROADMAP.md`, `PLAN.md`, `BUGS.md`) must always reflect the current, active direction of all projects with zero contradictions. Whenever a requirement changes or supersedes an earlier decision, immediately replace or remove the superseded statements in place.
 - **Normalized & Categorized Locked User Directives**: Never paste raw chronological chat logs or contradictory historical quotes. Rewrite user directives into clean, typo-free engineering specifications grouped under explicit bold domain sub-headers so it is immediately clear what goes to what.
-- **Zero Non-Organization Mentions**: Only reference active repositories belonging to the `HELIX-Origin` GitHub organization (`helix-docs`, `helix-origin.github.io`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db`, `ffxiv-config`). Never directly mention external, third-party, or deleted projects/repositories by name.
+- **Zero Non-Organization Mentions**: Only reference active repositories belonging to the `HELIX-Origin` GitHub organization (`helix-jekyll-theme`, `helix-origin.github.io`, `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `ffxiv-config`). Never directly mention external, third-party, or deleted projects/repositories by name.
 - **Atomic Checklist Groups & Archival**: Group checklist items by functional component (`- [ ] **[<project-name>] Component Group**:` followed by atomic `- [ ]` sub-tasks). Never stuff multiple distinct deliverables into a single run-on paragraph. Move completed workstreams to [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md) and leave a concise single-line summary under `## ✅ Completed Workstreams`.
 - **Mandatory Project Tagging**: Every workstream, checklist group, task, and backlog item must explicitly include its current project tag (`[<project-name>] (<project-path>)`).
 - **Active Items First**: The currently active workstream must always be placed at the top of the content sections.
@@ -51,16 +51,22 @@ flowchart TD
   - Deploy automated scheduled workflows to run ingestion batches in the background and open pull requests for validation.
 
 **Implementation checklist:**
-- [ ] **[helix-gaming-db-00] 0. Volume-Sharded Multi-Repository Federation & Centralized Docs/Wiki Split (00, 01, 02, 03, docs, wiki)**:
-  - [ ] `[docs]` Create dedicated public repository `HELIX-Origin/docs`, provision `PAT_TOKEN`, configure GitHub Pages (`helix-origin.club/docs`), and set up `remote_theme: HELIX-Origin/helix-docs`.
-  - [ ] `[wiki]` Create dedicated public repository `HELIX-Origin/wiki`, provision `PAT_TOKEN`, configure GitHub Pages (`helix-origin.club/wiki`), and set up `remote_theme: HELIX-Origin/helix-docs`.
-  - [ ] `[helix-gaming-db-00]` Rename existing GitHub repository `helix-gaming-db` to `helix-gaming-db-00` and update local folder to `projects/helix-gaming-db-00`.
-  - [ ] `[helix-gaming-db-00]` Migrate docs to `docs` and wiki to `wiki`, leaving `helix-gaming-db-00` as a pure REST metadata API repository.
-  - [ ] `[helix-gaming-db-01]` Create public repository `HELIX-Origin/helix-gaming-db-01`, provision `PAT_TOKEN`, and seed with identical boilerplate, schemas, validation scripts, workflows, and i18n locales.
-  - [ ] `[helix-gaming-db-02]` Create public repository `HELIX-Origin/helix-gaming-db-02`, provision `PAT_TOKEN`, and seed with identical boilerplate, schemas, validation scripts, workflows, and i18n locales.
-  - [ ] `[helix-gaming-db-03]` Create public repository `HELIX-Origin/helix-gaming-db-03`, provision `PAT_TOKEN`, and seed with identical boilerplate, schemas, validation scripts, workflows, and i18n locales.
-  - [ ] `[helix-gaming-db-00]` Implement cross-shard deduplication & ownership verification in `scripts/verify-pr.mjs` across all 4 shard repositories (failing PR if metadata already exists in a sibling shard).
-  - [ ] `[universal-game-launcher]` Update client `src/lib/plugins/metadata/helix-db.ts` to seamlessly cycle through all four active metadata repositories (`helix-gaming-db-00`, `01`, `02`, `03`).
+- [x] **[helix-gaming-db-00] 0. Volume-Sharded Multi-Repository Federation, Centralized Docs/Wiki Split & Cloudflare Worker Gateway (00, 01, 02, 03, docs, wiki, api)**:
+  - [x] `[docs]` Create dedicated public repository `HELIX-Origin/docs`, provision `PAT_TOKEN`, configure GitHub Pages (`docs.helix-origin.club`), and set up `remote_theme: HELIX-Origin/helix-jekyll-theme`.
+  - [x] `[wiki]` Create dedicated public repository `HELIX-Origin/wiki`, provision `PAT_TOKEN`, configure GitHub Pages (`wiki.helix-origin.club`), and set up `remote_theme: HELIX-Origin/helix-jekyll-theme`.
+  - [x] `[helix-gaming-db-00]` Rename existing GitHub repository `helix-gaming-db` to `helix-gaming-db-00` and update local folder to `projects/helix-gaming-db-00`.
+  - [x] `[helix-gaming-db-00]` Migrate docs to `docs` and wiki to `wiki`, removing Jekyll files from `helix-gaming-db-00` leaving it as a pure REST metadata API repository.
+  - [x] `[docs]` Update `_config.yml` to `remote_theme: HELIX-Origin/helix-jekyll-theme` and author comprehensive documentation covering every project in `HELIX-Origin` (`universal-game-launcher`, `nh-reader`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db`, `ffxiv-config`, `helix-jekyll-theme`).
+  - [x] `[wiki]` Update `_config.yml` to `remote_theme: HELIX-Origin/helix-jekyll-theme` and author comprehensive technical wikis covering every project in `HELIX-Origin`.
+  - [x] `[Ecosystem]` Purge `docs/` folders and Jekyll configuration from all project repositories (`universal-game-launcher`, `nh-reader`, `windhawk-themes`, `ffxiv-config`) to maintain clean, standalone codebases.
+  - [x] `[Ecosystem]` Disable GitHub Pages across all project repositories via GitHub API, reserving Pages strictly for `helix-origin.github.io`, `docs`, `wiki`, and `helix-jekyll-theme`.
+  - [x] `[helix-gaming-db-01]` Create public repository `HELIX-Origin/helix-gaming-db-01`, provision `PAT_TOKEN`, and seed with identical boilerplate, schemas, validation scripts, workflows, and i18n locales.
+  - [x] `[helix-gaming-db-02]` Create public repository `HELIX-Origin/helix-gaming-db-02`, provision `PAT_TOKEN`, and seed with identical boilerplate, schemas, validation scripts, workflows, and i18n locales.
+  - [x] `[helix-gaming-db-03]` Create public repository `HELIX-Origin/helix-gaming-db-03`, provision `PAT_TOKEN`, and seed with identical boilerplate, schemas, validation scripts, workflows, and i18n locales.
+  - [x] `[helix-gaming-db-00]` Implement cross-shard deduplication & ownership verification in `scripts/lib/cross-shard-dedup.mjs`, `scripts/validate.mjs`, and `scripts/verify-pr.mjs` checking both committed code and open PRs across all 4 shard repositories.
+  - [x] `[helix-gaming-db-00]` Implement shard cycling PR router (`scripts/lib/shard-router.mjs` and `api/v2/contribute/router.json`) to open update PRs in owner repos and cycle new metadata PRs to the first shard without code or PR collisions.
+  - [x] `[helix-gaming-api]` Deploy Cloudflare Worker Gateway (`helix-gaming-api` v2.0) on `api.helix-origin.club` supporting Mode 2 Unified Gateway (`/api/v{1,2,3}/...`) and Mode 1 Direct Shard Proxy (`/helix-gaming-db-{NN}/...`).
+  - [x] `[universal-game-launcher]` Update client `src/lib/plugins/metadata/helix-db.ts` to seamlessly query the Unified Gateway and cycle through all four active metadata repositories (`helix-gaming-db-00`, `01`, `02`, `03`).
 - [ ] **[helix-gaming-db-00] 1. Platform Ingestion Scripts Suite (`scripts/ingest/`)**:
   - [ ] `[helix-gaming-db-00]` Create `scripts/ingest/ingest-steam.mjs` for Steam PC storefront titles.
   - [ ] `[helix-gaming-db-00]` Create `scripts/ingest/ingest-gog.mjs` for GOG DRM-free releases.
@@ -90,7 +96,7 @@ flowchart TD
   - [x] `[universal-game-launcher]` Update Three-Tier client (`src/lib/plugins/metadata/helix-db.ts`) with `preferred_language` setting and dynamic localized metadata resolution.
 - [ ] **[helix-gaming-db-00] 8. Volume-Sharded Multi-Repository Federation & Dedicated Docs Split**:
   - [x] `[helix-gaming-db-00]` Architect multi-repo volume sharding and cycling framework (`/api/v2/federation/index.json` and `shards.json`) to prevent GitHub free user storage and file count ceilings.
-  - [ ] `[helix-gaming-db-docs]` Split Jekyll documentation site and wiki out of metadata shards into dedicated repository `HELIX-Origin/helix-gaming-db-docs`.
+  - [x] `[docs] & [wiki]` Decouple Jekyll documentation and wiki sites out of metadata shards into dedicated repositories `HELIX-Origin/docs` and `HELIX-Origin/wiki`.
   - [ ] `[helix-gaming-db-00]` Register volume shards (`helix-gaming-db-00`, `01`, `02`, `03`) where each shard supports all platforms and providers.
   - [x] `[helix-gaming-db-00]` Update root manifest (`/api/manifest.json`), v1, v2, and v3 manifests with `federation` metadata.
   - [ ] `[universal-game-launcher]` Add multi-repo cycling to `helix-db.ts` across `helix-gaming-db-00`, `01`, `02`, and `03`.
@@ -103,12 +109,12 @@ flowchart TD
 ---
 
 ### 🎯 [universal-game-launcher] & [Ecosystem] Workstream W.51: Organization-Wide CI Standards & Continuous Verification Workflows
-- **Project Identifiers:** `[universal-game-launcher]` (`projects/universal-game-launcher`), `[nh-reader]` (`projects/nh-reader`), `[theme-toolkit]` (`projects/theme-toolkit`), `[helix-docs]` (`projects/helix-docs`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`)
+- **Project Identifiers:** `[universal-game-launcher]` (`projects/universal-game-launcher`), `[nh-reader]` (`projects/nh-reader`), `[theme-toolkit]` (`projects/theme-toolkit`), `[helix-jekyll-theme]` (`projects/helix-jekyll-theme`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`)
 - **Target Components:**
   - **UGL CI (`projects/universal-game-launcher/`)**: `.github/workflows/ci.yml`
   - **NH-Reader CI (`projects/nh-reader/`)**: `.github/workflows/ci.yml`
   - **Theme Toolkit CI (`projects/theme-toolkit/`)**: `.github/workflows/ci.yml`
-  - **Helix Docs CI (`projects/helix-docs/`)**: `.github/workflows/ci.yml`
+  - **Helix Jekyll Theme CI (`projects/helix-jekyll-theme/`)**: `.github/workflows/ci.yml`
   - **Portal CI (`projects/helix-origin.github.io/`)**: `.github/workflows/ci.yml`
   - **Template Architecture (`.agents/templates/`)**: `ci-tauri-workflow-template.yml`
 
@@ -117,7 +123,7 @@ flowchart TD
     W51_1["[universal-game-launcher] 1. Tauri v2 CI Workflow Implementation"] --> W51_2["[universal-game-launcher] 2. Push & Actions Verification Gate"]
     W51_2 --> W51_3["[nh-reader] 3. Tauri v2 CI Workflow Deployment"]
     W51_3 --> W51_4["[theme-toolkit] 4. Theme Studio CI Deployment"]
-    W51_4 --> W51_5["[helix-docs] 5. Jekyll Theme CI Deployment"]
+    W51_4 --> W51_5["[helix-jekyll-theme] 5. Jekyll Theme CI Deployment"]
     W51_5 --> W51_6["[helix-origin.github.io] 6. Organization Portal CI Deployment"]
 ```
 
@@ -137,8 +143,8 @@ flowchart TD
   - [ ] `[nh-reader]` Verify local compilation and push to remote.
 - [ ] **[theme-toolkit] 3. Theme Studio CI Deployment**:
   - [ ] `[theme-toolkit]` Create `.github/workflows/ci.yml` tailored for desktop theme applicator.
-- [ ] **[helix-docs] 4. Jekyll Theme & SCSS CI Deployment**:
-  - [ ] `[helix-docs]` Create `.github/workflows/ci.yml` verifying Ruby/Bundler Jekyll builds and dart-sass stylesheets.
+- [ ] **[helix-jekyll-theme] 4. Jekyll Theme & SCSS CI Deployment**:
+  - [ ] `[helix-jekyll-theme]` Create `.github/workflows/ci.yml` verifying Ruby/Bundler Jekyll builds and dart-sass stylesheets.
 - [ ] **[helix-origin.github.io] 5. Organization Portal CI Deployment**:
   - [ ] `[helix-origin.github.io]` Create `.github/workflows/ci.yml` validating portal links and Jekyll site builds.
 
@@ -151,10 +157,10 @@ flowchart TD
 - [ ] `[nh-reader]` **Multi-Profile Partitioning**: Allow switching between isolated library/blacklist profile stores.
 - [ ] `[nh-reader]` **Background Update Inspection**: Non-intrusive GitHub release notification check on app launch.
 
-### [helix-docs] (projects/helix-docs) — v1.1.0 Candidates
-- [ ] `[helix-docs]` **Mermaid Helper Component**: Client-side rendering helper for legible ` ```mermaid ` fences.
-- [ ] `[helix-docs]` **In-Page TOC Module**: Robust sidebar TOC parser resolving `BUG-14`.
-- [ ] `[helix-docs]` **Dynamic Catalogue Filters**: Interactive category filtering for software and theme showrooms.
+### [helix-jekyll-theme] (projects/helix-jekyll-theme) — v1.1.0 Candidates
+- [ ] `[helix-jekyll-theme]` **Mermaid Helper Component**: Client-side rendering helper for legible ` ```mermaid ` fences.
+- [ ] `[helix-jekyll-theme]` **In-Page TOC Module**: Robust sidebar TOC parser resolving `BUG-14`.
+- [ ] `[helix-jekyll-theme]` **Dynamic Catalogue Filters**: Interactive category filtering for software and theme showrooms.
 
 ### [windhawk-themes] (projects/windhawk-themes) — M.04 Candidates
 - [ ] `[windhawk-themes]` **Theme Catalogue Integration**: Generate Jekyll showcase documentation in `docs/_catalogue/`.
@@ -204,18 +210,18 @@ flowchart TD
 ### [nh-reader] (projects/nh-reader)
 - **[nh-reader] Milestones M1–M12 & Web Assets (v0.1.0 – v0.7.5)**: Core foundation, browse, search filter drawer, blacklist stream buffering, responsive reader, 18-language localization core, NSIS installer polish, squircle website assets, unified `npm run sign` script. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
 
-### [helix-docs] (projects/helix-docs)
-- **[helix-docs] W.14 — Doc Site Refinements — Catalogue Width & ShareX Copy**: Expanded catalogue min column width to 400px, ShareX workflow docs. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
-- **[helix-docs] W.10 — Home Page (vCard Pattern) Documentation**: Modular card authoring guide for landing pages. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
-- **[helix-docs] W.06 & W.07 — Sidebar, Mermaid Rendering & Branding Artwork**: Fixed mermaid rendering, SVG squircle logo and multi-size favicon. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
-- **[helix-docs] Theme Phases 1–5 & v1.0.0 Release**: Layered SCSS architecture, precompiled Dart Sass CSS, pure frontmatter nav engine, modular cards, universal navbar. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
+### [helix-jekyll-theme] (projects/helix-jekyll-theme)
+- **[helix-jekyll-theme] W.14 — Doc Site Refinements — Catalogue Width & ShareX Copy**: Expanded catalogue min column width to 400px, ShareX workflow docs. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
+- **[helix-jekyll-theme] W.10 — Home Page (vCard Pattern) Documentation**: Modular card authoring guide for landing pages. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
+- **[helix-jekyll-theme] W.06 & W.07 — Sidebar, Mermaid Rendering & Branding Artwork**: Fixed mermaid rendering, SVG squircle logo and multi-size favicon. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
+- **[helix-jekyll-theme] Theme Phases 1–5 & v1.0.0 Release**: Layered SCSS architecture, precompiled Dart Sass CSS, pure frontmatter nav engine, modular cards, universal navbar. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
 
 ### [theme-toolkit] (projects/theme-toolkit)
 - **[theme-toolkit] W.39 — Theme Toolkit Repository Creation, Base Framework Scaffolding, and Dedicated Agent Suite**: Tauri v2 app scaffolding, Per-Platform Lib isolation, dedicated agents and rules. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
 - **[Ecosystem-Wide] & [theme-toolkit] W.38 — GTK Theming Removal, Desktop Theme Engineer Repurposing & Windows Deskthemepack Engineering Suite Planning**: Purged GTK theming; pivoted to cross-platform Theme Toolkit and Microsoft `makecab.exe` DDF standards. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
 
 ### [helix-origin.github.io] (projects/helix-origin.github.io)
-- **[helix-origin.github.io] W.09 & Portal Modernization**: Remote theme standardization, 16:9 vector showcase artwork integration (`universal-game-launcher.svg`, `nh-reader.svg`, `windhawk-themes.svg`, `helix-docs.svg`). See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
+- **[helix-origin.github.io] W.09 & Portal Modernization**: Remote theme standardization, 16:9 vector showcase artwork integration (`universal-game-launcher.svg`, `nh-reader.svg`, `windhawk-themes.svg`, `helix-jekyll-theme.svg`). See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
 
 ### [Ecosystem & Infrastructure] (workspace root)
 - **[Ecosystem-Wide] W.43 — Multi-Platform Clean Uninstaller Architecture, Windows Uninstall Registry Invariant & Process Termination Standards**: NSIS mutex termination hooks, registry hygiene, macOS/Linux uninstaller templates. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).

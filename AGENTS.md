@@ -18,7 +18,7 @@
 
 2. **Organization scope invariant — never mention non-org projects or repositories.**
    This agents ecosystem is engineered exclusively for active repositories within the `HELIX-Origin`
-   GitHub organization (`https://github.com/HELIX-Origin`): `helix-docs`, `helix-origin.github.io`,
+   GitHub organization (`https://github.com/HELIX-Origin`): `helix-jekyll-theme`, `helix-origin.github.io`,
    `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`,
    `helix-gaming-db-00`, `helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, and `ffxiv-config`. Never work with,
    read, explore, modify, or **directly mention by name** any external, third-party, or deleted
@@ -99,10 +99,10 @@
 │   ├── templates/             <- document & release templates
 │   └── agents/                <- role playbooks: agents/<primary>/<sub>/…
 ├── projects/                  <- UNTRACKED: local git repositories
-│   ├── helix-docs/            <- the shared Jekyll theme (+ its preview site)
+│   ├── helix-jekyll-theme/    <- the shared Jekyll theme (+ its preview site)
 │   ├── helix-origin.github.io/ <- Organization portal (hosted at https://www.helix-origin.club)
-│   ├── docs/                  <- dedicated documentation site (helix-origin.club/docs)
-│   ├── wiki/                  <- dedicated technical wiki site (helix-origin.club/wiki)
+│   ├── docs/                  <- dedicated documentation site (hosted at https://docs.helix-origin.club)
+│   ├── wiki/                  <- dedicated technical wiki site (hosted at https://wiki.helix-origin.club)
 │   ├── nh-reader/             <- Tauri v2 desktop reader (scripts, core, and docs in scope)
 │   ├── universal-game-launcher/ <- Tauri v2 Universal Game Launcher (multi-platform library & launcher)
 │   ├── theme-toolkit/         <- Tauri v2 desktop theme studio & applicator (Windows, macOS, Linux)
@@ -157,7 +157,7 @@
 | Shell command management (Windows/PowerShell) | `.agents/skills/shell-command-management.md` |
 | Safe file editing (paths, EOL, exact match) | `.agents/skills/file-editing.md` |
 | Test execution without blocking | `.agents/skills/test-execution.md` |
-| helix-docs theme knowledge / repair | `.agents/skills/helix-theme.md` |
+| helix-jekyll-theme knowledge / repair | `.agents/skills/helix-theme.md` |
 | Project artwork generation | `.agents/skills/project-artwork-generation.md` |
 | Template: Project artwork (16:9) | `.agents/templates/project-artwork-template.svg` |
 | Template: Roadmap ledger | `.agents/templates/roadmap-template.md` |
@@ -198,7 +198,7 @@
 
 1. Read `AGENTS.md` (done — it's this file).
 2. Read `ROADMAP.md` → `PLAN.md` → `TODO.md` → `BUGS.md`; **ensure the agents ecosystem (`.agents/`, `AGENTS.md`, and tracking ledgers) is 100% current and synchronized first** — updating agent rules and tracking ledgers always takes priority before touching project code. Resume at the first unchecked TODO item.
-3. Consult `.agents/skills/helix-theme.md` before touching helix-docs or any consuming site.
+3. Consult `.agents/skills/helix-theme.md` before touching helix-jekyll-theme or any consuming site.
 4. Before editing **any** `docs/` content, consult `.agents/rules/documentation-standards.md` —
    the docs stay **theme-neutral/mod-agnostic**; a theme/suite's specifics belong only in the
    catalogue/store.

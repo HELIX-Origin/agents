@@ -13,7 +13,7 @@
 - **Single Pane of Glass:** All repository roadmaps, sprints, tasks, and bugs are synchronized here at workspace root.
 - **Mandatory Project Tagging Invariant:** Every tracked milestone, sprint, task, bug, and backlog candidate **must explicitly state its project name and repository path** (`[<project-name>] (<project-path>)`). Unscoped items are strictly prohibited so agents never conflate repositories.
 - **Active Milestones First:** Active workstreams and upcoming milestones must always precede completed historical records.
-- **Strict Typing:** Differentiate explicitly between **SemVer repositories** (`helix-docs`, `NH-Reader`, `Universal-Game-Launcher`, `Theme-Toolkit`) and **Milestone/Sprint-tracked repositories** (`Windhawk-Themes`, `helix-origin.github.io`).
+- **Strict Typing:** Differentiate explicitly between **SemVer repositories** (`helix-jekyll-theme`, `NH-Reader`, `Universal-Game-Launcher`, `Theme-Toolkit`) and **Milestone/Sprint-tracked repositories** (`Windhawk-Themes`, `helix-origin.github.io`).
 - **No Stale Ledgers:** Updates to roadmap milestones must occur before or alongside code and configuration changes.
 
 ---
@@ -22,7 +22,7 @@
 
 ```mermaid
 flowchart TB
-    Org[HELIX Origin Organization] --> DocsTheme["[helix-docs] Remote Jekyll Theme"]
+    Org[HELIX Origin Organization] --> DocsTheme["[helix-jekyll-theme] Remote Jekyll Theme"]
     Org --> Portal["[helix-origin.github.io] Portal Hub"]
     Org --> DesktopApp["[nh-reader] Desktop/Mobile App"]
     Org --> UniversalLauncher["[universal-game-launcher] Desktop App"]
@@ -41,7 +41,7 @@ flowchart TB
 ```
 
 1. 🎨 **Unified Design Tokens**: A cohesive dark obsidian aesthetic (`#07111f` / `#0d1b2d`) with cyan (`#48d8f2`) and purple (`#b06cff`) accents across documentation, desktop apps, and OS styling suites.
-2. 🚀 **Zero-Install Remote Documentation**: All organizational web properties consume `HELIX-Origin/helix-docs` via GitHub Pages without local build duplication or hardcoded navigation data.
+2. 🚀 **Zero-Install Remote Documentation**: All organizational web properties consume `HELIX-Origin/helix-jekyll-theme` via GitHub Pages without local build duplication or hardcoded navigation data.
 3. 🔒 **Privacy & Local Independence**: User-facing clients operate 100% on-device (local SQLite, zero forced telemetry, self-contained runtimes).
 
 ---
@@ -50,7 +50,7 @@ flowchart TB
 
 | Project Identifier | Target Repository Path | Tracking Model | Current Milestone / Release | Status | Primary Focus |
 |---|---|---|---|---|---|
-| **[helix-docs]** | `projects/helix-docs` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-docs/releases/tag/v1.0.0) | ✅ Shipped | Frontmatter nav engine, modular cards, universal navbar |
+| **[helix-jekyll-theme]** | `projects/helix-jekyll-theme` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-jekyll-theme/releases/tag/v1.0.0) | ✅ Shipped | Frontmatter nav engine, modular cards, universal navbar |
 | **[helix-origin.github.io]** | `projects/helix-origin.github.io` | Rolling Sprints | Portal v2 | 🚀 Active | 16:9 vector artwork integration, project showcase cards |
 | **[nh-reader]** | `projects/nh-reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/nh-reader/releases/tag/v0.7.5) | 🚀 Active | M13: Unified `.mjs` scripts architecture, main:sub:option command hierarchy, local code signing |
 | **[windhawk-themes]** | `projects/windhawk-themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
@@ -98,11 +98,11 @@ flowchart LR
 
 ---
 
-### 3. [helix-docs] — Remote Jekyll Theme
-*Target Path: `projects/helix-docs` · Organization Documentation & Wiki Engine*
+### 3. [helix-jekyll-theme] — Remote Jekyll Theme
+*Target Path: `projects/helix-jekyll-theme` · Organization Documentation & Wiki Engine*
 
-- **[helix-docs] v1.0.0 Delivery (SHIPPED)**: Layered SCSS architecture, precompiled Dart Sass `site.css`, frontmatter tree navigation, modular card layouts, and universal navbar. Full technical summaries live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md#helix-docs).
-- **[helix-docs] v1.1.0 Roadmap (PLANNED):**
+- **[helix-jekyll-theme] v1.0.0 Delivery (SHIPPED)**: Layered SCSS architecture, precompiled Dart Sass `site.css`, frontmatter tree navigation, modular card layouts, and universal navbar. Full technical summaries live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md#helix-docs).
+- **[helix-jekyll-theme] v1.1.0 Roadmap (PLANNED):**
   - Dedicated client-side Mermaid diagram rendering helper (`components/mermaid.html`).
   - Dynamic in-page Table of Contents sidebar module (solving `BUG-14`).
   - Native catalogue filtering scripts for software and theme showrooms.
@@ -113,9 +113,9 @@ flowchart LR
 *Target Path: `projects/helix-origin.github.io` · Central Discovery Hub (hosted at https://www.helix-origin.club/)*
 
 - **[helix-origin.github.io] Portal v2 Delivery (ACTIVE):**
-  - Standardized on `remote_theme: HELIX-Origin/helix-docs`.
+  - Standardized on `remote_theme: HELIX-Origin/helix-jekyll-theme`.
   - 16:9 standalone vector artwork system (`docs/assets/images/*.svg`) replacing remote bitmaps.
-  - Added dedicated project card and custom artwork for `helix-docs`.
+  - Added dedicated project card and custom artwork for `helix-jekyll-theme`.
 - **[helix-origin.github.io] Portal v3 Roadmap (PLANNED):**
   - Live GitHub release status badge widgets fetched via Octokit / Jekyll GitHub metadata.
   - Interactive software catalogue showcase consuming the `catalogue` layout.
@@ -191,7 +191,9 @@ flowchart LR
 *Target Path: `projects/helix-gaming-db-00` · Shard 00 / Core Registry & Multi-Repo Federation (01, 02, 03) · v1.1.0*
 
 - **Core Vision & Invariants:**
-  - Dedicated, open, community-extensible gaming metadata repository and REST API named **HELIX Gaming DB** (`helix-gaming-db-00`), hosted directly via GitHub Pages (`https://helix-origin.club/helix-gaming-db-00/`) with Cloudflare edge proxying (`https://api.helix-origin.club/helix-gaming-db-00/`).
+  - Dedicated, open, community-extensible gaming metadata repository and REST API named **HELIX Gaming DB** volume-sharded across `helix-gaming-db-00` through `03`, served via a custom Cloudflare Worker Gateway (`helix-gaming-api` v2.0) on `https://api.helix-origin.club` featuring dual routing modes:
+    - **Mode 2 (Unified Gateway)**: `https://api.helix-origin.club/api/v{1,2,3}/...` — provides seamless multi-shard query resolution, sequential cross-shard lookup for games and developers (with appended `_federation` metadata), parallel multi-shard index aggregation (search index, catalog, taxonomies, stats), and edge caching (`caches.default` with 5-minute TTL).
+    - **Mode 1 (Direct Shard Proxy)**: `https://api.helix-origin.club/helix-gaming-db-{NN}/...` — direct shard-targeted proxying to GitHub raw storage with fallback to GitHub Pages origin (`https://www.helix-origin.club/helix-gaming-db-{NN}/`).
   - Implements a volume-sharded multi-repository architecture across horizontally numbered repositories (`helix-gaming-db-00`, `helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`), where each repository is an autonomous clone carrying the exact same structure, schemas, validation tools, `i18next` localized taxonomies, and GitHub Actions workflows, supporting all platforms to keep every repository well below GitHub free tier storage (<1GB) limits.
   - Provides reliable, verified metadata and high-resolution official CDN artwork for indie, Patreon, obscure, commercial, and emulation titles that are missing from or mismatched by mainstream storefronts.
   - Serves static, cacheable JSON endpoints across three purpose-built tiers:
@@ -199,7 +201,7 @@ flowchart LR
     - Tier v1 (`/api/v1/`): Client consumption tier.
     - Tier v2 (`/api/v2/`): Rich relational discovery (genres, platforms, tags, developers, publishers, stats, starter templates).
     - Tier v3 (`/api/v3/`): Dedicated Adult / 18+ gaming catalog for uncensored indie and Patreon visual novels and sandbox titles.
-  - Documentation and curation wikis are decoupled from the metadata repositories and hosted in dedicated centralized repositories: `docs` (`https://helix-origin.club/docs/`) and `wiki` (`https://helix-origin.club/wiki/`), both powered by `remote_theme: HELIX-Origin/helix-docs`.
+  - Documentation and curation wikis are decoupled from the metadata repositories and hosted in dedicated centralized repositories: `docs` (`https://docs.helix-origin.club/`) and `wiki` (`https://wiki.helix-origin.club/`), both powered by `remote_theme: HELIX-Origin/helix-jekyll-theme`.
 - **Delivered Milestones:**
   - **Milestone M.01 (Delivered v1.0.0)**: REST API v1 foundation, initial schemas, 62 curated games, 28 studio profiles, Jekyll documentation and wiki.
   - **Milestone M.02 (Delivered v1.1.0)**: Three-Tier REST Architecture (Root, v1, v2, v3), catalog expansion to 80 verified titles and 42 developers, contributor fork/PR starter templates and schemas, GitHub Issue forms (`01_new_game_request.yml`, `02_metadata_correction.yml`, `03_new_developer_request.yml`), automated PR validation workflow (`pr-automation.yml` with `scripts/verify-pr.mjs`), and issue triage automation (`issue-triage.yml`).
@@ -240,7 +242,7 @@ flowchart LR
 - **Core Vision & Invariants:**
   - Ready-to-use, information-dense HUD, hotbar, and macro configuration setup for Final Fantasy XIV built on Fr4nsson's FFC and extended for current 8.x jobs.
   - Provides pre-arranged combat, crafting, and gathering hotbars with on-screen macro navigation for instant job switching.
-  - Documentation site hosted via GitHub Pages and powered by `remote_theme: HELIX-Origin/helix-docs`.
+  - Documentation site hosted via GitHub Pages and powered by `remote_theme: HELIX-Origin/helix-jekyll-theme`.
 
 
 

@@ -96,10 +96,10 @@ This repository houses the authoritative operational blueprint for AI coding ass
 │       ├── security-reviewer/           <- Secret, credential & path hygiene reviewer
 │       └── theme-engineer/              <- SCSS, component, and Jekyll preview engineers
 ├── projects/                  <- UNTRACKED: Local working copies of active org repos
-│   ├── helix-docs/            <- Shared Jekyll theme & preview site
+│   ├── helix-jekyll-theme/    <- Shared Jekyll theme & preview site
 │   ├── helix-origin.github.io/ <- Organization portal (hosted at https://www.helix-origin.club)
-│   ├── docs/                  <- Dedicated documentation site (helix-origin.club/docs)
-│   ├── wiki/                  <- Dedicated technical wiki site (helix-origin.club/wiki)
+│   ├── docs/                  <- Dedicated documentation site (hosted at https://docs.helix-origin.club)
+│   ├── wiki/                  <- Dedicated technical wiki site (hosted at https://wiki.helix-origin.club)
 │   ├── nh-reader/             <- Tauri v2 desktop reader
 │   ├── universal-game-launcher/ <- Tauri v2 Universal Game Launcher
 │   ├── theme-toolkit/         <- Tauri v2 cross-platform desktop theme studio

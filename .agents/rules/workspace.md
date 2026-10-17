@@ -13,13 +13,18 @@ These rules apply to **every active project** under `projects/` belonging to `HE
 
 ## Active `HELIX-Origin` organization projects (as of 2026-10-17)
 
-- `projects/helix-docs` — theme repo (+ its own preview site).
-- `projects/helix-origin.github.io` — portal; **only `docs/` is in scope**.
-- `projects/nh-reader` — Tauri v2 desktop manga reader; **full repository in scope** (scripts, workflows, desktop core, and `docs/`).
-- `projects/universal-game-launcher` — Tauri v2 universal game library & launcher; **full repository in scope**.
-- `projects/theme-toolkit` — cross-platform desktop theme studio & applicator; **full repository in scope**.
-- `projects/windhawk-themes` — **only `docs/` is in scope**.
-- `projects/helix-gaming-db` — REST metadata API & gaming database; **full repository in scope** (docs, wiki, schemas, and `api/v1/` endpoints).
+- `projects/docs` — dedicated organization-wide documentation hub (`https://docs.helix-origin.club`).
+- `projects/wiki` — dedicated organization-wide technical knowledge base & wiki (`https://wiki.helix-origin.club`).
+- `projects/helix-jekyll-theme` — shared remote Jekyll theme engine (+ its own preview site).
+- `projects/helix-origin.github.io` — organization discovery portal (`https://www.helix-origin.club`).
+- `projects/nh-reader` — Tauri v2 desktop manga/comic reader (scripts, workflows, desktop core).
+- `projects/universal-game-launcher` — Tauri v2 universal game library & launcher.
+- `projects/theme-toolkit` — cross-platform desktop theme studio & applicator (Windows, macOS, Linux).
+- `projects/windhawk-themes` — Windows 11 styling suites for Windhawk styler mods.
+- `projects/helix-gaming-db-00` — REST metadata API & database (core / volume shard 00).
+- `projects/helix-gaming-db-01` — REST metadata API & database (volume shard 01).
+- `projects/helix-gaming-db-02` — REST metadata API & database (volume shard 02).
+- `projects/helix-gaming-db-03` — REST metadata API & database (volume shard 03).
 - `projects/ffxiv-config` — FFXIV HUD, hotbar, and macro configuration setup.
 
 Everything else outside these active `HELIX-Origin` repositories is strictly out of scope and must never be referenced.
@@ -59,7 +64,7 @@ The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs 
 
 ## Communication
 
-- Use clear paths (`projects/helix-docs/_includes/nav.html`).
+- Use clear paths (`projects/helix-jekyll-theme/_includes/nav.html`).
 - Report progress against TODO items, not just prose.
 - If credits may run out mid-task, leave TODO.md in a state a fresh session can resume from
   (first unchecked item = next action).

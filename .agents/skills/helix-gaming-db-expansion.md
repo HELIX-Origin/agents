@@ -1,6 +1,6 @@
 # Skill: HELIX Gaming DB — Multi-Platform Metadata Expansion & Automated Ingestion Pipeline
 
-> Authoritative engineering standard and operational guide for progressively expanding the **HELIX Gaming DB** (`projects/helix-gaming-db`) catalog to cover every game available across all supported PC and emulation platforms via automated ingestion scripts, data sanitization pipelines, and scheduled GitHub Actions workflows.
+> Authoritative engineering standard and operational guide for progressively expanding the **HELIX Gaming DB** (`projects/helix-gaming-db-00` through `03`) catalog to cover every game available across all supported PC and emulation platforms via automated ingestion scripts, data sanitization pipelines, scheduled GitHub Actions workflows, and the **Cloudflare Worker Unified Gateway** (`api.helix-origin.club`).
 
 ---
 
@@ -71,7 +71,7 @@ flowchart TD
     W_Enrich --> T_Index
 ```
 
-### 2.1 Ingestion Scripts Architecture (`projects/helix-gaming-db/scripts/ingest/`)
+### 2.1 Ingestion Scripts Architecture (`projects/helix-gaming-db-00/scripts/ingest/`)
 Ingestion scripts are modular, standalone Node.js ES modules (`.mjs`) adhering to the `scripts/ingest/` standard:
 
 1. **`ingest-steam.mjs`**:
