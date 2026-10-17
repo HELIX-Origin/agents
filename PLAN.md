@@ -58,10 +58,12 @@ flowchart TD
 2. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54b — Batch Runner, Deduplication & Validation Pipeline (`scripts/ingest/run-batch.mjs`) (Delivered)**:
    - `[helix-gaming-db-00]` Authored `run-batch.mjs` orchestrating multi-platform batch ingestion with CLI args (`--platform=<id>`, `--limit=<n>`, `--shard=<00|01|02|03>`), cross-shard slug deduplication, and automated `build-search-index.mjs` compilation.
    - `[helix-gaming-db-00]` Enforced strict schema validation and automated PR verification (`npm test`) on all newly emitted payloads across all shards.
-3. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54c — Scheduled Ingestion GitHub Actions Workflow (`.github/workflows/scheduled-ingest.yml`) (Delivered)**:
-   - `[helix-gaming-db-00]` Deployed scheduled weekly cron workflow across all 4 database shards running platform ingestion batches, rebuilding search indices, verifying schemas, and committing updates.
-4. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54d — Artwork Backfill & Health Check Workflow (`.github/workflows/enrich-artwork.yml`) (Delivered)**:
-   - `[helix-gaming-db-00]` Authored `scripts/enrich-artwork.mjs` and deployed bi-weekly scheduled workflow across all 4 database shards verifying artwork health and backfilling missing assets.
+3. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54c — High-Frequency Staggered Ingestion GitHub Actions Workflow (`.github/workflows/scheduled-ingest.yml`) (Delivered)**:
+   - `[helix-gaming-db-00..03]` Deployed automated ingestion batches running **4x daily per shard** (16 runs/day org-wide) on a staggered non-overlapping rotation (`00` at 00:15/06:15/12:15/18:15 UTC, `01` at 01:15/07:15/13:15/19:15 UTC, `02` at 03:15/09:15/15:15/21:15 UTC, `03` at 04:15/10:15/16:15/22:15 UTC).
+   - Staggering by 75–90 minutes with non-zero minute offsets prevents race conditions, stale metadata checks, Steam/Cloudflare rate limiting, and GitHub Actions top-of-hour queues.
+   - Enforced explicit `PAT_TOKEN` push authentication (`https://x-access-token:${PAT_TOKEN}@github.com/${GITHUB_REPOSITORY}.git`) and script environment variables, guaranteeing write permissions on protected branches.
+4. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54d — High-Frequency Staggered Artwork Health Workflow (`.github/workflows/enrich-artwork.yml`) (Delivered)**:
+   - `[helix-gaming-db-00..03]` Deployed artwork enrichment running **2x daily per shard** (8 runs/day org-wide) on a staggered schedule (`00` at 01:45/13:45 UTC, `01` at 04:45/16:45 UTC, `02` at 07:45/19:45 UTC, `03` at 10:45/22:45 UTC) with `PAT_TOKEN` push auth, completely isolated from ingestion runs.
 5. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54e — Multi-Stage Progressive Platform Catalog Rollout across Shards (Active)**:
    - `[helix-gaming-db-01]` Delivered Phase 1 Expansion: Top PC Indie & Digital Hits (78 games & 80 developers in `v2`, 100% verified).
    - `[helix-gaming-db-02]` Delivered Phase 2 Expansion & Retro 3D Classics: SNES, Genesis, NES, PS1, N64, GBA, PS2, GameCube, Dreamcast, Wii, PSP, DS (81 games & 32 developers in `v2`, 100% verified).

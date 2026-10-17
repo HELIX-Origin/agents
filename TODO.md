@@ -101,10 +101,10 @@ flowchart TD
   - [x] `[helix-gaming-db-00]` Create `scripts/ingest/ingest-patreon-itch.mjs` for indie/adult creations.
 - [x] **[helix-gaming-db-00] 2. Batch Ingestion CLI & Deduplication Engine (`scripts/ingest/run-batch.mjs`)**:
   - [x] `[helix-gaming-db-00]` Author `run-batch.mjs` supporting `--platform`, `--limit`, `--tier`, and `--shard` flags with automatic slug generation and cross-shard duplicate collision checks.
-- [x] **[helix-gaming-db-00] 3. Scheduled Ingestion GitHub Actions Workflow (`.github/workflows/scheduled-ingest.yml`)**:
-  - [x] `[helix-gaming-db-00]` Deploy scheduled weekly cron workflow running platform batches and opening validated PRs across shards.
-- [x] **[helix-gaming-db-00] 4. Artwork Backfill & Health Check Workflow (`.github/workflows/enrich-artwork.yml`)**:
-  - [x] `[helix-gaming-db-00]` Deploy background workflow and `scripts/enrich-artwork.mjs` searching authorized CDNs to backfill missing vertical box art and hero banners.
+- [x] **[helix-gaming-db-00] 3. High-Frequency Staggered Ingestion Workflow (`.github/workflows/scheduled-ingest.yml`)**:
+  - [x] `[helix-gaming-db-00..03]` Deploy automated ingestion batches running **4x daily per shard** (16 runs/day org-wide) on a staggered rotation (`00` at 00:15/06:15/12:15/18:15 UTC, `01` at 01:15/07:15/13:15/19:15 UTC, `02` at 03:15/09:15/15:15/21:15 UTC, `03` at 04:15/10:15/16:15/22:15 UTC) with non-zero minute offsets, PAT_TOKEN push authentication, and remote edge fallback in `fetch-trending-seeds.mjs`.
+- [x] **[helix-gaming-db-00] 4. High-Frequency Staggered Artwork Health Workflow (`.github/workflows/enrich-artwork.yml`)**:
+  - [x] `[helix-gaming-db-00..03]` Deploy background workflow running **2x daily per shard** (8 runs/day org-wide) on a staggered schedule (`00` at 01:45/13:45 UTC, `01` at 04:45/16:45 UTC, `02` at 07:45/19:45 UTC, `03` at 10:45/22:45 UTC) with PAT_TOKEN push auth, searching authorized CDNs to backfill missing vertical box art and hero banners.
 - [x] **[helix-gaming-db-00] 5. Multi-Stage Progressive Platform Rollout across Shards**:
   - [x] `[helix-gaming-db-01]` Phase 1 Expansion: Top PC Indie & Digital Hits (78 games & 80 developers in `v2`, 100% verified).
   - [x] `[helix-gaming-db-02]` Phase 2 Expansion & Retro 3D Classics: SNES, Genesis, NES, PS1, N64, GBA, PS2, GameCube, Dreamcast, Wii, PSP, DS (81 games & 32 developers in `v2`, 100% verified).
