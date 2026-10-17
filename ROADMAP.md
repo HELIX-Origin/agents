@@ -187,11 +187,12 @@ flowchart LR
 
 ---
 
-### 7. [helix-gaming-db] — Open REST Metadata API & Community Gaming Database (ACTIVE)
-*Target Path: `projects/helix-gaming-db` · Three-Tier REST API / GitHub Pages / Jekyll Remote Theme · v1.1.0*
+### 7. [helix-gaming-db-00] — Open REST Metadata API & Community Gaming Database (ACTIVE)
+*Target Path: `projects/helix-gaming-db-00` · Shard 00 / Core Registry & Multi-Repo Federation (01, 02, 03) · v1.1.0*
 
 - **Core Vision & Invariants:**
-  - Dedicated, open, community-extensible gaming metadata repository and REST API named **HELIX Gaming DB** (`helix-gaming-db`), hosted directly via GitHub Pages (`https://helix-origin.club/helix-gaming-db/`) with Cloudflare edge proxying (`https://api.helix-origin.club/helix-gaming-db/`).
+  - Dedicated, open, community-extensible gaming metadata repository and REST API named **HELIX Gaming DB** (`helix-gaming-db-00`), hosted directly via GitHub Pages (`https://helix-origin.club/helix-gaming-db-00/`) with Cloudflare edge proxying (`https://api.helix-origin.club/helix-gaming-db-00/`).
+  - Implements a volume-sharded multi-repository architecture across horizontally numbered repositories (`helix-gaming-db-00`, `helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`), where each repository is an autonomous clone carrying the exact same structure, schemas, validation tools, `i18next` localized taxonomies, and GitHub Actions workflows, supporting all platforms to keep every repository well below GitHub free tier storage (<1GB) limits.
   - Provides reliable, verified metadata and high-resolution official CDN artwork for indie, Patreon, obscure, commercial, and emulation titles that are missing from or mismatched by mainstream storefronts.
   - Serves static, cacheable JSON endpoints across three purpose-built tiers:
     - Root gateway (`/api/manifest.json`): Version capabilities and endpoint directory.
@@ -223,12 +224,13 @@ flowchart LR
   - **Library-Driven Internationalization (i18next) & Multilingual Taxonomy Architecture (Delivered)**:
     - Dedicated `i18next` integration (`scripts/i18n/index.mjs`) dynamically translating genres, categories, platforms, and UI terms across 12 primary languages (`en`, `ja`, `zh-CN`, `zh-TW`, `es`, `fr`, `de`, `it`, `pt-BR`, `ru`, `ko`, `pl`).
     - Emits static multilingual REST endpoints (`/api/v2/i18n/locales.json`, `/api/v2/i18n/{code}/bundle.json`, `/api/v2/i18n/{code}/search/index.json`) and optional in-record `locales` dictionary without duplicating static game files.
-  - **Multi-Repository Federation Architecture & GitHub Free Storage Limit Strategy (Delivered)**:
-    - Designed catalog partitioning into dedicated platform repositories (`helix-gaming-db-pc`, `helix-gaming-db-playstation`, `helix-gaming-db-nintendo`, `helix-gaming-db-xbox`, `helix-gaming-db-retro`, `helix-gaming-db-adult`) to prevent GitHub free user storage (<1GB) and file count ceilings.
-    - The core repository acts as the unified search index and manifest router (`api/manifest.json`, `/api/v2/federation/index.json`, `shards.json`) with transparent client URL resolution in `universal-game-launcher`.
+  - **Multi-Repository Federation Architecture & GitHub Free Storage Limit Strategy (ACTIVE)**:
+    - Designed and provisioned catalog volume partitioning into sequentially numbered repositories (`helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, etc.) to prevent GitHub free user storage (<1GB) and file count ceilings.
+    - Each shard repository is an exact, autonomous copy supporting all platforms and providers, equipped with the identical schemas, `i18next` multilingual localization, validation scripts, and GitHub Actions workflows.
+    - The client API (`universal-game-launcher`) seamlessly cycles across all active metadata repositories when searching or resolving metadata.
   - **Automated PAT Replication & Workspace Secret Provisioning (Delivered)**:
-    - Replicated `PAT_TOKEN` secrets across all 9 organization repositories via `gh secret set`.
-    - Secured `PAT_TOKEN` in untracked workspace `.env` file protected by `.gitignore` with `provision-repo-secrets.ps1` helper for instant provisioning of future shard repositories.
+    - Replicated `PAT_TOKEN` secrets across all organization repositories via `gh secret set`.
+    - Secured `PAT_TOKEN` in untracked workspace `.env` file protected by `.gitignore` with `provision-repo-secrets.ps1` helper for instant provisioning of newly created shard repositories.
 
 ---
 

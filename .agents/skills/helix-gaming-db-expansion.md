@@ -183,20 +183,18 @@ As the database scales across thousands of games and platforms, repository size 
 
 ```mermaid
 flowchart TD
-    subgraph RootRegistry["HELIX Gaming DB Root Registry (helix-gaming-db)"]
+    subgraph RootRegistry["HELIX Gaming DB Shard 00 / Root Registry (helix-gaming-db-00)"]
         Manifest["api/manifest.json (Federation Master)"]
         UnifiedIndex["api/v2/search/index.json (Global Unified Search)"]
         Catalog["api/v2/catalog/index.json (Unified Catalog)"]
         Locales["api/v2/i18n/ (Centralized Taxonomy Translations)"]
     end
 
-    subgraph Shards["Platform Shard Repositories (HELIX-Origin/*)"]
-        PC["helix-gaming-db-pc (PC, Windows, Linux, macOS)"]
-        PS["helix-gaming-db-playstation (PS1-PS5)"]
-        Nin["helix-gaming-db-nintendo (NES-Switch)"]
-        Xbx["helix-gaming-db-xbox (Xbox, 360, One, Series)"]
-        Retro["helix-gaming-db-retro (Arcade, Sega, Neo Geo)"]
-        Adult["helix-gaming-db-adult (Dedicated 18+ Tier)"]
+    subgraph Shards["Volume-Sharded Metadata Repositories (HELIX-Origin/*)"]
+        DB01["helix-gaming-db-01 (All Platforms / Volume Partition 01)"]
+        DB02["helix-gaming-db-02 (All Platforms / Volume Partition 02)"]
+        DB03["helix-gaming-db-03 (All Platforms / Volume Partition 03)"]
+        DBXX["helix-gaming-db-## (Future Sequential Shards as needed)"]
     end
 
     subgraph Automation["Automated Shard Provisioning & PAT Replication"]
@@ -205,24 +203,23 @@ flowchart TD
     end
 
     Manifest -->|Federation Routing| Shards
-    UnifiedIndex -->|Direct pointers| PC
-    UnifiedIndex -->|Direct pointers| PS
-    UnifiedIndex -->|Direct pointers| Nin
-    UnifiedIndex -->|Direct pointers| Xbx
-    UnifiedIndex -->|Direct pointers| Retro
-    UnifiedIndex -->|Direct pointers| Adult
+    UnifiedIndex -->|Direct pointers| DB01
+    UnifiedIndex -->|Direct pointers| DB02
+    UnifiedIndex -->|Direct pointers| DB03
+    UnifiedIndex -->|Direct pointers| DBXX
     PAT --> Shards
     Workflows --> Shards
 ```
 
 ### 6.1 Architectural Principles:
-1. **Unified Search Registry**: The root `helix-gaming-db` repository maintains the global search indexes, localized taxonomy dictionaries, schemas, and federation manifest. Client applications continue to make a single fast request to the root index.
-2. **Transparent Shard Resolution**: Search index entries carry optional `shard: string`, `repository: string`, and `sourceUrl: string` fields. When a client requests full game details for a partitioned title, the client resolves the record directly from the dedicated shard repository via raw CDN or GitHub Pages.
-3. **Automated PAT Replication Across Shards**:
+1. **Identical Structure & Multi-Provider Support**: Shard repositories do NOT partition by platform or storefront. Instead, every shard (`helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, etc.) is an exact copy carrying the full boilerplate, schemas, validation tools, `i18next` localized taxonomies, search generators, and GitHub Actions workflows. Every shard natively supports all platforms (PC, PlayStation, Nintendo, Xbox, Retro, and Adult).
+2. **Content Volume Splitting**: Repositories simply partition the collection volume (game records and artwork) horizontally across sequentially numbered repositories (`helix-gaming-db-###`) to guarantee repositories stay well below GitHub free tier storage (<1GB) and file count limits.
+3. **Multi-Repo Cycling API**: Client applications (including `universal-game-launcher`) cycle across all active metadata repositories when searching or retrieving metadata. Because all shards share the identical endpoint hierarchy (`/api/v1/`, `/api/v2/`, `/api/v3/`, `locales/`), the client cycles between the repositories seamlessly.
+4. **Automated PAT Replication Across Shards**:
    - Organization repositories share automated CI/CD and PR auto-merge workflows powered by a shared `PAT_TOKEN` secret.
-   - When new metadata API repositories are created, `PAT_TOKEN` is automatically provisioned via the GitHub CLI:
+   - When new metadata API repositories are created, `PAT_TOKEN` is automatically provisioned via `provision-repo-secrets.ps1`:
      ```powershell
-     $token | gh secret set PAT_TOKEN -R HELIX-Origin/<new-shard-repo>
+     .\provision-repo-secrets.ps1 -Repo "HELIX-Origin/<new-shard-repo>"
      ```
    - No human intervention or manual token re-entry is required.
 
