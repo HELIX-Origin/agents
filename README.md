@@ -97,11 +97,18 @@ This repository houses the authoritative operational blueprint for AI coding ass
 │       └── theme-engineer/              <- SCSS, component, and Jekyll preview engineers
 ├── projects/                  <- UNTRACKED: Local working copies of active org repos
 │   ├── helix-docs/            <- Shared Jekyll theme & preview site
-│   ├── helix-origin.github.io/ <- GitHub Pages organization portal
-│   ├── NH-Reader/             <- Tauri v2 desktop manga reader
-│   ├── Universal-Game-Launcher/ <- Tauri v2 Universal Game Launcher
-│   ├── Theme-Toolkit/         <- Tauri v2 cross-platform desktop theme studio
-│   └── Windhawk-Themes/       <- Windows 11 Windhawk styling suites & docs
+│   ├── helix-origin.github.io/ <- Organization portal (hosted at https://www.helix-origin.club)
+│   ├── docs/                  <- Dedicated documentation site (helix-origin.club/docs)
+│   ├── wiki/                  <- Dedicated technical wiki site (helix-origin.club/wiki)
+│   ├── nh-reader/             <- Tauri v2 desktop reader
+│   ├── universal-game-launcher/ <- Tauri v2 Universal Game Launcher
+│   ├── theme-toolkit/         <- Tauri v2 cross-platform desktop theme studio
+│   ├── windhawk-themes/       <- Windows 11 Windhawk styling suites
+│   ├── helix-gaming-db-00/    <- REST metadata API & gaming database (shard 00 / core)
+│   ├── helix-gaming-db-01/    <- REST metadata API & gaming database (shard 01)
+│   ├── helix-gaming-db-02/    <- REST metadata API & gaming database (shard 02)
+│   ├── helix-gaming-db-03/    <- REST metadata API & gaming database (shard 03)
+│   └── ffxiv-config/          <- FFXIV HUD, hotbar, and macro configuration setup
 └── scratch/                   <- UNTRACKED: Temporary agent working files
 ```
 

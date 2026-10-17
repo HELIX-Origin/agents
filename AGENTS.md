@@ -19,7 +19,7 @@
 2. **Organization scope invariant — never mention non-org projects or repositories.**
    This agents ecosystem is engineered exclusively for active repositories within the `HELIX-Origin`
    GitHub organization (`https://github.com/HELIX-Origin`): `helix-docs`, `helix-origin.github.io`,
-   `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db-docs`,
+   `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`,
    `helix-gaming-db-00`, `helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, and `ffxiv-config`. Never work with,
    read, explore, modify, or **directly mention by name** any external, third-party, or deleted
    projects or repositories that are not part of the `HELIX-Origin` organization across rules,
@@ -100,12 +100,13 @@
 │   └── agents/                <- role playbooks: agents/<primary>/<sub>/…
 ├── projects/                  <- UNTRACKED: local git repositories
 │   ├── helix-docs/            <- the shared Jekyll theme (+ its preview site)
-│   ├── helix-origin.github.io/ <- GitHub Pages portal (docs/ in scope)
+│   ├── helix-origin.github.io/ <- Organization portal (hosted at https://www.helix-origin.club)
+│   ├── docs/                  <- dedicated documentation site (helix-origin.club/docs)
+│   ├── wiki/                  <- dedicated technical wiki site (helix-origin.club/wiki)
 │   ├── nh-reader/             <- Tauri v2 desktop reader (scripts, core, and docs in scope)
 │   ├── universal-game-launcher/ <- Tauri v2 Universal Game Launcher (multi-platform library & launcher)
 │   ├── theme-toolkit/         <- Tauri v2 desktop theme studio & applicator (Windows, macOS, Linux)
 │   ├── windhawk-themes/       <- (docs/ in scope)
-│   ├── helix-gaming-db-docs/  <- documentation site & technical wiki for HELIX Gaming DB
 │   ├── helix-gaming-db-00/    <- REST metadata API & gaming database (shard 00 / core)
 │   ├── helix-gaming-db-01/    <- REST metadata API & gaming database (shard 01)
 │   ├── helix-gaming-db-02/    <- REST metadata API & gaming database (shard 02)

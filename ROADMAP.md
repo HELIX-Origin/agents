@@ -110,7 +110,7 @@ flowchart LR
 ---
 
 ### 4. [helix-origin.github.io] — Organization Portal
-*Target Path: `projects/helix-origin.github.io` · Central Discovery Hub*
+*Target Path: `projects/helix-origin.github.io` · Central Discovery Hub (hosted at https://www.helix-origin.club/)*
 
 - **[helix-origin.github.io] Portal v2 Delivery (ACTIVE):**
   - Standardized on `remote_theme: HELIX-Origin/helix-docs`.
@@ -199,7 +199,7 @@ flowchart LR
     - Tier v1 (`/api/v1/`): Client consumption tier.
     - Tier v2 (`/api/v2/`): Rich relational discovery (genres, platforms, tags, developers, publishers, stats, starter templates).
     - Tier v3 (`/api/v3/`): Dedicated Adult / 18+ gaming catalog for uncensored indie and Patreon visual novels and sandbox titles.
-  - Pairs with a dedicated documentation portal and technical wiki powered by `helix-docs` (`remote_theme: HELIX-Origin/helix-docs`), following strict documentation theme-neutrality rules.
+  - Documentation and curation wikis are decoupled from the metadata repositories and hosted in dedicated centralized repositories: `docs` (`https://helix-origin.club/docs/`) and `wiki` (`https://helix-origin.club/wiki/`), both powered by `remote_theme: HELIX-Origin/helix-docs`.
 - **Delivered Milestones:**
   - **Milestone M.01 (Delivered v1.0.0)**: REST API v1 foundation, initial schemas, 62 curated games, 28 studio profiles, Jekyll documentation and wiki.
   - **Milestone M.02 (Delivered v1.1.0)**: Three-Tier REST Architecture (Root, v1, v2, v3), catalog expansion to 80 verified titles and 42 developers, contributor fork/PR starter templates and schemas, GitHub Issue forms (`01_new_game_request.yml`, `02_metadata_correction.yml`, `03_new_developer_request.yml`), automated PR validation workflow (`pr-automation.yml` with `scripts/verify-pr.mjs`), and issue triage automation (`issue-triage.yml`).

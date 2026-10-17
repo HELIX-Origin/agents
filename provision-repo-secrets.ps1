@@ -47,7 +47,8 @@ if ($Repo) {
   $reposToProvision += $target
 } else {
   $reposToProvision = @(
-    "HELIX-Origin/helix-gaming-db-docs",
+    "HELIX-Origin/docs",
+    "HELIX-Origin/wiki",
     "HELIX-Origin/helix-gaming-db-00",
     "HELIX-Origin/helix-gaming-db-01",
     "HELIX-Origin/helix-gaming-db-02",

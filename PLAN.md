@@ -35,8 +35,11 @@ flowchart TD
 
 #### 📝 Execution Tasks
 
-0. **[helix-gaming-db-00] W.54_shard — Volume-Sharded Multi-Repository Federation Scaffolding (00, 01, 02, 03)**:
+0. **[helix-gaming-db-00] W.54_shard — Volume-Sharded Multi-Repository Federation & Centralized Docs/Wiki Split (00, 01, 02, 03, docs, wiki)**:
+   - `[docs]` Create dedicated public repository `HELIX-Origin/docs`, provision `PAT_TOKEN`, configure GitHub Pages (`helix-origin.club/docs`), and set up `remote_theme: HELIX-Origin/helix-docs`.
+   - `[wiki]` Create dedicated public repository `HELIX-Origin/wiki`, provision `PAT_TOKEN`, configure GitHub Pages (`helix-origin.club/wiki`), and set up `remote_theme: HELIX-Origin/helix-docs`.
    - `[helix-gaming-db-00]` Rename existing GitHub repository `helix-gaming-db` to `helix-gaming-db-00` and update local directory to `projects/helix-gaming-db-00`.
+   - `[helix-gaming-db-00]` Migrate docs to `docs` and wiki to `wiki`, leaving `helix-gaming-db-00` as a pure REST metadata API repository.
    - `[helix-gaming-db-01]` Create public repository `HELIX-Origin/helix-gaming-db-01`, provision `PAT_TOKEN`, seed with boilerplate, schemas, validation scripts, workflows, and i18n locales.
    - `[helix-gaming-db-02]` Create public repository `HELIX-Origin/helix-gaming-db-02`, provision `PAT_TOKEN`, seed with boilerplate, schemas, validation scripts, workflows, and i18n locales.
    - `[helix-gaming-db-03]` Create public repository `HELIX-Origin/helix-gaming-db-03`, provision `PAT_TOKEN`, seed with boilerplate, schemas, validation scripts, workflows, and i18n locales.

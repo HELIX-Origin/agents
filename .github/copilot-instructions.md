@@ -7,7 +7,7 @@
 ## 1. Workspace Identity & Scope
 
 - **Organization Focus:** All software and theme engineering belongs exclusively to the **HELIX Origin** organization (`https://github.com/HELIX-Origin`).
-- **Organization Repositories:** All active projects reside under the gitignored `projects/` directory (`projects/helix-docs`, `projects/helix-origin.github.io`, `projects/nh-reader`, `projects/universal-game-launcher`, `projects/theme-toolkit`, `projects/windhawk-themes`, `projects/helix-gaming-db`, `projects/ffxiv-config`).
+- **Organization Repositories:** All active projects reside under the gitignored `projects/` directory (`projects/helix-docs`, `projects/helix-origin.github.io`, `projects/docs`, `projects/wiki`, `projects/nh-reader`, `projects/universal-game-launcher`, `projects/theme-toolkit`, `projects/windhawk-themes`, `projects/helix-gaming-db-00`, `projects/helix-gaming-db-01`, `projects/helix-gaming-db-02`, `projects/helix-gaming-db-03`, `projects/ffxiv-config`).
 - **Zero Non-Org Mentions:** Never explore, modify, or directly mention by name any projects or repositories not belonging to the `HELIX-Origin` GitHub organization.
 
 ---
@@ -26,12 +26,14 @@
 ## 3. Subsystem Architecture
 
 - **`projects/helix-docs`**: Shared Jekyll theme with modular component partials (`_includes/components/`), frontmatter-driven navigation, precompiled Dart Sass (`assets/css/site.css`), and 18-language Google Translate switcher.
+- **`projects/helix-origin.github.io`**: Organization portal site hosted at `https://www.helix-origin.club` powered by GitHub Pages and `helix-docs` remote theme.
+- **`projects/docs`**: Dedicated organization-wide documentation hub hosted at `https://www.helix-origin.club/docs` powered by `helix-docs`.
+- **`projects/wiki`**: Dedicated organization-wide technical wiki and curation guide hub hosted at `https://www.helix-origin.club/wiki` powered by `helix-docs`.
 - **`projects/nh-reader`**: Cross-platform desktop client built with Tauri (Rust) and SvelteKit (Svelte 5 runes). Version manifests (`package.json`, `tauri.conf.json`, `Cargo.toml`) must move together.
 - **`projects/universal-game-launcher`**: Tauri v2 Universal Game Launcher with Universal Core Plugins + Global Helpers (`platform-universal`, `metadata-universal`, `utility-title-normalizer`, `media-universal`), authentic vector SVG platform icons, automatic metadata enhancement, per-game customization modal (`⚙ Manage`), and multi-drive storage analyzer.
 - **`projects/theme-toolkit`**: Cross-platform desktop theme authoring and packaging studio for Windows, macOS, and Linux.
 - **`projects/windhawk-themes`**: Windows 11 styling suites for 5 target styler mods. Uses `WindhawkBlur` and vertical gradient rim borders. Releases use milestone tags (`M.NN`) with zero attached assets.
-- **`projects/helix-origin.github.io`**: Organization portal site powered by GitHub Pages and `helix-docs` remote theme.
-- **`projects/helix-gaming-db`**: Open REST metadata API & gaming database hosted via GitHub Pages (`api/v1/`), with docs, schemas, and technical wiki powered by `helix-docs`.
+- **`projects/helix-gaming-db-00` through `03`**: Symmetrical volume-sharded REST metadata API and gaming database, each supporting all platforms with identical schemas, validation tools, `i18next` localized taxonomies, and GitHub Actions workflows.
 - **`projects/ffxiv-config`**: Information-dense HUD, hotbar, and macro configuration setup for Final Fantasy XIV.
 
 ---

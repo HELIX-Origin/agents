@@ -128,7 +128,7 @@ Once validated:
 2. Update `helix-origin.github.io/docs/index.md`:
    ```html
    <div class="project-card">
-   <a href="https://helix-origin.github.io/<project-repo>/" class="project-img">
+   <a href="https://www.helix-origin.club/<project-repo>/" class="project-img">
    <img src="{{ '/assets/images/<project-slug>.svg' | relative_url }}" alt="<Project Title> icon and project name" loading="lazy" decoding="async">
    </a>
    ```
