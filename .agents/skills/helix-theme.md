@@ -82,10 +82,12 @@ flowchart TB
 
 | Project | docs parent | wiki parent |
 | --- | --- | --- |
-| NH-Reader | "Documentation Home" | "NH Reader Technical Wiki" |
-| Universal-Game-Launcher | "Documentation Home" | "Universal Game Launcher Technical Wiki" |
-| Windhawk-Themes | "Documentation Directory" | "Target & Configuration Wiki" |
-| Theme-Toolkit | "Documentation Home" | "Theme Toolkit Technical Wiki" |
+| nh-reader | "Documentation Home" | "NH Reader Technical Wiki" |
+| universal-game-launcher | "Documentation Home" | "Universal Game Launcher Technical Wiki" |
+| windhawk-themes | "Documentation Directory" | "Target & Configuration Wiki" |
+| theme-toolkit | "Documentation Home" | "Theme Toolkit Technical Wiki" |
+| helix-gaming-db | "Documentation Directory" | "Community Wiki" |
+| ffxiv-config | "Documentation Directory" | — |
 | helix-origin.github.io | portal root (`/`, layout `default`) | — |
 
 ## Repair checklist for a consuming site

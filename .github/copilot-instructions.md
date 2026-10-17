@@ -7,7 +7,7 @@
 ## 1. Workspace Identity & Scope
 
 - **Organization Focus:** All software and theme engineering belongs exclusively to the **HELIX Origin** organization (`https://github.com/HELIX-Origin`).
-- **Organization Repositories:** All active projects reside under the gitignored `projects/` directory (`projects/helix-docs`, `projects/helix-origin.github.io`, `projects/NH-Reader`, `projects/Universal-Game-Launcher`, `projects/Theme-Toolkit`, `projects/Windhawk-Themes`, `projects/helix-gaming-db`).
+- **Organization Repositories:** All active projects reside under the gitignored `projects/` directory (`projects/helix-docs`, `projects/helix-origin.github.io`, `projects/nh-reader`, `projects/universal-game-launcher`, `projects/theme-toolkit`, `projects/windhawk-themes`, `projects/helix-gaming-db`, `projects/ffxiv-config`).
 - **Zero Non-Org Mentions:** Never explore, modify, or directly mention by name any projects or repositories not belonging to the `HELIX-Origin` GitHub organization.
 
 ---
@@ -26,12 +26,13 @@
 ## 3. Subsystem Architecture
 
 - **`projects/helix-docs`**: Shared Jekyll theme with modular component partials (`_includes/components/`), frontmatter-driven navigation, precompiled Dart Sass (`assets/css/site.css`), and 18-language Google Translate switcher.
-- **`projects/NH-Reader`**: Cross-platform desktop client built with Tauri (Rust) and SvelteKit (Svelte 5 runes). Version manifests (`package.json`, `tauri.conf.json`, `Cargo.toml`) must move together.
-- **`projects/Universal-Game-Launcher`**: Tauri v2 Universal Game Launcher with Universal Core Plugins + Global Helpers (`platform-universal`, `metadata-universal`, `utility-title-normalizer`, `media-universal`), authentic vector SVG platform icons, automatic metadata enhancement, per-game customization modal (`⚙ Manage`), and multi-drive storage analyzer.
-- **`projects/Theme-Toolkit`**: Cross-platform desktop theme authoring and packaging studio for Windows, macOS, and Linux.
-- **`projects/Windhawk-Themes`**: Windows 11 styling suites for 5 target styler mods. Uses `WindhawkBlur` and vertical gradient rim borders. Releases use milestone tags (`M.NN`) with zero attached assets.
+- **`projects/nh-reader`**: Cross-platform desktop client built with Tauri (Rust) and SvelteKit (Svelte 5 runes). Version manifests (`package.json`, `tauri.conf.json`, `Cargo.toml`) must move together.
+- **`projects/universal-game-launcher`**: Tauri v2 Universal Game Launcher with Universal Core Plugins + Global Helpers (`platform-universal`, `metadata-universal`, `utility-title-normalizer`, `media-universal`), authentic vector SVG platform icons, automatic metadata enhancement, per-game customization modal (`⚙ Manage`), and multi-drive storage analyzer.
+- **`projects/theme-toolkit`**: Cross-platform desktop theme authoring and packaging studio for Windows, macOS, and Linux.
+- **`projects/windhawk-themes`**: Windows 11 styling suites for 5 target styler mods. Uses `WindhawkBlur` and vertical gradient rim borders. Releases use milestone tags (`M.NN`) with zero attached assets.
 - **`projects/helix-origin.github.io`**: Organization portal site powered by GitHub Pages and `helix-docs` remote theme.
 - **`projects/helix-gaming-db`**: Open REST metadata API & gaming database hosted via GitHub Pages (`api/v1/`), with docs, schemas, and technical wiki powered by `helix-docs`.
+- **`projects/ffxiv-config`**: Information-dense HUD, hotbar, and macro configuration setup for Final Fantasy XIV.
 
 ---
 
@@ -40,7 +41,7 @@
 | Subsystem / Area | Verification Command |
 |---|---|
 | Theme (`helix-docs` & portal) | `bundle exec jekyll build` (0 errors, 0 warnings) |
-| Desktop App (`NH-Reader`) | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` |
-| Universal Game Launcher (`Universal-Game-Launcher`) | `cargo check`, `cargo test`, `npm run check`, `npm run build` |
-| Windows 11 Mods (`Windhawk-Themes`) | `pwsh -NoProfile -File projects/Windhawk-Themes/tools/Test-WindhawkStyles.ps1` |
+| Desktop App (`nh-reader`) | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` |
+| Universal Game Launcher (`universal-game-launcher`) | `cargo check`, `cargo test`, `npm run check`, `npm run build` |
+| Windows 11 Mods (`windhawk-themes`) | `pwsh -NoProfile -File projects/windhawk-themes/tools/Test-WindhawkStyles.ps1` |
 | Gaming DB (`helix-gaming-db`) | Schema & JSON validation (`node test-api.mjs` or `bundle exec jekyll build`) |

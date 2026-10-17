@@ -24,11 +24,12 @@
 flowchart TB
     Org[HELIX Origin Organization] --> DocsTheme["[helix-docs] Remote Jekyll Theme"]
     Org --> Portal["[helix-origin.github.io] Portal Hub"]
-    Org --> DesktopApp["[NH-Reader] Desktop/Mobile App"]
-    Org --> UniversalLauncher["[Universal-Game-Launcher] Desktop App"]
-    Org --> ThemeToolkit["[Theme-Toolkit] Theme Suite"]
-    Org --> ShellMods["[Windhawk-Themes] Shell Styler Suite"]
+    Org --> DesktopApp["[nh-reader] Desktop/Mobile App"]
+    Org --> UniversalLauncher["[universal-game-launcher] Desktop App"]
+    Org --> ThemeToolkit["[theme-toolkit] Theme Suite"]
+    Org --> ShellMods["[windhawk-themes] Shell Styler Suite"]
     Org --> GamingDB["[helix-gaming-db] REST Metadata API & Database"]
+    Org --> FFXIVConfig["[ffxiv-config] HUD & Macro Suite"]
 
     DocsTheme -.->|remote_theme| Portal
     DocsTheme -.->|remote_theme| DesktopApp
@@ -36,6 +37,7 @@ flowchart TB
     DocsTheme -.->|remote_theme| ThemeToolkit
     DocsTheme -.->|remote_theme| ShellMods
     DocsTheme -.->|remote_theme| GamingDB
+    DocsTheme -.->|remote_theme| FFXIVConfig
 ```
 
 1. 🎨 **Unified Design Tokens**: A cohesive dark obsidian aesthetic (`#07111f` / `#0d1b2d`) with cyan (`#48d8f2`) and purple (`#b06cff`) accents across documentation, desktop apps, and OS styling suites.
@@ -50,18 +52,19 @@ flowchart TB
 |---|---|---|---|---|---|
 | **[helix-docs]** | `projects/helix-docs` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-docs/releases/tag/v1.0.0) | ✅ Shipped | Frontmatter nav engine, modular cards, universal navbar |
 | **[helix-origin.github.io]** | `projects/helix-origin.github.io` | Rolling Sprints | Portal v2 | 🚀 Active | 16:9 vector artwork integration, project showcase cards |
-| **[NH-Reader]** | `projects/NH-Reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/NH-Reader/releases/tag/v0.7.5) | 🚀 Active | M13: Unified `.mjs` scripts architecture, main:sub:option command hierarchy, local code signing |
-| **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
-| **[Universal-Game-Launcher]** | `projects/Universal-Game-Launcher` | SemVer | [v1.4.0](https://github.com/HELIX-Origin/Universal-Game-Launcher) | 🚀 Active | M14: Universal Game Launcher Rebranding, Steam/GOG UI, Native In-App Modular Plugins Framework, Generic SQLite Persistence & Modern Visual Identity |
-| **[Theme-Toolkit]** | `projects/Theme-Toolkit` | SemVer | [v0.1.0-alpha](https://github.com/HELIX-Origin/Theme-Toolkit) | 🚀 Active | M1: Framework scaffolded, Per-Platform Lib isolation, native packaging blueprints |
+| **[nh-reader]** | `projects/nh-reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/nh-reader/releases/tag/v0.7.5) | 🚀 Active | M13: Unified `.mjs` scripts architecture, main:sub:option command hierarchy, local code signing |
+| **[windhawk-themes]** | `projects/windhawk-themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
+| **[universal-game-launcher]** | `projects/universal-game-launcher` | SemVer | [v1.4.0](https://github.com/HELIX-Origin/universal-game-launcher) | 🚀 Active | M14: Universal Game Launcher Rebranding, Steam/GOG UI, Native In-App Modular Plugins Framework, Generic SQLite Persistence & Modern Visual Identity |
+| **[theme-toolkit]** | `projects/theme-toolkit` | SemVer | [v0.1.0-alpha](https://github.com/HELIX-Origin/theme-toolkit) | 🚀 Active | M1: Framework scaffolded, Per-Platform Lib isolation, native packaging blueprints |
 | **[helix-gaming-db]** | `projects/helix-gaming-db` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-gaming-db) | 🚀 Active | M1: REST API v1 endpoints (`manifest`, `search`, `games`, `developers`), GitHub Pages deployment, `helix-docs` portal & wiki |
+| **[ffxiv-config]** | `projects/ffxiv-config` | Rolling Releases | [v1.0.0](https://github.com/HELIX-Origin/ffxiv-config) | 🚀 Active | Information-dense HUD, hotbars, job macros, and FFC integration |
 
 ---
 
 ## 🚀 Active Project Roadmaps
 
-### 1. [Windhawk-Themes] — Command Center Suite
-*Target Path: `projects/Windhawk-Themes` · Windows 11 Shell Theming Framework*
+### 1. [windhawk-themes] — Command Center Suite
+*Target Path: `projects/windhawk-themes` · Windows 11 Shell Theming Framework*
 
 ```mermaid
 flowchart LR
@@ -71,24 +74,24 @@ flowchart LR
     M2b --> M4["M.04: Suite Verification ⏳"]
 ```
 
-- **[Windhawk-Themes] Milestone M.02b: Suite Polish & Geometry Alignment (ACTIVE):**
+- **[windhawk-themes] Milestone M.02b: Suite Polish & Geometry Alignment (ACTIVE):**
   - **Start Menu Geometry**: Phone Link companion cards aligned flush with menu top; search box left edge flush with pinned apps card; companion toggle button right edge flush with pinned apps card.
   - **Action Center Quick Settings**: Harmonize split-button toggle and chevron backgrounds (`SplitL2Button`); eliminate high-contrast blue fallback states.
   - **Taskbar Snap Layout Containers**: Theme internal snap containers (`SnapLayoutControl`, `LayoutBorder`) with Command Center glass without breaking layout bounds.
   - **Taskbar Overflow Grid**: Restore frosted glass background and specular border to system tray overflow flyout.
   - **Docs Neutrality & Config Hygiene** (2026-10-13): corrected the documentation site to stay theme-neutral (mod mechanism only — the catalogue is the sole suite-specific surface, now codified as a global agents rule); synced `projects/command-center/README.md` to the current configs; deduplicated the static gate to **0 errors / 0 warnings**.
-- **[Windhawk-Themes] Milestone M.03: Windows 11 File Explorer Styler (SHELVED / DEFERRED):**
+- **[windhawk-themes] Milestone M.03: Windows 11 File Explorer Styler (SHELVED / DEFERRED):**
   - Shelved per maintainer decision (2026-10-07) to avoid unstable system-wide translucency injectors or breaking Win32 DirectUI controls.
-- **[Windhawk-Themes] Milestone M.04: Unified Suite Verification & Catalog Showcase (PLANNED):**
+- **[windhawk-themes] Milestone M.04: Unified Suite Verification & Catalog Showcase (PLANNED):**
   - Full multi-mod Windows 11 desktop verification and Jekyll showcase catalogue generation in `docs/_catalogue/`.
 
 ---
 
-### 2. [NH-Reader] — Desktop & Android Reader
-*Target Path: `projects/NH-Reader` · Tauri / Rust / SvelteKit Native Client*
+### 2. [nh-reader] — Desktop & Android Reader
+*Target Path: `projects/nh-reader` · Tauri / Rust / SvelteKit Native Client*
 
-- **[NH-Reader] Milestone History (M1–M12 Delivered)**: Foundation, Browse, Advanced Query Search, Blacklist Engine, SQLite Cache, Responsive Reader, Storage Budgets, 18-Language Localization Core, Custom Title Bar, and Multi-Platform Sign Script (v0.1.0 – v0.7.5). Full technical summaries live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md#nh-reader).
-- **[NH-Reader] Milestone M13 (UPCOMING / PLANNED):**
+- **[nh-reader] Milestone History (M1–M12 Delivered)**: Foundation, Browse, Advanced Query Search, Blacklist Engine, SQLite Cache, Responsive Reader, Storage Budgets, 18-Language Localization Core, Custom Title Bar, and Multi-Platform Sign Script (v0.1.0 – v0.7.5). Full technical summaries live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md#nh-reader).
+- **[nh-reader] Milestone M13 (UPCOMING / PLANNED):**
   - Tag frequency analytics and recommended read suggestions based on local history.
   - Multi-profile library partitions (e.g. separate blacklist/favorites sets).
   - Background auto-update inspection and release notification toasts.
@@ -119,8 +122,8 @@ flowchart LR
 
 ---
 
-### 5. [Universal-Game-Launcher] — Universal Game Launcher
-*Target Path: `projects/Universal-Game-Launcher` · Tauri v2 / Rust / SvelteKit Desktop App*
+### 5. [universal-game-launcher] — Universal Game Launcher
+*Target Path: `projects/universal-game-launcher` · Tauri v2 / Rust / SvelteKit Desktop App*
 
 ```mermaid
 flowchart LR
@@ -136,11 +139,11 @@ flowchart LR
     M14 -.-> M15["M15: Cloud Gaming (Planned) ⏳"]
 ```
 
-- **[Universal-Game-Launcher] Milestone History (M1–M12 Delivered)**: Multi-platform library aggregation, storage manager, custom artwork manager, localization engine, dynamic smart collections, SQLite metadata persistence, obsidian UI, Redis KV in-memory tier, and deals/free games engines (v1.0.0 – v1.3.1). Full architectural histories live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md).
-- **[Universal-Game-Launcher] Milestone M13: Multi-Platform Hardening, WinGet Packaging & Hygiene v1.3.2 - v1.3.3 (DELIVERED):**
+- **[universal-game-launcher] Milestone History (M1–M12 Delivered)**: Multi-platform library aggregation, storage manager, custom artwork manager, localization engine, dynamic smart collections, SQLite metadata persistence, obsidian UI, Redis KV in-memory tier, and deals/free games engines (v1.0.0 – v1.3.1). Full architectural histories live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md).
+- **[universal-game-launcher] Milestone M13: Multi-Platform Hardening, WinGet Packaging & Hygiene v1.3.2 - v1.3.3 (DELIVERED):**
   - Elimination of all cross-platform compiler warnings across POSIX (Linux/macOS) and Windows targets.
   - Full adherence to organizational `main:sub:option` script hierarchy and IDE untracking hygiene.
-- **[Universal-Game-Launcher] Milestone M14: Native Universal Core Plugins & Global Helpers Framework, Automatic Metadata Enhancement, Per-Game Customization Modal, Store & Social Hub v1.4.0 (ACTIVE):**
+- **[universal-game-launcher] Milestone M14: Native Universal Core Plugins & Global Helpers Framework, Automatic Metadata Enhancement, Per-Game Customization Modal, Store & Social Hub v1.4.0 (ACTIVE):**
   - **Complete Product Rebranding**: Renamed package to `universal-game-launcher`, product to `Universal Game Launcher`, crate to `universal_game_launcher_lib`, and bundle identifier to `org.helixorigin.universal-game-launcher`.
   - **Native In-App Universal Core Plugins & Global Helpers Framework (`src/lib/plugins/` & `src-tauri/src/`)**: Consolidated platform integrations, metadata providers, title normalization, and media playback into cohesive **Universal Core Plugins** paired with **Global Helper Modules/Functions**:
     - `platform-universal` (`src/lib/plugins/platforms/universal.ts`): Unified support and global helpers (`getAllPlatformSpecs`, `detectPlatformLauncher`, `installPlatformLauncher`, `getPlatformLaunchSpec`, `getPlatformUris`) across all 12 game providers (`steam`, `gog`, `epic`, `itch`, `xbox`, `ea`, `ubisoft`, `battlenet`, `amazon`, `rockstar`, `emulationstation`, `standalone`).
@@ -160,8 +163,8 @@ flowchart LR
 
 ---
 
-### 6. [Theme-Toolkit] — Dedicated Cross-Platform Theme Engineering Suite (ACTIVE / SCAFFOLDED)
-*Target Path: `projects/Theme-Toolkit` · Tauri v2 / Rust / SvelteKit Desktop App · v0.1.0-alpha*
+### 6. [theme-toolkit] — Dedicated Cross-Platform Theme Engineering Suite (ACTIVE / SCAFFOLDED)
+*Target Path: `projects/theme-toolkit` · Tauri v2 / Rust / SvelteKit Desktop App · v0.1.0-alpha*
 
 - **Core Vision & Invariants:**
   - Dedicated cross-platform desktop theme authoring and packaging application named **Theme Toolkit**, built as a **Tauri v2 application** that utilizes a modern GUI as its primary interface to replace Microsoft's broken settings export integration and provide native theme authoring across all major desktop operating systems.
@@ -178,7 +181,7 @@ flowchart LR
   - **Color Editing:** Live DWM accent colorization control (`ColorizationColor` ARGB hex), Windows 10/11 system/app dark and light modes (`SystemMode`, `AppMode`), and Control Panel color palette overrides.
   - **Delivery Form Factor:** Dedicated **Tauri v2 GUI application** (`Theme Toolkit`) with interactive asset previews (wallpaper viewport, audio player, animated cursor canvas, real-time color pickers) backed by a native Rust Per-Platform Lib Architecture (`windows.rs`, `macos.rs`, `linux.rs`), alongside optional headless CLI automation (`theme-toolkit pack:theme:release`).
 - **Scaffolded State:**
-  - Repository created at `HELIX-Origin/Theme-Toolkit`, cloned into `projects/Theme-Toolkit`, and initial base framework committed and pushed to `origin/main`.
+  - Repository created at `HELIX-Origin/theme-toolkit`, cloned into `projects/theme-toolkit`, and initial base framework committed and pushed to `origin/main`.
   - Feature implementation will be scheduled for a subsequent sprint.
 
 ---
@@ -187,9 +190,9 @@ flowchart LR
 *Target Path: `projects/helix-gaming-db` · REST API / GitHub Pages / Jekyll Remote Theme · v1.0.0*
 
 - **Core Vision & Invariants:**
-  - Dedicated, open, community-extensible gaming metadata repository and REST API named **HELIX Gaming DB** (`helix-gaming-db`), hosted directly via GitHub Pages (`https://helix-origin.github.io/helix-gaming-db/`).
+  - Dedicated, open, community-extensible gaming metadata repository and REST API named **HELIX Gaming DB** (`helix-gaming-db`), hosted directly via GitHub Pages (`https://www.helix-origin.club/helix-gaming-db/`).
   - Provides reliable, verified metadata and high-resolution official CDN artwork for indie, Patreon, obscure, and emulation titles that are missing from or mismatched by mainstream storefronts.
-  - Serves static, cacheable JSON endpoints under `/api/v1/` allowing both `Universal-Game-Launcher` and external clients to query manifest data, search indices, game metadata, and developer studio profiles.
+  - Serves static, cacheable JSON endpoints under `/api/v1/` allowing both `universal-game-launcher` and external clients to query manifest data, search indices, game metadata, and developer studio profiles.
   - Pairs with a dedicated documentation portal and technical wiki powered by `helix-docs` (`remote_theme: HELIX-Origin/helix-docs`), following strict documentation theme-neutrality rules.
 - **Detailed Feature Scope:**
   - **REST API v1 Endpoints (`api/v1/`)**:
@@ -203,7 +206,17 @@ flowchart LR
     - REST API reference, endpoints specification, payload examples, and client integration guide.
     - Community contribution guide for submitting new game and developer records via GitHub Pull Requests.
   - **Client Integration**:
-    - Directly integrated into `Universal-Game-Launcher` as the primary authoritative metadata provider with offline hand-rolled fallback.
+    - Directly integrated into `universal-game-launcher` as the primary authoritative metadata provider with offline hand-rolled fallback.
+
+---
+
+### 8. [ffxiv-config] — Final Fantasy XIV HUD, Hotbar & Macro Configuration Setup (ACTIVE)
+*Target Path: `projects/ffxiv-config` · HUD & Macro Suite · v1.0.0*
+
+- **Core Vision & Invariants:**
+  - Ready-to-use, information-dense HUD, hotbar, and macro configuration setup for Final Fantasy XIV built on Fr4nsson's FFC and extended for current 8.x jobs.
+  - Provides pre-arranged combat, crafting, and gathering hotbars with on-screen macro navigation for instant job switching.
+  - Documentation site hosted via GitHub Pages and powered by `remote_theme: HELIX-Origin/helix-docs`.
 
 
 

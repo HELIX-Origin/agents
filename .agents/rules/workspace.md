@@ -15,11 +15,12 @@ These rules apply to **every active project** under `projects/` belonging to `HE
 
 - `projects/helix-docs` — theme repo (+ its own preview site).
 - `projects/helix-origin.github.io` — portal; **only `docs/` is in scope**.
-- `projects/NH-Reader` — Tauri v2 desktop manga reader; **full repository in scope** (scripts, workflows, desktop core, and `docs/`).
-- `projects/Universal-Game-Launcher` — Tauri v2 universal game library & launcher; **full repository in scope**.
-- `projects/Theme-Toolkit` — cross-platform desktop theme studio & applicator; **full repository in scope**.
-- `projects/Windhawk-Themes` — **only `docs/` is in scope**.
+- `projects/nh-reader` — Tauri v2 desktop manga reader; **full repository in scope** (scripts, workflows, desktop core, and `docs/`).
+- `projects/universal-game-launcher` — Tauri v2 universal game library & launcher; **full repository in scope**.
+- `projects/theme-toolkit` — cross-platform desktop theme studio & applicator; **full repository in scope**.
+- `projects/windhawk-themes` — **only `docs/` is in scope**.
 - `projects/helix-gaming-db` — REST metadata API & gaming database; **full repository in scope** (docs, wiki, schemas, and `api/v1/` endpoints).
+- `projects/ffxiv-config` — FFXIV HUD, hotbar, and macro configuration setup.
 
 Everything else outside these active `HELIX-Origin` repositories is strictly out of scope and must never be referenced.
 
@@ -52,7 +53,7 @@ The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs 
 - **Bare Minimal Living Ledgers & Normalized Dedicated Archival**: Maintain `ROADMAP.md`, `TODO.md`, and `BUGS.md` lean, sharp, and focused on active workstreams. Detailed historical task checklists, delivered milestone technical narratives, and resolved bug post-mortems in `.github/` (`.github/ROADMAP-ARCHIVE.md`, `.github/TODO-ARCHIVE.md`, `.github/BUGS-ARCHIVE.md`) must be kept equally clean, normalized, and free of non-organization or deleted repository mentions.
 - **Mandatory Project Tagging**: In workspace root tracking documents (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) and `.github/*-ARCHIVE.md` files,
   every milestone, sprint, task, workstream, quirk, or bug MUST be explicitly prefixed with its current active project tag
-  and relative path (`[<project-name>] (<project-path>)`, e.g. `[Universal-Game-Launcher] (projects/Universal-Game-Launcher)`). Never omit
+  and relative path (`[<project-name>] (<project-path>)`, e.g. `[universal-game-launcher] (projects/universal-game-launcher)`). Never omit
   project attribution or leave stale pre-rebrand repository paths in active or archived sections.
 - Update all four when: starting a task, completing a task, hitting a blocker, or changing scope.
 

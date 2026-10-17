@@ -12,7 +12,7 @@
 
 - **Single Pane of Glass:** All repository sprint plans are consolidated here at workspace root.
 - **100% Active Direction Accuracy:** Active sprints and architectural descriptions must always reflect the current, active direction of all projects with zero contradictions. Superseded tasks or decisions must be updated in place rather than appended as conflicting statements.
-- **Zero Non-Organization Mentions:** Only reference active repositories belonging to the `HELIX-Origin` GitHub organization (`helix-docs`, `helix-origin.github.io`, `NH-Reader`, `Universal-Game-Launcher`, `Theme-Toolkit`, `Windhawk-Themes`). Never directly mention external, third-party, or deleted projects/repositories by name.
+- **Zero Non-Organization Mentions:** Only reference active repositories belonging to the `HELIX-Origin` GitHub organization (`helix-docs`, `helix-origin.github.io`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db`, `ffxiv-config`). Never directly mention external, third-party, or deleted projects/repositories by name.
 - **Active Sprints Only in Top Section:** `## 🎯 Active Sprints` contains ONLY currently active sprints. Completed sprints move immediately to `## ✅ Completed Sprints` (newest first).
 - **Mandatory Project Tagging Invariant:** Every sprint, workstream, task, and verification command **must explicitly state its current project name and repository path** (`[<project-name>] (<project-path>)`). Unscoped items are strictly prohibited so agents never conflate repositories.
 
@@ -20,32 +20,65 @@
 
 ## 🎯 Active Sprints
 
-### 🚀 Sprint 28: [Universal-Game-Launcher] (projects/Universal-Game-Launcher) & [Ecosystem] — Organization CI Workflow Standards & Continuous Verification Deployment
-- **Project Identifiers:** `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`), `[NH-Reader]` (`projects/NH-Reader`), `[Theme-Toolkit]` (`projects/Theme-Toolkit`), `[helix-docs]` (`projects/helix-docs`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`)
-- **Target Objective:** Establish continuous integration (CI) workflows as an organization standard across all active repositories in `HELIX-Origin`. Deploy repo-tailored CI workflows executing frontend type-checks (`svelte-check` / TypeScript), Rust backend compiler checks (`cargo check`, `cargo test --lib`), schema validations, and Jekyll build verification on push and pull requests to prevent regressions. Start with `Universal-Game-Launcher` and progress sequentially across projects.
+### 🚀 Sprint 29: [helix-gaming-db] (projects/helix-gaming-db) — REST Metadata API Expansion: Three-Tier Endpoints, Contributor Fork/PR Suite, Dedicated Adult (18+) API, Expanded 80-Game Catalog & GitHub Issue Templates (v1.1.0)
+- **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`)
+- **Target Objective:** Expand `helix-gaming-db` into a versatile, multidimensional gaming metadata REST API organized across three purpose-built tiers: Root gateway (`/api/manifest.json`), v1 Client API (`/api/v1/`), v2 Relational & Contributor API (`/api/v2/`), and v3 Dedicated Adult / 18+ Gaming API (`/api/v3/`). Provide starter schemas and developer templates for forking and pull request submissions. Expand the curated game catalog to 80 verified titles and 42 developers across PC indie, adult visual novels, and emulation classics. Author structured GitHub issue forms and PR templates, and synchronize documentation and wiki.
 
 ```mermaid
 flowchart TD
-    S28_1["[Universal-Game-Launcher] W.51a: CI Workflow Design & Matrix (Frontend + Rust)"] --> S28_2["[Universal-Game-Launcher] W.51b: Verification Gate & Remote Actions Run"]
-    S28_2 --> S28_3["[NH-Reader] W.51c: Tauri v2 CI Workflow Deployment"]
-    S28_3 --> S28_4["[Theme-Toolkit] W.51d: Theme Studio CI Workflow Deployment"]
+    S29_1["[helix-gaming-db] W.52a: Three-Tier Endpoint & Index Generator (Root, v1, v2, v3)"] --> S29_2["[helix-gaming-db] W.52b: Developer Contributor Starter Templates & PR Workflow"]
+    S29_2 --> S29_3["[helix-gaming-db] W.52c: Database Catalog Expansion (80 Games & 42 Studios)"]
+    S29_3 --> S29_4["[helix-gaming-db] W.52d: GitHub Issue Forms & PR Template Suite"]
+    S29_4 --> S29_5["[helix-gaming-db] W.52e: Documentation & Wiki Sync"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[helix-gaming-db] (projects/helix-gaming-db) W.52a — Three-Tier Endpoint & Index Generator (Done)**:
+   - `[helix-gaming-db]` Expand `scripts/build-search-index.mjs` to generate:
+     - `/api/manifest.json`: Root entrypoint declaring version capabilities and routing.
+     - `/api/v1/`: Flat client consumption tier (`manifest.json`, `search/index.json`, `games/`, `developers/`).
+     - `/api/v2/`: Relational discovery & contributor tier (`manifest.json`, `catalog/`, `search/`, `genres/`, `platforms/`, `tags/`, `publishers/`, `developers/`, `stats/`, `contribute/`).
+     - `/api/v3/`: Dedicated adult (18+) gaming tier (`manifest.json`, `catalog/`, `search/`, `games/`, `developers/`, `tags/`, `platforms/`, `stats/`).
+2. **[helix-gaming-db] (projects/helix-gaming-db) W.52b — Developer Contributor Starter Templates & CI (Done)**:
+   - `[helix-gaming-db]` Provide starter payloads and schemas at `api/v2/contribute/templates/game.json`, `api/v2/contribute/templates/developer.json`, `api/v2/contribute/schemas/`, and `api/v2/contribute/guide.json`.
+   - `[helix-gaming-db]` Deploy GitHub Actions CI workflow (`.github/workflows/ci.yml`) validating schemas and index building on push/PR.
+3. **[helix-gaming-db] (projects/helix-gaming-db) W.52c — Database Catalog Expansion & Validation (Done)**:
+   - `[helix-gaming-db]` Expand catalog to 80 curated games and 42 developer studios across PC indie gems, adult visual novels, and emulation classics.
+   - `[helix-gaming-db]` Run multi-tier validation test suite (`npm test`) passing with 0 errors.
+4. **[helix-gaming-db] (projects/helix-gaming-db) W.52d — GitHub Issue Forms & PR Template Suite (Done)**:
+   - `[helix-gaming-db]` Author `.github/ISSUE_TEMPLATE/01_new_game_request.yml`, `02_metadata_correction.yml`, `03_new_developer_request.yml`, `config.yml`, and `.github/pull_request_template.md`.
+5. **[helix-gaming-db] (projects/helix-gaming-db) W.52e — Documentation & Wiki Sync (Done)**:
+   - `[helix-gaming-db]` Update `_docs/endpoints.md`, `_docs/contributing.md`, `_docs/index.md`, and `_wiki/architecture.md` with complete 3-tier REST architecture and diagrams.
+
+---
+
+### 🚀 Sprint 28: [universal-game-launcher] (projects/universal-game-launcher) & [Ecosystem] — Organization CI Workflow Standards & Continuous Verification Deployment
+- **Project Identifiers:** `[universal-game-launcher]` (`projects/universal-game-launcher`), `[nh-reader]` (`projects/nh-reader`), `[theme-toolkit]` (`projects/theme-toolkit`), `[helix-docs]` (`projects/helix-docs`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`)
+- **Target Objective:** Establish continuous integration (CI) workflows as an organization standard across all active repositories in `HELIX-Origin`. Deploy repo-tailored CI workflows executing frontend type-checks (`svelte-check` / TypeScript), Rust backend compiler checks (`cargo check`, `cargo test --lib`), schema validations, and Jekyll build verification on push and pull requests to prevent regressions. Start with `universal-game-launcher` and progress sequentially across projects.
+
+```mermaid
+flowchart TD
+    S28_1["[universal-game-launcher] W.51a: CI Workflow Design & Matrix (Frontend + Rust)"] --> S28_2["[universal-game-launcher] W.51b: Verification Gate & Remote Actions Run"]
+    S28_2 --> S28_3["[nh-reader] W.51c: Tauri v2 CI Workflow Deployment"]
+    S28_3 --> S28_4["[theme-toolkit] W.51d: Theme Studio CI Workflow Deployment"]
     S28_4 --> S28_5["[helix-docs] W.51e: Jekyll & Sass CI Workflow Deployment"]
     S28_5 --> S28_6["[helix-origin.github.io] W.51f: Organization Portal CI Deployment"]
 ```
 
 #### 📝 Execution Tasks
 
-1. **[Universal-Game-Launcher] (projects/Universal-Game-Launcher) W.51a — Tauri v2 CI Workflow Creation (`.github/workflows/ci.yml`) (In Progress)**:
-   - `[Universal-Game-Launcher]` Create `.github/workflows/ci.yml` with dual-stage verification:
+1. **[universal-game-launcher] (projects/universal-game-launcher) W.51a — Tauri v2 CI Workflow Creation (`.github/workflows/ci.yml`) (Done)**:
+   - `[universal-game-launcher]` Create `.github/workflows/ci.yml` with dual-stage verification:
      - `frontend`: Node 22, `npm ci`, SvelteKit sync & type-check (`npm run check`).
      - `backend`: Rust stable toolchain on `windows-latest` & `ubuntu-22.04` with GTK/WebKit dependencies, `swatinem/rust-cache`, `cargo check` & `cargo test --lib`.
-2. **[Universal-Game-Launcher] (projects/Universal-Game-Launcher) W.51b — Verification Gate & Push to Remote**:
-   - `[Universal-Game-Launcher]` Run local test suites (`npm test`: check, rust, frontend).
-   - `[Universal-Game-Launcher]` Commit and push to `main`, verify GitHub Actions run passes cleanly.
-3. **[NH-Reader] (projects/NH-Reader) W.51c — Tauri v2 CI Workflow Deployment**:
-   - `[NH-Reader]` Create `.github/workflows/ci.yml` tailored for NH-Reader (`cargo check`, `cargo test`, `npm test`).
-4. **[Theme-Toolkit] (projects/Theme-Toolkit) W.51d — Theme Studio CI Workflow Deployment**:
-   - `[Theme-Toolkit]` Create `.github/workflows/ci.yml` tailored for Theme-Toolkit.
+2. **[universal-game-launcher] (projects/universal-game-launcher) W.51b — Verification Gate & Push to Remote (Done)**:
+   - `[universal-game-launcher]` Run local test suites (`npm test`: check, rust, frontend).
+   - `[universal-game-launcher]` Commit and push to `main`, verify GitHub Actions run passes cleanly (Run `39016342557` passed 100%).
+3. **[nh-reader] (projects/nh-reader) W.51c — Tauri v2 CI Workflow Deployment**:
+   - `[nh-reader]` Create `.github/workflows/ci.yml` tailored for nh-reader (`cargo check`, `cargo test`, `npm test`).
+4. **[theme-toolkit] (projects/theme-toolkit) W.51d — Theme Studio CI Workflow Deployment**:
+   - `[theme-toolkit]` Create `.github/workflows/ci.yml` tailored for theme-toolkit.
 5. **[helix-docs] (projects/helix-docs) W.51e — Jekyll Theme CI Workflow Deployment**:
    - `[helix-docs]` Create `.github/workflows/ci.yml` with Ruby / Bundler Jekyll build validation and dart-sass check.
 6. **[helix-origin.github.io] (projects/helix-origin.github.io) W.51f — Portal CI Workflow Deployment**:
@@ -55,11 +88,11 @@ flowchart TD
 
 ## 🔮 Planned Sprints
 
-### ⏳ [NH-Reader] (projects/NH-Reader) — Post-v0.7.5 / Milestone M13
-- **Project Identifier:** `[NH-Reader]` (`projects/NH-Reader`)
-- `[NH-Reader]` Tag frequency analytics and local recommendation engine based on reading history.
-- `[NH-Reader]` Multi-profile library partitions (isolated blacklist/favorite spaces).
-- `[NH-Reader]` Background auto-update checker and GitHub release notification toasts.
+### ⏳ [nh-reader] (projects/nh-reader) — Post-v0.7.5 / Milestone M13
+- **Project Identifier:** `[nh-reader]` (`projects/nh-reader`)
+- `[nh-reader]` Tag frequency analytics and local recommendation engine based on reading history.
+- `[nh-reader]` Multi-profile library partitions (isolated blacklist/favorite spaces).
+- `[nh-reader]` Background auto-update checker and GitHub release notification toasts.
 
 ### ⏳ [helix-docs] (projects/helix-docs) — v1.1.0 Feature Cycle
 - **Project Identifier:** `[helix-docs]` (`projects/helix-docs`)
@@ -72,30 +105,30 @@ flowchart TD
 - `[helix-origin.github.io]` Live release status widgets dynamically queried via Jekyll GitHub metadata.
 - `[helix-origin.github.io]` Interactive showcase component consuming the `catalogue` layout.
 
-### ⏳ [Theme-Toolkit] (projects/Theme-Toolkit) — Milestone M2 Native Packaging Implementation
-- **Project Identifier:** `[Theme-Toolkit]` (`projects/Theme-Toolkit`)
-- `[Theme-Toolkit]` Implement `makecab.exe` Diamond Directive File (`.ddf`) engine, Sound Scheme Manager, Wallpaper & Slideshow Studio, Cursor Scheme Inspector, and Color & Visual Style Editor.
+### ⏳ [theme-toolkit] (projects/theme-toolkit) — Milestone M2 Native Packaging Implementation
+- **Project Identifier:** `[theme-toolkit]` (`projects/theme-toolkit`)
+- `[theme-toolkit]` Implement `makecab.exe` Diamond Directive File (`.ddf`) engine, Sound Scheme Manager, Wallpaper & Slideshow Studio, Cursor Scheme Inspector, and Color & Visual Style Editor.
 
 ---
 
 ## ✅ Completed Sprints
 
-### ✅ Sprint 27: [helix-gaming-db] (projects/helix-gaming-db) & [Universal-Game-Launcher] (projects/Universal-Game-Launcher) — HELIX Gaming DB REST API Foundation, GitHub Pages Deployment, Remote Theme Docs & UGL Client Provider (v1.0.0)
-- **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`), `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`)
+### ✅ Sprint 27: [helix-gaming-db] (projects/helix-gaming-db) & [universal-game-launcher] (projects/universal-game-launcher) — HELIX Gaming DB REST API Foundation, GitHub Pages Deployment, Remote Theme Docs & UGL Client Provider (v1.0.0)
+- **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`), `[universal-game-launcher]` (`projects/universal-game-launcher`)
 - ✅ `[helix-gaming-db]` **Dedicated Gaming Metadata Repository & REST API Architecture**: Scaffolded repository with Draft 2020-12 JSON schemas (`manifest.schema.json`, `game.schema.json`, `developer.schema.json`), automated validation (`scripts/validate.mjs`), and search index generator (`scripts/build-search-index.mjs`).
 - ✅ `[helix-gaming-db]` **Static REST v1 Endpoints & Seed Datasets**: Authored 62 curated game payloads (`api/v1/games/*.json`), 28 studio profiles (`api/v1/developers/*.json`), `api/v1/search/index.json`, and `api/v1/manifest.json`.
 - ✅ `[helix-gaming-db]` **Jekyll Remote Theme Docs & Technical Wiki**: Deployed documentation portal and wiki powered by `remote_theme: HELIX-Origin/helix-docs` with theme-neutral API explorer and contribution guides.
-- ✅ `[Universal-Game-Launcher]` **Client Metadata Provider Integration (`metadata-helix`)**: Implemented high-priority client plugin querying `helix-origin.club` with cascade fallback to `helix-origin.github.io` and local offline catalog.
+- ✅ `[universal-game-launcher]` **Client Metadata Provider Integration (`metadata-helix`)**: Implemented high-priority client plugin querying `helix-origin.club` with cascade fallback to `helix-origin.github.io` and local offline catalog.
 - ✅ **Verification**: Passed schema validation (62 games, 28 developers, 0 errors), `cargo check`, `cargo test` (35 passing), `svelte-check` (0 errors, 0 warnings), and live GitHub Actions CI run `39015195011`.
 
 
-### ✅ Sprint 26: [Universal-Game-Launcher] (projects/Universal-Game-Launcher) — Universal Core Plugins & Global Helpers Architecture, Authentic Vector SVG Platform Icons, Automatic Metadata Engine & Per-Game Customization (Release v1.4.0)
-- **Project Identifiers:** `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`)
-- ✅ `[Universal-Game-Launcher]` **Universal Core Plugins & Global Helpers Framework (`W.49a–W.49d`)**: Consolidated fragmented platform and metadata plugins into `platform-universal`, `metadata-universal`, `utility-title-normalizer`, and `media-universal` paired with global helper functions (`getAllPlatformSpecs`, `detectPlatformLauncher`, `normalizeGameTitle`, etc.).
-- ✅ `[Universal-Game-Launcher]` **Authentic Vector SVG Platform Icons (`PlatformIcon.svelte`) (`W.49e`)**: Rendered custom vector SVG icon variants for all PC game providers and emulation consoles, eliminating generic Unicode glyphs across all views.
-- ✅ `[Universal-Game-Launcher]` **Automatic Metadata Cascade & Settings-Only Cache (`W.49c`, `W.49f`)**: Automatic multi-source resolution across Local Inspector, Libretro Thumbnails CDN, Steam Store, GOG Catalog v1 API, Wikipedia/Wikidata MediaWiki API, and PCGamingWiki Cargo; confined refresh/purge controls strictly to `/settings` (`Storage & Cache`).
-- ✅ `[Universal-Game-Launcher]` **Per-Game Customization Modal (`⚙ Manage`) (`W.49f`)**: Full per-game editing of Title, Short Description, Developers, Publishers, Release Date, Genres, and Custom Artwork in `/library` with `userEnhanced: true` protection.
-- ✅ `[Universal-Game-Launcher]` **Local Client Discovery & Hand-Rolled Developer Catalog (`W.49i`, `W.49j`)**: Native discovery for GOG Galaxy, itch.io Butler, Epic Games, EA Desktop, Ubisoft Connect, Xbox/MS Store, and Battle.net; modular hand-rolled catalog covering 21 studios and indie/Patreon creators with cross-studio mismatch validation.
+### ✅ Sprint 26: [universal-game-launcher] (projects/universal-game-launcher) — Universal Core Plugins & Global Helpers Architecture, Authentic Vector SVG Platform Icons, Automatic Metadata Engine & Per-Game Customization (Release v1.4.0)
+- **Project Identifiers:** `[universal-game-launcher]` (`projects/universal-game-launcher`)
+- ✅ `[universal-game-launcher]` **Universal Core Plugins & Global Helpers Framework (`W.49a–W.49d`)**: Consolidated fragmented platform and metadata plugins into `platform-universal`, `metadata-universal`, `utility-title-normalizer`, and `media-universal` paired with global helper functions (`getAllPlatformSpecs`, `detectPlatformLauncher`, `normalizeGameTitle`, etc.).
+- ✅ `[universal-game-launcher]` **Authentic Vector SVG Platform Icons (`PlatformIcon.svelte`) (`W.49e`)**: Rendered custom vector SVG icon variants for all PC game providers and emulation consoles, eliminating generic Unicode glyphs across all views.
+- ✅ `[universal-game-launcher]` **Automatic Metadata Cascade & Settings-Only Cache (`W.49c`, `W.49f`)**: Automatic multi-source resolution across Local Inspector, Libretro Thumbnails CDN, Steam Store, GOG Catalog v1 API, Wikipedia/Wikidata MediaWiki API, and PCGamingWiki Cargo; confined refresh/purge controls strictly to `/settings` (`Storage & Cache`).
+- ✅ `[universal-game-launcher]` **Per-Game Customization Modal (`⚙ Manage`) (`W.49f`)**: Full per-game editing of Title, Short Description, Developers, Publishers, Release Date, Genres, and Custom Artwork in `/library` with `userEnhanced: true` protection.
+- ✅ `[universal-game-launcher]` **Local Client Discovery & Hand-Rolled Developer Catalog (`W.49i`, `W.49j`)**: Native discovery for GOG Galaxy, itch.io Butler, Epic Games, EA Desktop, Ubisoft Connect, Xbox/MS Store, and Battle.net; modular hand-rolled catalog covering 21 studios and indie/Patreon creators with cross-studio mismatch validation.
 - ✅ **Verification**: Passed `cargo check`, `cargo test` (35 passing), `svelte-check` (0 errors, 0 warnings), and `npm run build`.
 - ✅ `[Universal-Game-Launcher]` **Product Rebranding & Visual Suite (`W.48a–W.48f`)**: Renamed package (`universal-game-launcher`), Rust library (`universal_game_launcher_lib`), and bundle identifier (`org.helixorigin.universal-game-launcher`); authored 16:9 vector banner (`universal-game-launcher.svg`), 256×256 squircle logo, multi-resolution icons, 164×314 BMP3 NSIS `sidebar.bmp`, and 850ms animated splash screen in `+layout.svelte`.
 - ✅ `[Universal-Game-Launcher]` **Generic SQLite (`database.sqlite`) & In-Memory KV (`mem_kv`) (`W.48k–W.48t`)**: Standardized on generic `database.sqlite`, purged discontinued offline catalogue tables and binary seeds, tuned SQLite WAL PRAGMAs, decoupled the app from writing to external launcher files, and implemented zero-blur dark purple surfaces (`_tokens.scss`).
@@ -175,14 +208,14 @@ flowchart TD
 ## 🛠️ Verification Commands
 
 ```powershell
-# [Universal-Game-Launcher] (projects/Universal-Game-Launcher)
-cargo check --manifest-path "projects/Universal-Game-Launcher/src-tauri/Cargo.toml"
-cargo test --manifest-path "projects/Universal-Game-Launcher/src-tauri/Cargo.toml"
-node "projects/Universal-Game-Launcher/scripts/test.mjs" frontend build
+# [universal-game-launcher] (projects/universal-game-launcher)
+cargo check --manifest-path "projects/universal-game-launcher/src-tauri/Cargo.toml"
+cargo test --manifest-path "projects/universal-game-launcher/src-tauri/Cargo.toml"
+node "projects/universal-game-launcher/scripts/test.mjs" frontend build
 
-# [NH-Reader] (projects/NH-Reader)
-node "projects/NH-Reader/scripts/test.mjs" all
+# [nh-reader] (projects/nh-reader)
+node "projects/nh-reader/scripts/test.mjs" all
 
-# [Windhawk-Themes] (projects/Windhawk-Themes)
-pwsh -NoProfile -File "projects/Windhawk-Themes/tools/Test-WindhawkStyles.ps1"
+# [windhawk-themes] (projects/windhawk-themes)
+pwsh -NoProfile -File "projects/windhawk-themes/tools/Test-WindhawkStyles.ps1"
 ```
