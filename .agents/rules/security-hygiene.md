@@ -21,5 +21,12 @@ Never commit, log, or leak sensitive data into repositories, release notes, or c
 
 Before any file is staged or committed:
 1. Scan diffs for accidental tokens, signing keys, or credentials.
-2. Confirm `.gitignore` protects certificates, signing keystores, and build output directories.
-3. If user credentials are required to build or sign assets (such as in `NH-Reader`), ensure signing is completely opt-in, run locally by the user with user-managed environment variables, and never hardcoded in scripts.
+2. Confirm `.gitignore` protects certificates (`/certificates/`, `*.pfx`, `*.p12`), signing keystores, and build output directories.
+3. If user credentials are required to build or sign assets, ensure signing is completely opt-in, run locally by the user with user-managed environment variables, and never hardcoded in scripts.
+
+---
+
+## 3. Code Signing Certificate Standards
+
+1. **Generic Paths & Passwords:** Standardize local certificate paths to `certificates/certificate.pfx` (or `certificate.p12`) and fallback password to `youshallnotpass`. Never hardcode project-specific names in certificate file paths or passwords.
+2. **Web Distribution Realities:** Uploading self-signed or development certificates to GitHub Secrets is pointless for software distributed via the web, as Windows SmartScreen / Mark-of-the-Web (MOTW) will still warn untrusted publisher without a publicly trusted EV/OV Certificate Authority. Reserve signing scripts for local developer verification or official trusted hardware tokens.

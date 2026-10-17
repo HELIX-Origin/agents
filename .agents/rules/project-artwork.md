@@ -59,7 +59,7 @@ Artwork must honor the specific project's visual identity while staying grounded
 | **helix-docs** | `#07111f` / `#040a14` | `#48d8f2` (Cyan) | `#b06cff` (Purple) |
 | **Windhawk-Themes** | `#081426` / `#050c18` | `#48d8f2` (Specular Glass) | `#b06cff` (Windhawk Accent) |
 | **NH-Reader** | `#171424` / `#101820` | `#9275ff` (Violet) | `#65d6df` (Teal) |
-| **Steam-Vault** | `#0e141b` / `#0a0f14` | `#1a9fff` (Electric Blue) | `#66c0f4` (Steam Sky Blue) |
+| **Universal-Game-Launcher** | `#120e24` / `#0a0814` | `#9d4edd` (Neon Purple) | `#38bdf8` (Cyan Blue) |
 
 ---
 

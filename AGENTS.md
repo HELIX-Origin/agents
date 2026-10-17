@@ -54,6 +54,20 @@
    public, standalone open-source codebases whose documentation must remain completely self-contained
    for external human contributors. See `.agents/rules/workspace.md`.
 
+8. **Agent ecosystem updates ALWAYS take priority (Global Rule).**
+   Before beginning ANY work, modification, refactoring, feature development, or code generation
+   on ANY project in the workspace, the agent ecosystem (`AGENTS.md`, `.agents/rules/`,
+   `.agents/skills/`, `.agents/agents/`, `.agents/templates/`, and workspace root tracking docs
+   `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) MUST be updated and synchronized first.
+   Whenever a project is renamed, rebranded, created, archived, or when its architecture, scope,
+   or technology stack changes:
+   - ALL references, names, paths, standards, and rules in the agents ecosystem MUST be updated
+     immediately across the board.
+   - Agents must **NEVER** touch project code while the agent ecosystem contains stale, outdated,
+     or conflicting information about that project or any project in the workspace.
+   - Updating and maintaining the agents ecosystem is the **#1 highest priority** above all
+     project implementation tasks. See `.agents/rules/workspace.md`.
+
 
 ## Workspace layout
 
@@ -86,7 +100,7 @@
 │   ├── helix-docs/            <- the shared Jekyll theme (+ its preview site)
 │   ├── helix-origin.github.io/ <- GitHub Pages portal (docs/ in scope)
 │   ├── NH-Reader/             <- Tauri v2 desktop reader (scripts, core, and docs in scope)
-│   ├── Steam-Vault/           <- Tauri v2 Universal Game Launcher (multi-platform library & launcher)
+│   ├── Universal-Game-Launcher/ <- Tauri v2 Universal Game Launcher (multi-platform library & launcher)
 │   ├── Theme-Toolkit/         <- Tauri v2 desktop theme studio & applicator (Windows, macOS, Linux)
 │   └── Windhawk-Themes/       <- (docs/ in scope)
 └── (other projects)           <- out of scope unless asked
@@ -145,6 +159,7 @@
 | Template: macOS uninstaller script | `.agents/templates/uninstall-macos-template.sh` |
 | Template: Linux uninstaller script | `.agents/templates/uninstall-linux-template.sh` |
 | Tauri & Rust desktop engineering | `.agents/skills/tauri-desktop-engineering.md` |
+| Universal Game Launcher architecture & design system | `.agents/skills/universal-game-launcher.md` |
 | Windhawk styler mod engineering | `.agents/skills/windhawk-styler-engineering.md` |
 | Windows deskthemepack & theme packaging | `.agents/skills/windows-deskthemepack-engineering.md` |
 | macOS desktop theme engineering | `.agents/skills/macos-theme-engineering.md` |
@@ -169,7 +184,7 @@
 ## Session start checklist
 
 1. Read `AGENTS.md` (done — it's this file).
-2. Read `ROADMAP.md` → `PLAN.md` → `TODO.md` → `BUGS.md`; resume at the first unchecked TODO item.
+2. Read `ROADMAP.md` → `PLAN.md` → `TODO.md` → `BUGS.md`; **ensure the agents ecosystem (`.agents/`, `AGENTS.md`, and tracking ledgers) is 100% current and synchronized first** — updating agent rules and tracking ledgers always takes priority before touching project code. Resume at the first unchecked TODO item.
 3. Consult `.agents/skills/helix-theme.md` before touching helix-docs or any consuming site.
 4. Before editing **any** `docs/` content, consult `.agents/rules/documentation-standards.md` —
    the docs stay **theme-neutral/mod-agnostic**; a theme/suite's specifics belong only in the

@@ -8,14 +8,14 @@
 ## 1. Absolute Invariants
 
 1. **Tauri v2 Desktop Applications — Native `.mjs` Scripts**:
-   - All scripting and task automation in Tauri v2 applications (`projects/Steam-Vault`, `projects/NH-Reader`, etc.) **must be implemented in native ES Modules (`.mjs`)** run via Node.js.
+   - All scripting and task automation in Tauri v2 applications (`projects/Universal-Game-Launcher`, `projects/NH-Reader`, `projects/Theme-Toolkit`, etc.) **must be implemented in native ES Modules (`.mjs`)** run via Node.js.
    - Do not use ad-hoc shell scripts, batch files, or un-modular `.js` files for internal project orchestration.
    - Scripts live under `scripts/` with a modular architecture:
      - `scripts/lib/runner.mjs`: Shared runner utility providing formatted logging (`[title]`, `[error]`, `[timing]`), cross-platform child process execution (`spawn`), exit code propagation, and signal handling (`SIGINT`, `SIGTERM`).
      - Modular domain runners: `scripts/build.mjs`, `scripts/dev.mjs`, `scripts/test.mjs`, `scripts/run.mjs`, `scripts/sign.mjs`, `scripts/generate-winget-manifest.mjs`.
 
-2. **Non-Tauri Applications — Modular TypeScript ESM Scripts**:
-   - Non-Tauri applications and tools that use automation scripts (e.g., crawlers, catalogues, backend tools like `projects/Steam-Vault-Catalogue`) **must be implemented in TypeScript ESM (`.ts`)**.
+2. **Non-Tauri Applications & Tools — Modular TypeScript ESM Scripts**:
+   - Non-Tauri applications, tools, and shared plugins that use automation scripts **must be implemented in TypeScript ESM (`.ts`) or native ES Modules (`.mjs`)**.
    - Executed using modern TypeScript ESM loaders (`tsx`, `ts-node/esm`, or native Node 22+ `--experimental-strip-types`).
    - Must mirror the exact same modular runner architecture with shared utilities (`scripts/lib/runner.ts` or `scripts/modules/*`) and unified domain handlers.
    - **Reusable Modular Extension Invariant**: Whenever a new script or utility is needed (such as migrations, schema transformers, data cleaners, or formatters), **always build it as a reusable extension module** (e.g., under `scripts/modules/`) rather than a temporary disposable script. Expose it through the unified management CLI (`scripts/manage-catalogue.ts`) via sub-options and register canonical `main:sub:option` commands in `package.json` (`catalogue:migrate:providers`, `catalogue:migrate:dry`). This guarantees proper migration and data maintenance support whenever changes occur.

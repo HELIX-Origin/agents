@@ -1,6 +1,6 @@
 # Skill: Tauri & Rust Desktop Client Engineering
 
-> Domain knowledge and engineering runbook for cross-platform Tauri and Rust applications (`projects/NH-Reader`, `projects/Steam-Vault`).
+> Domain knowledge and engineering runbook for cross-platform Tauri and Rust applications (`projects/NH-Reader`, `projects/Universal-Game-Launcher`, `projects/Theme-Toolkit`).
 
 ---
 
@@ -39,10 +39,9 @@ Tauri v2 projects standardize on **native `.mjs` scripts** under `scripts/`:
 - `scripts/lib/runner.mjs`: Shared process spawner, ANSI-colored output, timing metrics, and signal trapping.
 - `scripts/dev.mjs`: Dev environment orchestrator.
 - `scripts/build.mjs`: Production builds passing `--config src-tauri/tauri.<platform>.conf.json`.
-- `scripts/test.mjs`: Unified test suite runner (Rust, frontend, i18n).
+- `scripts/test.mjs`: Unified test suite runner (Rust, frontend, build).
 - `scripts/run.mjs`: Execution and live logging.
 - `scripts/sign.mjs`: Multi-platform code signing router.
-- `scripts/generate-winget-manifest.mjs`: Automated WinGet manifest generator (for non-NSFW apps).
 - `scripts/setup-signing-secrets.ps1`: Local-to-GitHub secret export helper.
 
 ### Command Standard
@@ -61,10 +60,8 @@ Commands in `package.json` must adhere strictly to **`main:sub:option`**:
     "tauri:build:raw": "tauri build",
     "test:rust": "node scripts/test.mjs rust",
     "test:frontend": "node scripts/test.mjs frontend",
-    "test:i18n": "node scripts/test.mjs i18n",
     "test:all": "node scripts/test.mjs all",
-    "sign:local": "node scripts/sign.mjs",
-    "winget:manifest": "node scripts/generate-winget-manifest.mjs"
+    "sign:local": "node scripts/sign.mjs"
   }
 }
 ```
@@ -215,11 +212,14 @@ If any Win32 HWND belonging to that class is still open or hidden (e.g., when th
 
 ## 4. Code Signing Architecture
 
-Both local manual builds and CI releases support opt-in code signing:
+Both local manual builds and release packaging support opt-in code signing (`scripts/sign.mjs`):
 1. **Windows:**
    - Discovers Windows SDK `signtool.exe` automatically across `C:\Program Files (x86)\Windows Kits\10\bin\<version>\x64`.
    - Uses RFC 3161 timestamps via `http://timestamp.digicert.com`.
-   - Supports production `.pfx` certificates or generates a temporary self-signed development certificate for testing.
+   - **Generic Certificate Naming & Defaults:** Standardized on `certificates/certificate.pfx` (with fallback to `certificate.p12` or `codesign.pfx`) and generic fallback password `youshallnotpass` (`$env:WINDOWS_CERTIFICATE_PASSWORD ?? 'youshallnotpass'`).
+   - **Web-Downloaded Binaries & SmartScreen Caveat:** Uploading self-signed or development certificates to GitHub Secrets is pointless for files distributed over the web. Web-downloaded files receive the Mark-of-the-Web (MOTW) NTFS alternate data stream; Windows SmartScreen will still flag the binary unless signed by a publicly-trusted commercial Certificate Authority (EV/OV) with established reputation. Local signing is intended strictly for local packaging, testing, and enterprise trust environments.
+   - **Environment Hygiene:** Uses generic temporary environment variables `CODESIGN_PFX_FILE` and `CODESIGN_PFX_PASS` during verification and signing. Self-signed developer certificates generate with `Subject: 'CN=HELIX Origin, O=HELIX Origin, OU=Code Signing'`.
+   - **Git Hygiene:** Every repository must add `/certificates/`, `*.pfx`, and `*.p12` to `.gitignore` to prevent committing private key material.
 2. **macOS:**
    - Apple Developer ID Application certificate signing via `codesign --deep --force --options runtime`.
    - Notarization submission via `xcrun notarytool submit --wait`.
@@ -228,13 +228,13 @@ Both local manual builds and CI releases support opt-in code signing:
 
 ---
 
-## 5. WinGet Package Repository Registration
+## 5. Desktop Application Packaging & Distribution
 
-For non-NSFW desktop applications (`Steam-Vault`), automated release and distribution through the official Windows Package Manager repository (`microsoft/winget-pkgs`) is standard:
-- **Package Identifier:** `HELIXOrigin.<AppName>` (e.g. `HELIXOrigin.SteamVault`).
-- **Installer Type:** `nullsoft` (NSIS).
-- **Release Automation:** Release workflows (`.github/workflows/release.yml`) include a `publish-winget` job leveraging `vedantmgoyal9/winget-releaser@v2` targeting the GitHub Release NSIS installer asset.
-- **Local Manifests:** Maintained or generated via `node scripts/generate-winget-manifest.mjs`.
+Desktop applications standardize on direct multi-platform artifact distribution:
+- **Windows:** NSIS installer (`.exe`) with custom branding, per-user/machine install options, and silent uninstallation.
+- **macOS:** Standard signed and notarized `.dmg` / `.app` bundles.
+- **Linux:** Native `.AppImage` and Debian `.deb` packages.
+- **Release Automation:** Multi-platform GitHub Actions matrix workflow attaching installer binaries directly to GitHub Releases.
 
 ---
 
@@ -246,29 +246,32 @@ All desktop repositories must maintain:
 
 ---
 
-## 8. WinGet Compliance, Native Launcher Integration & Packaging Invariants
+## 7. Universal Launcher Invariants & Native Integration
 
-1. **WinGet Compliance & Zero Emulation Policy**:
-   - Applications distributed or submitted to Microsoft's WinGet package repository (`microsoft/winget-pkgs`) must strictly avoid emulation or ROM management features. Emulators and ROM managers frequently trigger policy flags or rejections regarding copyright infringement and piracy enablement.
-   - Applications intended for WinGet publication must never bundle emulator execution engines, ROM directory scrapers, or emulation platform types.
+1. **Zero External Client File Tampering Invariant**:
+   - Universal launchers operate completely non-invasively. Never write to, modify, or corrupt storefront client files (e.g. Steam's `shortcuts.vdf`, `cloud-storage-namespace-1.json`, `appmanifest.acf`, or GOG/Epic/EA manifests).
+   - Never require storefront clients to be closed during operation.
 
-2. **Native Launcher Integration & Zero Credential Invariant**:
+2. **Zero Emulation / No ROM Scrapers**:
+   - Focus exclusively on official PC storefronts and local standalone executables. No bundled emulator execution engines, ROM directory scrapers, or emulation platform types.
+
+3. **Native Launcher Integration & Zero Credential Invariant**:
    - Universal launchers should integrate with official platform launchers (Steam, Epic Games, GOG Galaxy, EA App, Ubisoft Connect, Battle.net, Xbox, Amazon Games, itch.io) to detect owned and installed games for the authenticated user on the host system.
    - **Zero Password Storage:** Applications must never handle, scrape, or store third-party user credentials or authentication tokens. All game installations, updates, uninstalls, and launches delegate to official launcher protocols (`steam://`, `com.epicgames.launcher://`, `goggalaxy://`, `uplay://`, etc.).
    - **Full Platform Feature Preservation:** Delegating to official launchers preserves official game overlays, cloud synchronization, community friend lists, playtime counters, and achievement unlocks.
    - **Metadata Architecture:** External metadata providers (e.g., IGDB, SteamGridDB, PCGamingWiki) serve primarily to enrich missing high-resolution artwork (heroes, logos, icons, screenshots) and provide metadata for manually added non-store titles.
 
-3. **Store & Order Delegation Invariant**:
+4. **Store & Order Delegation Invariant**:
    - If an in-app store or deals browser is provided, it is strictly mandatory that order placement, purchasing, and payment processing are never performed within the application.
    - Any purchase intent must pass directly to the official platform client or open the official store URL in the user's default browser.
 
-4. **Generic SQLite Database Naming Scheme**:
-   - Applications must never tie local SQLite database filenames to brittle branding or product names (e.g. `steam-vault.db` or `universal-game-launcher.db`).
-   - Use generic naming schemes such as `database.sqlite` (with fallback to `database.db` and automatic copy/migration from legacy paths) to prevent file breakage across branding iterations.
+5. **Generic SQLite Database Naming Scheme**:
+   - Applications must never tie local SQLite database filenames to brittle branding or product names.
+   - Use generic naming schemes such as `database.sqlite` (with fallback to `database.db`) to prevent file breakage across branding iterations.
 
-5. **Tauri v2 NSIS Installer Artwork Specifications**:
+6. **Tauri v2 NSIS Installer Artwork Specifications**:
    - **NSIS Sidebar Bitmap:** Dimensions must strictly match default Tauri v2 NSIS specifications: **164 × 314 pixels**, BMP3 (Windows Bitmap) format (`src-tauri/windows/sidebar.bmp`).
    - **Branding Artwork:** Vector SVGs follow `.agents/rules/project-artwork.md` standards (16:9 1920×1080 viewBox, dark theme background).
 
-6. **Animated Splash Transitions**:
+7. **Animated Splash Transitions**:
    - Desktop apps with heavyweight initializations (e.g. multi-store scan, SQLite index loading) should provide an animated splash screen at launch (`splashVisible` / `splashExiting`) with minimum display timing (e.g. 850ms) and smooth scale/fade transitions.

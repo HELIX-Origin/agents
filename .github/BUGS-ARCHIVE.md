@@ -50,6 +50,24 @@
 
 ## Universal-Game-Launcher (formerly Steam-Vault)
 
+#### [Universal-Game-Launcher] 2026-10-16 — Circular Import in In-App Plugins Suite Triggering 500 Internal Error Across App Pages (v1.4.0)
+- **Project Identifier:** `[Universal-Game-Launcher]`
+- **Repository Path:** `projects/Universal-Game-Launcher`
+- **Severity**: 🔴 Critical (500 internal error crash on Dashboard, Store, Social, and Settings pages)
+- **Status**: ✅ resolved
+- **Scope**: `src/lib/plugins/index.ts`, `src/lib/plugins/engine.ts`, `src/lib/plugins/catalog.ts`
+- **Reported Issue**: Loading the Dashboard (`/`), Store page (`/store`), Social page (`/social`), or Settings page (`/settings`) triggered an immediate SvelteKit 500 Internal Error.
+- **Root Cause**:
+  1. *Module-Level Circular Dependency*: In `src/lib/plugins/index.ts`, `export * from "./engine"` executed before `PLATFORM_PLUGINS`, `METADATA_PLUGINS`, and `ALL_PLUGINS` were defined on lines 49–84.
+  2. *Premature Iteration in Constructor*: `src/lib/plugins/engine.ts` imported `ALL_PLUGINS` from `./index` and called `export const pluginEngine = new PluginEngineManager()`. In its constructor, `this.init()` ran `for (const plugin of ALL_PLUGINS)`. Because `./index` was still evaluating, `ALL_PLUGINS` was uninitialized/undefined in the Temporal Dead Zone (TDZ), throwing an immediate `TypeError: ALL_PLUGINS is not iterable`.
+  3. Because this error occurred at top-level module evaluation time, any page or component importing from `$lib/plugins` (`+page.svelte`, `store/+page.svelte`, `social/+page.svelte`, `PlatformsSection.svelte`) crashed during route rendering with a 500 error.
+- **Resolution**:
+  1. Extracted all plugin lists into a standalone, leaf module `src/lib/plugins/catalog.ts` that defines `PLATFORM_PLUGINS`, `METADATA_PLUGINS`, `UTILITY_PLUGINS`, `MEDIA_PLUGINS`, and `ALL_PLUGINS` with zero imports from `engine.ts` or `index.ts`.
+  2. Updated `engine.ts` to import `ALL_PLUGINS` directly from `./catalog`, eliminating the circular cycle.
+  3. Added guarded `ensureInitialized()` in `engine.ts` to verify array presence defensively.
+  4. Updated `index.ts` to cleanly re-export `./framework`, `./catalog`, `./engine`, `./utility`, and `./media`.
+  5. Verified all routes with `svelte-check` (0 errors) and `npm run build` (all client chunks and SSR static pages rendered cleanly).
+
 #### [Universal-Game-Launcher] 2026-10-16 — Network Choking & UI Freezing from Defunct Offline Catalogue & Blocking Dashboard Waterfalls (v1.4.0)
 - **Project Identifier:** `[Universal-Game-Launcher]`
 - **Repository Path:** `projects/Steam-Vault`

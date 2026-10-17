@@ -72,7 +72,7 @@
 
 | Tool | How |
 | --- | --- |
-| npm scripts | `npm run <script>` (set `workdir` to the repo). Steam-Vault: prefer `npm run tauri:dev` / `tauri:build` / `log` (logged wrappers). |
+| npm scripts | `npm run <script>` (set `workdir` to the repo). Universal-Game-Launcher: prefer `npm run tauri:dev` / `tauri:build` / `log` (logged wrappers). |
 | Node | `node <file>` |
 | Rust / Tauri | `cargo check` / `cargo test` / `cargo build` with `workdir` on the crate (`src-tauri`) |
 | Ruby / Jekyll / Sass | prepend PATH first: `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"`, then `bundle exec jekyll build --source <abs> --destination <abs>` |

@@ -4,7 +4,7 @@ This document provides ready-to-use release notes templates for all projects in 
 
 ---
 
-## 1. Semantic Versioning Template (NH-Reader, Steam-Vault, helix-docs)
+## 1. Semantic Versioning Template (NH-Reader, Universal-Game-Launcher, helix-docs)
 
 Use this format for software and themes adhering to Semantic Versioning (`v<major>.<minor>.<patch>`).
 

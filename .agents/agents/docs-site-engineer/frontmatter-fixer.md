@@ -24,7 +24,7 @@ and nav order.
 | Project | docs parent | wiki parent |
 | --- | --- | --- |
 | NH-Reader | "Documentation Home" | "NH Reader Technical Wiki" |
-| Steam-Vault | "Documentation Home" | "Steam Vault Technical Wiki" |
+| Universal-Game-Launcher | "Documentation Home" | "Universal Game Launcher Technical Wiki" |
 | Windhawk-Themes | "Documentation Directory" | "Target & Configuration Wiki" |
 
 ## Traps

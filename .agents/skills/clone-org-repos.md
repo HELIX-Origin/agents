@@ -21,8 +21,7 @@
 | **helix-origin.github.io** | `https://github.com/HELIX-Origin/helix-origin.github.io.git` | Organization portal & project directory | `projects/helix-origin.github.io` |
 | **NH-Reader** | `https://github.com/HELIX-Origin/NH-Reader.git` | Cross-platform desktop reader for nhentai.net | `projects/NH-Reader` |
 | **Windhawk-Themes** | `https://github.com/HELIX-Origin/Windhawk-Themes.git` | Windows 11 Windhawk styler mod suites | `projects/Windhawk-Themes` |
-| **Steam-Vault** | `https://github.com/HELIX-Origin/Steam-Vault.git` | Tauri v2 Steam library organizer & launcher | `projects/Steam-Vault` |
-| **Steam-Vault-Catalogue** | `https://github.com/HELIX-Origin/Steam-Vault-Catalogue.git` | Community game catalogue & crawler | `projects/Steam-Vault-Catalogue` |
+| **Universal-Game-Launcher** | `https://github.com/HELIX-Origin/Universal-Game-Launcher.git` | Tauri v2 cross-platform universal game library & launcher | `projects/Universal-Game-Launcher` |
 | **FFXIV-Config** | `https://github.com/HELIX-Origin/FFXIV-Config.git` | Custom FFXIV Config UI (Fr4nsson's base, 8.x jobs) | `projects/FFXIV-Config` |
 | **agents** | `https://github.com/HELIX-Origin/agents.git` | This workspace: agent rules, skills & CTL | `projects/agents` *(skipped by default)* |
 | **.github** | `https://github.com/HELIX-Origin/.github.git` | Organization profile & community health files | `projects/.github` |

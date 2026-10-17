@@ -13,16 +13,23 @@
 These rules apply to **every project** under `projects/` — the folder structure below is
 the *currently active* work set (repos where only `docs/` is in scope are marked).
 
-## In-scope organization projects (as of 2026-10-10)
+## In-scope organization projects (as of 2026-10-16)
 
 - `projects/helix-docs` — theme repo (+ its own preview site).
 - `projects/helix-origin.github.io` — portal; **only `docs/` is in scope**.
 - `projects/NH-Reader` — Tauri v2 desktop manga reader; **full repository in scope** (scripts, workflows, desktop core, and `docs/`).
-- `projects/Steam-Vault` — Tauri v2 desktop app & library launcher; **full repository in scope**.
+- `projects/Universal-Game-Launcher` — Tauri v2 universal game library & launcher; **full repository in scope**.
 - `projects/Theme-Toolkit` — cross-platform desktop theme studio & applicator; **full repository in scope**.
 - `projects/Windhawk-Themes` — **only `docs/` is in scope**.
 
 Everything else outside `projects/` is presumptively out of scope.
+
+## Agent ecosystem priority rule (GLOBAL RULE)
+
+Updating and maintaining the agents ecosystem (`AGENTS.md`, `.agents/rules/`, `.agents/skills/`, `.agents/agents/`, `.agents/templates/`, `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) **ALWAYS takes priority** over project-level work.
+- When any project is renamed, rebranded, created, archived, or undergoes an architectural or technology stack shift, the agent ecosystem MUST be updated and synchronized first across the board before ANY project code is touched.
+- Agents must **NEVER** write or generate project code when the agent ecosystem contains stale, contradictory, or obsolete references to that project or any project in the workspace.
+- Any obsolete, legacy, or discontinued architecture must be purged completely from agent documentation, rules, and skills so it never gets inadvertently rebuilt.
 
 ## Agents ecosystem isolation invariant
 

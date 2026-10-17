@@ -8,7 +8,7 @@
 - **Log everything**: Capture stdout+stderr to timestamped logs
 - **Track execution**: Record PID and log path
 - **Verify via logs**: Don't assume success; inspect log tail before proceeding
-- **Use existing tooling**: Prefer repo's existing logged scripts (e.g. Steam-Vault's scripts)
+- **Use existing tooling**: Prefer repo's existing logged scripts (e.g. Universal-Game-Launcher's scripts)
 
 ## Workflow
 
@@ -25,7 +25,7 @@
 
 Foreground quick check:
 ```powershell
-cd projects/Steam-Vault; npm run check
+cd projects/Universal-Game-Launcher; npm run check
 ```
 
 Background build with logging:
@@ -33,7 +33,7 @@ Background build with logging:
 $ts = (Get-Date -Format "yyyyMMdd_HHmmss")
 $log = "logs\build-$ts.log"
 New-Item -Force -ItemType Directory logs | Out-Null
-Start-Process -NoNewWindow powershell -ArgumentList "-Command", "cd 'projects/Steam-Vault'; npm run build *>&1 | Tee-Object -FilePath '$log'"
+Start-Process -NoNewWindow powershell -ArgumentList "-Command", "cd 'projects/Universal-Game-Launcher'; npm run build *>&1 | Tee-Object -FilePath '$log'"
 # Note: record that it's running; check log later
 ```
 
@@ -43,17 +43,17 @@ $ts = (Get-Date -Format "yyyyMMdd_HHmmss")
 $log = "logs\test-$ts.log"
 New-Item -Force -ItemType Directory logs -ErrorAction SilentlyContinue | Out-Null
 # Example: cargo test in background
-Start-Process -NoNewWindow powershell -ArgumentList "-Command", "cd 'projects/Steam-Vault\src-tauri'; cargo test *>&1 | Tee-Object -FilePath '$((Get-Item ..\..).FullName)\logs\test-$ts.log'"
+Start-Process -NoNewWindow powershell -ArgumentList "-Command", "cd 'projects/Universal-Game-Launcher\src-tauri'; cargo test *>&1 | Tee-Object -FilePath '$((Get-Item ..\..).FullName)\logs\test-$ts.log'"
 ```
 
-## Using Steam-Vault's Logged Scripts
+## Using Universal-Game-Launcher's Logged Scripts
 
-Steam-Vault has purpose-built logged wrappers:
+Universal-Game-Launcher has purpose-built logged wrappers:
 - `npm run tauri:build` → logs to `logs/tauri-build-<ts>.log`
 - `npm run tauri:dev` → logs to `logs/tauri-dev-<ts>.log`
 - `npm run log -- <type> <cmd> [args...]` → generic logged execution
 
-Prefer these when working in Steam-Vault.
+Prefer these when working in Universal-Game-Launcher.
 
 ## Log Inspection
 

@@ -6,9 +6,9 @@
 
 ## 1. Owns
 
-- Desktop client codebases: `projects/NH-Reader` and `projects/Steam-Vault`.
-- Rust backend modules in `src-tauri/` (Steam/shortcuts data layers, launcher protocols, platform detectors, metadata pipelines, storage managers).
-- Frontend SvelteKit views, stores, and components in `src/` (Library grid launcher, right sidebar filter/sort, per-game management sub-page with 10-image gallery and modal sub-window, streamlined storage metrics, and Depressurizer multi-scope lists).
+- Desktop client codebases: `projects/NH-Reader`, `projects/Universal-Game-Launcher`, and `projects/Theme-Toolkit`.
+- Rust backend modules in `src-tauri/` (modular plugin engine, generic SQLite persistence, launch delegation protocols, platform detectors, metadata pipelines).
+- Frontend SvelteKit views, stores, and components in `src/` (Custom Title Bar navigation [Dashboard, Library, Storage, Plugins, Settings], Steam & GOG-style left games list sidebar with instant filters and platform accordions, main game showcase view with prominent PLAY NOW button, screenshot gallery with lightbox, overview, and custom artwork studio, plus drop-in plugin manager & per-plugin settings modal).
 - Packaging, NSIS installer scripts, and multi-platform build scripts.
 
 ---
@@ -21,6 +21,7 @@
 - [`.agents/rules/security-hygiene.md`](../../rules/security-hygiene.md) — Secret and keystore management.
 - [`.agents/rules/styling-standards.md`](../../rules/styling-standards.md) — SCSS-first styling standards & zero-hardcoding rules.
 - [`.agents/skills/tauri-desktop-engineering.md`](../../skills/tauri-desktop-engineering.md) — Tauri architecture, platform lib isolation, and toolchains.
+- [`.agents/skills/universal-game-launcher.md`](../../skills/universal-game-launcher.md) — Universal Game Launcher architecture, navigation layout, obsidian purple palette, and plugin engine.
 - [`.agents/skills/scss-architecture.md`](../../skills/scss-architecture.md) — Modern SCSS modular architecture and token systems.
 
 ---
@@ -31,7 +32,7 @@
 2. Implements features or bug fixes cleanly across frontend and backend codebases.
 3. Follows the **Per-Platform Lib Isolation Standard** (`windows.rs`, `macos.rs`, `linux.rs`) and **Per-Platform Tauri Configuration Standard** (`tauri.<platform>.conf.json` with base `tauri.conf.json`).
 4. Uses native `.mjs` modular scripts under `scripts/` (`runner.mjs`, `logger.mjs`, `suites.mjs`, `build.mjs`, `dev.mjs`, `test.mjs`) and adheres to the `main:sub:option` command hierarchy in `package.json`.
-5. Supports opt-in multi-platform code signing (`scripts/sign.mjs`) and configures WinGet package registration for non-NSFW applications (`HELIXOrigin.SteamVault`).
+5. Supports opt-in multi-platform code signing (`scripts/sign.mjs`).
 6. Ensures `.github/workflows/cleanup-failed-runs.yml` is present from the universal template.
 7. Keeps versions strictly synchronized across `package.json`, `tauri.conf.json`, and `Cargo.toml`.
 8. Executes static gates: `cargo check`, `cargo test`, `npm run check`, `node scripts/test.mjs`.
