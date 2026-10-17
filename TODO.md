@@ -115,12 +115,13 @@ flowchart TD
 - [ ] **[helix-gaming-db-00] 6. Outdated Information & Artwork Refresh Pipeline**:
   - [ ] `[helix-gaming-db-00]` Author `scripts/ingest/check-drift.mjs` scanning active entries against live storefronts to refresh descriptions, resolve 404 images, and fetch updated capsules/banners.
   - [ ] `[helix-gaming-db-00]` Deploy `.github/workflows/update-metadata-drift.yml` running bi-weekly drift scans and opening automated refresh PRs for actively maintained games.
-- [x] **[helix-gaming-db-00] 7. Library-Driven Internationalization (i18next) & Multilingual Taxonomy**:
+- [x] **[helix-gaming-db-00] & [universal-game-launcher] 7. Library-Driven Internationalization (i18next) & App Localization Integration**:
   - [x] `[helix-gaming-db-00]` Integrate `i18next` library (`scripts/i18n/index.mjs`) for dynamic taxonomy resolution, language negotiation, and ISO 639-1 / BCP 47 fallback chains.
   - [x] `[helix-gaming-db-00]` Author complete taxonomy dictionaries across 12 primary languages (`locales/{lang}/genres.json`, `categories.json`, `platforms.json`, `common.json` for `en`, `ja`, `zh-CN`, `zh-TW`, `es`, `fr`, `de`, `it`, `pt-BR`, `ru`, `ko`, `pl`).
-  - [x] `[helix-gaming-db-00]` Update `schemas/game.schema.json` to formally support optional `locales` dictionary with per-language title, synopses, and aliases.
-  - [x] `[helix-gaming-db-00]` Update `scripts/build-search-index.mjs` to emit static multilingual REST endpoints (`/api/v2/i18n/locales.json`, `/api/v2/i18n/{code}/bundle.json`, `/api/v2/i18n/{code}/genres.json`, `/api/v2/i18n/{code}/search/index.json`).
-  - [x] `[universal-game-launcher]` Update Three-Tier client (`src/lib/plugins/metadata/helix-db.ts`) with `preferred_language` setting and dynamic localized metadata resolution.
+  - [x] `[helix-gaming-db-00]` Expand `locales/{lang}/` with first-class `app.json` namespace dictionaries providing comprehensive UI localization across all 12 supported languages.
+  - [x] `[helix-gaming-db-00]` Update `scripts/build-search-index.mjs` and `scripts/i18n/index.mjs` to bundle `app` namespace into `/api/v2/i18n/{code}/bundle.json` and emit `/api/v2/i18n/{code}/app.json`.
+  - [x] `[helix-gaming-db-01, 02, 03]` Symmetrically sync `locales/` and i18n scripts across all volume shards.
+  - [x] `[universal-game-launcher]` Replace hand-rolled hard-coded `LOCALES` dictionary system with `i18next` library, dynamically loading UI strings and taxonomy from `helix-gaming-db` API with offline caching.
 - [ ] **[helix-gaming-db-00] 8. Volume-Sharded Multi-Repository Federation & Dedicated Docs Split**:
   - [x] `[helix-gaming-db-00]` Architect multi-repo volume sharding and cycling framework (`/api/v2/federation/index.json` and `shards.json`) to prevent GitHub free user storage and file count ceilings.
   - [x] `[docs] & [wiki]` Decouple Jekyll documentation and wiki sites out of metadata shards into dedicated repositories `HELIX-Origin/docs` and `HELIX-Origin/wiki`.
