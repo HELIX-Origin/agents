@@ -43,6 +43,7 @@ flowchart TD
    - `[helix-gaming-db-01]` Create public repository `HELIX-Origin/helix-gaming-db-01`, provision `PAT_TOKEN`, seed with boilerplate, schemas, validation scripts, workflows, and i18n locales.
    - `[helix-gaming-db-02]` Create public repository `HELIX-Origin/helix-gaming-db-02`, provision `PAT_TOKEN`, seed with boilerplate, schemas, validation scripts, workflows, and i18n locales.
    - `[helix-gaming-db-03]` Create public repository `HELIX-Origin/helix-gaming-db-03`, provision `PAT_TOKEN`, seed with boilerplate, schemas, validation scripts, workflows, and i18n locales.
+   - `[helix-gaming-db-00]` Implement cross-shard deduplication & ownership verification in `scripts/verify-pr.mjs` across all 4 shard repositories (failing PR if metadata already exists in a sibling shard).
    - `[universal-game-launcher]` Update `src/lib/plugins/metadata/helix-db.ts` to seamlessly cycle through all four active metadata repositories (`helix-gaming-db-00`, `01`, `02`, `03`).
 1. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54a — Platform Ingestion Scripts Suite (`scripts/ingest/`)**:
    - `[helix-gaming-db-00]` Create `scripts/ingest/ingest-steam.mjs`: Steam App Details & Store API scraper extracting title, synopsis, creators, tags, release dates, screenshots, videos, and 600×900 capsule artwork.
