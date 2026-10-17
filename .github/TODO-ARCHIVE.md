@@ -7,6 +7,41 @@
 
 ---
 
+### 🎯 [Universal-Game-Launcher] (`projects/Universal-Game-Launcher`) Workstream W.49: Universal Core Plugins & Global Helpers Architecture, Authentic Vector SVG Platform Icons, Automatic Metadata Engine & Per-Game Customization (Release v1.4.0)
+- **Project Identifiers:** `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`)
+- **Target Components:** `src-tauri/src/metadata/`, `src-tauri/src/plugins/`, `src-tauri/src/commands.rs`, `src/lib/plugins/`, `src/lib/components/PlatformIcon.svelte`, `src/routes/library/`
+
+**Locked user directives (normalized by domain):**
+- **Universal Core Plugins & Global Helpers**:
+  - Consolidate fragmented per-platform and per-service plugin files into unified Universal Core Plugins (`platform-universal`, `metadata-universal`, `utility-title-normalizer`, `media-universal`) and paired global helper modules (`getAllPlatformSpecs`, `detectPlatformLauncher`, `installPlatformLauncher`, `getPlatformLaunchSpec`, `getPlatformUris`, `normalizeGameTitle`, `normalizeRomTitle`, `canonicalTitleKey`).
+- **Title Normalization & Local Engine Inspection**:
+  - Extract title normalization into a dedicated utility plugin (`utility-title-normalizer` & `title_normalizer.rs`) handling article inversion, unified subtitle separators, promotional/version noise stripping (`Relicts of Aeson`), and compound word splitting (`My Futa Family`).
+  - Accurately inspect 1-level child directories for RPG Maker `System.json` (`"gameTitle"`) and parse `snake_case` itch.io receipts while excluding `Launcher`, `Legendary`, `broth`, and `downloads`.
+- **Automatic Metadata Enhancement & Settings-Only Cache**:
+  - Provide automatic multi-source metadata and artwork resolution via native Rust `reqwest` cascades (Local Inspector, Libretro Thumbnails CDN, Steam Store, GOG Catalog v1, Wikipedia/Wikidata MediaWiki API, PCGamingWiki Cargo).
+  - Confine cache refresh and purge controls strictly to `/settings` (`Storage & Cache`).
+- **Per-Game Customization Modal (`⚙ Manage`)**:
+  - Provide full editing of Title, Short Description, Developers, Publishers, Release Date, Genres, and Custom Artwork in `/library` with `userEnhanced: true` protection.
+- **Authentic Vector SVG Platform Icons (`PlatformIcon.svelte`)**:
+  - Render authentic vector SVG platform and emulation console icons across all views, eliminating generic Unicode shapes.
+- **Local Client Discovery & Hand-Rolled Developer Catalog**:
+  - Implement native client discovery for GOG Galaxy, itch.io, Epic Games, EA Desktop, Ubisoft Connect, Xbox/MS Store, and Battle.net with installed detection and launch delegation.
+  - Implement modular hand-rolled metadata catalogs (`src/lib/plugins/metadata/developers/` & `developers.rs`) covering 21 studios and indie/Patreon creators, blocking cross-studio mismatches.
+
+**Implementation checklist:**
+- [x] **[Universal-Game-Launcher] Agent Ecosystem & Tracking Ledger Synchronization**: Synchronized `.agents/skills/` and root tracking ledgers.
+- [x] **[Universal-Game-Launcher] Dedicated Title Normalizer & Local Inspector Backend**: Implemented `title_normalizer.rs` and upgraded `local.rs` / `engine.rs`.
+- [x] **[Universal-Game-Launcher] Rust IPC Commands & Placeholder Filtering**: Added `fetch_external_json` and removed placeholder strings.
+- [x] **[Universal-Game-Launcher] Frontend Universal Core Plugins & Global Helper Modules**: Created `platform-universal`, `metadata-universal`, `utility-title-normalizer`, and `media-universal`, deleting legacy separate files.
+- [x] **[Universal-Game-Launcher] Authentic Vector SVG Platform & Console Icons**: Created `PlatformIcon.svelte` and integrated across all views.
+- [x] **[Universal-Game-Launcher] Per-Game Customization Modal & Settings-Only Cache Controls**: Upgraded `⚙ Manage` modal and removed manual refresh buttons from `/library`.
+- [x] **[Universal-Game-Launcher] Quality Gate & End-to-End Verification**: Passed `cargo check`, `cargo test` (35 passing), `svelte-check` (0 errors, 0 warnings), and `npm run build`.
+- [x] **[Universal-Game-Launcher] Documentation Site & Technical Wiki Modernization**: Updated guides and wiki articles.
+- [x] **[Universal-Game-Launcher] Authoritative Local Client Discovery & Metadata Type Sanitization**: Implemented `client_discovery.rs` and filtered non-game media types.
+- [x] **[Universal-Game-Launcher] Hand-Rolled Developer & Game Metadata Engine**: Added 21 developer files, hand-rolled titles, and cross-studio validation.
+
+---
+
 ### 🎯 [Universal-Game-Launcher] (`projects/Universal-Game-Launcher`) Workstream W.48: Universal Game Launcher Rebranding, Generic SQLite Persistence, EmulationStation Scaffolding, Background Worker & Headless CLI Foundation (Release v1.4.0 Phase 1)
 - **Project Identifiers:** `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`)
 - **Target Components:** `projects/Universal-Game-Launcher/package.json`, `projects/Universal-Game-Launcher/src-tauri/Cargo.toml`, `projects/Universal-Game-Launcher/src-tauri/tauri.conf.json`, `projects/Universal-Game-Launcher/src-tauri/src/`, `projects/Universal-Game-Launcher/src/`, `projects/Universal-Game-Launcher/docs/`, `projects/helix-origin.github.io/docs/`

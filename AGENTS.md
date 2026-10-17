@@ -19,7 +19,7 @@
 2. **Organization scope invariant — never mention non-org projects or repositories.**
    This agents ecosystem is engineered exclusively for active repositories within the `HELIX-Origin`
    GitHub organization (`https://github.com/HELIX-Origin`): `helix-docs`, `helix-origin.github.io`,
-   `NH-Reader`, `Universal-Game-Launcher`, `Theme-Toolkit`, and `Windhawk-Themes`. Never work with,
+   `NH-Reader`, `Universal-Game-Launcher`, `Theme-Toolkit`, `Windhawk-Themes`, and `helix-gaming-db`. Never work with,
    read, explore, modify, or **directly mention by name** any external, third-party, or deleted
    projects or repositories that are not part of the `HELIX-Origin` organization across rules,
    skills, playbooks, or tracking files. This is mandatory to prevent agents from getting mixed up.
@@ -102,7 +102,8 @@
 │   ├── NH-Reader/             <- Tauri v2 desktop reader (scripts, core, and docs in scope)
 │   ├── Universal-Game-Launcher/ <- Tauri v2 Universal Game Launcher (multi-platform library & launcher)
 │   ├── Theme-Toolkit/         <- Tauri v2 desktop theme studio & applicator (Windows, macOS, Linux)
-│   └── Windhawk-Themes/       <- (docs/ in scope)
+│   ├── Windhawk-Themes/       <- (docs/ in scope)
+│   └── helix-gaming-db/       <- REST metadata API & gaming database (docs, wiki, and api/v1/ in scope)
 └── (other projects)           <- out of scope unless asked
 ```
 

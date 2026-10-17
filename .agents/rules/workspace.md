@@ -11,7 +11,7 @@
 
 These rules apply to **every active project** under `projects/` belonging to `HELIX-Origin`:
 
-## Active `HELIX-Origin` organization projects (as of 2026-10-16)
+## Active `HELIX-Origin` organization projects (as of 2026-10-17)
 
 - `projects/helix-docs` — theme repo (+ its own preview site).
 - `projects/helix-origin.github.io` — portal; **only `docs/` is in scope**.
@@ -19,6 +19,7 @@ These rules apply to **every active project** under `projects/` belonging to `HE
 - `projects/Universal-Game-Launcher` — Tauri v2 universal game library & launcher; **full repository in scope**.
 - `projects/Theme-Toolkit` — cross-platform desktop theme studio & applicator; **full repository in scope**.
 - `projects/Windhawk-Themes` — **only `docs/` is in scope**.
+- `projects/helix-gaming-db` — REST metadata API & gaming database; **full repository in scope** (docs, wiki, schemas, and `api/v1/` endpoints).
 
 Everything else outside these active `HELIX-Origin` repositories is strictly out of scope and must never be referenced.
 

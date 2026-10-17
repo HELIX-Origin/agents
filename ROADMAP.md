@@ -28,12 +28,14 @@ flowchart TB
     Org --> UniversalLauncher["[Universal-Game-Launcher] Desktop App"]
     Org --> ThemeToolkit["[Theme-Toolkit] Theme Suite"]
     Org --> ShellMods["[Windhawk-Themes] Shell Styler Suite"]
+    Org --> GamingDB["[helix-gaming-db] REST Metadata API & Database"]
 
     DocsTheme -.->|remote_theme| Portal
     DocsTheme -.->|remote_theme| DesktopApp
     DocsTheme -.->|remote_theme| UniversalLauncher
     DocsTheme -.->|remote_theme| ThemeToolkit
     DocsTheme -.->|remote_theme| ShellMods
+    DocsTheme -.->|remote_theme| GamingDB
 ```
 
 1. 🎨 **Unified Design Tokens**: A cohesive dark obsidian aesthetic (`#07111f` / `#0d1b2d`) with cyan (`#48d8f2`) and purple (`#b06cff`) accents across documentation, desktop apps, and OS styling suites.
@@ -52,6 +54,7 @@ flowchart TB
 | **[Windhawk-Themes]** | `projects/Windhawk-Themes` | Milestones | Milestone M.02b | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons |
 | **[Universal-Game-Launcher]** | `projects/Universal-Game-Launcher` | SemVer | [v1.4.0](https://github.com/HELIX-Origin/Universal-Game-Launcher) | 🚀 Active | M14: Universal Game Launcher Rebranding, Steam/GOG UI, Native In-App Modular Plugins Framework, Generic SQLite Persistence & Modern Visual Identity |
 | **[Theme-Toolkit]** | `projects/Theme-Toolkit` | SemVer | [v0.1.0-alpha](https://github.com/HELIX-Origin/Theme-Toolkit) | 🚀 Active | M1: Framework scaffolded, Per-Platform Lib isolation, native packaging blueprints |
+| **[helix-gaming-db]** | `projects/helix-gaming-db` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-gaming-db) | 🚀 Active | M1: REST API v1 endpoints (`manifest`, `search`, `games`, `developers`), GitHub Pages deployment, `helix-docs` portal & wiki |
 
 ---
 
@@ -177,6 +180,30 @@ flowchart LR
 - **Scaffolded State:**
   - Repository created at `HELIX-Origin/Theme-Toolkit`, cloned into `projects/Theme-Toolkit`, and initial base framework committed and pushed to `origin/main`.
   - Feature implementation will be scheduled for a subsequent sprint.
+
+---
+
+### 7. [helix-gaming-db] — Open REST Metadata API & Community Gaming Database (ACTIVE / SCAFFOLDED)
+*Target Path: `projects/helix-gaming-db` · REST API / GitHub Pages / Jekyll Remote Theme · v1.0.0*
+
+- **Core Vision & Invariants:**
+  - Dedicated, open, community-extensible gaming metadata repository and REST API named **HELIX Gaming DB** (`helix-gaming-db`), hosted directly via GitHub Pages (`https://helix-origin.github.io/helix-gaming-db/`).
+  - Provides reliable, verified metadata and high-resolution official CDN artwork for indie, Patreon, obscure, and emulation titles that are missing from or mismatched by mainstream storefronts.
+  - Serves static, cacheable JSON endpoints under `/api/v1/` allowing both `Universal-Game-Launcher` and external clients to query manifest data, search indices, game metadata, and developer studio profiles.
+  - Pairs with a dedicated documentation portal and technical wiki powered by `helix-docs` (`remote_theme: HELIX-Origin/helix-docs`), following strict documentation theme-neutrality rules.
+- **Detailed Feature Scope:**
+  - **REST API v1 Endpoints (`api/v1/`)**:
+    - `api/v1/manifest.json`: Database version, game count, developer count, schema version, and updated timestamp.
+    - `api/v1/search/index.json`: Lightweight index mapping normalized title slugs and aliases to metadata payloads for instant client-side search.
+    - `api/v1/games/{slug}.json`: Complete metadata payload for each game (title, aliases, developers, publishers, releaseDate, releaseYear, genres, categories, tags, ageRating, userScore, capsuleImage, heroImage, logoImage, headerImage, screenshots, movies, soundtracks, detailedDescription).
+    - `api/v1/developers/{slug}.json`: Developer studio profiles, aliases, websites, and associated game slugs.
+  - **JSON Schema Validation & Testing**:
+    - Strict JSON schemas (`schemas/game.schema.json`, `schemas/developer.schema.json`, `schemas/manifest.schema.json`) with automated build validation (`node scripts/validate.mjs`).
+  - **Documentation & Wiki (`docs/`)**:
+    - REST API reference, endpoints specification, payload examples, and client integration guide.
+    - Community contribution guide for submitting new game and developer records via GitHub Pull Requests.
+  - **Client Integration**:
+    - Directly integrated into `Universal-Game-Launcher` as the primary authoritative metadata provider with offline hand-rolled fallback.
 
 
 

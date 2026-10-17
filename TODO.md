@@ -21,62 +21,61 @@
 
 ## 🔥 Active Workstreams
 
-### 🎯 [Universal-Game-Launcher] Workstream W.49: Universal Core Plugins & Global Helpers Architecture, Authentic Vector SVG Platform Icons, Automatic Metadata Engine & Per-Game Customization (Release v1.4.0)
-- **Project Identifiers:** `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`)
+### 🎯 [helix-gaming-db] & [Universal-Game-Launcher] Workstream W.50: HELIX Gaming DB REST API Foundation, Static v1 Endpoints, JSON Schemas, Remote Theme Docs / Wiki & UGL Integration (Release v1.0.0)
+- **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`), `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`)
 - **Target Components:**
-  - **Rust Backend (`src-tauri/src/`)**: `metadata/universal.rs`, `metadata/local.rs`, `metadata/mod.rs`, `plugins/title_normalizer.rs`, `plugins/engine.rs`, `plugins/defaults.rs`, `platforms/emulation.rs`, `commands.rs`, `lib.rs`
-  - **Frontend Plugins & Helpers (`src/lib/plugins/`)**: `platforms/universal.ts`, `metadata/universal.ts`, `utility/title-normalizer.ts`, `media/universal.ts`, `catalog.ts`, `engine.ts`, `index.ts`, `src/lib/worker.ts`, `src/lib/api.ts`
-  - **Frontend UI & Icons (`src/`)**: `lib/components/PlatformIcon.svelte`, `routes/+layout.svelte`, `routes/library/+page.svelte`, `routes/+page.svelte`, `routes/store/+page.svelte`, `routes/social/+page.svelte`, `routes/storage/+page.svelte`, `routes/settings/+page.svelte`, `lib/components/settings/PlatformsSection.svelte`
+  - **Gaming DB API & Schemas (`projects/helix-gaming-db/`)**: `api/v1/manifest.json`, `api/v1/search/index.json`, `api/v1/games/`, `api/v1/developers/`, `schemas/game.schema.json`, `schemas/developer.schema.json`, `schemas/manifest.schema.json`, `scripts/validate.mjs`, `scripts/build-search-index.mjs`, `package.json`
+  - **Gaming DB Documentation & Wiki (`projects/helix-gaming-db/`)**: `_config.yml`, `index.md`, `_docs/`, `_wiki/`, `_data/nav.yml`
+  - **UGL Client Provider (`projects/Universal-Game-Launcher/`)**: `src/lib/plugins/metadata/helix-db.ts`, `src/lib/plugins/metadata/universal.ts`, `src-tauri/src/metadata/universal.rs`, `src/routes/settings/+page.svelte`
 
 ```mermaid
 flowchart TD
-    W49_1["[Universal-Game-Launcher] 1. Agent Skills & Tracking Sync"] --> W49_2["[Universal-Game-Launcher] 2. Rust Universal Metadata & Title Normalizer"]
-    W49_2 --> W49_3["[Universal-Game-Launcher] 3. Universal Core Plugins & Global Helpers"]
-    W49_3 --> W49_4["[Universal-Game-Launcher] 4. Authentic Vector SVG Platform Icons"]
-    W49_4 --> W49_5["[Universal-Game-Launcher] 5. Per-Game Customization & Settings-Only Cache"]
-    W49_5 --> W49_Gate["[Universal-Game-Launcher] 6. Verification Gate (CLI, Cargo, Svelte-Check)"]
+    W50_1["[helix-gaming-db] 1. Agent Ecosystem Synchronization"] --> W50_2["[helix-gaming-db] 2. Repo Scaffolding & JSON Schemas"]
+    W50_2 --> W50_3["[helix-gaming-db] 3. Static REST v1 Endpoints (Manifest, Search, Games, Devs)"]
+    W50_3 --> W50_4["[helix-gaming-db] 4. Jekyll Remote Theme Docs & Technical Wiki"]
+    W50_4 --> W50_5["[Universal-Game-Launcher] 5. Client Metadata Provider (metadata-helix)"]
+    W50_5 --> W50_Gate["[Ecosystem] 6. Verification Gate (Validation, Jekyll, Tests)"]
 ```
 
 **Locked user directives (normalized by domain):**
-- **1. Universal Core Plugins & Global Helper Modules (`src/lib/plugins/` & `src-tauri/src/`)**:
-  - Consolidate fragmented per-platform and per-service plugin files into unified **Universal Core Plugins** (`platform-universal`, `metadata-universal`, `utility-title-normalizer`, `media-universal`) that provide core domain functionality across all supported game providers and metadata sources, and delete the old separate per-platform/per-service files.
-  - Pair each Universal Core Plugin with **Global Helper Modules/Functions** (`getAllPlatformSpecs`, `detectPlatformLauncher`, `installPlatformLauncher`, `getPlatformLaunchSpec`, `getPlatformUris`, `normalizeGameTitle`, `normalizeRomTitle`, `canonicalTitleKey`, etc.) for improved maintainability and shared functionality across the app.
-- **2. Dedicated Title Normalizer Plugin (`utility-title-normalizer`)**:
-  - Extract title normalization out of `emulation.rs` into its own dedicated utility plugin (`src/lib/plugins/utility/title-normalizer.ts` and `src-tauri/src/plugins/title_normalizer.rs`) so title normalization is managed cleanly in one place across all PC, local, and emulated platforms.
-  - Accurately normalize RPG Maker and itch.io titles (prioritizing `System.json` `gameTitle` and stripping promotional/version suffixes so `relicts-auf-aeson` resolves to **`Relicts of Aeson`**), concatenated lowercase slugs (`myfutafamily` → **`My Futa Family`**), and inverted-article ROM titles (`Legend of Zelda, The - The Wind Waker` → **`The Legend of Zelda: The Wind Waker`**) while deduplicating `library:custom_games`.
-- **3. Automatic Metadata Enhancement & Settings-Only Cache Management**:
-  - Metadata providers (`metadata-universal`) must **automatically** fetch and enhance metadata and artwork for all games (PC, itch.io, standalone, and emulated console ROMs) via native Rust `reqwest` cascades (Local Inspector, Libretro Thumbnails CDN, Steam Store, GOG Catalog v1 API, Wikipedia + Wikidata MediaWiki API, PCGamingWiki Cargo, ProtonDB, and optional authenticated APIs) without dummy placeholder strings blocking enrichment.
-  - Remove manual "Refresh Metadata" and "Enhance Metadata" buttons from the `/library` view; cache refresh and cache purge buttons belong **exclusively in `/settings`** (`Storage & Cache` tab) for refreshing or purging the application's data cache.
-- **4. Per-Game Management & Customization (`⚙ Manage` Modal in `/library`)**:
-  - Equip each game's per-game management modal (`⚙ Manage` in `/library`) with full customization controls allowing users to edit the game's **Title (Display Name)**, **Short Description**, **Developers**, **Publishers**, **Release Date**, **Genres**, and **Custom Artwork** (Portrait Capsule Cover, Hero Wallpaper Banner, and Transparent Logo via URL or local file picker).
-- **5. UI Layout Synchronization & Authentic Vector SVG Platform Icons (`PlatformIcon.svelte`)**:
-  - Keep `.agents/skills/universal-game-launcher.md` 100% synchronized with the actual UI being built (custom frameless title bar with `Dashboard`, `Library`, `Store`, `Social`, `Storage`, `Settings` and no right quick-filter bar; `/library`-only conditional left sidebar with PC platform and Emulation Console accordions).
-  - Replace generic Unicode shapes (`♨`, `◈`, `▲`, `●`, `🎲`, etc.) across the Library sidebar, Showcase, Dashboard, Store, Social, Storage, and Settings views with **authentic vector SVG variants** (`src/lib/components/PlatformIcon.svelte`) representing each actual provider and console logo.
+- **1. Dedicated Gaming Metadata Repository & REST API Architecture (`helix-gaming-db`)**:
+  - Establish `helix-gaming-db` as a dedicated repository in the `HELIX-Origin` GitHub organization (`https://github.com/HELIX-Origin/helix-gaming-db`) hosted via GitHub Pages (`https://helix-origin.github.io/helix-gaming-db/`).
+  - Serve static, cacheable JSON endpoints under `/api/v1/` mimicking a production REST API:
+    - `/api/v1/manifest.json`: Database metadata, total game count, total developer count, schema version, and updated timestamp.
+    - `/api/v1/search/index.json`: Lightweight index mapping normalized title slugs and aliases to metadata payloads for instant client-side search.
+    - `/api/v1/games/{slug}.json`: Complete metadata payload for each game (title, aliases, developers, publishers, releaseDate, releaseYear, genres, categories, tags, ageRating, userScore, capsuleImage, heroImage, logoImage, headerImage, screenshots, movies, soundtracks, detailedDescription).
+    - `/api/v1/developers/{slug}.json`: Developer studio profiles, aliases, websites, and associated game slugs.
+- **2. Documentation & Technical Wiki Powered by `helix-docs`**:
+  - Build a rich documentation portal and wiki using `remote_theme: HELIX-Origin/helix-docs`.
+  - Maintain strict documentation theme-neutrality: the docs explain the REST API specifications, endpoints, schema definitions, and contribution workflows without coupling to any theme styling.
+- **3. Curation Standards & Initial Seed Datasets**:
+  - Populate initial high-fidelity seed datasets from our curated hand-rolled catalog (Square Enix, Falcom, Nintendo, Neyor, Sierra Lee, NLT Media, Dr PinkCake, Proxxie, Caribdis, Kompas Productions) with verified Steam CDN and itch artwork.
+  - Implement automated JSON schema validation (`scripts/validate.mjs`) ensuring zero schema drift.
+- **4. Client Integration in Universal Game Launcher**:
+  - Integrate `helix-gaming-db` as a primary high-priority metadata provider (`metadata-helix`) in `Universal-Game-Launcher`, querying the REST API endpoints and falling back gracefully to local offline datasets when disconnected.
 
 **Implementation checklist:**
-- [x] **[Universal-Game-Launcher] 1. Agent Ecosystem & Tracking Ledger Synchronization**:
-  - [x] `[Universal-Game-Launcher]` Update `.agents/skills/universal-game-launcher.md` and `.agents/skills/game-metadata-providers.md` to match the exact UI layout, `_tokens.scss` palette, Universal Core Plugins + Global Helpers architecture, and Authentic Vector SVG Platform Icons specification.
-  - [x] `[Universal-Game-Launcher]` Reorganize `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`, and `.agents/rules/workspace.md` with categorized, contradiction-free directives and zero non-organization project mentions.
-- [x] **[Universal-Game-Launcher] 2. Dedicated Title Normalizer & Local Inspector Backend (`src-tauri/src/`)**:
-  - [x] `[Universal-Game-Launcher]` Create `src-tauri/src/plugins/title_normalizer.rs` (`normalize_game_title`, `normalize_rom_title`, `canonical_title_key`) handling article inversion, unified `: ` subtitle separators, promotional/version noise stripping (`Relicts of Aeson`), and compound word splitting (`My Futa Family`).
-  - [x] `[Universal-Game-Launcher]` Update `src-tauri/src/metadata/local.rs` and `src-tauri/src/plugins/engine.rs` to inspect 1-level child folders for RPG Maker `System.json` (`"gameTitle"`), parse `snake_case` itch.io receipt fields, and exclude `Launcher`, `Legendary`, `broth`, and `downloads` folders.
-  - [x] `[Universal-Game-Launcher]` Create `src-tauri/src/metadata/universal.rs` implementing multi-source automatic metadata & artwork resolution (Local Inspector + Libretro Thumbnails CDN + Steam Store + GOG Catalog v1 + Wikipedia/Wikidata MediaWiki API + PCGamingWiki Cargo).
-- [x] **[Universal-Game-Launcher] 3. Rust IPC Commands & Placeholder Filtering (`src-tauri/src/commands.rs` & `lib.rs`)**:
-  - [x] `[Universal-Game-Launcher]` Update `get_cached_game_metadata` and `import_platform_games` in `src-tauri/src/commands.rs` to strip legacy dummy placeholder descriptions (`"Emulated title for..."`) and inspect local manifests on import.
-  - [x] `[Universal-Game-Launcher]` Add native `fetch_external_json` Tauri command in `src-tauri/src/commands.rs`, register in `src-tauri/src/lib.rs`, and expose `api.fetchExternalJson` in `src/lib/api.ts`.
-- [ ] **[Universal-Game-Launcher] 4. Frontend Universal Core Plugins & Global Helper Modules (`src/lib/plugins/`)**:
-  - [ ] `[Universal-Game-Launcher]` Create `src/lib/plugins/platforms/universal.ts` (`platform-universal`) with `PLATFORM_SPECS` and global platform helper functions (`getAllPlatformSpecs`, `detectPlatformLauncher`, `installPlatformLauncher`, `getPlatformLaunchSpec`, `getPlatformUris`), and delete the 12 obsolete separate platform plugin files.
-  - [ ] `[Universal-Game-Launcher]` Create `src/lib/plugins/metadata/universal.ts` (`metadata-universal`) with automatic multi-provider cascade and global metadata helpers, and delete the 11 obsolete separate metadata plugin files.
-  - [ ] `[Universal-Game-Launcher]` Create `src/lib/plugins/utility/title-normalizer.ts` (`utility-title-normalizer`) and `src/lib/plugins/media/universal.ts` (`media-universal`), delete obsolete `trailers.ts` and `ambient.ts`, and synchronize `catalog.ts`, `engine.ts`, `index.ts`, `defaults.rs`, and `worker.ts`.
-- [ ] **[Universal-Game-Launcher] 5. Authentic Vector SVG Platform & Console Icons (`src/lib/components/PlatformIcon.svelte`)**:
-  - [ ] `[Universal-Game-Launcher]` Create `src/lib/components/PlatformIcon.svelte` rendering custom vector SVG icon variants for all PC game providers (`steam`, `gog`, `epic`, `itch`, `xbox`, `ea`, `ubisoft`, `battlenet`, `amazon`, `rockstar`, `standalone`) and emulation consoles (`Nintendo GameCube`, `PlayStation`, `Nintendo 64`, `Super Nintendo`, `Game Boy Advance`, `Nintendo Switch`, `Sega Dreamcast`, etc.).
-  - [ ] `[Universal-Game-Launcher]` Replace generic Unicode platform shapes with `<PlatformIcon />` across `src/routes/+layout.svelte`, `src/routes/library/+page.svelte`, `src/routes/+page.svelte`, `src/routes/store/+page.svelte`, `src/routes/social/+page.svelte`, `src/routes/storage/+page.svelte`, and `src/lib/components/settings/PlatformsSection.svelte`.
-- [ ] **[Universal-Game-Launcher] 6. Per-Game Customization Modal & Settings-Only Cache Controls (`src/routes/library/+page.svelte` & `settings/+page.svelte`)**:
-  - [ ] `[Universal-Game-Launcher]` Remove manual "Refresh Metadata" and "Enhance Metadata" buttons from `src/routes/library/+page.svelte` so cache refresh and purge actions live exclusively in `/settings` (`Storage & Cache` tab).
-  - [ ] `[Universal-Game-Launcher]` Upgrade the `⚙ Manage` modal in `src/routes/library/+page.svelte` to allow customizing each game's Title, Short Description, Developers, Publishers, Release Date, Genres, and Custom Artwork (Portrait Capsule URL/file, Hero Banner URL/file, Transparent Logo URL/file).
-- [ ] **[Universal-Game-Launcher] 7. Quality Gate & End-to-End Verification**:
-  - [ ] `[Universal-Game-Launcher]` Verify `--cli scan` output confirms clean titles (`Relicts of Aeson`, `My Futa Family`, `The Legend of Zelda: The Wind Waker`) and zero duplicate entries.
-  - [ ] `[Universal-Game-Launcher]` Pass `cargo check`, `cargo test`, `svelte-check` (0 errors, 0 warnings), and `npm run build`.
+- [x] **[helix-gaming-db] 1. Agent Ecosystem & Tracking Ledger Synchronization**:
+  - [x] `[helix-gaming-db]` Register `helix-gaming-db` in `AGENTS.md`, `.agents/rules/workspace.md`, and `.github/copilot-instructions.md`.
+  - [x] `[helix-gaming-db]` Update `ROADMAP.md`, `PLAN.md`, `TODO.md`, and `BUGS.md` with normalized directives, milestone definitions, and atomic execution tasks.
+- [x] **[helix-gaming-db] 2. Repository Scaffolding, Package Manifest & JSON Schemas**:
+  - [x] `[helix-gaming-db]` Initialize `projects/helix-gaming-db` with `.gitignore`, `.gitattributes` (`eol=lf`), `package.json`, and `README.md`.
+  - [x] `[helix-gaming-db]` Create JSON schemas: `schemas/manifest.schema.json`, `schemas/game.schema.json`, `schemas/developer.schema.json`.
+  - [x] `[helix-gaming-db]` Implement `scripts/validate.mjs` and `scripts/build-search-index.mjs` for automated schema testing and index generation.
+- [x] **[helix-gaming-db] 3. Static REST v1 Endpoints & Seed Datasets (`api/v1/`)**:
+  - [x] `[helix-gaming-db]` Author initial developer profiles under `api/v1/developers/` (`square-enix.json`, `falcom.json`, `nintendo.json`, `neyor.json`, `sierra-lee.json`, `nlt-media.json`, `dr-pink-cake.json`, `proxxie.json`, `caribdis.json`, `kompas.json`).
+  - [x] `[helix-gaming-db]` Author initial comprehensive game payloads under `api/v1/games/` (`final-fantasy-xiv-a-realm-reborn.json`, `ys-viii-lacrimosa-of-dana.json`, `crossdressing-in-camelot.json`, `the-last-sovereign.json`, `third-crisis.json`, `the-genesis-order.json`, `treasure-of-nadia.json`, `being-a-dik.json`, `relicts-of-aeson.json`, `eternum.json`, `my-futa-family.json`, etc.).
+  - [x] `[helix-gaming-db]` Generate `api/v1/search/index.json` and `api/v1/manifest.json`.
+- [x] **[helix-gaming-db] 4. Jekyll Remote Theme Docs & Technical Wiki**:
+  - [x] `[helix-gaming-db]` Create `_config.yml` (`remote_theme: HELIX-Origin/helix-docs`), `index.md` (portal homepage and interactive API explorer).
+  - [x] `[helix-gaming-db]` Create documentation pages under `_docs/` (`index.md`, `endpoints.md`, `schemas.md`, `contributing.md`).
+  - [x] `[helix-gaming-db]` Create technical wiki under `_wiki/` (`index.md`, `architecture.md`, `metadata-standards.md`, `artwork-standards.md`).
+- [x] **[Universal-Game-Launcher] 5. Client Metadata Provider Integration (`metadata-helix`)**:
+  - [x] `[Universal-Game-Launcher]` Add `src/lib/plugins/metadata/helix-db.ts` querying `api/v1/search/index.json` and `api/v1/games/{slug}.json` via `api.fetchExternalJson`.
+  - [x] `[Universal-Game-Launcher]` Wire provider into `src/lib/plugins/metadata/universal.ts` as primary authoritative source with multi-domain fallback (`helix-origin.club` -> `helix-origin.github.io`) and local offline catalog backup.
+- [x] **[Ecosystem] 6. Verification Gate & Quality Assurance**:
+  - [x] `[helix-gaming-db]` Run `node scripts/validate.mjs` (0 errors, 100% schemas valid for 62 games and 28 developers).
+  - [x] `[Universal-Game-Launcher]` Run `cargo check`, `cargo test` (35 passing), `svelte-check` (0 errors, 0 warnings).
 
 ---
 
@@ -111,7 +110,7 @@ flowchart TD
 > 📖 **Full Archive Details**: For complete task checklists, locked user directives, and technical scope notes, see [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
 
 ### [Universal-Game-Launcher] (projects/Universal-Game-Launcher)
-- **[Universal-Game-Launcher] W.48 — Universal Game Launcher Rebranding, Generic SQLite Persistence, EmulationStation Scaffolding, Background Worker & Headless CLI Foundation (v1.4.0 Phase 1)**: Complete rebranding, `database.sqlite` + `mem_kv`, Steam/GOG-style titlebar & `/library` showcase UI, `/store` & `/social` hubs, archived ROM auto-extraction with `rom.ini`, `GlobalBackgroundWorker`, and `--cli` engine. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
+- **[Universal-Game-Launcher] W.49 — Universal Core Plugins & Global Helpers Architecture, Authentic Vector SVG Platform Icons, Automatic Metadata Engine & Per-Game Customization (v1.4.0)**: Consolidated Universal Core Plugins, Authentic Vector SVG Platform Icons (`PlatformIcon.svelte`), multi-source automatic metadata cascade, `⚙ Manage` per-game customization modal, client discovery across all 7 desktop platforms outside Steam, and modular hand-rolled developer catalog. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
 - **[Universal-Game-Launcher] W.47 — Project Script Standards, Manifest Schema 1.12.0 & IDE Untracking (Hotfix v1.3.3)**: Canonical `main:sub:option` scripts, schema 1.12.0 validation, `.vscode` untracking, release CI. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
 - **[Universal-Game-Launcher] W.46 — Cross-Platform Compiler Warning Elimination & Release Pipeline Hardening (Hotfix v1.3.2)**: POSIX/Windows compiler warnings resolved, release v1.3.2. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
 - **[Universal-Game-Launcher] W.45 — Modular Multi-Platform Free Game Checker, Store Deals Engine, Library Patch Notes & Settings Ergonomics (Patch v1.3.1)**: Per-platform checkers, deals engine, patch notes feed, sidebar cog. See [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
