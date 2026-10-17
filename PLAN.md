@@ -62,12 +62,13 @@ flowchart TD
    - `[helix-gaming-db-00]` Deployed scheduled weekly cron workflow across all 4 database shards running platform ingestion batches, rebuilding search indices, verifying schemas, and committing updates.
 4. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54d — Artwork Backfill & Health Check Workflow (`.github/workflows/enrich-artwork.yml`) (Delivered)**:
    - `[helix-gaming-db-00]` Authored `scripts/enrich-artwork.mjs` and deployed bi-weekly scheduled workflow across all 4 database shards verifying artwork health and backfilling missing assets.
-5. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54e — Multi-Stage Progressive Platform Catalog Rollout (Active)**:
-   - `[helix-gaming-db-01]` Delivered Phase 1 Expansion: Top PC Indie & Digital Hits (63 games & 66 developers in `v2`, 100% verified).
-   - `[helix-gaming-db-02]` Delivered Phase 2 Expansion & 6th/7th Gen 3D Classics: SNES, Genesis, NES, PS1, N64, GBA, PS2, GameCube, Dreamcast, Wii, PSP, DS (63 games & 25 developers in `v2`, 100% verified).
-   - `[helix-gaming-db-03]` Delivered Phase 3 Expansion: Acclaimed Visual Novels & Independent Adult Creations (22 games & 12 developers across `v2` and `v3`, 100% verified).
-   - `[helix-gaming-db-00]` Core Catalog & Shard Ingestion: 80 flagship AAA & PC titles, achieving 228 unique verified games & 149 developers across shards.
+5. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54e — Multi-Stage Progressive Platform Catalog Rollout across Shards (Active)**:
+   - `[helix-gaming-db-01]` Delivered Phase 1 Expansion: Top PC Indie & Digital Hits (78 games & 80 developers in `v2`, 100% verified).
+   - `[helix-gaming-db-02]` Delivered Phase 2 Expansion & Retro 3D Classics: SNES, Genesis, NES, PS1, N64, GBA, PS2, GameCube, Dreamcast, Wii, PSP, DS (81 games & 32 developers in `v2`, 100% verified).
+   - `[helix-gaming-db-03]` Delivered Phase 3 Expansion: Acclaimed Visual Novels & Dedicated Adult Creations (37 games & 19 developers in `v2`, 19 titles in `v3`, 100% verified).
+   - `[helix-gaming-db-00]` Core Catalog & Cross-Shard Multi-Platform Expansion: 80 flagship AAA & PC titles in `v2`, 16 in `v3`, achieving **276 unique verified games**, **35 v3 adult titles**, and **178 developers** across active volume shards with 0 schema validation errors.
    - `[helix-gaming-db-00]` Phase 5 Expansion: Long-Tail Storefronts & Retro Arcade (Epic, EA, Ubisoft, Battle.net, Arcade) (~1,000+ games).
+   - `[helix-gaming-db-00]` Dynamic Sharding Policy: Symmetrical horizontal partitioning into sequential shards (`helix-gaming-db-04`, `05`, ...) whenever any shard approaches storage limits, discovered dynamically by clients without app redeployment.
 6. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54f — Outdated Information & Artwork Refresh Pipeline (`check-drift.mjs` & `.github/workflows/update-metadata-drift.yml`)**:
    - `[helix-gaming-db-00]` Create `scripts/ingest/check-drift.mjs` detecting outdated synopses, changed release dates, updated Steam capsules/heroes, and 404 image URLs.
    - `[helix-gaming-db-00]` Deploy `.github/workflows/update-metadata-drift.yml` running bi-weekly drift scans and opening automated refresh PRs for actively updated games.
@@ -80,17 +81,17 @@ flowchart TD
 8. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54h — Multi-Repository Volume Sharding, Cross-Shard PR Deduplication & Shard Cycling Framework (Delivered)**:
    - `[helix-gaming-db-00]` Architect multi-repo volume sharding and cycling framework (`/api/v2/federation/index.json` and `shards.json`) to prevent GitHub free user storage and file count ceilings.
    - `[helix-gaming-db-00]` Purge Jekyll documentation and wiki out of `helix-gaming-db-00` into dedicated `docs` and `wiki` repositories, maintaining `00` as a pure REST API.
-   - `[helix-gaming-db-00]` Implement cross-shard deduplication & ownership verification in `scripts/lib/cross-shard-dedup.mjs`, `scripts/validate.mjs`, and `scripts/verify-pr.mjs` checking both committed code and open PRs across all 4 shard repositories.
+   - `[helix-gaming-db-00]` Implement cross-shard deduplication & ownership verification in `scripts/lib/cross-shard-dedup.mjs`, `scripts/validate.mjs`, and `scripts/verify-pr.mjs` checking both committed code and open PRs across all shard repositories.
    - `[helix-gaming-db-00]` Implement shard cycling PR router (`scripts/lib/shard-router.mjs` and `api/v2/contribute/router.json`) to target owner repos for updates and cycle new metadata PRs to the first shard without code or PR collisions.
    - `[helix-gaming-db-01, 02, 03]` Seed public repositories `helix-gaming-db-01`, `02`, `03` with identical pure API boilerplate, schemas, validation scripts, workflows, and i18n locales.
-   - `[universal-game-launcher]` Update client `src/lib/plugins/metadata/helix-db.ts` to seamlessly cycle through all four active metadata repositories (`helix-gaming-db-00`, `01`, `02`, `03`).
+   - `[universal-game-launcher]` Implement dynamic federation discovery in `src/lib/plugins/metadata/helix-db.ts` (`getActiveShards()`) querying `/api/v2/federation/shards.json` with SQLite KV fallback to automatically discover new shards (`00` through `03` and future sequential shards).
 9. **[Ecosystem] (projects/agents) W.54i — Automated Secret & PAT Replication Across Projects (Delivered)**:
    - `[Ecosystem]` Replicate shared legacy `PAT_TOKEN` secret across all organization repositories via `gh secret set`.
    - `[agents]` Protect `.env` in root `.gitignore` and save `PAT_TOKEN` / `GITHUB_TOKEN` to local untracked `.env` file for agent automation.
    - `[agents]` Create `provision-repo-secrets.ps1` helper script to instantly provision new repositories as they are created.
 10. **[helix-gaming-db-00] & [Ecosystem] W.54j — Cloudflare Edge Protection, Automated GitHub Webhooks (`/_webhook/github`) & Unified Client / Documentation Synchronization (Delivered)**:
    - `[helix-gaming-api]` Configured Cloudflare rate-limiting rules (100 req/min for general endpoints, 20 req/min for bulk endpoints).
-   - `[helix-gaming-db-00..03]` Created and verified GitHub push webhooks (`https://api.helix-origin.club/_webhook/github`) on all 4 database shards (`helix-gaming-db-00`, `01`, `02`, `03`) with automated cache purging.
+   - `[helix-gaming-db-00..03]` Created and verified GitHub push webhooks (`https://api.helix-origin.club/_webhook/github`) on all database shards (`helix-gaming-db-00`, `01`, `02`, `03`) with automated cache purging.
    - `[universal-game-launcher]` Updated client `src/lib/plugins/metadata/helix-db.ts` to aggregate multi-shard search indices, prioritize direct shard proxies, and cache data persistently in SQLite KV storage.
    - `[docs] & [wiki]` Updated centralized documentation (`docs`) and technical wiki (`wiki`) to detail rate limiting rules, webhooks, multi-shard search aggregation, and the dynamic `i18next` architecture.
 

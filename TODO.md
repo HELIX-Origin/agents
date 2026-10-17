@@ -106,11 +106,12 @@ flowchart TD
 - [x] **[helix-gaming-db-00] 4. Artwork Backfill & Health Check Workflow (`.github/workflows/enrich-artwork.yml`)**:
   - [x] `[helix-gaming-db-00]` Deploy background workflow and `scripts/enrich-artwork.mjs` searching authorized CDNs to backfill missing vertical box art and hero banners.
 - [x] **[helix-gaming-db-00] 5. Multi-Stage Progressive Platform Rollout across Shards**:
-  - [x] `[helix-gaming-db-01]` Phase 1 Expansion: Top PC Indie & Digital Hits (63 games & 66 developers in `v2`, 100% verified).
-  - [x] `[helix-gaming-db-02]` Phase 2 Expansion & 6th/7th Gen 3D Classics: SNES, Genesis, NES, PS1, N64, GBA, PS2, GameCube, Dreamcast, Wii, PSP, DS (63 games & 25 developers in `v2`, 100% verified).
-  - [x] `[helix-gaming-db-03]` Phase 3 Expansion: Acclaimed Visual Novels & Independent Adult Creations (22 games & 12 developers across `v2` and `v3`, 100% verified).
-  - [x] `[helix-gaming-db-00]` Core Catalog & Shard Ingestion: 80 flagship AAA & PC titles, achieving 228 unique verified games & 149 developers across shards.
+  - [x] `[helix-gaming-db-01]` Phase 1 Expansion: Top PC Indie & Digital Hits (78 games & 80 developers in `v2`, 100% verified).
+  - [x] `[helix-gaming-db-02]` Phase 2 Expansion & Retro 3D Classics: SNES, Genesis, NES, PS1, N64, GBA, PS2, GameCube, Dreamcast, Wii, PSP, DS (81 games & 32 developers in `v2`, 100% verified).
+  - [x] `[helix-gaming-db-03]` Phase 3 Expansion: Acclaimed Visual Novels & Dedicated Adult Creations (37 games & 19 developers in `v2`, 19 titles in `v3`, 100% verified).
+  - [x] `[helix-gaming-db-00]` Core Catalog & Cross-Shard Multi-Platform Expansion: 80 flagship AAA & PC titles in `v2`, 16 in `v3`, achieving **276 unique verified games**, **35 v3 adult titles**, and **178 developers** across active volume shards with 0 schema validation errors.
   - [ ] `[helix-gaming-db-00]` Phase 5 Expansion: Long-Tail Storefronts & Retro Arcade (Epic, EA, Ubisoft, Battle.net, Arcade) (~1,000+ games).
+  - [x] `[helix-gaming-db-00]` Dynamic Sharding Policy: Symmetrical horizontal partitioning into sequential shards (`helix-gaming-db-04`, `05`, ...) whenever any shard approaches storage limits, discovered dynamically by clients without app redeployment.
 - [ ] **[helix-gaming-db-00] 6. Outdated Information & Artwork Refresh Pipeline**:
   - [ ] `[helix-gaming-db-00]` Author `scripts/ingest/check-drift.mjs` scanning active entries against live storefronts to refresh descriptions, resolve 404 images, and fetch updated capsules/banners.
   - [ ] `[helix-gaming-db-00]` Deploy `.github/workflows/update-metadata-drift.yml` running bi-weekly drift scans and opening automated refresh PRs for actively maintained games.
