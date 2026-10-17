@@ -69,10 +69,12 @@ flowchart TD
   - [x] Update GitHub repository metadata (descriptions, homepages pointing to `docs.helix-origin.club` / `wiki.helix-origin.club`, and topic tags) across all 15 repositories in the `HELIX-Origin` organization.
   - [x] Update portal repo (`helix-origin.github.io`) to strictly link to Docs Hub and Wiki Hub, removing raw API JSON gateway links and letting Docs and Wiki handle all project-specific information.
 
-- [ ] **[Ecosystem] 0c. Organization-Wide Semantic Versioning, Detailed Universal Release Notes & Baseline Releases**:
+- [x] **[Ecosystem] 0c. Organization-Wide Semantic Versioning, Detailed Universal Release Notes & Baseline Releases**:
   - [x] Codify Universal Semantic Versioning Invariant and Release Asset Invariant across `AGENTS.md`, `.github/copilot-instructions.md`, `.agents/rules/release-notes.md`, and `.agents/templates/release-notes-template.md`.
   - [x] Migrate `windhawk-themes` and `docs` from milestone-based release framing to Semantic Versioning (`vMAJOR.MINOR.PATCH`).
-  - [ ] Publish baseline GitHub Releases for all repositories currently missing releases (`docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `agents`) adhering strictly to SemVer and the zero-asset policy.
+  - [x] Publish baseline GitHub Releases for all repositories (`docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `agents`) adhering strictly to SemVer and the zero-asset policy.
+  - [x] Restructure `docs` and `wiki` repositories from redundant `_docs` and `_wiki` folders to clean `_projects/` collections.
+  - [x] Convert all repository `README.md` files into minimal entry points linking directly to centralized documentation and wiki hubs.
 
 
 
