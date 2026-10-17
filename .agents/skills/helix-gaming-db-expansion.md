@@ -172,3 +172,90 @@ All clients consuming the expanded database must adhere to:
 1. **Dynamic Search Index Query**: Query `/api/v2/search/index.json` first, and if adult content is permitted, also query `/api/v3/search/index.json`.
 2. **Offline-First Resilience**: Cache search indexes in the client's persistent KV storage (`api.kvSetJson`) with fallback to local cache when network connectivity is lost.
 3. **Index Fallback Synthesis**: If a detailed game payload (`/api/v2/games/{slug}.json`) fails to load or is offline, synthesize metadata directly from the rich search index entry (which contains title, developers, publishers, releaseYear, genres, categories, userScore, and complete artwork URLs).
+4. **Federated Shard Resolution**: Check `entry.sourceUrl` or `entry.repository` for records partitioned across federated shard repositories, seamlessly resolving cross-repo URLs.
+5. **Localized Metadata Mapping**: Resolve localized metadata variants from `game.locales[lang]` matching the user's preferred launcher language.
+
+---
+
+## 6. Multi-Repository Federation Framework & GitHub Free Tier Limits
+
+As the database scales across thousands of games and platforms, repository size and file counts may approach GitHub free user limitations (recommended <1GB per repository, soft limits on Git LFS, GitHub Pages deployment quotas). To safeguard against quota ceilings, the database architecture is designed with a **Federated Multi-Repository Architecture**:
+
+```mermaid
+flowchart TD
+    subgraph RootRegistry["HELIX Gaming DB Root Registry (helix-gaming-db)"]
+        Manifest["api/manifest.json (Federation Master)"]
+        UnifiedIndex["api/v2/search/index.json (Global Unified Search)"]
+        Catalog["api/v2/catalog/index.json (Unified Catalog)"]
+        Locales["api/v2/i18n/ (Centralized Taxonomy Translations)"]
+    end
+
+    subgraph Shards["Platform Shard Repositories (HELIX-Origin/*)"]
+        PC["helix-gaming-db-pc (PC, Windows, Linux, macOS)"]
+        PS["helix-gaming-db-playstation (PS1-PS5)"]
+        Nin["helix-gaming-db-nintendo (NES-Switch)"]
+        Xbx["helix-gaming-db-xbox (Xbox, 360, One, Series)"]
+        Retro["helix-gaming-db-retro (Arcade, Sega, Neo Geo)"]
+        Adult["helix-gaming-db-adult (Dedicated 18+ Tier)"]
+    end
+
+    subgraph Automation["Automated Shard Provisioning & PAT Replication"]
+        PAT["gh secret set PAT_TOKEN -R HELIX-Origin/<shard-repo>"]
+        Workflows["Shared CI/CD & Auto-Merge Templates"]
+    end
+
+    Manifest -->|Federation Routing| Shards
+    UnifiedIndex -->|Direct pointers| PC
+    UnifiedIndex -->|Direct pointers| PS
+    UnifiedIndex -->|Direct pointers| Nin
+    UnifiedIndex -->|Direct pointers| Xbx
+    UnifiedIndex -->|Direct pointers| Retro
+    UnifiedIndex -->|Direct pointers| Adult
+    PAT --> Shards
+    Workflows --> Shards
+```
+
+### 6.1 Architectural Principles:
+1. **Unified Search Registry**: The root `helix-gaming-db` repository maintains the global search indexes, localized taxonomy dictionaries, schemas, and federation manifest. Client applications continue to make a single fast request to the root index.
+2. **Transparent Shard Resolution**: Search index entries carry optional `shard: string`, `repository: string`, and `sourceUrl: string` fields. When a client requests full game details for a partitioned title, the client resolves the record directly from the dedicated shard repository via raw CDN or GitHub Pages.
+3. **Automated PAT Replication Across Shards**:
+   - Organization repositories share automated CI/CD and PR auto-merge workflows powered by a shared `PAT_TOKEN` secret.
+   - When new metadata API repositories are created, `PAT_TOKEN` is automatically provisioned via the GitHub CLI:
+     ```powershell
+     $token | gh secret set PAT_TOKEN -R HELIX-Origin/<new-shard-repo>
+     ```
+   - No human intervention or manual token re-entry is required.
+
+---
+
+## 7. Library-Driven Localization (i18next) & Multilingual Taxonomy
+
+To support internationalization across the global gaming community without manually coding static translations into thousands of game files (which would drastically bloat repository size), the metadata API incorporates a dedicated `i18next` library architecture:
+
+### 7.1 Architecture Standard
+1. **Centralized Taxonomy Dictionaries (`locales/{lang}/`)**:
+   - Reusable taxonomy translations for `genres.json`, `categories.json`, `platforms.json`, and `common.json`.
+   - Maintained across 12 primary gaming languages:
+     - `en` (English - Canonical fallback)
+     - `ja` (Japanese)
+     - `zh-CN` (Simplified Chinese)
+     - `zh-TW` (Traditional Chinese)
+     - `es` (Spanish)
+     - `fr` (French)
+     - `de` (German)
+     - `it` (Italian)
+     - `pt-BR` (Portuguese - Brazil)
+     - `ru` (Russian)
+     - `ko` (Korean)
+     - `pl` (Polish)
+2. **Static Localized Endpoints Generated via `build-search-index.mjs`**:
+   - `/api/v2/i18n/locales.json` (supported locale discovery)
+   - `/api/v2/i18n/{code}/bundle.json` (complete taxonomy bundle)
+   - `/api/v2/i18n/{code}/genres.json` (localized genres)
+   - `/api/v2/i18n/{code}/categories.json` (localized categories)
+   - `/api/v2/i18n/{code}/platforms.json` (localized platforms)
+   - `/api/v2/i18n/{code}/common.json` (common UI phrases)
+   - `/api/v2/i18n/{code}/search/index.json` (multilingual search index)
+3. **Optional In-Record `locales` Dictionary**:
+   - Game payloads retain canonical English metadata at root.
+   - Specific localized titles, synopses, and aliases are optionally stored in `game.locales[bcp47]`, populated automatically from upstream localized queries (e.g. Steam Store API `l=<language>`, Wikipedia/Wikidata MediaWiki APIs) without file duplication.

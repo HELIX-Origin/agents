@@ -79,6 +79,7 @@
 ├── TODO.md                    <- actionable checklist (update as you go)
 ├── BUGS.md                    <- known issues, quirks, workarounds
 ├── .gitignore                 <- keeps projects/ and scratch/ untracked
+├── provision-repo-secrets.ps1 <- Securely provision PAT_TOKEN secrets to HELIX-Origin repos (Windows)
 ├── clone-org-repos-windows.ps1<- Clone all HELIX-Origin repos into projects/ (Windows)
 ├── clone-org-repos-linux.sh   <- Clone all HELIX-Origin repos into projects/ (Linux)
 ├── clone-org-repos-macos.sh   <- Clone all HELIX-Origin repos into projects/ (macOS)
@@ -142,6 +143,7 @@
 | Session & context management rules | `.agents/rules/session-management.md` |
 | Clone organization repos | `.agents/skills/clone-org-repos.md` |
 | Clone all org repos (scripts) | `clone-org-repos-windows.ps1`, `clone-org-repos-linux.sh`, `clone-org-repos-macos.sh` |
+| Provision PAT secrets to org repos | `provision-repo-secrets.ps1` |
 | Compile theme CSS (dart-sass) | `.agents/skills/sass-compile.md` |
 | Modern SCSS architecture | `.agents/skills/scss-architecture.md` |
 | Task decomposition & incremental steps | `.agents/skills/task-decomposition.md` |

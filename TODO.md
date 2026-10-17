@@ -68,6 +68,21 @@ flowchart TD
 - [ ] **[helix-gaming-db] 6. Outdated Information & Artwork Refresh Pipeline**:
   - [ ] `[helix-gaming-db]` Author `scripts/ingest/check-drift.mjs` scanning active entries against live storefronts to refresh descriptions, resolve 404 images, and fetch updated capsules/banners.
   - [ ] `[helix-gaming-db]` Deploy `.github/workflows/update-metadata-drift.yml` running bi-weekly drift scans and opening automated refresh PRs for actively maintained games.
+- [x] **[helix-gaming-db] 7. Library-Driven Internationalization (i18next) & Multilingual Taxonomy**:
+  - [x] `[helix-gaming-db]` Integrate `i18next` library (`scripts/i18n/index.mjs`) for dynamic taxonomy resolution, language negotiation, and ISO 639-1 / BCP 47 fallback chains.
+  - [x] `[helix-gaming-db]` Author complete taxonomy dictionaries across 12 primary languages (`locales/{lang}/genres.json`, `categories.json`, `platforms.json`, `common.json` for `en`, `ja`, `zh-CN`, `zh-TW`, `es`, `fr`, `de`, `it`, `pt-BR`, `ru`, `ko`, `pl`).
+  - [x] `[helix-gaming-db]` Update `schemas/game.schema.json` to formally support optional `locales` dictionary with per-language title, synopses, and aliases.
+  - [x] `[helix-gaming-db]` Update `scripts/build-search-index.mjs` to emit static multilingual REST endpoints (`/api/v2/i18n/locales.json`, `/api/v2/i18n/{code}/bundle.json`, `/api/v2/i18n/{code}/genres.json`, `/api/v2/i18n/{code}/search/index.json`).
+  - [x] `[universal-game-launcher]` Update Three-Tier client (`src/lib/plugins/metadata/helix-db.ts`) with `preferred_language` setting and dynamic localized metadata resolution.
+- [x] **[helix-gaming-db] 8. Multi-Repository Federation Framework (GitHub Free Storage Limit Strategy)**:
+  - [x] `[helix-gaming-db]` Architect multi-repo federation schema and shard routing table (`/api/v2/federation/index.json` and `shards.json`) to prevent GitHub free user storage and file count ceilings.
+  - [x] `[helix-gaming-db]` Define shard partitions (`core`, `pc`, `playstation`, `nintendo`, `xbox`, `retro`, `adult`) with transparent URL resolution.
+  - [x] `[helix-gaming-db]` Update root manifest (`/api/manifest.json`), v1, v2, and v3 manifests with `federation` metadata.
+  - [x] `[universal-game-launcher]` Add federated shard resolution to `getHelixDbGame` supporting direct cross-repo raw CDN downloads and persistent caching.
+- [x] **[Ecosystem] 9. Automated Secret & PAT Replication Across Projects**:
+  - [x] `[Ecosystem]` Replicate shared legacy `PAT_TOKEN` secret across all 9 organization repositories (`helix-gaming-db`, `universal-game-launcher`, `helix-docs`, `helix-origin.github.io`, `nh-reader`, `theme-toolkit`, `windhawk-themes`, `ffxiv-config`, `agents`) via `gh secret set`.
+  - [x] `[agents]` Protect `.env` in root `.gitignore` and save `PAT_TOKEN` / `GITHUB_TOKEN` to local untracked `.env` file for agent automation.
+
 
 ---
 

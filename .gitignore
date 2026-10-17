@@ -8,3 +8,9 @@ temp/
 Thumbs.db
 *.tmp
 *.log
+
+# Secrets and environment variables
+.env
+.env.*
+*.env
+
