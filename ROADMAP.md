@@ -54,7 +54,7 @@ flowchart TB
 | **[wiki]** | `projects/wiki` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/wiki/releases/tag/v1.0.0) | 🚀 Active | Centralized organization technical wiki & curation guidelines |
 | **[nh-reader]** | `projects/nh-reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/nh-reader/releases/tag/v0.7.5) | 🚀 Active | Post-v0.7.5: Unified `.mjs` scripts architecture, local code signing |
 | **[windhawk-themes]** | `projects/windhawk-themes` | SemVer | [v0.1.0](https://github.com/HELIX-Origin/windhawk-themes/releases/tag/v0.1.0) | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons (`v0.2.0`) |
-| **[universal-game-launcher]** | `projects/universal-game-launcher` | SemVer | [v1.3.3](https://github.com/HELIX-Origin/universal-game-launcher/releases/tag/v1.3.3) | 🚀 Active | Universal Game Launcher Rebranding, Modular Plugins Framework (`v1.4.0`) |
+| **[universal-game-launcher]** | `projects/universal-game-launcher` | SemVer | [v1.4.0](https://github.com/HELIX-Origin/universal-game-launcher/releases/tag/v1.4.0) | 🚀 Active | Universal Game Launcher Rebranding, Modular Plugins Framework (`v1.4.0`) |
 | **[theme-toolkit]** | `projects/theme-toolkit` | SemVer | [v0.1.0](https://github.com/HELIX-Origin/theme-toolkit/releases/tag/v0.1.0) | 🚀 Active | Framework scaffolded, Per-Platform Lib isolation, native packaging blueprints |
 | **[helix-gaming-db-00]** | `projects/helix-gaming-db-00` | SemVer | [v2.0.0](https://github.com/HELIX-Origin/helix-gaming-db-00/releases/tag/v2.0.0) | 🚀 Active | Volume shard 00 (core), automated multi-platform ingestion pipeline |
 | **[helix-gaming-db-01]** | `projects/helix-gaming-db-01` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-gaming-db-01/releases/tag/v1.0.0) | 🚀 Active | Volume shard 01 provisioning, cross-shard deduplication |
@@ -147,7 +147,7 @@ flowchart LR
 - **[universal-game-launcher] Milestone M13: Multi-Platform Hardening, WinGet Packaging & Hygiene v1.3.2 - v1.3.3 (DELIVERED):**
   - Elimination of all cross-platform compiler warnings across POSIX (Linux/macOS) and Windows targets.
   - Full adherence to organizational `main:sub:option` script hierarchy and IDE untracking hygiene.
-- **[universal-game-launcher] Milestone M14: Native Universal Core Plugins & Global Helpers Framework, Automatic Metadata Enhancement, Per-Game Customization Modal, Store & Social Hub v1.4.0 (ACTIVE):**
+- **[universal-game-launcher] Milestone M14: Native Universal Core Plugins & Global Helpers Framework, Automatic Metadata Enhancement, Per-Game Customization Modal, Store & Social Hub v1.4.0 (DELIVERED):**
   - **Complete Product Rebranding**: Renamed package to `universal-game-launcher`, product to `Universal Game Launcher`, crate to `universal_game_launcher_lib`, and bundle identifier to `org.helixorigin.universal-game-launcher`.
   - **Native In-App Universal Core Plugins & Global Helpers Framework (`src/lib/plugins/` & `src-tauri/src/`)**: Consolidated platform integrations, metadata providers, title normalization, and media playback into cohesive **Universal Core Plugins** paired with **Global Helper Modules/Functions**:
     - `platform-universal` (`src/lib/plugins/platforms/universal.ts`): Unified support and global helpers (`getAllPlatformSpecs`, `detectPlatformLauncher`, `installPlatformLauncher`, `getPlatformLaunchSpec`, `getPlatformUris`) across all 12 game providers (`steam`, `gog`, `epic`, `itch`, `xbox`, `ea`, `ubisoft`, `battlenet`, `amazon`, `rockstar`, `emulationstation`, `standalone`).
