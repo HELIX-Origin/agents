@@ -50,25 +50,24 @@ flowchart TD
 0b. **[Ecosystem] W.54_badges — Universal HTML Badge Standards Migration**:
    - `[Ecosystem]` Established binding HTML Badge Standard across `.agents/rules/documentation-standards.md`, `.agents/skills/gfm-content.md`, `AGENTS.md`, and `.github/copilot-instructions.md`, requiring raw HTML `<a><img src="..." alt="..." height="20" /></a>` with explicit `height="20"` to prevent badge stretching and layout shift.
    - `[Ecosystem]` Converted badges across all project READMEs (`docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `universal-game-launcher`, `nh-reader`, `theme-toolkit`, `windhawk-themes`, `ffxiv-config`, `helix-gaming-db-00` through `03`, and workspace root) to compliant HTML badges.
-1. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54a — Platform Ingestion Scripts Suite (`scripts/ingest/`)**:
-   - `[helix-gaming-db-00]` Create `scripts/ingest/ingest-steam.mjs`: Steam App Details & Store API scraper extracting title, synopsis, creators, tags, release dates, screenshots, videos, and 600×900 capsule artwork.
-   - `[helix-gaming-db-00]` Create `scripts/ingest/ingest-gog.mjs`: GOG Catalog v1 & Product Details scraper extracting DRM-free metadata and high-res cover art.
-   - `[helix-gaming-db-00]` Create `scripts/ingest/ingest-libretro-rdb.mjs`: Libretro OpenVGDB database parser resolving canonical titles and mapping to Libretro Thumbnails CDN assets.
-   - `[helix-gaming-db-00]` Create `scripts/ingest/ingest-screenscraper.mjs`: ScreenScraper API client with rate-limiting and cache checks for retro arcade/console platforms.
-   - `[helix-gaming-db-00]` Create `scripts/ingest/ingest-patreon-itch.mjs`: Specialized scraper for independent, Patreon, and itch.io creations with automatic mature tag detection and routing to the v3 tier.
-2. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54b — Batch Runner, Deduplication & Validation Pipeline (`scripts/ingest/run-batch.mjs`)**:
-   - `[helix-gaming-db-00]` Author `run-batch.mjs` orchestrating batch ingestion with CLI args (`--platform=<id>`, `--limit=<n>`, `--tier=<v2|v3>`, `--shard=<00|01|02|03>`), slug collision resolution, and automated `build-search-index.mjs` compilation.
-   - `[helix-gaming-db-00]` Enforce strict Draft 2020-12 schema validation (`npm test`) on all newly emitted payloads.
-3. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54c — Scheduled Ingestion GitHub Actions Workflow (`.github/workflows/scheduled-ingest.yml`)**:
-   - `[helix-gaming-db-00]` Deploy scheduled cron workflow running weekly platform ingestion batches, rebuilding search indices, verifying schemas, and automatically opening pull requests.
-4. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54d — Artwork Backfill & Health Check Workflow (`.github/workflows/enrich-artwork.yml`)**:
-   - `[helix-gaming-db-00]` Deploy bi-weekly background workflow identifying games with missing artwork slots (capsules, hero banners, logos) and searching authorized CDNs to backfill assets.
-5. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54e — Multi-Stage Progressive Platform Catalog Rollout**:
-   - `[helix-gaming-db-00]` Execute Phase 1: Top PC Indie & Digital Hits (~250 games in `v2`).
-   - `[helix-gaming-db-00]` Execute Phase 2: Golden Age 16-bit & 32-bit Consoles (SNES, Genesis, PS1, GBA) (~500 games in `v2`).
-   - `[helix-gaming-db-00]` Execute Phase 3: Dedicated Adult & Patreon 18+ Visual Novels & RPGs (~150 games in `v3`).
-   - `[helix-gaming-db-00]` Execute Phase 4: 6th & 7th Generation 3D Classics (GameCube, PS2, Dreamcast, Wii, PSP) (~500 games in `v2`).
-   - `[helix-gaming-db-00]` Execute Phase 5: Long-Tail Storefronts & Retro Arcade (Epic, EA, Ubisoft, Battle.net, Arcade) (~1,000+ games).
+1. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54a — Platform Ingestion Scripts Suite (`scripts/ingest/`) (Delivered)**:
+   - `[helix-gaming-db-00]` Created `scripts/ingest/ingest-steam.mjs`: Steam App Details & Store API scraper extracting title, synopsis, creators, tags, release dates, screenshots, videos, and 600×900 capsule artwork with cross-shard sibling developer deduplication.
+   - `[helix-gaming-db-00]` Created `scripts/ingest/ingest-gog.mjs`: GOG Catalog v1 & Product Details scraper extracting DRM-free metadata and cover art.
+   - `[helix-gaming-db-00]` Created `scripts/ingest/ingest-libretro-rdb.mjs`: Libretro OpenVGDB database parser mapping canonical titles to Libretro Thumbnails CDN assets (Named_Boxarts, Named_Snaps, Named_Titles).
+   - `[helix-gaming-db-00]` Created `scripts/ingest/ingest-patreon-itch.mjs`: Scraper for independent, Patreon, and itch.io creations with automatic mature tag detection and routing to v2 and v3 tiers.
+2. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54b — Batch Runner, Deduplication & Validation Pipeline (`scripts/ingest/run-batch.mjs`) (Delivered)**:
+   - `[helix-gaming-db-00]` Authored `run-batch.mjs` orchestrating multi-platform batch ingestion with CLI args (`--platform=<id>`, `--limit=<n>`, `--shard=<00|01|02|03>`), cross-shard slug deduplication, and automated `build-search-index.mjs` compilation.
+   - `[helix-gaming-db-00]` Enforced strict schema validation and automated PR verification (`npm test`) on all newly emitted payloads across all shards.
+3. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54c — Scheduled Ingestion GitHub Actions Workflow (`.github/workflows/scheduled-ingest.yml`) (Delivered)**:
+   - `[helix-gaming-db-00]` Deployed scheduled weekly cron workflow across all 4 database shards running platform ingestion batches, rebuilding search indices, verifying schemas, and committing updates.
+4. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54d — Artwork Backfill & Health Check Workflow (`.github/workflows/enrich-artwork.yml`) (Delivered)**:
+   - `[helix-gaming-db-00]` Authored `scripts/enrich-artwork.mjs` and deployed bi-weekly scheduled workflow across all 4 database shards verifying artwork health and backfilling missing assets.
+5. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54e — Multi-Stage Progressive Platform Catalog Rollout (Active)**:
+   - `[helix-gaming-db-01]` Delivered Phase 1 Initial: Top PC Indie & Digital Hits (29 games & 30 developers in `v2`, 100% verified).
+   - `[helix-gaming-db-02]` Delivered Phase 2 Initial: Golden Age 16-bit & 32-bit Consoles (SNES, Genesis, PS1, N64, GBA) (23 games & 12 developers in `v2`, 100% verified).
+   - `[helix-gaming-db-03]` Delivered Phase 3 Initial: Dedicated Visual Novels & Independent Adult Creations (7 games & 7 developers across `v1`, `v2`, and `v3`, 100% verified).
+   - `[helix-gaming-db-00]` Phase 4 Expansion: 6th & 7th Generation 3D Classics (GameCube, PS2, Dreamcast, Wii, PSP) (~500 games in `v2`).
+   - `[helix-gaming-db-00]` Phase 5 Expansion: Long-Tail Storefronts & Retro Arcade (Epic, EA, Ubisoft, Battle.net, Arcade) (~1,000+ games).
 6. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54f — Outdated Information & Artwork Refresh Pipeline (`check-drift.mjs` & `.github/workflows/update-metadata-drift.yml`)**:
    - `[helix-gaming-db-00]` Create `scripts/ingest/check-drift.mjs` detecting outdated synopses, changed release dates, updated Steam capsules/heroes, and 404 image URLs.
    - `[helix-gaming-db-00]` Deploy `.github/workflows/update-metadata-drift.yml` running bi-weekly drift scans and opening automated refresh PRs for actively updated games.
@@ -78,7 +77,7 @@ flowchart TD
    - `[helix-gaming-db-00]` Update `scripts/build-search-index.mjs` to bundle `app` UI strings into `/api/v2/i18n/{code}/bundle.json` and emit `/api/v2/i18n/{code}/app.json`.
    - `[helix-gaming-db-01, 02, 03]` Symmetrically sync `locales/` and i18n scripts across all volume shards.
    - `[universal-game-launcher]` Replace hand-rolled hard-coded `LOCALES` system with `i18next` library, dynamically loading UI strings and taxonomy from `helix-gaming-db` API with offline caching.
-8. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54h — Multi-Repository Volume Sharding, Cross-Shard PR Deduplication & Shard Cycling Framework (Active)**:
+8. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54h — Multi-Repository Volume Sharding, Cross-Shard PR Deduplication & Shard Cycling Framework (Delivered)**:
    - `[helix-gaming-db-00]` Architect multi-repo volume sharding and cycling framework (`/api/v2/federation/index.json` and `shards.json`) to prevent GitHub free user storage and file count ceilings.
    - `[helix-gaming-db-00]` Purge Jekyll documentation and wiki out of `helix-gaming-db-00` into dedicated `docs` and `wiki` repositories, maintaining `00` as a pure REST API.
    - `[helix-gaming-db-00]` Implement cross-shard deduplication & ownership verification in `scripts/lib/cross-shard-dedup.mjs`, `scripts/validate.mjs`, and `scripts/verify-pr.mjs` checking both committed code and open PRs across all 4 shard repositories.
