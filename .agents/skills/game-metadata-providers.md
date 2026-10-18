@@ -204,5 +204,12 @@ Official retro artwork CDN providing boxarts, title screens, gameplay snaps, and
 - **ProtonDB**:
   - `GET https://www.protondb.com/api/v1/reports/summaries/{steamAppId}.json`
   - Returns `tier` (`platinum`, `gold`, `silver`, `bronze`, `borked`, `native`), `score`, `confidence`, `total`.
-- **HowLongToBeat**:
-  - Executes via native Rust `reqwest` proxy (`api.fetchExternalJson`) with `Referer: https://howlongtobeat.com/` and `User-Agent` headers to avoid browser CORS errors.
+- **HowLongToBeat (`metadata-howlongtobeat`)**:
+  - **No official public API.** HowLongToBeat (owned by IGN / Ziff Davis) publishes no documented API; access is only through a **token-gated internal JSON endpoint** or community REST wrappers. The legacy Depressurizer (.NET) HLTB support broke because it targeted a **now shut-down older endpoint** — restoration must target the current active surface only.
+  - **Native token-gated JSON lookup (current active endpoint)**:
+    - `GET https://howlongtobeat.com/api/find/init` (endpoint name is served by the site's JS bundle and has changed over time: `/api/search`, `/api/bleed`, `/api/find` — always re-discover rather than hardcoding) → yields a short-lived session token.
+    - `POST https://howlongtobeat.com/api/find` with `Content-Type: application/json`, the session token, and a body carrying the search term (`searchTerms`, `searchType: "games"`, `size: 20`) → returns structured JSON.
+    - Response rows expose `game_id`, `game_name`, `release_world`, and completion times **in seconds**: `comp_main`, `comp_plus`, `comp_100`, `comp_all` (divide by 3600 for hours).
+    - Send `Referer: https://howlongtobeat.com/` plus a browser `User-Agent`; requests execute via the native Rust `reqwest` proxy (`api.fetchExternalJson`) to avoid browser CORS errors.
+  - **Preferred for a Steam library (Depressurizer) — community REST wrapper**: the community REST service (`Crashdummy/HowLongToBeatApi`) proxies HLTB data and supports **direct Steam `appId` / GOG id lookups** (no fuzzy name matching needed), returning `id`, `hltbId`, `title`, `imageUrl`, `steamAppId`, `gogAppId`, `mainStory`, `mainStoryWithExtras`, `completionist`, `lastUpdatedAt`. This maps cleanly onto Depressurizer's `SteamGame.app_id`.
+  - **Do not restore the dead scrape method**: the legacy `POST https://howlongtobeat.com/search` (form-urlencoded `queryString=…&t=games&sorthead=popular&…`, HTML response) is the shut-down surface that broke the original app.

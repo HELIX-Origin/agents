@@ -24,10 +24,7 @@
   },
   "plugin": [
     "@tarquinen/opencode-dcp@latest",
-    "@plannotator/opencode@latest",
-    "@franlol/opencode-md-table-formatter@latest",
-    "opencode-agent-skills@latest",
-    "opencode-websearch-cited@latest"
+    "@plannotator/opencode@latest"
   ],
   "instructions": [
     "AGENTS.md",

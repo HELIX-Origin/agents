@@ -17,10 +17,9 @@ Provide a clear and concise summary of what this change achieves, the motivation
 
 ---
 
-## Target Project & Subsystem
+## Related Issues
 
-- **Repository:** `projects/<repo-name>`
-- **Subsystem:** e.g., Theme SCSS / Rust Backend / Styler Mod / Svelte Views / Docs
+Closes #<issue-number>
 
 ---
 
@@ -30,13 +29,15 @@ Detail the exact steps and automated checks taken to verify the change:
 
 - [ ] Static validation passed: `<command>` (0 errors, 0 warnings)
 - [ ] Unit tests / test suites passed: `<command>`
-- [ ] Manual desktop / browser visual inspection verified
-- [ ] Tracking files updated (`TODO.md`, `PLAN.md`, `BUGS.md`, `CHANGELOG.md`)
+- [ ] Manual visual inspection verified
+- [ ] `CHANGELOG.md` updated if behavior changed
 
 ---
 
-## Security & Path Hygiene Checklist
+## Checklist
 
-- [ ] Zero secrets, private tokens, or credentials committed
-- [ ] Zero hardcoded local machine paths or personal identifiers
-- [ ] Code follows repository conventions and licensing terms
+- [ ] My changes follow the project's [contributing guidelines](../CONTRIBUTING.md).
+- [ ] My changes follow the [Code of Conduct](../CODE_OF_CONDUCT.md).
+- [ ] No credentials, tokens, API keys, or personal machine paths are included.
+- [ ] Documentation has been updated if needed.
+- [ ] Commit messages follow the project's commit style.

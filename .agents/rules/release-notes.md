@@ -24,7 +24,7 @@ To establish a uniform, detailed, human-readable, and universal release notes st
 ### Release Asset Attachment Invariant
 > [!IMPORTANT]
 > **Assets must ONLY be uploaded to repositories that distribute a packaged application or resource.**
-> - **Packaged Repositories (Assets Allowed):** `universal-game-launcher`, `nh-reader`, `theme-toolkit` (desktop installers/binaries) and `ffxiv-config` (packaged configuration archive).
+> - **Packaged Repositories (Assets Allowed):** `universal-game-launcher`, `nh-reader`, `theme-toolkit`, `depressurizer` (desktop installers/binaries) and `ffxiv-config` (packaged configuration archive).
 > - **Zero-Asset Repositories (No Uploaded Assets):** `docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `agents`, and `.github`. These repositories publish GitHub Releases with comprehensive release notes, changelog highlights, and git tags, but **never attach binary or zip assets**.
 
 ### Repository Versioning & Asset Matrix
@@ -34,6 +34,7 @@ To establish a uniform, detailed, human-readable, and universal release notes st
 | **universal-game-launcher** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.3.3`) | ✅ Yes (Windows, macOS, Linux desktop installers & packages) | `CHANGELOG.md`, `ROADMAP.md` |
 | **nh-reader** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.7.5`) | ✅ Yes (Windows, macOS, Linux installers, Android APK) | `CHANGELOG.md`, `ROADMAP.md` |
 | **theme-toolkit** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ✅ Yes (Windows, macOS, Linux desktop installers & packages) | `CHANGELOG.md`, `ROADMAP.md` |
+| **depressurizer** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ✅ Yes (Windows desktop binaries & packages) | `CHANGELOG.md`, `ROADMAP.md` |
 | **ffxiv-config** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ✅ Yes (Packaged configuration archive `ffxiv-config.zip`) | `README.md` |
 | **windhawk-themes** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ❌ No (Zero attached assets; git tag only) | `ROADMAP.md`, `PLAN.md`, `CHANGELOG.md` |
 | **helix-jekyll-theme** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.1.0`) | ❌ No (Zero attached assets; git remote theme & gem) | `changelog.md` |

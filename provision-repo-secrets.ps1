@@ -60,6 +60,7 @@ if ($Repo) {
     "HELIX-Origin/theme-toolkit",
     "HELIX-Origin/windhawk-themes",
     "HELIX-Origin/ffxiv-config",
+    "HELIX-Origin/depressurizer",
     "HELIX-Origin/agents"
   )
 }

@@ -13,6 +13,7 @@ Never commit, log, or leak sensitive data into repositories, release notes, or c
 - API keys, access tokens, personal access tokens (PATs), OAuth credentials.
 - Code signing keys, private keys (`.pfx`, `.key`, `.keystore`, `.asc`, `.pem`).
 - Passwords, authentication headers, database connection strings.
+- **Steam credentials (absolute, no exceptions):** never hardcode, default, seed, fall back to, or ship a Steam Web API key or a SteamID64/SteamID3 in any application code, settings default, test fixture, script, doc, or ledger. A valid SteamID64 grants access to another person's account data, and a key is account-scoped. Both are supplied **only by the end user at runtime** (Settings UI / CLI flag), stored locally in the user's own app data, and **never** pre-filled, read from a developer's `.env` into shipped defaults, or committed. Tests use obviously fake placeholders (e.g. `0000...`, `TEST_KEY`). The public SteamID3→SteamID64 offset constant (`76561197960265728`) is not an account identifier and is allowed.
 - Hardcoded local file system personal directories (e.g. `C:\Users\<username>`).
 
 ---

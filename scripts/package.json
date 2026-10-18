@@ -1,0 +1,25 @@
+{
+  "name": "helix-origin-agents-cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HELIX-Origin workspace headless CLI (agents-kb knowledge-base suite: setup, migrate, read, test).",
+  "license": "BSD-3-Clause",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "setup": "node agents-kb/setup.ts",
+    "migrate": "node agents-kb/migrate.ts",
+    "sync": "node agents-kb/kb-sync.ts",
+    "export": "node agents-kb/kb-export.ts",
+    "validate": "node agents-kb/kb-write.ts",
+    "scaffold": "node agents-kb/kb-scaffold.ts",
+    "test": "node agents-kb/test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "^5.9.0"
+  }
+}

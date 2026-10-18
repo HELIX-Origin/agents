@@ -20,7 +20,7 @@
    This agents ecosystem is engineered exclusively for active repositories within the `HELIX-Origin`
    GitHub organization (`https://github.com/HELIX-Origin`): `helix-jekyll-theme`, `helix-origin.github.io`,
    `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`,
-   `helix-gaming-db-00`, `helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, and `ffxiv-config`. Never work with,
+   `helix-gaming-db-00`, `helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, `ffxiv-config`, and `depressurizer`. Never work with,
    read, explore, modify, or **directly mention by name** any external, third-party, or deleted
    projects or repositories that are not part of the `HELIX-Origin` organization across rules,
    skills, playbooks, or tracking files. This is mandatory to prevent agents from getting mixed up.
@@ -70,17 +70,19 @@
    - Updating and maintaining the agents ecosystem is the **#1 highest priority** above all
      project implementation tasks. See `.agents/rules/workspace.md`.
 
-9. **Organization license invariant — BSD 3-Clause everywhere.**
-   Every repository, project, package, and document across the `HELIX-Origin` organization
+9. **Organization license invariant — BSD 3-Clause everywhere (with revival fork exception).**
+   Every repository, project, package, and document authored across the `HELIX-Origin` organization
    is strictly licensed under the **BSD 3-Clause "New" or "Revised" License** (`BSD-3-Clause`).
-   Never use MIT or other licenses. Any occurrence of MIT in `package.json`, `Cargo.toml`,
-   `.gemspec`, `LICENSE*`, or `README.md` must be corrected immediately to `BSD-3-Clause`.
+   Never use MIT or other licenses for original repositories. Any occurrence of MIT in `package.json`,
+   `Cargo.toml`, `.gemspec`, `LICENSE*`, or `README.md` must be corrected immediately to `BSD-3-Clause`.
+   *Revival Fork Exception:* Upstream revival forks of archived third-party repositories (`depressurizer`)
+   strictly retain their original copyleft license (**GPL-3.0**) to respect open-source copyright and author attribution.
    See `.agents/rules/workspace.md`.
 
 10. **Organization release & asset attachment invariant.**
    Every repository across `HELIX-Origin` must make use of GitHub Releases. However,
    release assets must **only** be uploaded to repositories distributing a packaged application
-   or resource (`universal-game-launcher`, `nh-reader`, `theme-toolkit`, `ffxiv-config`).
+   or resource (`universal-game-launcher`, `nh-reader`, `theme-toolkit`, `ffxiv-config`, `depressurizer`).
    All other repositories (`docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`,
    `windhawk-themes`, `helix-gaming-db-00` through `03`, `agents`, `.github`) publish
    zero-asset GitHub Releases with release notes and tags. See `.agents/rules/release-notes.md`.
@@ -101,6 +103,33 @@
    to these hubs rather than duplicating exhaustive technical specifications, schemas, or
    manuals. See `.agents/rules/documentation-standards.md`.
 
+13. **Organization zero-warning invariant — warnings are treated as errors.**
+   Warnings flagged as "harmless" often end up being breaking issues that directly cause uncaught
+   errors and runtime instability. Therefore, warnings are not harmless and are strictly treated
+   as errors. All compilers, typecheckers, linters, and bundlers across all repositories must
+   execute with **zero errors and zero warnings** (`RUSTFLAGS="-D warnings" cargo check`, `cargo test`,
+   `svelte-check` reporting 0 errors and 0 warnings, and bundler/transpiler output with 0 warnings).
+   Never allow warnings to linger in any codebase. See `.agents/rules/verification.md`.
+
+14. **Organization community-health files invariant.**
+   Every repository under `projects/` must ship the standard, self-contained GitHub community-health
+   documents: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, `PRIVACY.md`,
+   `CHANGELOG.md`, `GOVERNANCE.md`, `CITATION.cff`, a conditional `TOS.md` (for apps/resources that
+   interact with third-party services), plus `.github/pull_request_template.md` and YAML issue forms
+   (`.github/ISSUE_TEMPLATE/{config.yml,bug_report.yml,feature_request.yml}`). Each repository
+   `README.md` must link these documents so GitHub surfaces them as tabs/links. They are public-facing
+   and **must never** reference or mention the private agents ecosystem. See
+   `.agents/rules/community-health-files.md`.
+
+15. **Project-local agents interoperability invariant.**
+   Project repositories may ship their own internal agents ecosystems (`AGENTS.md`, `.agents/`,
+   `.opencode/`, `.github/copilot-instructions.md`). These are first-class: discover and honor
+   them for project work, and never rewrite, normalize, or delete them unprompted. The
+   workspace-root ecosystem is the base **enhancement layer** — org-wide invariants (git safety,
+   licensing, SemVer, releases, community-health, ecosystem isolation, zero-warning, documentation
+   standards) are never relaxed by project-local config, while project-local rules win on
+   project-internal conventions. See `.agents/rules/project-agents-interoperability.md`.
+
 
 
 
@@ -113,6 +142,7 @@
 ├── PLAN.md                    <- active sprint planning (execution tasks, gate, history)
 ├── TODO.md                    <- actionable checklist (update as you go)
 ├── BUGS.md                    <- known issues, quirks, workarounds
+├── HANDOFF.md                 <- PERMANENT (git-tracked): session-state ledger, read at session start & kept current incrementally; migrated into the ledgers, never deleted
 ├── .gitignore                 <- keeps projects/ and scratch/ untracked
 ├── provision-repo-secrets.ps1 <- Securely provision PAT_TOKEN secrets to HELIX-Origin repos (Windows)
 ├── clone-org-repos-windows.ps1<- Clone all HELIX-Origin repos into projects/ (Windows)
@@ -132,6 +162,7 @@
 │   ├── skills/                <- domain knowledge packs
 │   ├── templates/             <- document & release templates
 │   └── agents/                <- role playbooks: agents/<primary>/<sub>/…
+├── scripts/                   <- workspace headless CLI (scripts/agents-kb: setup/migrate/test + kb modules; data/ & logs/ gitignored with tracked READMEs)
 ├── projects/                  <- UNTRACKED: local git repositories
 │   ├── helix-jekyll-theme/    <- the shared Jekyll theme (+ its preview site)
 │   ├── helix-origin.github.io/ <- Organization portal (hosted at https://www.helix-origin.club)
@@ -145,7 +176,8 @@
 │   ├── helix-gaming-db-01/    <- REST metadata API & gaming database (shard 01)
 │   ├── helix-gaming-db-02/    <- REST metadata API & gaming database (shard 02)
 │   ├── helix-gaming-db-03/    <- REST metadata API & gaming database (shard 03)
-│   └── ffxiv-config/          <- FFXIV HUD, hotbar, and macro configuration setup
+│   ├── ffxiv-config/          <- FFXIV HUD, hotbar, and macro configuration setup
+│   └── depressurizer/         <- Tauri v2 cross-platform Steam library categorizer & AutoCat manager (revival fork)
 └── (other projects)           <- out of scope unless asked
 ```
 
@@ -175,12 +207,15 @@
 | Security & secret hygiene | `.agents/rules/security-hygiene.md` |
 | Styling standards & SCSS-first | `.agents/rules/styling-standards.md` |
 | Documentation & content standards (theme-neutrality, HTML badges) | `.agents/rules/documentation-standards.md` |
+| Community health files standard (CONTRIBUTING/SECURITY/PRIVACY/etc.) | `.agents/rules/community-health-files.md` |
+| Project-local agents interoperability (projects with own agents ecosystems) | `.agents/rules/project-agents-interoperability.md` |
 | Theme engineering & packaging standards | `.agents/rules/theme-engineering-standards.md` |
 | Shell command rules | `.agents/rules/shell-commands.md` |
 | Project scripts & command standards | `.agents/rules/script-standards.md` |
 | Large task handling rules | `.agents/rules/large-task-handling.md` |
 | Background task execution rules | `.agents/rules/background-tasks.md` |
 | Session & context management rules | `.agents/rules/session-management.md` |
+| Session handoff rules (permanent HANDOFF.md) | `.agents/rules/session-handoff.md` |
 | Clone organization repos | `.agents/skills/clone-org-repos.md` |
 | Clone all org repos (scripts) | `clone-org-repos-windows.ps1`, `clone-org-repos-linux.sh`, `clone-org-repos-macos.sh` |
 | Provision PAT secrets to org repos | `provision-repo-secrets.ps1` |
@@ -188,6 +223,7 @@
 | Modern SCSS architecture | `.agents/skills/scss-architecture.md` |
 | Task decomposition & incremental steps | `.agents/skills/task-decomposition.md` |
 | Large session & context management | `.agents/skills/large-session-management.md` |
+| Session handoff (read, migrate & refresh HANDOFF.md) | `.agents/skills/session-handoff.md` |
 | Shell command management (Windows/PowerShell) | `.agents/skills/shell-command-management.md` |
 | Safe file editing (paths, EOL, exact match) | `.agents/skills/file-editing.md` |
 | Test execution without blocking | `.agents/skills/test-execution.md` |
@@ -198,6 +234,7 @@
 | Template: Sprint plan ledger | `.agents/templates/plan-template.md` |
 | Template: Task checklist ledger | `.agents/templates/todo-template.md` |
 | Template: Bug tracker ledger | `.agents/templates/bugs-template.md` |
+| Template: Session handoff buffer | `.agents/templates/handoff-template.md` |
 | Template: Cleanup failed runs workflow | `.agents/templates/cleanup-failed-runs-workflow-template.yml` |
 | Template: CI workflow (Tauri v2) | `.agents/templates/ci-tauri-workflow-template.yml` |
 | Template: NSIS hooks (Tauri v2 Windows) | `.agents/templates/nsis-hooks-template.nsh` |
@@ -206,6 +243,7 @@
 | Tauri & Rust desktop engineering | `.agents/skills/tauri-desktop-engineering.md` |
 | Universal Game Launcher architecture & design system | `.agents/skills/universal-game-launcher.md` |
 | Game metadata providers & multi-source enrichment | `.agents/skills/game-metadata-providers.md` |
+| Steam Web API key-only integration (depressurizer) | `.agents/skills/steam-web-api.md` |
 | HELIX Gaming DB multi-platform expansion & ingestion | `.agents/skills/helix-gaming-db-expansion.md` |
 | Windhawk styler mod engineering | `.agents/skills/windhawk-styler-engineering.md` |
 | Windows deskthemepack & theme packaging | `.agents/skills/windows-deskthemepack-engineering.md` |
@@ -227,16 +265,25 @@
 | Agent: Sound packager (Theme Toolkit) | `.agents/agents/desktop-theme-engineer/sound-packager.md` |
 | Agent: Security reviewer | `.agents/agents/security-reviewer/security-reviewer.md` |
 | Agent: Git auditor | `.agents/agents/git-guard/git-auditor.md` |
+| Agent: Handoff writer (session keeper) | `.agents/agents/session-keeper/handoff-writer.md` |
 
 ## Session start checklist
 
 1. Read `AGENTS.md` (done — it's this file).
-2. Read `ROADMAP.md` → `PLAN.md` → `TODO.md` → `BUGS.md`; **ensure the agents ecosystem (`.agents/`, `AGENTS.md`, and tracking ledgers) is 100% current and synchronized first** — updating agent rules and tracking ledgers always takes priority before touching project code. Resume at the first unchecked TODO item.
-3. Consult `.agents/skills/helix-theme.md` before touching helix-jekyll-theme or any consuming site.
-4. Before editing **any** `docs/` content, consult `.agents/rules/documentation-standards.md` —
+2. Read `HANDOFF.md` **immediately** (permanent, git-tracked session-state ledger) — it holds the previous
+   large session's progress — then migrate its content into `ROADMAP.md` / `PLAN.md` / `TODO.md` /
+   `BUGS.md`, reconcile (ledgers win), and **refresh it** (never delete) per `.agents/rules/session-handoff.md`.
+   Actively self-monitor context pressure every checkpoint against that rule's scoreboard — never wait for the user to flag a limit.
+3. Read `ROADMAP.md` → `PLAN.md` → `TODO.md` → `BUGS.md`; **ensure the agents ecosystem (`.agents/`, `AGENTS.md`, and tracking ledgers) is 100% current and synchronized first** — updating agent rules and tracking ledgers always takes priority before touching project code. Resume at the first unchecked TODO item.
+4. Consult `.agents/skills/helix-theme.md` before touching helix-jekyll-theme or any consuming site.
+5. Before editing **any** `docs/` content, consult `.agents/rules/documentation-standards.md` —
    the docs stay **theme-neutral/mod-agnostic**; a theme/suite's specifics belong only in the
    catalogue/store.
-5. Confirm which exact git operations, if any, the user has explicitly authorized in the
+6. Confirm which exact git operations, if any, the user has explicitly authorized in the
    current conversation — and for which repository.
-6. If this is a large/multi-step task, load `task-decomposition` skill and follow `large-task-handling.md`. If session may be long, load `large-session-management` skill and follow `session-management.md`. Follow `background-tasks.md` for any long-running commands.
-7. For any shell command, follow `.agents/skills/shell-command-management.md` (quote paths with spaces, set `workdir` instead of `cd`, PowerShell-native tools only). For file edits, follow `.agents/skills/file-editing.md` (read first, exact match, preserve EOL) — never edit files via the shell.
+7. When touching a project, discover and honor its own internal agents assets if present
+   (`AGENTS.md`, `.agents/`, `.opencode/`, `.github/copilot-instructions.md`) per
+   `.agents/rules/project-agents-interoperability.md` — never clobber them unprompted; the
+   workspace-root ecosystem enhances them and org-wide invariants always win.
+8. If this is a large/multi-step task, load `task-decomposition` skill and follow `large-task-handling.md`. If session may be long, load `large-session-management` skill and follow `session-management.md`. Follow `background-tasks.md` for any long-running commands.
+9. For any shell command, follow `.agents/skills/shell-command-management.md` (quote paths with spaces, set `workdir` instead of `cd`, PowerShell-native tools only). For file edits, follow `.agents/skills/file-editing.md` (read first, exact match, preserve EOL) — never edit files via the shell.

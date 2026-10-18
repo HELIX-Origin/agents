@@ -4,7 +4,7 @@
 >
 > Pair with [`ROADMAP.md`](./ROADMAP.md) (strategic direction), [`TODO.md`](./TODO.md) (executable tasks), and [`BUGS.md`](./BUGS.md) (known issues).
 > Historical delivered milestones and task archives live in [`.github/`](./.github/).
-> Last updated: 2026-10-16
+> Last updated: 2026-10-18
 
 ---
 
@@ -19,6 +19,135 @@
 ---
 
 ## 🎯 Active Sprints
+
+### 🚀 Sprint 32: [depressurizer] (projects/depressurizer) — Steam Library Categorizer Cross-Platform Revival: Tauri v2 (Rust + Svelte/SCSS) Architecture, Official Steam Integration, Multi-User NSIS & Multi-Platform Packaging
+- **Project Identifiers:** `[depressurizer]` (`projects/depressurizer`)
+- **Target Objective:** Revive and maintain an active cross-platform fork of Depressurizer within the `HELIX-Origin` organization targeting Windows, macOS, and Linux. Transition from archived legacy .NET Framework 4.8 WinForms to the organization's standard **Tauri v2 (Rust + Svelte/SCSS)** desktop architecture. Rely **entirely on the official Steam Web API key** as the sole required integration surface — it provides account authorization (`key` + `steamid`), the full owned-game library (`IPlayerService/GetOwnedGames`), and account collection customization — with **no dependency on direct Steam client access**: the legacy Steam-client methods (local path autodetection and VDF parsing) are **abandoned and removed**, not retained as a fallback — they were flaky and Windows-locked, which is precisely why the migration moves to the Web API key + SteamID64 architecture. The app never reads or writes local Steam client files; the `legacy/` folder (archived .NET/C# app) is retained only as an intentional historical backup and behavioural reference. Official Steam Store API supplements tags/genres. Implement an obsidian dark SCSS frontend matching our desktop suite, multi-platform installer options (multi-user NSIS for Windows, DMG for macOS, AppImage/deb for Linux), and automated GitHub Actions CI/CD. The key-only architecture additionally unlocks future Android and iOS support for the app.
+
+```mermaid
+flowchart TD
+    S32_0["[depressurizer] Fork & Org Registration (provision-repo-secrets, AGENTS.md, ROADMAP.md)"] --> S32_1["[depressurizer] Tauri v2 Scaffolding (Rust src-tauri, Svelte/TypeScript UI, Vite, SCSS)"]
+    S32_1 --> S32_2["[depressurizer] Steam Web API Engine (Key-Only — No Steam Client Dependency)"]
+    S32_2 --> S32_3["[depressurizer] Category & AutoCat Rules Engine (Genres, Tags, Dev/Pub, Hours)"]
+    S32_3 --> S32_4["[depressurizer] Obsidian SCSS UI Suite & Profile Switcher"]
+    S32_4 --> S32_5["[depressurizer] Multi-Platform Packaging (Tauri Multi-User NSIS, macOS DMG, Linux AppImage)"]
+```
+
+#### 📝 Execution Tasks
+
+0. **[depressurizer] (projects/depressurizer) W.55_init — Repository Fork, Secret Provisioning & Ecosystem Registration (Delivered)**:
+   - `[depressurizer]` Forked archived repository into `HELIX-Origin/depressurizer`.
+   - `[depressurizer]` Provisioned `PAT_TOKEN` secret to repository via `provision-repo-secrets.ps1`.
+   - `[depressurizer]` Cloned repository to `projects/depressurizer` and configured clean remote origin.
+   - `[depressurizer]` Registered repository across `AGENTS.md`, `.agents/rules/workspace.md`, `.agents/rules/release-notes.md`, `ROADMAP.md`, `PLAN.md`, `TODO.md`, and `provision-repo-secrets.ps1`.
+1. **[depressurizer] (projects/depressurizer) W.55a — Tauri v2 Core Scaffolding & Design System (Delivered)**:
+   - `[depressurizer]` Scaffolded Tauri v2 architecture (`src-tauri/` with Rust backend, SvelteKit / Vite frontend, TypeScript, SCSS).
+   - `[depressurizer]` Integrated HELIX Origin obsidian dark theme SCSS tokens (`#07111f`, `#0d1b2d`, `#48d8f2`, `#b06cff`).
+   - `[depressurizer]` Generated full cross-platform icon suites (ICNS, ICO, PNG) and NSIS sidebar artwork (`sidebar.bmp` / `sidebar.svg`).
+2. **[depressurizer] (projects/depressurizer) W.55b — Official Steam Web API Engine & Legacy Code Extraction (Delivered)**:
+   - `[depressurizer]` Implemented official Steam Web API client (`IPlayerService/GetOwnedGames`) and official Store API tag/genre lookup.
+   - `[depressurizer]` Relocated the legacy monolithic .NET/C# application to the `legacy/` folder as an intentional historical backup and behavioural reference (retained; excluded from the shipped build).
+   - `[depressurizer]` *Superseded:* Steam client path autodetection and the VDF parser were delivered here and are now abandoned and removed (see W.55k) — they were flaky and Windows-locked.
+3. **[depressurizer] (projects/depressurizer) W.55c — AutoCat Rules Engine & Category Management (Delivered)**:
+   - `[depressurizer]` Implemented complete category manipulation (create, rename, delete, assign, unassign).
+   - `[depressurizer]` Authored AutoCat rules engine supporting Genre, Tags, Developer/Publisher, Release Year, User Score, Playtime, and Platform filters with unit tests.
+   - `[depressurizer]` Implemented Tokio background worker (`worker.rs`) streaming live progress events to prevent UI hangs.
+   - `[depressurizer]` Implemented headless CLI (`--cli detect`, `list-games`, `autocat`) with Windows console attachment (`AttachConsole`).
+4. **[depressurizer] (projects/depressurizer) W.55d — Multi-Platform Packaging & Continuous Integration (Delivered)**:
+   - `[depressurizer]` Authored NSIS multi-user installer matching Tauri v2 standards (all-users vs per-user, custom path, desktop shortcuts, clean uninstaller, process termination mutex).
+   - `[depressurizer]` Authored `.github/workflows/ci.yml` verifying Rust and frontend builds across Windows, macOS, and Linux runners.
+5. **[depressurizer] (projects/depressurizer) W.55e — SQLite Persistent In-App Storage & All Owned Games Discovery (Delivered)**:
+   - `[depressurizer]` Implemented native Tauri RustSQL (`rusqlite`) storage module (`storage.rs`) with WAL mode in `depressurizer.db` for instant startup and persistent credentials/settings.
+   - `[depressurizer]` Implemented official Steam Web API client (`IPlayerService/GetOwnedGames/v1`) capturing all 137 owned games (installed + uninstalled) so AutoCat never misses a title.
+   - `[depressurizer]` Configured generic Chrome 131 user agent across WebView window and HTTP clients to prevent Cloudflare/CDN blocks.
+6. **[depressurizer] (projects/depressurizer) W.55f — Modular SCSS Design System & Zero-Warning Gate (Delivered)**:
+   - `[depressurizer]` Extracted all inline styles into modular SCSS partials (`_tokens.scss`, `_mixins.scss`, `_components.scss`, `_titlebar.scss`, `depressurizer.scss`).
+   - `[depressurizer]` Refactored modals to full accessible dialogs (`role="dialog"`, `aria-modal="true"`, keyboard dismissals), achieving **0 errors and 0 warnings** across `svelte-check`, `vite build`, and `RUSTFLAGS="-D warnings" cargo check`.
+7. **[depressurizer] (projects/depressurizer) W.55g — Live AutoCat Execution Feedback & Tauri v2 Capabilities ACL (Delivered)**:
+   - `[depressurizer]` Streamed live per-game AutoCat progress from the Tokio worker to the frontend (`autocat://progress` / `AutoCatProgress`) driving both live table row updates (matched by `app_id`) and an in-modal progress bar.
+   - `[depressurizer]` Shipped an explicit Tauri v2 capabilities ACL (`src-tauri/capabilities/default.json`: `core:default`, custom-titlebar window controls, `opener:default`) replacing the empty implicit permission set; verified at zero errors and zero warnings across `svelte-check`, `vite build`, and `RUSTFLAGS="-D warnings"`/`cargo clippy`.
+8. **[depressurizer] (projects/depressurizer) W.55h — Workbench Table Multiselect & Batch Actions (Delivered)**:
+   - `[depressurizer]` Implemented workbench table multiselect (row checkboxes with Select All / Deselect) for batch assign/remove categories, toggle favorites, and toggle hidden titles; verified at zero errors and zero warnings.
+9. **[depressurizer] (projects/depressurizer) W.55i — Steam Web API Research & Endpoint Validation (API-Only Architecture)**:
+   - `[depressurizer]` Validate the key-only capability set using the `https://steamapi.xpaw.me/` reference: account authorization (user `key` — account-scoped on its own — paired with the account's SteamID64 wherever beneficial, e.g. the required `steamid` on `GetOwnedGames`), full library reads (`IPlayerService/GetOwnedGames` with `include_appinfo` / `include_played_free_games` / `include_family_licenses`), achievements, and store metadata.
+   - `[depressurizer]` Determine the concrete collection-customization write path available to a user API key — no `IPlayerService` collections method exists (public or undocumented); probe undocumented endpoints and the Steam cloud-storage namespace (`userdata/<id>/config/cloudstorage/`) — and document findings before implementation.
+10. **[depressurizer] (projects/depressurizer) W.55j — Steam Web API Collection Synchronization ("Save to Steam")**:
+   - `[depressurizer]` Implement the "Save to Steam" action as an API-only sync of category/favorite/hidden changes through the Steam Web API key — zero local Steam client access, no `save_sharedconfig` writes, no timestamped file backups; and document (UI/docs) desktop Steam-client flakiness as a troubleshooting step (if cloud-synced collections do not stick, fully close the desktop Steam client and re-apply) — advisory only, with no running-instance detection.
+11. **[depressurizer] (projects/depressurizer) W.55k — Abandon & Remove Legacy Steam-Client Runtime Integration**:
+    - `[depressurizer]` Remove the legacy Steam-client runtime from the new Tauri app — local Steam path autodetection (`paths.rs`), the VDF parser (`vdf.rs`), `save_sharedconfig` writes, and the local-account selection flow — and re-point library loading at the key + SteamID64 Web API pipeline.
+    - `[depressurizer]` Replace local-account discovery with explicit Web API account resolution (account-scoped key plus a user-supplied or `ResolveVanityURL`-resolved SteamID64) and update the settings UI accordingly.
+    - `[depressurizer]` **Retain** the `legacy/` folder (archived .NET/C# app) as an intentional historical backup and behavioural reference; it is excluded from the shipped build and must not be deleted.
+12. **[depressurizer] (projects/depressurizer) W.55l — HowLongToBeat Playtime Enrichment Restoration**:
+    - `[depressurizer]` Restore HowLongToBeat metadata (main story / main+extras / completionist playtimes) against a currently active HLTB API, replacing the legacy shut-down endpoint the original app targeted.
+    - `[depressurizer]` Resolve entries by Steam `app_id` via the community REST wrapper with a token-gated `howlongtobeat.com/api/find` JSON fallback; surface the times in the workbench table and AutoCat playtime filters.
+
+13. **[Ecosystem] & [depressurizer] (projects/depressurizer) W.55m — Community Health Files Standard & Rollout (Delivered for depressurizer)**:
+    - `[Ecosystem]` Authored the binding rule `.agents/rules/community-health-files.md`, the reusable `.agents/templates/` community-health template set, and a self-contained `.github/pull_request_template.md` template (removing the previous workspace-coupled wording).
+    - `[depressurizer]` Added root `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, `PRIVACY.md`, `TOS.md`, `CHANGELOG.md`, `GOVERNANCE.md`, and `CITATION.cff`.
+    - `[depressurizer]` Added `.github/pull_request_template.md` and YAML issue forms (`config.yml`, `bug_report.yml`, `feature_request.yml`, `autocat-request.yml`); retired the legacy Markdown issue templates and linked all community documents from `README.md`.
+    - `[Ecosystem]` Tracked the organization-wide rollout as Workstream **W.56** in `TODO.md`.
+
+---
+
+### 🚀 Sprint 33: [Ecosystem] — Organization Community Health Files Rollout (GitHub Community/Health Documents)
+- **Project Identifiers:** `[Ecosystem]` (all `HELIX-Origin` repositories)
+- **Target Objective:** Ensure every repository ships the standard, self-contained GitHub community-health documents — `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, `PRIVACY.md`, `CHANGELOG.md`, `GOVERNANCE.md`, `CITATION.cff`, conditional `TOS.md`, plus `.github/pull_request_template.md` and YAML issue forms (`.github/ISSUE_TEMPLATE/{config,bug_report,feature_request}.yml`) — all linked from the repository `README.md`, per `.agents/rules/community-health-files.md`. Documents are public-facing and must never reference the private agents ecosystem.
+
+#### 📝 Execution Tasks
+
+1. **[Ecosystem] W.56a — Standard, Rule & Templates (Delivered)**:
+   - `[Ecosystem]` Authored `.agents/rules/community-health-files.md` and the reusable `.agents/templates/` community-health set (`contributing`, `code-of-conduct`, `security`, `support`, `privacy`, `changelog`, `governance`, `tos`, `citation.cff`, `pull-request`, `issue-template-config/bug/feature`).
+2. **[depressurizer] (projects/depressurizer) W.56b — Community Health Files (Delivered)**:
+   - `[depressurizer]` Added the full root community-health file set, `.github` PR + issue templates, retired the legacy Markdown issue templates, and linked everything from `README.md`.
+3. **[Ecosystem] W.56c — Agents Ecosystem Knowledge Base (SQLite) — Design & Read-Only Integration (W.57)**:
+   - `[Ecosystem]` W.57a — Finalize agents DB design (`.agents/skills/agents-db-design.md`) — universal org/repo support, filesystem-canonical, export/import round-trips. **(Delivered)**
+   - `[Ecosystem]` W.57b — Schema prototype + migrations (`.agents/migrations/`). **(Delivered 2026-10-18 — metadata-only schema via `v002__metadata_only.sql`: `artifacts` rebuilt without `content_md`/`frontmatter`/`checksum_fs`, `kind` widened to rule/skill/agent/template/document/fragment, new `metadata_entries` key/value table; `migrate.ts` hardened with per-file applied-tracking, legacy `last_migration` backfill, and `schema_version` recompute — regression fixed where a second run re-applied `v001` and downgraded the version to 1.0.0)**
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Locked amendments: **local-only DB lifecycle** — `knowledge.db`/`secure.db` live in `scripts/agents-kb/data/` (next to the CLI, mirroring `logs/`), created by initial setup after cloning (`setup.ts`), gitignored with tracked `README.md`, never tracked/pushed (per-repo data stays solely per repo, locally); **metadata helpers only** — the DBs store metadata *used by* agents/rules/skills/templates (registries, tags, cross-refs, defaults) and never their content (agent tools must see that content on the filesystem at runtime). `kb-config.ts` (`DATA_DIR`/`KB_PATH`/`SECURE_KB_PATH`, `tracked: false`) + `.gitignore` updated; local DB migrated and verified (rerun → 0 applied, 2.0.0); `data/README.md` written.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** `.agents/skills/agents-db-design.md` corrected: metadata-helper-only invariant, v002 metadata-only `artifacts` + `metadata_entries` documented, DB → metadata export (no filesystem content regeneration), local-only lifecycle.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** W.57c — Read-only DB access with filesystem fallback (no behavior change): `scripts/agents-kb/kb-read.ts` implements `getByKey`/`getByPath`/`list`/`findRefs`/`search` (DB-first with filesystem merge/fallback, alias fallback, both-direction refs, scored search title 3/path 2/tags 1; `tryOpenDb()` never creates the DB and falls back on v1 schema); test body `kb-read.test.ts` (4 assertions) green.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** W.57d — Export/sync scripts (`scripts/agents-kb/kb-export.ts`, `scripts/agents-kb/kb-sync.ts`) with deterministic **metadata** export/import round-trips (the DB never regenerates filesystem content): `kb-sync.ts` (fs→DB upsert + soft-delete orphans; idempotent — 88 inserted then 88 unchanged), `kb-export.ts` (DB→deterministic Markdown report `kb-export.md`, 88 artifacts, byte-identical on rerun); npm scripts `sync`/`export`; typecheck clean.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** W.57e — Controlled write path with invariant validation: `scripts/agents-kb/kb-write.ts` (`upsertArtifact`/`upsertMetadata`/`softDeleteArtifact` with full invariant validation; `validateInvariants` + `runValidate` CLI; npm `validate`; test body `kb-write.test.ts` green; 88 artifacts validate clean).
+   - `[Ecosystem]` **(Delivered 2026-10-18)** W.57f — Fork customization documented: `.agents/rules/workspace.md` "Fork customization" section (slug override via code or `AGENTS_KB_ORG`/`AGENTS_KB_ORG_SLUG`, local-only lifecycle, repo-mapping note, env override list); `defaultOrgSlug()` added to `kb-config.ts`; env vars documented in `scripts/README.md`.
+4. **[Ecosystem] (projects/agents) W.58 — Session Handoff Protocol (Permanent `HANDOFF.md` Session-State Ledger) (Delivered, amended 2026-10-18)**:
+   - `[Ecosystem]` Author the binding rule `.agents/rules/session-handoff.md`, skill `.agents/skills/session-handoff.md`, template `.agents/templates/handoff-template.md`, and agent playbook `.agents/agents/session-keeper/handoff-writer.md` governing the permanent workspace-root `HANDOFF.md` ledger used to split large sessions.
+   - `[Ecosystem]` Lifecycle (amended): `HANDOFF.md` is git-tracked, maintained **incrementally** (created at first worth-carrying milestone, refreshed at every workstream state change, fully rewritten at session end / soft-target posture) → the new session reads it at the very start (right after `AGENTS.md`) → migrates its content into `ROADMAP.md` / `PLAN.md` / `TODO.md` / `BUGS.md` → **refreshes** it (migrated-only state collapses to one-line delivered notes). Never gitignored, never deleted.
+   - `[Ecosystem]` **Active self-monitoring (binding)**: context-pressure scoreboard (token meter, DCP compress count, pressure reminders, ~40-turn / ≥3-workstream fallbacks) with self-executing postures — the agent never waits for the user to flag a limit; a crossed threshold without a refreshed handoff is a protocol failure logged in `BUGS.md`.
+   - `[Ecosystem]` **DCP compression coexistence**: `HANDOFF.md` is the disk-durable store independent of compressed conversation memory; compress summaries preserve the handoff's current state; compressing never substitutes for refreshing it.
+   - `[Ecosystem]` Fixed max session size (pre-computed, never re-derived): hard ceiling **120k tokens**, soft target **100k tokens**, **60% of window** for windows < 160k, with turn/workstream/compaction fallback heuristics.
+   - `[Ecosystem]` Register across `AGENTS.md` (quick reference, workspace layout, session start checklist), `.agents/rules/session-management.md`, `.agents/skills/large-session-management.md`; removed the `.gitignore` rule.
+5. **[Ecosystem] (projects/agents) W.59 — Headless CLI Standards: Dual Extension Mechanism, Structured Logging & Folder Documentation** — **(Delivered 2026-10-18)**:
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Update `.agents/rules/script-standards.md` with the headless-CLI invariant: no temp scripts (reuse via the modular CLI), dual extension mechanism (first-class TS ESM modules for real logic vs body files for pluggable content), and structured action logging to gitignored `logs/`.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Make `scripts/agents-kb/kb-config.ts` paths lazy/overridable (`kbPath()` + `AGENTS_KB_PATH` env, `TESTS_DIR`) so tests run the real pipeline against throwaway DBs (`DATA_DIR`/`LOGS_DIR` constants and local-only `scripts/agents-kb/data/` paths already in place).
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Add logging module `scripts/agents-kb/kb-log.ts` (per-run `logs/<cmd>-<slug>.log`, console+file tee, ISO timestamps, retention pruning to newest 50, never fails the CLI); gitignore rules for `logs/` + `data/` (with tracked `README.md` exceptions) already in place.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Add initial-setup module `scripts/agents-kb/setup.ts` (idempotent: creates `data/` + `logs/`, runs migrations, seeds the organization row) — the post-clone DB bootstrap for the local-only lifecycle.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Add body-file loader `scripts/agents-kb/kb-body.ts` (`loadBodies(dir, suffix)`: ENOENT-safe readdir, sorted, `pathToFileURL` dynamic import, default-or-named `run` export contract).
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Refactor `scripts/agents-kb/migrate.ts`: export `runMigrations(logger?)`, direct-run guard (`import.meta.url === pathToFileURL(process.argv[1]).href`), use `kbPath()`, log via `kb-log.ts`, return `{appliedCount, fileCount, schemaVersion}`.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Add test runner `scripts/agents-kb/test.ts` + first body `scripts/agents-kb/bodies/test/migrations.test.ts` (fresh build → 2.0.0, idempotent rerun, metadata-only schema shape, kind check, legacy backfill scope, schema_version downgrade guard); gate = `node scripts/agents-kb/test.ts` green.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Write `scripts/README.md` (purpose, CLI structure, dual extension mechanism, env overrides) and `scripts/agents-kb/logs/README.md` (log purpose, naming, retention, git policy); add `scripts/` to the `AGENTS.md` workspace layout.
+6. **[Ecosystem] (projects/agents) W.60 — Project-Local Agents Interoperability & Per-Project Ecosystem Scaffolding**:
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Binding rule `.agents/rules/project-agents-interoperability.md` + `AGENTS.md` invariant 15 + quick-reference row + session-start checklist step: discover and honor project-local agents assets (`AGENTS.md`, `.agents/`, `.opencode/`, `.github/copilot-instructions.md`); precedence matrix (org-wide invariants never relaxed; project-local conventions win in-project); ours enhances theirs, never clobbered unprompted; ecosystem isolation preserved.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Optional headless-CLI scaffold feature `scripts/agents-kb/kb-scaffold.ts`: generate complete project-local agents ecosystems (`AGENTS.md`, `.agents/rules|skills|templates|agents/`) with dry-run, idempotent never-clobber merge, and `kb-log.ts` structured logging.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Project-type template suites as body files (`bodies/scaffold/<type>/`): `tauri-desktop`, `jekyll-theme`, `node-ts-cli`, `rust-library`, `docs-site` — engine-tailored starter rules, skills, templates, and agent playbooks.
+   - `[Ecosystem]` **(Delivered 2026-10-18)** Scaffold test bodies (dry-run purity, idempotency, never-clobber, engine content) + documentation in `scripts/README.md`; KB records per-repo agent assets (W.57 linkage).
+
+---
+
+### 🚀 [windhawk-themes] (projects/windhawk-themes) — Milestone M.02b: Command Center Suite Polish & Geometry Alignment
+- **Project Identifiers:** `[windhawk-themes]` (`projects/windhawk-themes`)
+- **Target Objective:** Refine the proven Command Center Windows 11 styling suite (targeting `v0.2.0`) through precise geometry alignments, Quick Settings harmony, snap layout container theming, and tray overflow restoration, with the static gate (`tools/Test-WindhawkStyles.ps1`) holding 0 errors and 0 warnings.
+
+#### 📝 Execution Tasks
+
+1. **[windhawk-themes] (projects/windhawk-themes) Start Menu Geometry**:
+   - `[windhawk-themes]` Phone Link companion card flush with menu top; search box left edge flush with pinned apps card; companion toggle flush right.
+2. **[windhawk-themes] (projects/windhawk-themes) Action Center Quick Settings Harmony**:
+   - `[windhawk-themes]` Harmonize split-button toggle and chevron backgrounds (`SplitL2Button`); eliminate high-contrast blue fallback states.
+3. **[windhawk-themes] (projects/windhawk-themes) Taskbar Snap Layout Containers**:
+   - `[windhawk-themes]` Theme internal snap containers (`SnapLayoutControl`, `LayoutBorder`) with Command Center glass without breaking layout bounds.
+4. **[windhawk-themes] (projects/windhawk-themes) Taskbar Overflow Grid Restoration**:
+   - `[windhawk-themes]` Restore frosted glass background and specular border to the system tray overflow flyout.
+
+---
 
 ### 🚀 Sprint 31: [helix-gaming-db-00] (projects/helix-gaming-db-00) — Multi-Platform Metadata Ingestion Automation, Volume-Sharded Federation (01, 02, 03), Platform Scrapers & Scheduled Enrichment Pipeline (v1.2.0)
 - **Project Identifiers:** `[helix-gaming-db-00]` (`projects/helix-gaming-db-00`), `[helix-gaming-db-01]` (`projects/helix-gaming-db-01`), `[helix-gaming-db-02]` (`projects/helix-gaming-db-02`), `[helix-gaming-db-03]` (`projects/helix-gaming-db-03`)
@@ -55,6 +184,8 @@ flowchart TD
    - `[helix-gaming-db-00]` Created `scripts/ingest/ingest-gog.mjs`: GOG Catalog v1 & Product Details scraper extracting DRM-free metadata and cover art.
    - `[helix-gaming-db-00]` Created `scripts/ingest/ingest-libretro-rdb.mjs`: Libretro OpenVGDB database parser mapping canonical titles to Libretro Thumbnails CDN assets (Named_Boxarts, Named_Snaps, Named_Titles).
    - `[helix-gaming-db-00]` Created `scripts/ingest/ingest-patreon-itch.mjs`: Scraper for independent, Patreon, and itch.io creations with automatic mature tag detection and routing to v2 and v3 tiers.
+1b. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54l — Rate-Limited Retro & Arcade Metadata Extractor (`scripts/ingest/ingest-screenscraper.mjs`)**:
+   - `[helix-gaming-db-00]` Create `scripts/ingest/ingest-screenscraper.mjs`: rate-limited retro and arcade metadata extractor for titles missing from the other platform scrapers.
 2. **[helix-gaming-db-00] (projects/helix-gaming-db-00) W.54b — Batch Runner, Deduplication & Validation Pipeline (`scripts/ingest/run-batch.mjs`) (Delivered)**:
    - `[helix-gaming-db-00]` Authored `run-batch.mjs` orchestrating multi-platform batch ingestion with CLI args (`--platform=<id>`, `--limit=<n>`, `--shard=<00|01|02|03>`), cross-shard slug deduplication, and automated `build-search-index.mjs` compilation.
    - `[helix-gaming-db-00]` Enforced strict schema validation and automated PR verification (`npm test`) on all newly emitted payloads across all shards.
@@ -146,6 +277,7 @@ flowchart TD
 - `[nh-reader]` Tag frequency analytics and local recommendation engine based on reading history.
 - `[nh-reader]` Multi-profile library partitions (isolated blacklist/favorite spaces).
 - `[nh-reader]` Background auto-update checker and GitHub release notification toasts.
+- `[nh-reader]` Unified maintenance scripts standard: ensure all scripts follow canonical `main:sub:option` naming and `.mjs` conventions.
 
 ### ⏳ [helix-jekyll-theme] (projects/helix-jekyll-theme) — v1.1.0 Feature Cycle
 - **Project Identifier:** `[helix-jekyll-theme]` (`projects/helix-jekyll-theme`)
@@ -156,11 +288,44 @@ flowchart TD
 ### ⏳ [helix-origin.github.io] (projects/helix-origin.github.io) — Portal v3 Enhancement
 - **Project Identifier:** `[helix-origin.github.io]` (`projects/helix-origin.github.io`)
 - `[helix-origin.github.io]` Live release status widgets dynamically queried via Jekyll GitHub metadata.
+- `[helix-origin.github.io]` Dedicated project card and custom 16:9 vector SVG artwork for `depressurizer`.
 - `[helix-origin.github.io]` Interactive showcase component consuming the `catalogue` layout.
 
 ### ⏳ [theme-toolkit] (projects/theme-toolkit) — Milestone M2 Native Packaging Implementation
 - **Project Identifier:** `[theme-toolkit]` (`projects/theme-toolkit`)
 - `[theme-toolkit]` Implement `makecab.exe` Diamond Directive File (`.ddf`) engine, Sound Scheme Manager, Wallpaper & Slideshow Studio, Cursor Scheme Inspector, and Color & Visual Style Editor.
+- `[theme-toolkit]` Implement macOS native tooling (`macos.rs`): Dynamic Desktop timed/solar HEIC wallpaper generator, system alert `.soundpack` archiver, and cursor bundle packager.
+- `[theme-toolkit]` Implement Linux native tooling (`linux.rs`): FreeDesktop Sound Theme audio packager, XDG cursor and icon theme packager, and desktop background XML generator (GNOME, KDE Plasma, XFCE, Cinnamon).
+- `[theme-toolkit]` Build the Frontend Studio UI with interactive previews (wallpaper viewport, audio player, animated cursor canvas, real-time color pickers).
+
+### ⏳ [universal-game-launcher] (projects/universal-game-launcher) — Post-v1.4.1 / Milestone M15: Cloud Gaming, Handheld Mode & Large-Library Performance
+- **Project Identifier:** `[universal-game-launcher]` (`projects/universal-game-launcher`)
+- `[universal-game-launcher]` Cloud Gaming & Streaming Hooks: launch hooks and URI integrations for GeForce NOW, Xbox Cloud Gaming, and Moonlight/Sunshine.
+- `[universal-game-launcher]` Gamepad / Handheld Overlay Mode: controller navigation (Big Picture UI) optimized for handhelds (Steam Deck, ROG Ally, Legion Go).
+- `[universal-game-launcher]` Automated Emulator Setup presets for standalone emulators (RetroArch, Dolphin, PCSX2, RPCS3).
+- `[universal-game-launcher]` Large Library Indexing Optimization: incremental SQLite index tuning for libraries exceeding 10,000 titles.
+
+### ⏳ [docs] & [wiki] (projects/docs & projects/wiki) — Centralized Documentation Expansion
+- **Project Identifiers:** `[docs]` (`projects/docs`), `[wiki]` (`projects/wiki`)
+- `[docs]` Author comprehensive user manuals for `depressurizer` (AutoCat rules, official Steam Web API integration, VDF backup routines).
+- `[docs]` Author user manuals for `theme-toolkit`.
+- `[docs] & [wiki]` Author the developer integration guide for `helix-gaming-db` and Universal Game Launcher.
+
+### ⏳ [ffxiv-config] (projects/ffxiv-config) — 8.x Job Updates, Character Configuration Utility & Documentation
+- **Project Identifier:** `[ffxiv-config]` (`projects/ffxiv-config`)
+- `[ffxiv-config]` Update hotbars, job rotations, and macros for current 8.x jobs.
+- `[ffxiv-config]` Author an automated installer / backup utility for character configuration files (`FFXIV_CHR.../ADDON.DAT`, `MACRO.DAT`, `HOTBAR.DAT`).
+- `[ffxiv-config]` Expand documentation on `docs.helix-origin.club/ffxiv-config/`.
+
+### ⏳ [docs] & [helix-jekyll-theme] (projects/docs & projects/helix-jekyll-theme) — Wallpapers Gallery Site & Multi-Repo Wallpaper Storage (Future Work)
+- **Project Identifiers:** `[docs]` (`projects/docs`), `[helix-jekyll-theme]` (`projects/helix-jekyll-theme`)
+- `[helix-jekyll-theme]` Author a new gallery layout (responsive image grid, lightbox, author attribution) in `helix-jekyll-theme` for wallpaper showcasing.
+- `[docs]` Serve the wallpapers site from the dedicated docs site (`docs.helix-origin.club`) consuming the new gallery layout.
+- `[docs]` Maintain a wallpaper author config file (authors + scan sources) driving automatic population of the wallpaper storage repositories.
+- `[docs]` Shard wallpaper storage across multiple repositories, modeled on the `helix-gaming-db-00..03` multi-repo scope.
+- `[docs]` Run an ImageMagick conversion pipeline producing true JPEG output at 90% quality (low file sizes, no visible quality loss).
+- `[docs]` Keep wallpaper storage a multi-repository scope regardless of hosting platform (free-tier limits); a GitLab migration for improved structural layout may be considered — consideration only until the API subdomain domain setup is solved (domain not registered on GitLab).
+- `[docs]` Support wallpaper creator "Passion of Desire" first, pulling free versions only.
 
 ---
 

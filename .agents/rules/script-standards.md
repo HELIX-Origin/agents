@@ -39,7 +39,14 @@
    - Wire them into the repository's central CLI or runner with sub-options and expose them as standard `main:sub:option` commands in `package.json`.
    - Rationale: Any task worth writing a script for is almost certain to be needed again during future updates, migrations, or data audits. Making them permanent, reusable modular commands preserves organizational capabilities and prevents technical debt.
 
-5. **Cross-Platform Path & Environment Invariant**:
+5. **Workspace Headless CLI — Dual Extension Mechanism, Standard Node Setup & Structured Logging**:
+   - The workspace root ships a reusable headless CLI under `scripts/agents-kb/` (TypeScript ESM, Node 22+ native type stripping). The "no temporary scripts" invariant applies to it exactly: every CLI capability is a permanent modular extension.
+   - **Dual extension mechanism**: (1) *pluggable content* = **body files** — throw-away text/JSON/MD units under `scripts/agents-kb/bodies/` (e.g. `bodies/scaffold/<type>/`) holding update strings, templates, and copy consumed by CLI modules at runtime, so content is never hard-coded in code; (2) *permanent code* = first-class TS ESM modules — CLI logic (`kb-read.ts`, `kb-log.ts`, exporters, validators, commands) **and the built-in reusable test suite** (`scripts/agents-kb/tests/*.test.ts`, executed by `test.ts` via the `kb-body.ts` `loadUnits()` loader). TS files are never temporary; test scripts are permanent suite members, never body files. `.agents/migrations/*.sql` are permanent versioned schema history.
+   - **Standard Node.js project setup** (standard Node.js practice, not a project-specific convention): the CLI root `scripts/` ships `package.json` (private, `"type": "module"`, `engines`, npm `scripts` for setup/migrate/test/typecheck) and `scripts/tsconfig.json` (strict ESM typechecking); dependencies install via npm and `node_modules/` stays gitignored.
+   - **Structured logging invariant**: every CLI command logs through `kb-log.ts` (`createLogger(command)`) to the gitignored `scripts/agents-kb/logs/` directory (tracked `README.md` only), teeing to the console. Logging failures must degrade to console-only and never crash a CLI.
+   - **Local-only data invariant**: SQLite DBs live in the gitignored `scripts/agents-kb/data/` and are created by `setup.ts` after cloning — never tracked, never pushed.
+
+6. **Cross-Platform Path & Environment Invariant**:
    - Scripts must never hardcode OS-specific path separators (`\\` or `/`). Always use `node:path` (`path.join`, `path.resolve`) or forward slashes.
    - Always quote arguments passed to child processes.
    - Never write CRLF line endings; enforce LF (`\n`) for all generated script outputs and manifests.

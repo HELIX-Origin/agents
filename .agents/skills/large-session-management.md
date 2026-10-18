@@ -14,6 +14,8 @@
 
 1. **Session start** (every new session):
    - Read AGENTS.md first
+   - Read `HANDOFF.md` (permanent, git-tracked session-state ledger) immediately, migrate its progress into
+     the tracking ledgers, then refresh it — never delete it (skill: `session-handoff`)
    - Read ROADMAP.md → PLAN.md → TODO.md → BUGS.md
    - Find first unchecked TODO item; that's your resume point
    - Review recent decisions in tracking docs
@@ -25,7 +27,12 @@
    - Run verification per step (see task-decomposition skill)
    - Keep edits small and targeted
 
-3. **Before context pressure**:
+3. **Before context pressure** (and at every workstream state change — self-monitor per
+   `session-handoff.md`, never wait for the user):
+   - Refresh the permanent `HANDOFF.md` (workspace root, git-tracked) with open workstreams, exact
+     paths, decisions, and next steps — full rewrite at soft-target posture / session end
+     (skill: `session-handoff`)
+   - Update TODO/BUGS/PLAN so no task lives only in the handoff
    - Identify closed sections (completed steps fully verified)
    - Write high-fidelity compress summaries with all paths, signatures, rationale
    - Compress only stale, closed content

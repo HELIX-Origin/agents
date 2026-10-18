@@ -31,6 +31,41 @@ Tauri v2 allows splitting configuration across platform files:
 > Tauri v2 supports both JSON and TOML configuration files. Across HELIX-Origin projects, **JSON (`tauri.conf.json` / `tauri.<platform>.conf.json`) is the authoritative standard**.
 > JSON allows instant `$schema` validation (`https://schema.tauri.app/config/2`) providing full IDE autocomplete, type validation, and inline docs without needing specialized language plugins.
 
+### Tauri v2 Capabilities & Permissions Standard (`src-tauri/capabilities/`)
+
+Every Tauri v2 project **must ship an explicit capability set** under `src-tauri/capabilities/`
+rather than relying on implicit defaults. Capabilities are the v2 ACL: they grant the frontend
+least-privilege access to core and plugin commands (`invoke`) — including the event channels
+used for real-time UI updates.
+
+- **Standard file:** `src-tauri/capabilities/default.json`, scoped to the app's main window:
+  ```json
+  {
+    "$schema": "../gen/schemas/desktop-schema.json",
+    "identifier": "default",
+    "description": "Default permissions for the main window (core APIs, event stream, plugins).",
+    "windows": ["main"],
+    "permissions": ["core:default", "opener:default"]
+  }
+  ```
+- **Always include** `core:default` (which bundles `core:event:default`, required for `listen()` /
+  `emit()` of custom app events, plus the core app, window, webview, path, image and resources
+  defaults) **and** the `default` permission of every Tauri plugin the app ships
+  (e.g. `opener:default`, `dialog:default`, `fs:default`, `shell:default`).
+- **Mutating window controls are NOT covered by `core:window:default`.** Apps with a custom
+  title bar (minimize / toggle-maximize / close / start-dragging) must grant them explicitly:
+  `core:window:allow-minimize`, `core:window:allow-toggle-maximize`, `core:window:allow-maximize`,
+  `core:window:allow-unmaximize`, `core:window:allow-close`, `core:window:allow-start-dragging`,
+  `core:window:allow-set-focus`, etc. Verify exact identifiers against the generated ACL manifest
+  at `src-tauri/gen/schemas/acl-manifests.json` (and `desktop-schema.json`).
+- **Scope per window/per capability.** Prefer explicit window labels (`"windows": ["main"]`) over
+  the `"*"` wildcard, and split platform- or feature-specific sets into additional files
+  (`desktop.json`, `mobile.json`, `tray.json`).
+- **Custom app events** (e.g. `worker://progress`) require `core:event:default` — or the narrower
+  `core:event:allow-listen` + `core:event:allow-emit`. Omitting this silently breaks live UIs.
+- **Least privilege:** never grant a wider permission set than the feature actually uses. The ACL
+  is the application's security boundary.
+
 ---
 
 ## 2. Scripts & Command Standard (`main:sub:option`)

@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use {{PROJECT_NAME}} in your work, please cite it as below."
+title: "{{PROJECT_NAME}}"
+abstract: "{{ABSTRACT}}"
+type: software
+authors:
+  - name: "HELIX Origin"
+    alias: "HELIX-Origin"
+    website: "https://www.helix-origin.club/"
+repository-code: "https://github.com/HELIX-Origin/{{REPO_NAME}}"
+url: "https://www.helix-origin.club/"
+license: {{SPDX_LICENSE}}
+version: "{{VERSION}}"
+date-released: "{{DATE}}"
+keywords:
+  - "{{KEYWORD_1}}"
+  - "{{KEYWORD_2}}"
+  - "tauri"

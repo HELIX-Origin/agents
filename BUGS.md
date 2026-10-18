@@ -4,7 +4,7 @@
 >
 > Pair with [`ROADMAP.md`](./ROADMAP.md) (direction), [`PLAN.md`](./PLAN.md) (sprint execution), and [`TODO.md`](./TODO.md) (task ledger).
 > Complete historical post-mortems for resolved bugs live in [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md).
-> Last updated: 2026-10-16
+> Last updated: 2026-10-18
 
 ---
 
@@ -37,6 +37,13 @@
 ---
 
 ## 🚫 Known Quirks & External Limitations (wontfix bucket)
+
+### [Ecosystem] (projects/agents)
+- 🔧 **[Ecosystem] Compress / DCP Tooling:** The compress tool previously caused issues and was disabled; the `.opencode` dynamic-context-pruning (DCP) plugins were restored 2026-10-18 and `compress` is the sanctioned context-management tool again. If issues reappear, fall back to high-fidelity summaries and the permanent `HANDOFF.md` session-state ledger. Compress summaries must always preserve the handoff file's current state.
+- 🖥️ **[Ecosystem] Non-Interactive Shell Policy:** The agent shell has no TTY — pagers/editors (`less`, `vim`, `man`) hang until timeout. Use OpenCode Read/Write/Edit for files and non-interactive command flags only.
+- 🧪 **[Ecosystem] TypeScript ESM CLI Scripts:** `scripts/agents-kb/*.ts` run on Node with `node --experimental-strip-types` (ESM, `.ts` imports with explicit extension).
+- 💬 **[Ecosystem] PowerShell Strips Quotes in Inline `node -e`:** PowerShell mangles quote nesting in `node -e '...'` / `node -e "..."` arguments, silently corrupting inline JavaScript (caused two failed runs). Never run inline `node -e` — write a CLI module/script file under `scripts/` and execute it instead.
+- 🔌 **[Ecosystem] OpenCode V1-Only Plugins Removed (2026-10-18):** `@franlol/opencode-md-table-formatter`, `opencode-agent-skills`, and `opencode-websearch-cited` failed to load since the V2 plugin API (no valid V2 default export: `{ id, effect | setup }`). Removed from `.opencode/opencode.jsonc`; watched for V2-compatible releases (or alternatives) to restore ASAP under the curation policy in `TODO.md` W.61 — also survey for new beneficial plugins there, keeping the list minimal to avoid instance instability. Working V2 plugins: `@tarquinen/opencode-dcp`, `@plannotator/opencode`. Plugin load errors are visible in `~/.local/share/opencode/log/opencode.log` (`failed to load plugin`). The plugin view reflected the config edit immediately (V2 appears to refresh it live), but a **full OpenCode relaunch** is the guaranteed way to make the running server's loaded plugin set match config — the relaunched run (log 19:25) loaded only the two working plugins. This build's CLI has no `opencode service` subcommand (`service restart` fails: asks for a project, absent from help; verified 2026-10-18).
 
 ### [Ecosystem & helix-docs] (projects/helix-docs)
 - 💎 **[helix-docs] ENV-1 — Ruby not on PATH in agent shell:** Ruby is installed to `C:\Ruby33-x64\bin` but default shell PATH may be stale. Prepend `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"`.
@@ -87,6 +94,17 @@
 
 ## ⚠️ Active & Open Bugs
 
+### [Universal-Game-Launcher] (projects/Universal-Game-Launcher)
+
+#### [Universal-Game-Launcher] BUG-1 — Process Launch Failure & Immediate Crash on Specific Titles (RuneScape)
+- **Project Identifier:** `[Universal-Game-Launcher]`
+- **Repository Path:** `projects/Universal-Game-Launcher`
+- **Severity**: 🟠 High (functional failure — game cannot be launched from launcher)
+- **Status**: ⚠️ open
+- **Scope:** `projects/Universal-Game-Launcher/src-tauri/src/` (launch command execution, environment variables, working directory) & `src/lib/plugins/platform-universal/`
+- **Symptom:** Attempting to launch certain games fails; the target executable or launcher process initiates but immediately crashes or terminates unexpectedly. Observed specifically with RuneScape and potentially impacting other titles with specialized startup parameters, multi-stage bootstrappers, or custom working directory dependencies.
+- **Notes**: Deferred for dedicated future debugging sprint per maintainer directive; logged for tracking.
+
 ### [helix-docs] (projects/helix-docs)
 
 #### [helix-docs] BUG-4 — `_functions.scss` legacy division triggers Dart Sass deprecation
@@ -128,12 +146,17 @@
 ### [Ecosystem] (workspace root)
 - **[Ecosystem] 2026-10-14 — CRLF Line-Ending Churn:** Machine system git config (`core.autocrlf=true`) rewrote line endings. Resolved by adding explicit `.gitattributes` to all repos and setting user-global `core.autocrlf=input`. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#ecosystem--workspace).
 - **[Ecosystem-Wide] 2026-10-15 — Chromium / WebView2 Window Class Teardown Error (1412):** Clean Win32 HWND unregistration on app exit via atomic `IS_QUITTING` flag and explicit `window.destroy()`. See [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md#ecosystem--workspace).
+- **[Ecosystem] 2026-10-18 — Handoff Limits Not Self-Enforced (user had to flag a soft-limit breach):** Resolved by a binding self-monitoring scoreboard in `.agents/rules/session-handoff.md` (token meter, compress count, DCP reminders, turn/workstream fallbacks → self-executing postures) and promotion of `HANDOFF.md` to a permanent, git-tracked, always-current session-state ledger that coexists with DCP compression (incremental refresh, never deleted, compress summaries preserve its state).
+- **[Ecosystem] 2026-10-18 — Self-Monitoring Not Executed (second occurrence; user flagged 106k tokens):** The scoreboard was documented but the agent still failed to act on the 100k soft target until the user flagged it — the agent cannot reliably self-observe from within the context window. Recorded as a known limitation; proposed remedy is a V2-native OpenCode plugin (W.62 — internal context-pressure self-monitoring plugin) that injects the scoreboard at checkpoints and gates work at soft posture. Pending W.62.
 
 ### [docs] & [wiki] (projects/docs & projects/wiki)
 - **[docs] & [wiki] 2026-10-17 — Project Pages HTTP 404 & Navigation Tree Collision via Overridden Permalinks:** Project index pages (`universal-game-launcher`, `nh-reader`, `ffxiv-config`, `windhawk-themes`) hardcoded `permalink: /docs/` and `permalink: /wiki/` in front matter, colliding with root paths and preventing `/<project>/index.html` generation; generic parent titles (`Documentation Home`, `Documentation Directory`) merged unrelated project documentation sub-pages into a single tangled sidebar tree. Resolved by setting explicit permalinks (`/<project>/` for roots, `/<project>/<article>/` for sub-pages), assigning project-specific parent titles, fixing internal cross-site URLs, and normalizing LF line endings.
 
 ### [helix-gaming-db] (projects/helix-gaming-db)
 - **[helix-gaming-db] 2026-10-17 — GitHub Actions Workflow Failures (`issue-triage.yml` & `ci.yml`):** Unindented multiline template literals in `issue-triage.yml` inline script caused YAML block scalar truncation and syntax errors on push; missing `npm ci` and untracked `package-lock.json` caused runtime module import errors (`i18next`) in `ci.yml`. Fixed by converting inline multiline strings to cleanly indented arrays, tracking `package-lock.json`, and executing automated cleanup of historical failed runs via `cleanup-failed-runs.yml`.
+
+### [depressurizer] (projects/depressurizer)
+- **[depressurizer] 2026-10-17 — Modal A11y Warnings and Strict Zero-Warning Verification Enforcement (v0.8.0):** Svelte-check flagged 12 accessibility warnings on static `div` click handlers and missing keyboard event handlers for modal overlays and dialogs (`a11y_click_events_have_key_events`, `a11y_no_static_element_interactions`); Rust compiler flagged unused import warning. Resolved by refactoring overlays to fully accessible ARIA dialog containers (`role="dialog"`, `aria-modal="true"`, Escape keydown handlers, and self-target click dismissal); removed unused import; codified organization invariant 13 requiring strict zero warnings; verified 0 errors and 0 warnings across `svelte-check`, `vite build`, and `RUSTFLAGS="-D warnings" cargo check`.
 
 ### [Universal-Game-Launcher] (projects/Universal-Game-Launcher)
 - **[Universal-Game-Launcher] 2026-10-16 — Settings Tabs Unresponsive, Archived ROMs Undetected, Launcher Client False Positives, & Standalone Metadata Resolution (v1.4.0):** Removed conflicting `$effect` in `settings/+page.svelte` that reset `activeTab` to `"general"`; added multi-drive ROM directory autodetection, automatic `.zip`/`.7z` extraction into per-game subfolders with `saves/` isolation and `rom.ini` indexing; excluded launcher client folders/binaries (`Ubisoft Game Launcher`, `upc.exe`, etc.) from game scanning and pruned stale entries; and removed faulty `Standalone & Local` developer/publisher attribution and placeholder descriptions so standalone games resolve full store metadata and artwork.

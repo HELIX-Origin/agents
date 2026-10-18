@@ -26,6 +26,7 @@ These rules apply to **every active project** under `projects/` belonging to `HE
 - `projects/helix-gaming-db-02` — REST metadata API & database (volume shard 02).
 - `projects/helix-gaming-db-03` — REST metadata API & database (volume shard 03).
 - `projects/ffxiv-config` — FFXIV HUD, hotbar, and macro configuration setup.
+- `projects/depressurizer` — Steam library categorizing & management tool (revival fork).
 
 Everything else outside these active `HELIX-Origin` repositories is strictly out of scope and must never be referenced.
 
@@ -38,20 +39,29 @@ Updating and maintaining the agents ecosystem (`AGENTS.md`, `.agents/rules/`, `.
 
 ## Agents ecosystem isolation invariant
 
-The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) lives strictly at the workspace root (`projects/agents`). It is **never** stored inside the individual project repositories under `projects/` and **must never be mentioned, referenced, or linked** inside any project repository (e.g. in `README.md`, documentation, code comments, or configuration files). Project repositories are public, standalone open-source codebases whose documentation must remain completely self-contained for external human contributors.
+The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) lives strictly at the workspace root (`projects/agents`). It is **never** copied into the individual project repositories under `projects/` and **must never be mentioned, referenced, or linked** inside any project repository (e.g. in `README.md`, documentation, code comments, or configuration files). Project repositories are public, standalone open-source codebases whose documentation must remain completely self-contained for external human contributors.
 
-## Organization License Invariant — BSD 3-Clause (BINDING)
+**Project-local ecosystems (W.56):** every project repository owns its **own, fully self-contained** agents ecosystem (`AGENTS.md`, `.agents/`, `.github/copilot-instructions.md`) and its **own tracking files** (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) holding that repository's items only. They are generated from the headless CLI scaffold (`kb-scaffold.ts`) plus the workspace templates, contain no workspace-root paths or ledger references, carry no `[project] (path)` tags (single-project scope), and never relax org-wide invariants. Per-repo items migrate from the root ledgers into the owning repo; the root ledgers retain only ecosystem and cross-repo items plus a one-line pointer per migrated workstream.
 
-Every repository, project, package, and document across the `HELIX-Origin` organization is strictly licensed under the **BSD 3-Clause "New" or "Revised" License** (`BSD-3-Clause`).
-- **Never use MIT or other licenses.** Any occurrence of MIT or other license types in `package.json`, `Cargo.toml`, `.gemspec`, `LICENSE*`, or `README.md` is a violation of organization invariants and must be corrected immediately to `BSD-3-Clause`.
-- Every project repository and workspace root must contain a root `LICENSE.md` (or `LICENSE`) file with the standard BSD 3-Clause legal text copyright to `HELIX Origin`.
+## Organization License Invariant — BSD 3-Clause (BINDING, with Revival Fork Exception)
+
+Every repository, project, package, and document authored across the `HELIX-Origin` organization is strictly licensed under the **BSD 3-Clause "New" or "Revised" License** (`BSD-3-Clause`).
+- **Never use MIT or other licenses for original work.** Any occurrence of MIT or other license types in `package.json`, `Cargo.toml`, `.gemspec`, `LICENSE*`, or `README.md` is a violation of organization invariants and must be corrected immediately to `BSD-3-Clause`.
+- Every original project repository and workspace root must contain a root `LICENSE.md` (or `LICENSE`) file with the standard BSD 3-Clause legal text copyright to `HELIX Origin`.
+- **Revival Fork Exception:** Upstream revival forks of archived third-party repositories (`depressurizer`) strictly retain their original copyleft license (**GPL-3.0**) to respect open-source copyright laws and upstream author licensing.
 - All license badges in `README.md` must use the HTML badge standard:
   ```html
   <a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD--3--Clause-blue.svg" alt="License: BSD-3-Clause" height="20" /></a>
   ```
 
 
-## Tracking docs contract
+## Fork customization (org_slug, repo mappings)
+- The knowledge base is keyed by an **organization slug** (`org_slug`, default `HELIX-Origin`). A fork that wants to track a different organization must change the slug before running setup:
+  - **Code**: edit `defaultOrgSlug()` in `scripts/agents-kb/kb-config.ts` (or set the `AGENTS_KB_ORG` / `AGENTS_KB_ORG_SLUG` environment variable at runtime).
+  - **Database**: the slug becomes the `organizations.org_slug` row created by `setup.ts`; existing clones keep their slug (the DB is local-only, so changing the slug means re-running setup against a fresh DB).
+- **Repo mappings**: the KB scans the canonical `.agents/` tree (rules/skills/agents/templates) plus the root ledgers (`AGENTS.md`, `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`, `HANDOFF.md`). There is no per-repo mapping table yet — a fork with a different repo set simply gets a different scanned artifact set after `npm run sync`.
+- **Local-only lifecycle**: `scripts/agents-kb/data/` and `logs/` are gitignored; forks start clean via `npm run setup` and never inherit another clone's data. See `.agents/skills/agents-db-design.md` (Sync & lifecycle).
+- **Environment overrides**: `AGENTS_KB_PATH` (DB file), `AGENTS_KB_ORG`/`AGENTS_KB_ORG_SLUG` (organization slug), `AGENTS_KB_EXPORT_PATH` (export report path), `AGENTS_KB_SECURE_PATH` (secure DB).
 
 - `ROADMAP.md` — master roadmap, milestone delivery history, organization architecture, and project direction.
 - `PLAN.md` — strategic active sprint planning (`## 🎯 Active Sprints` contains ONLY currently active sprints; finished sprints move immediately to `## ✅ Completed Sprints`).

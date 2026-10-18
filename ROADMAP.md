@@ -4,7 +4,7 @@
 >
 > Pair with [`PLAN.md`](./PLAN.md) (sprint execution), [`TODO.md`](./TODO.md) (task ledger), and [`BUGS.md`](./BUGS.md) (open issues and quirks).
 > Delivered historical milestone records live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md).
-> Last updated: 2026-10-16
+> Last updated: 2026-10-18
 
 ---
 
@@ -32,6 +32,7 @@ flowchart TB
     Org --> ShellMods["[windhawk-themes] Shell Styler Suite"]
     Org --> GamingDB["[helix-gaming-db-00..03] REST Metadata API & Database"]
     Org --> FFXIVConfig["[ffxiv-config] HUD & Macro Suite"]
+    Org --> Depressurizer["[depressurizer] Cross-Platform Steam Library Categorizer (Tauri v2 Revival Fork)"]
 
     DocsTheme -.->|remote_theme| Portal
     DocsTheme -.->|remote_theme| DocsHub
@@ -54,14 +55,26 @@ flowchart TB
 | **[wiki]** | `projects/wiki` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/wiki/releases/tag/v1.0.0) | 🚀 Active | Centralized organization technical wiki & curation guidelines |
 | **[nh-reader]** | `projects/nh-reader` | SemVer | [v0.7.5](https://github.com/HELIX-Origin/nh-reader/releases/tag/v0.7.5) | 🚀 Active | Post-v0.7.5: Unified `.mjs` scripts architecture, local code signing |
 | **[windhawk-themes]** | `projects/windhawk-themes` | SemVer | [v0.1.0](https://github.com/HELIX-Origin/windhawk-themes/releases/tag/v0.1.0) | 🚀 Active | Suite polish: Start Menu alignments, Quick Settings split buttons (`v0.2.0`) |
-| **[universal-game-launcher]** | `projects/universal-game-launcher` | SemVer | [v1.4.0](https://github.com/HELIX-Origin/universal-game-launcher/releases/tag/v1.4.0) | 🚀 Active | Universal Game Launcher Rebranding, Modular Plugins Framework (`v1.4.0`) |
+| **[universal-game-launcher]** | `projects/universal-game-launcher` | SemVer | [v1.4.1](https://github.com/HELIX-Origin/universal-game-launcher/releases/tag/v1.4.1) | 🚀 Active | Universal Game Launcher Rebranding, Dynamic Shard Discovery (`v1.4.1`) |
 | **[theme-toolkit]** | `projects/theme-toolkit` | SemVer | [v0.1.0](https://github.com/HELIX-Origin/theme-toolkit/releases/tag/v0.1.0) | 🚀 Active | Framework scaffolded, Per-Platform Lib isolation, native packaging blueprints |
 | **[helix-gaming-db-00]** | `projects/helix-gaming-db-00` | SemVer | [v2.0.0](https://github.com/HELIX-Origin/helix-gaming-db-00/releases/tag/v2.0.0) | 🚀 Active | Volume shard 00 (core), automated multi-platform ingestion pipeline |
 | **[helix-gaming-db-01]** | `projects/helix-gaming-db-01` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-gaming-db-01/releases/tag/v1.0.0) | 🚀 Active | Volume shard 01 provisioning, cross-shard deduplication |
 | **[helix-gaming-db-02]** | `projects/helix-gaming-db-02` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-gaming-db-02/releases/tag/v1.0.0) | 🚀 Active | Volume shard 02 provisioning, cross-shard deduplication |
 | **[helix-gaming-db-03]** | `projects/helix-gaming-db-03` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/helix-gaming-db-03/releases/tag/v1.0.0) | 🚀 Active | Volume shard 03 provisioning, cross-shard deduplication |
 | **[ffxiv-config]** | `projects/ffxiv-config` | SemVer | [v0.1.0](https://github.com/HELIX-Origin/ffxiv-config/releases/tag/0.1.0) | 🚀 Active | Information-dense HUD, hotbars, job macros, and FFC integration |
+| **[depressurizer]** | `projects/depressurizer` | SemVer | v0.8.0 | 🚀 Active | Revival fork: Cross-platform Tauri v2 (Rust + Svelte/SCSS) migration, Steam Web API key-only architecture (sole integration surface, no Steam client *file* dependency — desktop Steam-client flakiness on cloud-synced collections is documented as a troubleshooting warning, not a requirement; legacy VDF/Steam-client methods abandoned & removed — unlocks future Android & iOS support), AutoCat rules, HowLongToBeat playtime enrichment via the active HLTB API |
 | **[agents]** | `./` | SemVer | [v1.0.0](https://github.com/HELIX-Origin/agents/releases/tag/v1.0.0) | 🚀 Active | AI governance ecosystem, binding rules, skills, and templates |
+
+---
+
+## 🧩 Organization-Wide Standards
+
+These standards apply to **every** `HELIX-Origin` repository:
+
+1. **License** — `BSD-3-Clause` everywhere; the sole exception is `depressurizer` (a revival fork retaining `GPL-3.0-or-later`, with original upstream copyright preserved).
+2. **Versioning & Releases** — Semantic Versioning (`vMAJOR.MINOR.PATCH`) with human-readable release notes; packaged-application repositories attach release assets, all others publish zero-asset releases.
+3. **Documentation Hubs** — Centralized documentation (`docs.helix-origin.club`) and technical wiki (`wiki.helix-origin.club`); project `README.md` files are minimal entry points that link to these hubs.
+4. **Community Health Files** — Every repository ships `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, `PRIVACY.md`, `CHANGELOG.md`, `GOVERNANCE.md`, `CITATION.cff`, a conditional `TOS.md`, plus `.github/pull_request_template.md` and YAML issue forms — all linked from the repository `README.md`. Enforced by `.agents/rules/community-health-files.md`; organization-wide rollout tracked as workstream **W.56** (`depressurizer` delivered; remaining repositories pending).
 
 ---
 
@@ -99,6 +112,7 @@ flowchart LR
   - Tag frequency analytics and recommended read suggestions based on local history.
   - Multi-profile library partitions (e.g. separate blacklist/favorites sets).
   - Background auto-update inspection and release notification toasts.
+  - Unified maintenance scripts standard (canonical `main:sub:option` naming and `.mjs` conventions).
 
 ---
 
@@ -121,6 +135,7 @@ flowchart LR
   - 16:9 standalone vector artwork system (`docs/assets/images/*.svg`) replacing remote bitmaps.
   - Added dedicated project card and custom artwork for `helix-jekyll-theme`.
 - **[helix-origin.github.io] Portal v3 Roadmap (PLANNED):**
+  - Dedicated project card and custom 16:9 vector SVG artwork for `depressurizer`.
   - Live GitHub release status badge widgets fetched via Octokit / Jekyll GitHub metadata.
   - Interactive software catalogue showcase consuming the `catalogue` layout.
 
@@ -140,7 +155,7 @@ flowchart LR
     M9 --> M12["M12: Deals & News ✅"]
     M12 --> M13["M13: Multi-Platform & WinGet ✅"]
     M13 --> M14["M14: Universal Core Plugins, Store & Social Hub ✅"]
-    M14 -.-> M15["M15: Cloud Gaming (Planned) ⏳"]
+    M14 -.-> M15["M15: Cloud Gaming & Handheld (Planned) ⏳"]
 ```
 
 - **[universal-game-launcher] Milestone History (M1–M12 Delivered)**: Multi-platform library aggregation, storage manager, custom artwork manager, localization engine, dynamic smart collections, SQLite metadata persistence, obsidian UI, Redis KV in-memory tier, and deals/free games engines (v1.0.0 – v1.3.1). Full architectural histories live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md).
@@ -168,6 +183,11 @@ flowchart LR
 - **[universal-game-launcher] Milestone M14 Patch v1.4.1: Dynamic Federation Discovery & Multi-Shard Scaling (DELIVERED):**
   - **Dynamic Shard Resolution (`getActiveShards()`)**: Replaced static 4-shard constraint with dynamic federation manifest querying (`/api/v2/federation/shards.json`), enabling real-time scaling to newly provisioned volume shards (`helix-gaming-db-04`, `05`, etc.) without requiring application updates.
   - **Multi-Tier Resilient Offline Caching**: Persists active shard rosters in local SQLite key-value storage for up to 7 days, maintaining instant 0ms offline startup and transparent error recovery.
+- **[universal-game-launcher] Milestone M15: Cloud Gaming, Handheld Mode & Large-Library Performance (PLANNED):**
+  - **Cloud Gaming & Streaming Hooks**: Launch hooks and URI integrations for GeForce NOW, Xbox Cloud Gaming, and Moonlight/Sunshine.
+  - **Gamepad / Handheld Overlay Mode**: Controller navigation (Big Picture UI) optimized for handhelds (Steam Deck, ROG Ally, Legion Go).
+  - **Automated Emulator Setup**: Preset configurations for standalone emulators (RetroArch, Dolphin, PCSX2, RPCS3).
+  - **Large Library Indexing Optimization**: Incremental SQLite index tuning for libraries exceeding 10,000 titles.
 
 ---
 
@@ -237,6 +257,7 @@ flowchart LR
     - Designed and provisioned catalog volume partitioning into sequentially numbered repositories (`helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, etc.) to prevent GitHub free user storage (<1GB) and file count ceilings.
     - Each shard repository is an exact, autonomous copy supporting all platforms and providers, equipped with the identical schemas, `i18next` multilingual localization, validation scripts, and GitHub Actions workflows.
     - The client API (`universal-game-launcher`) seamlessly cycles across all active metadata repositories when searching or resolving metadata.
+    - **Cross-Hosting Evaluation (UNDER EVALUATION):** Migrating the API/shard repositories to GitLab for its improved structural layout is being considered; free-tier limits require the multi-repository scope to remain regardless of hosting platform. **Status: consideration only** — the organization domain is not registered on GitLab, so the move waits on a solution for making the API subdomain work with GitLab-hosted API repos.
   - **Automated PAT Replication & Workspace Secret Provisioning (Delivered)**:
     - Replicated `PAT_TOKEN` secrets across all organization repositories via `gh secret set`.
     - Secured `PAT_TOKEN` in untracked workspace `.env` file protected by `.gitignore` with `provision-repo-secrets.ps1` helper for instant provisioning of newly created shard repositories.
@@ -250,6 +271,26 @@ flowchart LR
   - Ready-to-use, information-dense HUD, hotbar, and macro configuration setup for Final Fantasy XIV built on Fr4nsson's FFC and extended for current 8.x jobs.
   - Provides pre-arranged combat, crafting, and gathering hotbars with on-screen macro navigation for instant job switching.
   - Documentation site hosted via GitHub Pages and powered by `remote_theme: HELIX-Origin/helix-jekyll-theme`.
+- **Planned Work:**
+  - Update hotbars, job rotations, and macros for current 8.x jobs.
+  - Author an automated installer / backup utility for character configuration files (`FFXIV_CHR.../ADDON.DAT`, `MACRO.DAT`, `HOTBAR.DAT`).
+  - Expand documentation on `docs.helix-origin.club/ffxiv-config/`.
+
+---
+
+### 9. [docs] & [helix-jekyll-theme] — Wallpapers Gallery Site & Multi-Repo Wallpaper Storage (PLANNED — Future Work)
+*Target Paths: `projects/docs` (site) · `projects/helix-jekyll-theme` (gallery layout) · Multi-repo wallpaper storage (modeled on `helix-gaming-db-00..03`)*
+
+- **Core Vision:**
+  - A dedicated wallpapers site served from the docs site (`docs.helix-origin.club`) via a new gallery layout contributed to `helix-jekyll-theme`.
+  - Multi-repo wallpaper storage sharded like `helix-gaming-db-00..03`, auto-populated from configured wallpaper author sources.
+- **Planned Work:**
+  - `helix-jekyll-theme`: new gallery layout (responsive image grid, lightbox, author attribution).
+  - `docs`: wallpapers section consuming the new gallery layout.
+  - `docs`: wallpaper author config file (authors + scan sources) driving automatic repository population.
+  - `docs`: ImageMagick conversion pipeline converting all wallpapers to true JPEG at 90% quality (low file sizes, no visible quality loss).
+  - Wallpaper storage must remain a multi-repository scope regardless of hosting platform (free-tier limits); migrating the wallpaper storage repositories to GitLab for its improved structural layout may be considered — **consideration only for now**, since the organization domain is not registered on GitLab (API subdomain solution TBD).
+  - First supported wallpaper creator: **Passion of Desire** — free versions only.
 
 
 

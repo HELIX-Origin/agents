@@ -3,14 +3,29 @@ projects/
 scratch/
 temp/
 
-# OS and Editor metadata
+# OS, Editor, and Session metadata
 .DS_Store
 Thumbs.db
 *.tmp
 *.log
+opencode-session.json
+*-session.json
 
 # Secrets and environment variables
 .env
 .env.*
 *.env
+!.env.example
+!*.env.example
+
+# Node.js dependencies (installed per-project under scripts/ for the headless CLI)
+node_modules/
+scripts/**/node_modules/
+
+# Agents KB — local-only SQLite databases + logs (created/used by the headless CLI under
+# scripts/agents-kb/; never tracked, never pushed — clones/forks start clean via initial setup)
+scripts/agents-kb/data/*
+!scripts/agents-kb/data/README.md
+scripts/agents-kb/logs/*
+!scripts/agents-kb/logs/README.md
 

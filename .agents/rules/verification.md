@@ -5,9 +5,16 @@
 
 ---
 
-## 1. Zero-Defect Gate Requirement
+## 1. Zero-Defect Gate Requirement & Warnings Treated as Errors
 
 No change, feature, bug fix, or documentation update is complete without running and passing the applicable verification checks for that specific repository.
+
+> [!IMPORTANT]
+> **Warnings are treated as errors organization-wide.**
+> Warnings flagged as "harmless" often end up being breaking issues that directly cause uncaught errors and runtime instability. All compilers, typecheckers, linters, and test runners must run with **0 errors and 0 warnings**.
+> - In Rust: Always verify with `RUSTFLAGS="-D warnings" cargo check` and `cargo test`.
+> - In Svelte / TypeScript: `svelte-check` must report **0 errors and 0 warnings**.
+> - In builds: Bundlers and transpilers (`vite build`, `rollup`, `esbuild`) must compile cleanly with 0 warnings.
 
 ---
 
@@ -17,10 +24,11 @@ No change, feature, bug fix, or documentation update is complete without running
 |---|---|---|
 | **helix-docs** | `bundle exec jekyll build` | 0 errors, 0 warnings. Valid generated site. |
 | **helix-origin.github.io** | `bundle exec jekyll build` | 0 errors, 0 warnings. |
-| **NH-Reader** | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` | 0 Rust errors, 0 test failures, 0 Svelte errors, all i18n keys valid. |
-| **Universal-Game-Launcher** | `node scripts/test.mjs check rust frontend build` | 0 Rust errors, 0 test failures, 0 Svelte errors/warnings. |
-| **Theme-Toolkit** | `node scripts/test.mjs check rust frontend build` | 0 Rust errors, 0 test failures, 0 Svelte errors/warnings. |
-| **Windhawk-Themes** | `pwsh -NoProfile -File tools/Test-WindhawkStyles.ps1` | 0 errors. All styler YAML definitions parse correctly. |
+| **depressurizer** | `cargo check` (`-D warnings`), `cargo test --lib`, `npm run check`, `npm run build` | 0 Rust errors, 0 warnings, 0 test failures, 0 Svelte errors/warnings, clean build. |
+| **nh-reader** | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` | 0 Rust errors/warnings, 0 test failures, 0 Svelte errors/warnings, all i18n keys valid. |
+| **universal-game-launcher** | `node scripts/test.mjs check rust frontend build` | 0 Rust errors/warnings, 0 test failures, 0 Svelte errors/warnings. |
+| **theme-toolkit** | `node scripts/test.mjs check rust frontend build` | 0 Rust errors/warnings, 0 test failures, 0 Svelte errors/warnings. |
+| **windhawk-themes** | `pwsh -NoProfile -File tools/Test-WindhawkStyles.ps1` | 0 errors. All styler YAML definitions parse correctly. |
 | **Deskthemepack / Packaging** | `makecab.exe /F <theme>.ddf`, asset existence check | Valid cabinet archive, 0 missing assets, valid .theme INI. |
 
 ---
