@@ -103,7 +103,7 @@
 
 ### 🎯 [Universal-Game-Launcher] (`projects/Universal-Game-Launcher`) Workstream W.48: Universal Game Launcher Rebranding, Generic SQLite Persistence, EmulationStation Scaffolding, Background Worker & Headless CLI Foundation (Release v1.4.0 Phase 1)
 - **Project Identifiers:** `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`)
-- **Target Components:** `projects/Universal-Game-Launcher/package.json`, `projects/Universal-Game-Launcher/src-tauri/Cargo.toml`, `projects/Universal-Game-Launcher/src-tauri/tauri.conf.json`, `projects/Universal-Game-Launcher/src-tauri/src/`, `projects/Universal-Game-Launcher/src/`, `projects/Universal-Game-Launcher/docs/`, `projects/helix-origin.github.io/docs/`
+- **Target Components:** `projects/Universal-Game-Launcher/package.json`, `projects/Universal-Game-Launcher/src-tauri/Cargo.toml`, `projects/Universal-Game-Launcher/src-tauri/tauri.conf.json`, `projects/Universal-Game-Launcher/src-tauri/src/`, `projects/Universal-Game-Launcher/src/`, `projects/Universal-Game-Launcher/docs/`, `projects/helix-origin.github.io/`
 
 **Locked user directives (normalized by domain):**
 - **Identity & Branding**:
@@ -376,7 +376,7 @@
 
 ### 🎯 [Windhawk-Themes] (`projects/Windhawk-Themes`) & [helix-docs] (`projects/helix-docs`) Workstream W.04–W.15: Shared Jekyll Theme v1.0.0, Squircle Branding Suite & Command Center Catalogue Documentation
 - **Project Identifiers:** `[helix-docs]` (`projects/helix-docs`), `[Windhawk-Themes]` (`projects/Windhawk-Themes`), `[helix-origin.github.io]` (`projects/helix-origin.github.io`), `[NH-Reader]` (`projects/NH-Reader`)
-- **Target Components:** `projects/helix-docs/_sass/*`, `projects/helix-docs/_includes/*`, `projects/helix-docs/_docs/*`, `projects/Windhawk-Themes/docs/*`, `projects/helix-origin.github.io/docs/*`
+- **Target Components:** `projects/helix-docs/_sass/*`, `projects/helix-docs/_includes/*`, `projects/helix-docs/_docs/*`, `projects/Windhawk-Themes/docs/*`, `projects/helix-origin.github.io/*`
 
 **Locked user directives (normalized by domain):**
 - **Shared Jekyll Theme (`helix-docs`) & vCard Home Pattern**:

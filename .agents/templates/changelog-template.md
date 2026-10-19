@@ -41,5 +41,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 -
 
-[Unreleased]: https://github.com/HELIX-Origin/{{REPO_NAME}}/compare/v{{VERSION}}...HEAD
-[{{VERSION}}]: https://github.com/HELIX-Origin/{{REPO_NAME}}/releases/tag/v{{VERSION}}
+{{#REPO_URL}}
+[Unreleased]: {{REPO_URL}}/compare/v{{VERSION}}...HEAD
+[{{VERSION}}]: {{REPO_URL}}/releases/tag/v{{VERSION}}
+{{/REPO_URL}}

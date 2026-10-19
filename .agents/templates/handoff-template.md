@@ -11,6 +11,16 @@
 > `TODO.md` / `BUGS.md`, then **refresh this file** (migrated-only state collapses to one-line
 > delivered notes). **Never delete it.** See `.agents/rules/session-handoff.md`.
 
+The session cycle every agent follows:
+
+```mermaid
+flowchart LR
+    read[Read handoff] --> migrate[Migrate into ledgers]
+    migrate --> work[Execute work]
+    work --> refresh[Refresh handoff]
+    refresh --> read
+```
+
 ---
 
 ## 1) <Workstream name — with project tag> (<status: In Progress | Blocked | Delivered>)

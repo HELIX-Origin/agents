@@ -23,8 +23,8 @@ flowchart LR
    - Verify every SVG using ImageMagick CLI (`magick <file.svg> <verify.png>`).
    - Confirm 0 RSVG parsing errors, intact geometries, and accurate font sizing.
 3. **Portal Showcase Integration:**
-   - Place validated SVGs into `helix-origin.github.io/docs/assets/images/<slug>.svg`.
-   - Update project cards in `helix-origin.github.io/docs/index.md` using relative Jekyll Liquid links (`{{ '/assets/images/<slug>.svg' | relative_url }}`).
+   - Place validated SVGs into `helix-origin.github.io/assets/images/<slug>.svg`.
+   - Update project cards in `helix-origin.github.io/index.md` using relative Jekyll Liquid links (`{{ '/assets/images/<slug>.svg' | relative_url }}`).
 
 ## Hard Rules
 

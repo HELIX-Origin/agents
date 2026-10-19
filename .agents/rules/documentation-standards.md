@@ -37,8 +37,14 @@ The organization enforces a strict separation of documentation surfaces across d
 |---|---|---|
 | **Documentation Hub (`docs`)** | `projects/docs/` (`_docs/<project>/`, `_catalogue/`) | **User-Centric & Theme-Neutral.** Product documentation, installation guides, user manuals, and the theme showcase catalogue (`_catalogue/`). |
 | **Technical Wiki Hub (`wiki`)** | `projects/wiki/` (`_wiki/<project>/`) | **Deep Technical & Architectural.** In-depth technical specifications, developer APIs, schema definitions, visual tree topologies, and curation guidelines. |
-| **Organization Portal (`helix-origin.github.io`)** | `projects/helix-origin.github.io/` (`docs/index.md`) | **Central Discovery Gateway.** Links directly to Docs Hub and Wiki Hub; never hosts project-specific docs or raw JSON API endpoints. |
+| **Organization Portal (`helix-origin.github.io`)** | `projects/helix-origin.github.io/` (`index.md`) | **Central Discovery Gateway.** Links directly to Docs Hub and Wiki Hub; never hosts project-specific docs or raw JSON API endpoints. |
 | **Project Code Repositories** | `projects/<project>/` (`README.md`) | **Minimal Entry Points.** Standalone open-source codebases; contain **NO** embedded `docs/` folders and **NO** GitHub Pages sites. Root `README.md` links directly to `docs` and `wiki`. |
+
+> **Single-site repositories publish from the repository root.** When a repository *is* the published
+> site (the portal, `docs`, `wiki`), its Jekyll root is the **repository root** — never a nested
+> `docs/` folder. Non-site Markdown (`README.md`, `CONTRIBUTING.md`, `SECURITY.md`, etc.) must carry
+> `published: false` front matter so it is never emitted as a site page, and non-Markdown legal files
+> (`LICENSE`) must be listed in `_config.yml` `exclude`.
 
 ---
 
@@ -72,6 +78,15 @@ Every project repository under `projects/` must maintain a concise, minimal entr
    - **Quick Start / Installation**: Minimal 2–5 line command snippet to clone, build, or run locally.
    - **Verification & Quality Gate**: Standard test command (`npm test`, `cargo test`, `pwsh ...`).
    - **License**: Canonical link to `LICENSE` (`BSD-3-Clause`).
+4. **Domain-Neutral Scaffold Templates:** The scaffold templates under `.agents/templates/` and the
+   `kb-scaffold` CLI must **never hardcode** an organization's domain or slug. Treat **both**
+   organization base URLs as leak surfaces: the custom domain (`*.helix-origin.club`) **and** the
+   GitHub Pages fallback paths (`helix-origin.github.io/<repo>`), so generated output stays portable even if the
+   custom domain is retired. Docs, wiki, portal, Discord, and Discussions links are **opt-in** and
+   rendered only when the user supplies them (`--docs-url`, `--wiki-url`, `--portal-url`,
+   `--discord-url`, `--with-discussions`, …), so generated files stay correct for any user — not just
+   `HELIX-Origin`. The only always-on attribution is the `README.md` footer linking the agents
+   ecosystem repository.
 
 ---
 

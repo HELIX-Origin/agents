@@ -2,9 +2,9 @@
 
 **Last updated:** {{DATE}} · **Version {{VERSION}}**
 
-These Terms of Service ("Terms") govern your use of **{{PROJECT_NAME}}** ("the App"), published by
-the **HELIX Origin** organization. By downloading, installing, or using the App you agree to these
-Terms. If you do not agree, do not use the App.
+These Terms of Service ("Terms") govern your use of **{{PROJECT_NAME}}** ("the App"){{#ORG_NAME}},
+published by the **{{ORG_NAME}}** organization{{/ORG_NAME}}. By downloading, installing, or using the
+App you agree to these Terms. If you do not agree, do not use the App.
 
 ## 1. The App is a client, not a provider
 
@@ -55,5 +55,4 @@ Continued use after changes constitutes acceptance.
 
 ## 8. Contact
 
-For questions about these Terms, open an issue or discussion on the
-[GitHub repository](https://github.com/HELIX-Origin/{{REPO_NAME}}).
+For questions about these Terms, {{#REPO_URL}}open an issue or discussion on the [GitHub repository]({{REPO_URL}}).{{/REPO_URL}}{{^REPO_URL}}open an issue or discussion on the project's issue tracker.{{/REPO_URL}}

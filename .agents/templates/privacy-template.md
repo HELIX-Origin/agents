@@ -30,8 +30,7 @@ This policy explains what the App stores, what it transmits, and what it never c
 
 ## 📬 Contact
 
-Questions? Open an issue or discussion on the
-[GitHub repository](https://github.com/HELIX-Origin/{{REPO_NAME}}).
+Questions? {{#REPO_URL}}Open an issue or discussion on the [GitHub repository]({{REPO_URL}}).{{/REPO_URL}}{{^REPO_URL}}Open an issue or discussion on the project's issue tracker.{{/REPO_URL}}
 
 ## 🗑️ Removing your data
 

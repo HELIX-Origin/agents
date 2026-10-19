@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/HELIX-Origin"><img src="https://img.shields.io/badge/Organization-HELIX--Origin-blue?logo=github" alt="HELIX Origin" height="20" /></a>
-  <a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD--3--Clause-blue.svg" alt="License: BSD-3-Clause" height="20" /></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" height="20" /></a>
   <a href="https://docs.helix-origin.club"><img src="https://img.shields.io/badge/Docs-docs.helix--origin.club-brightgreen" alt="Documentation Hub" height="20" /></a>
   <a href="https://wiki.helix-origin.club"><img src="https://img.shields.io/badge/Wiki-wiki.helix--origin.club-brightgreen" alt="Technical Wiki" height="20" /></a>
 </p>
@@ -159,4 +159,4 @@ bash clone-org-repos-macos.sh
 
 ## 📄 License
 
-This repository is licensed under the [BSD-3-Clause License](LICENSE).
+This repository is licensed under the [MIT License](LICENSE).

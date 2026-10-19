@@ -38,7 +38,7 @@ To establish a uniform, detailed, human-readable, and universal release notes st
 | **ffxiv-config** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ✅ Yes (Packaged configuration archive `ffxiv-config.zip`) | `README.md` |
 | **windhawk-themes** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ❌ No (Zero attached assets; git tag only) | `ROADMAP.md`, `PLAN.md`, `CHANGELOG.md` |
 | **helix-jekyll-theme** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.1.0`) | ❌ No (Zero attached assets; git remote theme & gem) | `changelog.md` |
-| **helix-origin.github.io** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; portal site checkpoint) | `docs/index.md` |
+| **helix-origin.github.io** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; portal site checkpoint) | `index.md` |
 | **docs** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; documentation hub) | `README.md` |
 | **wiki** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; technical wiki hub) | `README.md` |
 | **helix-gaming-db-00** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v2.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |

@@ -1,7 +1,7 @@
 # Governance
 
-This document describes how **{{PROJECT_NAME}}** (a
-[HELIX Origin](https://github.com/HELIX-Origin) project) is governed.
+This document describes how **{{PROJECT_NAME}}**{{#ORG_URL}}
+(a [{{ORG_NAME}}]({{ORG_URL}}) project){{/ORG_URL}} is governed.
 
 ## Roles
 
@@ -17,6 +17,18 @@ This document describes how **{{PROJECT_NAME}}** (a
 - Significant design or scope decisions are opened as an issue or discussion first to gather input.
 - Maintainers aim for **lazy consensus**: a proposal proceeds if no maintainer objects within a
   reasonable review window. When consensus is not reachable, maintainers decide by simple majority.
+
+How a proposal moves to a decision:
+
+```mermaid
+flowchart TD
+    change[Change proposed] --> small{Day-to-day?}
+    small -->|Yes| pr[Decided in review]
+    small -->|No| issue[Issue or discussion]
+    issue --> consensus{Lazy consensus?}
+    consensus -->|No objections| proceed[Proposal proceeds]
+    consensus -->|Objections| vote[Maintainers decide]
+```
 
 ## Releases
 

@@ -11,7 +11,7 @@
 ## 📜 Tracking Rules
 
 - **100% Active Direction Accuracy (Root & Archives)**: `BUGS.md` and `.github/BUGS-ARCHIVE.md` must reflect the 100% current, active direction of all projects with zero contradictions. Immediately update or remove any quirk or bug entry superseded by a new architectural decision.
-- **Zero Non-Organization Mentions**: Never directly mention by name any external, third-party, or deleted projects or repositories outside the active `HELIX-Origin` organization.
+- **Zero External Mentions**: Never directly mention by name any external, third-party, or deleted projects or repositories.
 - **No Typo Duplication**: When recording user reports, clean and fix all typos to preserve professional quality.
 - **Explicit Project Tagging**: Every quirk, open bug, and resolved bug entry header MUST be explicitly prefixed with its current project name and repository path (`[{{PROJECT_NAME}}] ({{PROJECT_PATH}}): {{BUG_TITLE}}`).
 - **Bare Minimal Root & Normalized Archive**: Keep `BUGS.md` focused on active issues and current architectural invariants; move detailed post-mortems of resolved bugs to `.github/BUGS-ARCHIVE.md`.
@@ -31,6 +31,20 @@
 - 🟠 **High**: Major bugs that significantly impact usability, aesthetics, or state synchronization.
 - 🟡 **Medium**: Bugs affecting minor visual alignments, non-critical state transitions, or fallbacks.
 - 🟢 **Low**: Minor warnings, duplicate selectors, or non-visual cosmetic quirks.
+
+---
+
+## 🔄 Bug Lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> open
+    open --> investigating
+    investigating --> resolved
+    investigating --> wontfix
+    resolved --> [*]
+    wontfix --> [*]
+```
 
 ---
 

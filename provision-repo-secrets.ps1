@@ -53,6 +53,7 @@ if ($Repo) {
     "HELIX-Origin/helix-gaming-db-01",
     "HELIX-Origin/helix-gaming-db-02",
     "HELIX-Origin/helix-gaming-db-03",
+    "HELIX-Origin/helix-gaming-db-ingest",
     "HELIX-Origin/universal-game-launcher",
     "HELIX-Origin/helix-jekyll-theme",
     "HELIX-Origin/helix-origin.github.io",

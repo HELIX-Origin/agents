@@ -11,8 +11,8 @@ privacy of the data you keep on your own machine.
 | {{VERSION_LINE_PREVIOUS}} | ⚠️ Upgrade recommended |
 | older | ❌ No longer supported |
 
-Only the latest release receives security fixes. See the
-[Releases page](https://github.com/HELIX-Origin/{{REPO_NAME}}/releases) for the current version.
+Only the latest release receives security fixes.{{#REPO_URL}} See the
+[Releases page]({{REPO_URL}}/releases) for the current version.{{/REPO_URL}}
 
 ## 🚨 Reporting a vulnerability
 
@@ -20,8 +20,13 @@ Only the latest release receives security fixes. See the
 
 Report privately using GitHub's **private vulnerability reporting**:
 
+{{#REPO_URL}}
 - Repository → **Security** → **Report a vulnerability**, or
-- Directly: `https://github.com/HELIX-Origin/{{REPO_NAME}}/security`
+- Directly: `{{REPO_URL}}/security`
+{{/REPO_URL}}
+{{^REPO_URL}}
+- Repository → **Security** → **Report a vulnerability**
+{{/REPO_URL}}
 
 Please include:
 
@@ -29,6 +34,16 @@ Please include:
 2. A clear description of the vulnerability.
 3. Minimal steps to reproduce.
 4. Impact assessment and — if you have one — a suggested fix.
+
+The disclosure path every report follows:
+
+```mermaid
+flowchart TD
+    report[Private report] --> ack[Acknowledge within 5 days]
+    ack --> triage[Triage severity]
+    triage --> fix[Ship a fix]
+    fix --> note[Changelog + release]
+```
 
 We aim to acknowledge reports within **5 business days** and to ship a fix for confirmed issues in a
 reasonable window depending on severity. Security fixes are noted in

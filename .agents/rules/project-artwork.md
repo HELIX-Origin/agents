@@ -77,7 +77,7 @@ Artwork must honor the specific project's visual identity while staying grounded
 
 ## 5. Portal Consumption Rules
 
-In `helix-origin.github.io/docs/index.md`:
+In `helix-origin.github.io/index.md`:
 - Every project card must point to a local relative SVG asset:
   ```html
   <img src="{{ '/assets/images/<project-slug>.svg' | relative_url }}" alt="<Project Name> icon and project name" loading="lazy" decoding="async">

@@ -4,15 +4,19 @@ title: "{{PROJECT_NAME}}"
 abstract: "{{ABSTRACT}}"
 type: software
 authors:
-  - name: "HELIX Origin"
-    alias: "HELIX-Origin"
-    website: "https://www.helix-origin.club/"
-repository-code: "https://github.com/HELIX-Origin/{{REPO_NAME}}"
-url: "https://www.helix-origin.club/"
+  - name: "{{CITATION_AUTHOR}}"
+{{#ORG_URL}}
+    website: "{{ORG_URL}}"
+{{/ORG_URL}}
+{{#REPO_URL}}
+repository-code: "{{REPO_URL}}"
+{{/REPO_URL}}
+{{#DOCS_URL}}
+url: "{{DOCS_URL}}"
+{{/DOCS_URL}}
 license: {{SPDX_LICENSE}}
 version: "{{VERSION}}"
 date-released: "{{DATE}}"
 keywords:
   - "{{KEYWORD_1}}"
   - "{{KEYWORD_2}}"
-  - "tauri"

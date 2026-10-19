@@ -11,6 +11,33 @@ const silent = {
   startTimer() { return () => 0; }, close() {}
 } as any;
 
+/**
+ * Both organization base URLs are leak surfaces: the custom domain and the
+ * GitHub Pages fallback paths (`helix-origin.github.io/<repo>`). Generated scaffold files must never
+ * contain either, so fork/generated output stays portable even if the custom
+ * domain is retired.
+ */
+const FORBIDDEN_DOMAINS = ['helix-origin.club', 'helix-origin.github.io'];
+
+async function collectFiles(dir: string): Promise<string[]> {
+  const out: string[] = [];
+  for (const entry of await fs.readdir(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...(await collectFiles(full)));
+    else out.push(full);
+  }
+  return out;
+}
+
+async function assertNoDomainLeak(root: string): Promise<void> {
+  for (const file of await collectFiles(root)) {
+    const content = (await fs.readFile(file, 'utf8')).toLowerCase();
+    for (const domain of FORBIDDEN_DOMAINS) {
+      assert.ok(!content.includes(domain), `${path.relative(root, file)} must not leak ${domain}`);
+    }
+  }
+}
+
 export default async function run(): Promise<void> {
   const types = await listTypes();
   for (const t of ['tauri-desktop', 'jekyll-theme', 'node-ts-cli', 'rust-library', 'docs-site']) {
@@ -80,6 +107,69 @@ export default async function run(): Promise<void> {
     assert.ok(privacy.includes('my-desktop-app'), 'PRIVACY.md contains project name');
     const security = await fs.readFile(path.join(customProject, 'SECURITY.md'), 'utf8');
     assert.ok(security.includes('my-desktop-app'), 'SECURITY.md contains project name');
+
+    // Optional links: docs/wiki/discussions/discord are opt-in. With no URLs,
+    // generated files must not leak any maintainer domain or organization name.
+    const bareProject = path.join(tmp, 'bare');
+    await runScaffold({
+      type: 'node-ts-cli',
+      projectPath: bareProject,
+      health: 'readme,support,issue-config,citation,changelog',
+    }, silent);
+    const bareReadme = await fs.readFile(path.join(bareProject, 'README.md'), 'utf8');
+    assert.ok(!bareReadme.includes('helix-origin.club'), 'README must not hardcode a maintainer domain');
+    assert.ok(
+      bareReadme.includes('https://github.com/HELIX-Origin/agents'),
+      'README carries the always-on attribution footer'
+    );
+    assert.ok(!bareReadme.includes('Documentation'), 'README has no docs section without a docs URL');
+    assert.ok(bareReadme.includes('**bare application.**'), 'double-brace tokens render without stray braces');
+    const bareSupport = await fs.readFile(path.join(bareProject, 'SUPPORT.md'), 'utf8');
+    assert.ok(!bareSupport.includes('Discussions'), 'discussions are opt-in');
+    assert.ok(!bareSupport.includes('agent ecosystem'), 'attribution is README-only');
+    const bareIssue = await fs.readFile(path.join(bareProject, '.github/ISSUE_TEMPLATE/config.yml'), 'utf8');
+    assert.ok(bareIssue.includes('contact_links: []'), 'empty contact links render as a valid empty list');
+    await assertNoDomainLeak(bareProject);
+
+    // Explicit optional links are applied only when provided.
+    const linkedProject = path.join(tmp, 'linked');
+    await runScaffold({
+      type: 'node-ts-cli',
+      projectPath: linkedProject,
+      projectName: 'linked-app',
+      health: 'readme,support,issue-config,citation',
+      docsUrl: 'https://example.com/docs/',
+      wikiUrl: 'https://example.com/wiki/',
+      repoUrl: 'https://github.com/example/linked-app/',
+      repoSlug: 'example/linked-app',
+      orgUrl: 'https://github.com/example',
+      orgName: 'Example',
+      discussions: true,
+      discordUrl: 'https://discord.gg/example',
+    }, silent);
+    const linkedReadme = await fs.readFile(path.join(linkedProject, 'README.md'), 'utf8');
+    assert.ok(linkedReadme.includes('https://example.com/docs'), 'docs URL applied');
+    assert.ok(linkedReadme.includes('https://discord.gg/example'), 'discord invite applied');
+    assert.ok(!linkedReadme.includes('helix-origin.club'), 'no maintainer domain leakage');
+    const linkedSupport = await fs.readFile(path.join(linkedProject, 'SUPPORT.md'), 'utf8');
+    assert.ok(
+      linkedSupport.includes('https://github.com/example/linked-app/discussions'),
+      'discussions link applied when opted in'
+    );
+    const linkedIssue = await fs.readFile(
+      path.join(linkedProject, '.github/ISSUE_TEMPLATE/config.yml'),
+      'utf8'
+    );
+    assert.ok(linkedIssue.includes('https://example.com/docs'), 'docs contact link applied');
+    assert.ok(linkedIssue.includes('https://example.com/wiki'), 'wiki contact link applied');
+    assert.ok(
+      linkedIssue.includes('https://github.com/example/linked-app/security'),
+      'security contact link applied'
+    );
+    const linkedCitation = await fs.readFile(path.join(linkedProject, 'CITATION.cff'), 'utf8');
+    assert.ok(linkedCitation.includes('name: "Example"'), 'org name applied to citation author');
+    assert.ok(linkedCitation.includes('https://example.com/docs'), 'citation url from docs url');
+    await assertNoDomainLeak(linkedProject);
 
     // Test .env parsing and auto-setting CLI options
     const envFilePath = path.join(tmp, '.test-env');

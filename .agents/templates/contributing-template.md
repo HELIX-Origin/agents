@@ -8,9 +8,20 @@ conventions, the quality gate, and how to submit changes.
 
 ## Ways to contribute
 
-- 🐛 **Report bugs** via [GitHub Issues](https://github.com/HELIX-Origin/{{REPO_NAME}}/issues) (bug form).
-- ✨ **Propose features** via [GitHub Issues](https://github.com/HELIX-Origin/{{REPO_NAME}}/issues) (feature form).
-- 📝 **Improve documentation** in the centralized docs/wiki hubs.
+{{#REPO_URL}}
+- 🐛 **Report bugs** via [GitHub Issues]({{REPO_URL}}/issues) (bug form).
+- ✨ **Propose features** via [GitHub Issues]({{REPO_URL}}/issues) (feature form).
+{{/REPO_URL}}
+{{^REPO_URL}}
+- 🐛 **Report bugs** via the repository's issue tracker (bug form).
+- ✨ **Propose features** via the repository's issue tracker (feature form).
+{{/REPO_URL}}
+{{#HAS_GATEWAYS}}
+- 📝 **Improve documentation** in the project's documentation hubs.
+{{/HAS_GATEWAYS}}
+{{^HAS_GATEWAYS}}
+- 📝 **Improve documentation**.
+{{/HAS_GATEWAYS}}
 - 🔧 **Submit code** via pull request.
 - 👀 **Review pull requests** from other contributors.
 
@@ -54,6 +65,18 @@ subjects:
 Common types: `feat`, `fix`, `docs`, `test`, `refactor`, `perf`, `chore`, `security`, `build`.
 
 ## Pull request process
+
+The contribution path from idea to merge:
+
+```mermaid
+flowchart TD
+    issue[Open an issue] --> branch[Create a branch]
+    branch --> commit[Commit changes]
+    commit --> gate[Run the quality gate]
+    gate --> pr[Open a pull request]
+    pr --> review[Address review feedback]
+    review --> merge[Maintainer merges]
+```
 
 1. **Open an issue first** for non-trivial changes.
 2. **Create a branch** from the default branch.

@@ -20,7 +20,7 @@
    This agents ecosystem is engineered exclusively for active repositories within the `HELIX-Origin`
    GitHub organization (`https://github.com/HELIX-Origin`): `helix-jekyll-theme`, `helix-origin.github.io`,
    `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`,
-   `helix-gaming-db-00`, `helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, `ffxiv-config`, and `depressurizer`. Never work with,
+   `helix-gaming-db-00`, `helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, `helix-gaming-db-ingest`, `ffxiv-config`, and `depressurizer`. Never work with,
    read, explore, modify, or **directly mention by name** any external, third-party, or deleted
    projects or repositories that are not part of the `HELIX-Origin` organization across rules,
    skills, playbooks, or tracking files. This is mandatory to prevent agents from getting mixed up.
@@ -70,13 +70,13 @@
    - Updating and maintaining the agents ecosystem is the **#1 highest priority** above all
      project implementation tasks. See `.agents/rules/workspace.md`.
 
-9. **Organization license invariant — BSD 3-Clause everywhere (with revival fork exception).**
-   Every repository, project, package, and document authored across the `HELIX-Origin` organization
-   is strictly licensed under the **BSD 3-Clause "New" or "Revised" License** (`BSD-3-Clause`).
-   Never use MIT or other licenses for original repositories. Any occurrence of MIT in `package.json`,
-   `Cargo.toml`, `.gemspec`, `LICENSE*`, or `README.md` must be corrected immediately to `BSD-3-Clause`.
-   *Revival Fork Exception:* Upstream revival forks of archived third-party repositories (`depressurizer`)
-   strictly retain their original copyleft license (**GPL-3.0**) to respect open-source copyright and author attribution.
+9. **Per-project licensing — most fitting license per repository (no org-wide default).**
+   Each repository under `HELIX-Origin` is licensed under the license that best fits that
+   project. There is no single org-wide default; the choice is made per repository (MIT is the
+   common default for original code/docs/themes/tools, but a project may use any appropriate
+   license). `depressurizer` strictly retains its original copyleft license (**GPL-3.0**) as an
+   upstream revival fork. Every `LICENSE*`, `package.json`, `Cargo.toml`, `.gemspec`,
+   `README.md`, and `CITATION.cff` must state the repository's chosen license consistently.
    See `.agents/rules/workspace.md`.
 
 10. **Organization release & asset attachment invariant.**
@@ -176,6 +176,7 @@
 │   ├── helix-gaming-db-01/    <- REST metadata API & gaming database (shard 01)
 │   ├── helix-gaming-db-02/    <- REST metadata API & gaming database (shard 02)
 │   ├── helix-gaming-db-03/    <- REST metadata API & gaming database (shard 03)
+│   ├── helix-gaming-db-ingest/<- Dedicated automated metadata crawler, ingestion & cross-shard router
 │   ├── ffxiv-config/          <- FFXIV HUD, hotbar, and macro configuration setup
 │   └── depressurizer/         <- Tauri v2 cross-platform Steam library categorizer & AutoCat manager (revival fork)
 └── (other projects)           <- out of scope unless asked

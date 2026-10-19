@@ -50,6 +50,30 @@ Run from the workspace root (`node scripts/agents-kb/<cmd>.ts`) or from `scripts
 | `node scripts/agents-kb/test.ts` | `npm test` | Run the built-in reusable test suite (`tests/*.test.ts`) |
 | `npx tsc --noEmit` (in `scripts/`) | `npm run typecheck` | Strict ESM typecheck of all CLI modules |
 
+### Scaffold link configuration (opt-in)
+
+Scaffold templates **never hardcode an organization domain**. Docs, wiki, portal, Discord, and
+Discussions links are omitted by default and rendered only when supplied, so generated files stay
+correct for any user. Unset links simply disappear (no broken or maintainer-specific URLs). Both
+organization base URLs — the custom domain (`*.helix-origin.club`) and the GitHub Pages fallback
+(`helix-origin.github.io/<repo>`) — are treated as leak surfaces and are asserted absent by the scaffold
+tests.
+
+| Flag | Env key | Effect when set |
+| :--- | :--- | :--- |
+| `--docs-url <url>` | `SCAFFOLD_DOCS_URL` | Public documentation links + badge |
+| `--wiki-url <url>` | `SCAFFOLD_WIKI_URL` | Technical wiki links + badge |
+| `--portal-url <url>` | `SCAFFOLD_PORTAL_URL` | Organization / portal link |
+| `--repo-url <url>` | `SCAFFOLD_REPO_URL` | Releases / Issues / Security / compare links |
+| `--repo-slug <o/r>` | `SCAFFOLD_REPO_SLUG` | Release badge (`owner/repo`) |
+| `--org-url <url>` | `SCAFFOLD_ORG_URL` | Organization homepage (CITATION website) |
+| `--org-name <name>` | `SCAFFOLD_ORG_NAME` | CITATION.cff author name |
+| `--discord-url <url>` | `SCAFFOLD_DISCORD_URL` | Discord invite link + badge |
+| `--with-discussions` | `SCAFFOLD_DISCUSSIONS=true` | GitHub Discussions links |
+
+Only `README.md` carries the always-on attribution footer (linking the agents ecosystem); all
+other generated files stay attribution-free.
+
 ## Extension mechanism
 
 - **Body files** (pluggable content): throw-away text/JSON/MD units under `bodies/` — e.g. a
@@ -66,4 +90,7 @@ Run from the workspace root (`node scripts/agents-kb/<cmd>.ts`) or from `scripts
 - `AGENTS_KB_ORG` / `AGENTS_KB_ORG_SLUG` — override the organization slug (fork customization).
 - `AGENTS_KB_EXPORT_PATH` — override the export report path (used by tests).
 - `AGENTS_KB_SECURE_PATH` — override the secure DB path.
+- `SCAFFOLD_DOCS_URL`, `SCAFFOLD_WIKI_URL`, `SCAFFOLD_PORTAL_URL`, `SCAFFOLD_REPO_URL`,
+  `SCAFFOLD_REPO_SLUG`, `SCAFFOLD_ORG_URL`, `SCAFFOLD_ORG_NAME`, `SCAFFOLD_DISCORD_URL`,
+  `SCAFFOLD_DISCUSSIONS` — opt-in scaffold link configuration (see above). All blank by default.
 - Requires Node.js 22.18+ (native TypeScript type stripping); run from the workspace root.

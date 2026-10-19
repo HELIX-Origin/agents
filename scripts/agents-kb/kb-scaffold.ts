@@ -16,6 +16,15 @@ export interface ScaffoldOptions {
   license?: string;
   projectName?: string;
   serviceName?: string;
+  docsUrl?: string;
+  wikiUrl?: string;
+  repoUrl?: string;
+  repoSlug?: string;
+  orgUrl?: string;
+  orgName?: string;
+  portalUrl?: string;
+  discordUrl?: string;
+  discussions?: boolean;
   tracking?: string[] | boolean | string;
   health?: string[] | boolean | string;
 }
@@ -43,6 +52,7 @@ export const TRACKING_FILE_MAP: Record<string, { file: string; template: string 
 };
 
 export const HEALTH_FILE_MAP: Record<string, { file: string; template: string }> = {
+  readme: { file: 'README.md', template: 'readme-template.md' },
   contributing: { file: 'CONTRIBUTING.md', template: 'contributing-template.md' },
   'code-of-conduct': { file: 'CODE_OF_CONDUCT.md', template: 'code-of-conduct-template.md' },
   security: { file: 'SECURITY.md', template: 'security-template.md' },
@@ -136,10 +146,32 @@ export async function listTypes(): Promise<string[]> {
 
 function renderTemplate(content: string, vars: Record<string, string>): string {
   let result = content;
+
+  // Conditional blocks:
+  //   {{#KEY}}...{{/KEY}} renders only when KEY is non-empty
+  //   {{^KEY}}...{{/KEY}} renders only when KEY is empty
+  // Looped so nested blocks resolve regardless of authoring order.
+  let previous: string;
+  do {
+    previous = result;
+    result = result.replace(/\{\{#([A-Z0-9_]+)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (_match, key: string, inner: string) =>
+      vars[key] ? inner : ''
+    );
+    result = result.replace(/\{\{\^([A-Z0-9_]+)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (_match, key: string, inner: string) =>
+      vars[key] ? '' : inner
+    );
+  } while (result !== previous);
+
   for (const [key, val] of Object.entries(vars)) {
-    result = result.replaceAll(`{${key}}`, val);
-    result = result.replaceAll(`{{${key}}}`, val);
+    // Replace double-brace tokens first: a naive `{KEY}` pass would otherwise
+    // corrupt `{{KEY}}` into `{value}` (leaving stray braces in generated files).
+    result = result.split(`{{${key}}}`).join(val);
+    result = result.split(`{${key}}`).join(val);
   }
+
+  // Collapse whitespace left behind by removed conditional blocks so the
+  // generated files stay clean (no runs of blank lines or trailing spaces).
+  result = result.replace(/[ \t]+\r?\n/g, '\n').replace(/\n{3,}/g, '\n\n');
   return result;
 }
 
@@ -169,6 +201,19 @@ export async function runScaffold(options: ScaffoldOptions, logger?: KbLogger): 
   const created: string[] = [];
   const skipped: string[] = [];
   const wouldCreate: string[] = [];
+
+  // Optional, user-supplied links. Nothing is inferred from the maintainer's own
+  // organization or domain: generated files stay correct for any fork/user.
+  const stripTrailingSlash = (value: string): string => value.replace(/\/+$/, '');
+  const repoUrl = stripTrailingSlash(options.repoUrl?.trim() || '');
+  const repoSlug = (options.repoSlug?.trim() || '').replace(/^\/+|\/+$/g, '');
+  const orgUrl = stripTrailingSlash(options.orgUrl?.trim() || '');
+  const orgName = options.orgName?.trim() || '';
+  const portalUrl = stripTrailingSlash(options.portalUrl?.trim() || '');
+  const docsUrl = stripTrailingSlash(options.docsUrl?.trim() || '');
+  const wikiUrl = stripTrailingSlash(options.wikiUrl?.trim() || '');
+  const discordUrl = options.discordUrl?.trim() || '';
+  const discussions = Boolean(options.discussions);
 
   const templateVars: Record<string, string> = {
     PROJECT_NAME: projectName,
@@ -214,6 +259,21 @@ export async function runScaffold(options: ScaffoldOptions, logger?: KbLogger): 
     SUBTASK_1_B: 'Verify test and build gate',
     PROJECT_SLUG: projectName.toLowerCase().replace(/[^a-z0-9_-]/g, '-'),
     SERVICE_NAME: options.serviceName?.trim() || `${projectName} Service`,
+    DOCS_URL: docsUrl,
+    WIKI_URL: wikiUrl,
+    REPO_URL: repoUrl,
+    REPO_SLUG: repoSlug,
+    ORG_URL: orgUrl,
+    ORG_NAME: orgName,
+    PORTAL_URL: portalUrl,
+    DISCORD_URL: discordUrl,
+    HAS_DISCUSSIONS: discussions ? '1' : '',
+    HAS_DISCORD: discordUrl ? '1' : '',
+    HAS_COMMUNITY: repoUrl || discussions || discordUrl ? '1' : '',
+    HAS_GATEWAYS: docsUrl || wikiUrl || portalUrl ? '1' : '',
+    HAS_REPO: repoUrl ? '1' : '',
+    HAS_CONTACT_LINKS: docsUrl || wikiUrl || repoUrl || discussions || discordUrl ? '1' : '',
+    CITATION_AUTHOR: orgName || `${projectName} contributors`,
     PREREQUISITES:
       type === 'tauri-desktop'
         ? 'Node.js (>=20.x), Rust toolchain (stable), and platform-specific Tauri dependencies.'
@@ -419,6 +479,33 @@ export function parseArgs(argv: string[]): ScaffoldOptions {
   if (envVars.SCAFFOLD_SERVICE_NAME || envVars.SERVICE_NAME) {
     opts.serviceName = envVars.SCAFFOLD_SERVICE_NAME || envVars.SERVICE_NAME;
   }
+  if (envVars.SCAFFOLD_DOCS_URL || envVars.DOCS_URL) {
+    opts.docsUrl = envVars.SCAFFOLD_DOCS_URL || envVars.DOCS_URL;
+  }
+  if (envVars.SCAFFOLD_WIKI_URL || envVars.WIKI_URL) {
+    opts.wikiUrl = envVars.SCAFFOLD_WIKI_URL || envVars.WIKI_URL;
+  }
+  if (envVars.SCAFFOLD_REPO_URL || envVars.REPO_URL) {
+    opts.repoUrl = envVars.SCAFFOLD_REPO_URL || envVars.REPO_URL;
+  }
+  if (envVars.SCAFFOLD_REPO_SLUG || envVars.REPO_SLUG) {
+    opts.repoSlug = envVars.SCAFFOLD_REPO_SLUG || envVars.REPO_SLUG;
+  }
+  if (envVars.SCAFFOLD_ORG_URL || envVars.ORG_URL) {
+    opts.orgUrl = envVars.SCAFFOLD_ORG_URL || envVars.ORG_URL;
+  }
+  if (envVars.SCAFFOLD_ORG_NAME || envVars.ORG_NAME) {
+    opts.orgName = envVars.SCAFFOLD_ORG_NAME || envVars.ORG_NAME;
+  }
+  if (envVars.SCAFFOLD_PORTAL_URL || envVars.PORTAL_URL) {
+    opts.portalUrl = envVars.SCAFFOLD_PORTAL_URL || envVars.PORTAL_URL;
+  }
+  if (envVars.SCAFFOLD_DISCORD_URL || envVars.DISCORD_URL) {
+    opts.discordUrl = envVars.SCAFFOLD_DISCORD_URL || envVars.DISCORD_URL;
+  }
+  if (envVars.SCAFFOLD_DISCUSSIONS === 'true' || envVars.DISCUSSIONS === 'true') {
+    opts.discussions = true;
+  }
   if (envVars.SCAFFOLD_TRACKING || envVars.TRACKING) {
     opts.tracking = envVars.SCAFFOLD_TRACKING || envVars.TRACKING;
   }
@@ -445,6 +532,24 @@ export function parseArgs(argv: string[]): ScaffoldOptions {
         opts.projectName = tokens[++i];
       } else if (a === '--service-name') {
         opts.serviceName = tokens[++i];
+      } else if (a === '--docs-url') {
+        opts.docsUrl = tokens[++i];
+      } else if (a === '--wiki-url') {
+        opts.wikiUrl = tokens[++i];
+      } else if (a === '--repo-url') {
+        opts.repoUrl = tokens[++i];
+      } else if (a === '--repo-slug') {
+        opts.repoSlug = tokens[++i];
+      } else if (a === '--org-url') {
+        opts.orgUrl = tokens[++i];
+      } else if (a === '--org-name') {
+        opts.orgName = tokens[++i];
+      } else if (a === '--portal-url') {
+        opts.portalUrl = tokens[++i];
+      } else if (a === '--discord-url') {
+        opts.discordUrl = tokens[++i];
+      } else if (a === '--with-discussions') {
+        opts.discussions = true;
       } else if (a === '--tracking' || a === '-t') {
         const next = tokens[i + 1];
         if (next && !next.startsWith('-')) {

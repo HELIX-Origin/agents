@@ -1,14 +1,32 @@
 blank_issues_enabled: false
+{{#HAS_CONTACT_LINKS}}
 contact_links:
+{{#DOCS_URL}}
   - name: 📖 Documentation
-    url: https://docs.helix-origin.club/{{PROJECT_SLUG}}/
+    url: {{DOCS_URL}}
     about: Installation, setup, and usage guides.
+{{/DOCS_URL}}
+{{#WIKI_URL}}
   - name: 🧠 Technical Wiki
-    url: https://wiki.helix-origin.club/{{PROJECT_SLUG}}/
+    url: {{WIKI_URL}}
     about: Architecture, internals, and developer references.
+{{/WIKI_URL}}
+{{#HAS_DISCUSSIONS}}
   - name: 💬 Discussions
-    url: https://github.com/HELIX-Origin/{{REPO_NAME}}/discussions
+    url: {{REPO_URL}}/discussions
     about: Ask questions and share ideas with the community.
+{{/HAS_DISCUSSIONS}}
+{{#HAS_DISCORD}}
+  - name: 💬 Discord
+    url: {{DISCORD_URL}}
+    about: Chat with the community in real time.
+{{/HAS_DISCORD}}
+{{#REPO_URL}}
   - name: 🔒 Security
-    url: https://github.com/HELIX-Origin/{{REPO_NAME}}/security
+    url: {{REPO_URL}}/security
     about: Report a security vulnerability privately (do not open a public issue).
+{{/REPO_URL}}
+{{/HAS_CONTACT_LINKS}}
+{{^HAS_CONTACT_LINKS}}
+contact_links: []
+{{/HAS_CONTACT_LINKS}}
