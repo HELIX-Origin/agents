@@ -68,7 +68,7 @@ Never conflate release notes with discussion announcements or changelog files:
 
 ## 3. Universal Release Notes Specification
 
-Every release notes document published to GitHub Releases across the organization must follow this uniform, detailed, and human-readable format:
+Every release notes document published to GitHub Releases across the organization must follow this uniform, detailed, and human-readable format. Use the EXACT emoji prefixes shown below — do not substitute or omit them.
 
 ```markdown
 # <Project Name> v<MAJOR.MINOR.PATCH>
@@ -80,12 +80,12 @@ Every release notes document published to GitHub Releases across the organizatio
 | **Release Version** | `v<MAJOR.MINOR.PATCH>` |
 | **Release Date** | YYYY-MM-DD |
 | **Release Classification** | <Packaged Application Release \| Zero-Asset Source Release> |
-| **License** | [BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause) |
+| **License** | [<License Name>](<license-url>) |
 | **Release Channel** | <Stable / Production \| Preview / Alpha> |
 
 ---
 
-## 📖 Overview
+## 📋 Overview
 
 <1–2 clear, well-structured paragraphs written for human readers explaining what this release represents, why it matters, core themes, and key benefits to end-users or integrators.>
 
@@ -110,19 +110,18 @@ Every release notes document published to GitHub Releases across the organizatio
 | `<app>-<version>.deb` | Linux (Debian/Ubuntu) | amd64 | Debian Package | `<sha256-hash>` |
 
 ### For Zero-Asset Repositories:
-> [!NOTE]
 > **Zero-Asset Source Release:** In accordance with organization release policy, this repository does not publish prebuilt binary assets. All changes are tagged directly in git and consumed via <package manager / git clone / GitHub Pages remote theme / REST API gateway>.
->
-> **Consumption / Installation:**
-> ```bash
-> <commands to clone, bundle, npm install, or consume the repository>
-> ```
+
+**Consumption / Installation:**
+```bash
+<commands to clone, bundle, npm install, or consume the repository>
+```
 
 ---
 
-## 🚀 What's Changed
+## 🔍 What's Changed
 
-### 🌟 Added
+### 🆕 Added
 - **<Feature / Component>** — <Detailed, user-facing explanation of the addition>.
 
 ### 🔄 Changed
@@ -134,12 +133,12 @@ Every release notes document published to GitHub Releases across the organizatio
 ### 🗑️ Removed & Deprecated
 - **<Feature / Component>** — <Explanation of what was removed or scheduled for deprecation and alternative recommendations>.
 
-### 🛡️ Security, Hygiene & Compliance
+### 🔐 Security, Hygiene & Compliance
 - **<Compliance / Security Item>** — <License harmonization, secret hygiene, dependency audits, or permission lockdowns>.
 
 ---
 
-## 🔍 Compatibility & Environment Matrix
+## 🔗 Compatibility & Environment Matrix
 
 | Surface / Dependency | Target Requirement | Status / Notes |
 |---|---|---|
@@ -149,17 +148,38 @@ Every release notes document published to GitHub Releases across the organizatio
 
 ---
 
-## 🧪 Quality Gates & Verification
+## 🛡️ Quality Gates & Verification
 
 All changes in this release satisfied repository quality gates before publication:
 
 - [x] **Test Suites**: `<e.g. npm test / cargo test / static linters>` passed with **0 errors, 0 warnings**.
 - [x] **Schema Validation**: All JSON / YAML definitions validated against Draft 2020-12 specifications.
-- [x] **License Compliance**: Confirmed canonical BSD-3-Clause licensing across all manifests and source headers.
+- [x] **License Compliance**: Confirmed canonical MIT licensing across all manifests and source headers.
 - [x] **Clean Tree**: Staged, verified, and tagged on clean branch `main`.
 
 ---
 
-## 📄 Commit History
+## 📝 Commit History
 
 Full commit comparison: [`https://github.com/HELIX-Origin/<repo>/compare/<previous-tag>...v<current-tag>`](https://github.com/HELIX-Origin/<repo>/compare/<previous-tag>...v<current-tag>)
+```
+
+---
+
+## 4. Mandatory Release Verification Checklist
+
+Before publishing any release, the agent must verify:
+
+- [ ] **SemVer compliance**: Tag and release title use `vMAJOR.MINOR.PATCH` (no milestones).
+- [ ] **Asset policy compliance**: Zero-asset repos have NO attached files; packaged repos have all required installers/archives.
+- [ ] **Release notes format**: Follows Section 3 template EXACTLY, including all emoji prefixes (📋, ✨, 📦, 🔍, 🆕, 🔄, 🐛, 🗑️, 🔐, 🔗, 🛡️, 📝) and all sections (Overview, Highlights, Distribution & Packaging, What's Changed with all five subsections, Compatibility Matrix, Quality Gates, Commit History).
+- [ ] **License consistency**: Release notes state the repository's actual license (MIT for helix-jekyll-theme; BSD-3-Clause only where applicable).
+- [ ] **No mojibake**: Release notes contain only valid UTF-8 characters with correct emoji — no corrupted `dY...` sequences.
+- [ ] **Zero-asset note present** (for zero-asset repos): The Distribution & Packaging section includes the Zero-Asset Source Release callout and consumption instructions.
+- [ ] **Commit comparison link**: Points to the correct previous-tag → current-tag comparison URL.
+
+---
+
+## 5. Enforcement
+
+Any release that does not follow this standard must be edited via `gh release edit` to conform before the task is considered complete. Agents must never consider a release "done" until the release notes match this specification byte-for-byte in structure.
