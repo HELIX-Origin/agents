@@ -21,11 +21,11 @@ These rules apply to **every active project** under `projects/` belonging to `HE
 - `projects/universal-game-launcher` — Tauri v2 universal game library & launcher.
 - `projects/theme-toolkit` — cross-platform desktop theme studio & applicator (Windows, macOS, Linux).
 - `projects/windhawk-themes` — Windows 11 styling suites for Windhawk styler mods.
-- `projects/helix-gaming-db-00` — REST metadata API & database (core / volume shard 00).
-- `projects/helix-gaming-db-01` — REST metadata API & database (volume shard 01).
-- `projects/helix-gaming-db-02` — REST metadata API & database (volume shard 02).
-- `projects/helix-gaming-db-03` — REST metadata API & database (volume shard 03).
-- `projects/helix-gaming-db-ingest` — automated metadata crawler, ingestion pipeline & cross-shard router.
+- `projects/ugl-db-00` — REST metadata API & database (core / volume shard 00).
+- `projects/ugl-db-01` — REST metadata API & database (volume shard 01).
+- `projects/ugl-db-02` — REST metadata API & database (volume shard 02).
+- `projects/ugl-db-03` — REST metadata API & database (volume shard 03).
+- `projects/ugl-db-ingest` — automated metadata crawler, ingestion pipeline & cross-shard router.
 - `projects/ffxiv-config` — FFXIV HUD, hotbar, and macro configuration setup.
 - `projects/depressurizer` — Steam library categorizing & management tool (revival fork).
 

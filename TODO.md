@@ -12,7 +12,7 @@
 
 - **100% Active Direction Accuracy**: This file and its companion ledgers (`ROADMAP.md`, `PLAN.md`, `BUGS.md`) must always reflect the current, active direction of all projects with zero contradictions. Whenever a requirement changes or supersedes an earlier decision, immediately replace or remove the superseded statements in place.
 - **Normalized & Categorized Locked User Directives**: Never paste raw chronological chat logs or contradictory historical quotes. Rewrite user directives into clean, typo-free engineering specifications grouped under explicit bold domain sub-headers so it is immediately clear what goes to what.
-- **Zero Non-Organization Mentions**: Only reference active repositories belonging to the `HELIX-Origin` GitHub organization (`helix-jekyll-theme`, `helix-origin.github.io`, `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `ffxiv-config`, `depressurizer`). Never directly mention external, third-party, or deleted projects/repositories by name.
+- **Zero Non-Organization Mentions**: Only reference active repositories belonging to the `HELIX-Origin` GitHub organization (`helix-jekyll-theme`, `helix-origin.github.io`, `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`, `ugl-db-00` through `03`, `ffxiv-config`, `depressurizer`). Never directly mention external, third-party, or deleted projects/repositories by name.
 - **Atomic Checklist Groups & Archival**: Group checklist items by functional component (`- [ ] **[<project-name>] Component Group**:` followed by atomic `- [ ]` sub-tasks). Never stuff multiple distinct deliverables into a single run-on paragraph. Move completed workstreams to [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md) and leave a concise single-line summary under `## ✅ Completed Workstreams`.
 - **Mandatory Project Tagging**: Every workstream, checklist group, task, and backlog item must explicitly include its current project tag (`[<project-name>] (<project-path>)`).
 - **Active Items First**: The currently active workstream must always be placed at the top of the content sections.
@@ -21,7 +21,18 @@
 
 ## 🔥 Active Workstreams
 
-
+### 🎯 [Ecosystem] Workstream W.57: Session Output Protocol — Subagent Management (visible-work retired)
+- **Project Identifiers:** `[Ecosystem]` (`projects/agents` root ecosystem)
+- **Status:** ✅ completed & superseded (2026-10-20). **User rationale:** the visibility protocol was a good idea but too extensive, and that extensiveness revealed a massive flaw in its logic — it over-cluttered the session and destabilized long runs. The subagent-management protocol serves the same underlying need (transparent, reliable progress) without those caveats, via a more sustainable and manageable method: orchestration through subagents with short, verifiable parent turns.
+- **Checklist:**
+  - [x] `[Ecosystem]` Write `.agents/rules/visible-work.md` (binding, workspace-wide) — later retired.
+  - [x] `[Ecosystem]` Write `.agents/skills/visible-work.md` (playbook) — later retired.
+  - [x] `[Ecosystem]` Add both rows to `AGENTS.md` quick-reference table — later rewired.
+  - [x] `[Ecosystem]` **Retire visible-work trio** (2026-10-20): deleted `.agents/rules/visible-work.md`, `.agents/skills/visible-work.md`, `.agents/agents/visible-worker/visible-worker.md`.
+  - [x] `[Ecosystem]` **Install replacement trio**: `.agents/rules/subagent-management.md` (binding orchestration rule), `.agents/skills/subagent-management.md` (playbook: task-splitting, prompt template, parallel-ownership rules), `.agents/agents/subagent-orchestrator/subagent-orchestrator.md` (role playbook); all three wired into `AGENTS.md` quick reference.
+  - [x] `[Ecosystem]` Attempt native fix via `C:\Users\Joshu\.config\opencode\cli.json` (`session.thinking: "show"`, `session.verbosity: "high"`) — ❌ DID NOT RESOLVE the visibility problem (root cause per user: the TUI's **working indicator** hides live progress while tools run; no GUI toggle exists; thinking blocks themselves do display). Recorded as failed, not counted as a solution.
+  - [x] `[Ecosystem]` Plugin approach — abandoned by user (time/credit cost). Final, shipped solution (2026-10-20): **behavioral ecosystem enforcement** — rewritten `.agents/rules/visible-work.md` (all reasoning teed into the live window as visible text; no background work of any kind; empty turns = protocol violation), rewritten `.agents/skills/visible-work.md` (narrate→act→report loop, anti-patterns, narrow subagent policy), new `.agents/agents/visible-worker/visible-worker.md` (role playbook with mermaid loop + hard bans + escalation). All three wired into `AGENTS.md` quick reference.
+  - [ ] `[Ecosystem]` **Future project (backlog, not actionable yet)**: ship the working-indicator visibility fix as a standalone importable OpenCode V2 plugin — proper parsing & message handling to output all information hidden behind the working indicator; extensive configuration for versatile display options so users can see all output when using OpenCode. Planned in root `ROADMAP.md` (v1.4.0 backlog); pick up after the theme `v2.0.0` workstream.
 
 ### 🎯 [Ecosystem] Workstream W.56: Organization Community Health Files Standard — GitHub Community/Health Documents Across All Repositories
 - **Project Identifiers:** `[Ecosystem]` (all `projects/*` repositories; per-repository rollout tracked below)
@@ -58,8 +69,8 @@
   - [x] `[helix-origin.github.io]` Flattened the Jekyll site root from `docs/` to the repository root (config, `index.md`, `CNAME`, assets); non-site `README.md` now carries `published: false`, `LICENSE` is excluded from the build, and artwork/release rules were updated. **(Delivered 2026-10-19.)**
   - [x] `[docs]` Community-health gaps + project-local ecosystem + tracking files.
   - [x] `[wiki]` Community-health gaps + project-local ecosystem + tracking files.
-  - [x] `[helix-gaming-db-00]` .. `[helix-gaming-db-03]` Community-health gaps + project-local ecosystem + tracking files (per shard).
-  - [x] `[helix-gaming-db-ingest]` Community-health gaps + project-local ecosystem + tracking files (already migrated).
+  - [x] `[ugl-db-00]` .. `[ugl-db-03]` Community-health gaps + project-local ecosystem + tracking files (per shard).
+  - [x] `[ugl-db-ingest]` Community-health gaps + project-local ecosystem + tracking files (already migrated).
   - [x] `[Ecosystem]` Root-ledger reconciliation: after per-repo migration is verified, replace migrated per-repo workstreams in root `ROADMAP.md`/`PLAN.md`/`TODO.md`/`BUGS.md` and archives with one-line pointers.
   - [x] `[Ecosystem]` Verify no repo file references the workspace ecosystem; zero-leak scan.
 - [x] **[Ecosystem] 3. Agents Ecosystem Knowledge Base (SQLite) — Design & Read-Only Integration (W.57)**:
@@ -181,6 +192,41 @@
 - [ ] `[Ecosystem]` Re-check `@franlol/opencode-md-table-formatter`, `opencode-agent-skills`, and `opencode-websearch-cited` npm latest releases for V2-compatible versions (or same-capability alternatives) at session starts / periodically; re-add to the `plugin` array when available and verify green (plugin view + no `failed to load plugin` in `~/.local/share/opencode/log/opencode.log`).
 - [ ] `[Ecosystem]` Periodically survey for new ecosystem-beneficial **plugins, MCP servers, and LSP configurations**; evaluate each against the curation policy (compatible, maintained, no capability overlap, low resource overhead, no lockup/corruption risk **on potato-class hardware**); adopt only clear wins and keep the total list minimal.
 
+---
+
+### 🏗 [Ecosystem] Workstream W.63: OpenCode Config Modernization, Plugin Evaluation & Decline Record (Delivered 2026-10-20)
+- **Project Identifiers:** `[Ecosystem]` (`projects/agents`) — `.opencode/opencode.jsonc` permissions/plugins configuration
+- **Target Components:**
+  - **V2 config migration**: replaced the legacy singular `plugin` key with the current `plugins` array; replaced the V1 object-form `permissions` with a V2 `permissions` ARRAY of 51 `{action, resource, effect}` rules.
+  - **Granular permission gating**: auto-`allow` for safe tools (`read`, `edit`, `glob`, `grep`, `webfetch`, `websearch`, `external_directory`, `skill`, `subagent`, `question`), read-only shell inspection (`git status|diff|log|show|ls-files|remote -v`), read-only `gh` (`issue view|list`, `pr view|list`, `release view|list`, `repo view`), and `magick *`; then a catch-all `{action:"shell",resource:"*",effect:"ask"}`; then every git-mutating/destructive command = `ask` (`git add|commit|push|pull|fetch|merge|rebase|reset|revert|stash|checkout|switch|clean|tag|branch|mv|restore|worktree`, `gh issue create|close|edit`, `gh pr create|merge`, `gh release create`, `rm *`, `sudo *`).
+  - **Load-bearing ordering invariant**: **last matching rule wins**, so broad allows are FIRST and gated rules LAST; reordering would silently un-gate git and break workspace invariant #1 (No unauthorized git operations).
+  - **Declined candidate record**: `@coool/opencode-decision-mode` evaluated and declined (see below).
+- **Why:** the config had drifted onto deprecated V1 shapes; centralizing granular gating in a sorted, last-wins rule array makes git safety explicit and machine-verifiable.
+- **Locked user directives (normalized by domain):**
+  - **1. Granular `ask`, never autoaccept**: keep the git rules as `ask` (not `deny`) so a human confirms each mutation; therefore do NOT enable `session.permissions: "autoaccept"` or `--auto`, which would auto-approve the `ask` rules and undermine invariant #1.
+  - **2. Configurable equivalents only**: "auto-expand tool output" does NOT exist in OpenCode — expanding/collapsing tool calls is TUI-interactive only. The configurable equivalents are auto-approve via `permissions`, and `session.permissions: "autoaccept"` in the CLI config; this workstream deliberately adopts the former posture (granular `ask`) and rejects the latter.
+- **Implementation checklist:**
+  - [x] `[Ecosystem]` Migrate `.opencode/opencode.jsonc`: singular `plugin` → `plugins` array; V1 object `permissions` → V2 `permissions` ARRAY of 51 `{action, resource, effect}` rules; broad allows first, gated `ask` rules last. **(Delivered 2026-10-20 — verified: parses as JSON with comments stripped, 2 plugins, 51 rules, 0 CRLF, no legacy `plugin` key)**
+  - [x] `[Ecosystem]` Record the last-matching-rule-wins ordering invariant and the "auto-expand tool output does not exist in OpenCode" finding; decision: granular `ask` rules, NOT autoaccept. **(Delivered 2026-10-20 — documented in this workstream; granular `ask` posture protects invariant #1)**
+  - [x] `[Ecosystem]` Evaluate `@coool/opencode-decision-mode` against the curation policy. **(Delivered 2026-10-20 — NOT RECOMMENDED; nothing added to config)**
+    - **Declined — `@coool/opencode-decision-mode`:** npm latest 0.1.6 published 2026-10-20 (repo 0.1.7 — version skew), repo created 2026-10-19, 0 stars / 0 forks / 0 open issues / no releases, MIT, pre-1.0. Registers `decision`/`decision_map`/`decision_results` tools delegating judgment calls to a third-party runtime (OpenRouter / TypeSafe / OpenAI) requiring provider API keys and sending per-record state off-machine (telemetry-free claim is author-asserted, unverified). Targets `@opencode/plugin ^2.0.32` while the client here is 1.18.29 → plugin-API compatibility unverified. Decisive: orthogonal to and does not help the workspace's real context-bloat/crash problem.
+
+---
+
+### 🏗 [Ecosystem] Workstream W.64: First-Party OpenCode Plugin & Agent Suite (Proposed)
+- **Project Identifiers:** `[Ecosystem]` (`projects/agents`) — first-party OpenCode plugins and agents under `.opencode/plugins/` / `.opencode/agents/` (or `scripts/opencode-plugin/`)
+- **Target Components:**
+  - **Handoff-protocol plugin** — already planned (see W.58 / W.62): the permanent `HANDOFF.md` session-state auto-refresh. This workstream is the home for the whole first-party suite; the handoff plugin is its first entry (detail lives in W.58 / W.62, not duplicated here).
+  - **Custom reviewer plugin** — an OpenCode plugin providing the workspace's review workflow natively (repo / PR / code review with the HELIX review standards).
+  - **SQLite metadata database management & integration plugin** — a plugin to manage/integrate the workspace's SQLite metadata database (the HELIX metadata KB referenced by `scripts/`), for querying/maintaining it from within OpenCode.
+  - **Open-ended**: further first-party plugins/agents wherever they measurably enhance OpenCode capabilities.
+- **Why / framing (user's words, paraphrased accurately):** our agents ecosystem repo should be a great starting point for anyone who needs a unified ecosystem, with the ability to scaffold per-repo ecosystems for it to work with.
+- **Implementation checklist:**
+  - [ ] `[Ecosystem]` Handoff-protocol plugin (cross-reference W.58 / W.62; the first entry of this suite).
+  - [ ] `[Ecosystem]` Custom reviewer plugin (native HELIX review workflow).
+  - [ ] `[Ecosystem]` SQLite metadata database management & integration plugin (query/maintain the HELIX metadata KB from OpenCode).
+  - [ ] `[Ecosystem]` Open-ended: further first-party plugins/agents that measurably enhance OpenCode capabilities.
+
 
 
 
@@ -190,4 +236,5 @@
 
 - **[Ecosystem]** W.56 2b per-repo migration: COMPLETE (all 15 org repos scaffolded + tailored).
 - **[Ecosystem]** W.57/W.58/W.59/W.60/W.61/W.62: delivered (see PLAN.md / HANDOFF.md).
+- **[Ecosystem]** W.63: delivered 2026-10-20 (`.opencode` config modernization + plugin decline record). W.64: proposed (first-party plugin & agent suite).
 

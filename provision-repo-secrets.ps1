@@ -7,11 +7,11 @@
   and uses the GitHub CLI (gh) to securely set the repository secret.
 
 .PARAMETER Repo
-  The target repository (e.g. "HELIX-Origin/helix-gaming-db" or shard repo).
+  The target repository (e.g. "HELIX-Origin/ugl-db" or shard repo).
   If omitted, provisions all known organization repositories.
 
 .EXAMPLE
-  .\provision-repo-secrets.ps1 -Repo "HELIX-Origin/helix-gaming-db-pc"
+  .\provision-repo-secrets.ps1 -Repo "HELIX-Origin/ugl-db-pc"
 #>
 
 [CmdletBinding()]
@@ -49,11 +49,11 @@ if ($Repo) {
   $reposToProvision = @(
     "HELIX-Origin/docs",
     "HELIX-Origin/wiki",
-    "HELIX-Origin/helix-gaming-db-00",
-    "HELIX-Origin/helix-gaming-db-01",
-    "HELIX-Origin/helix-gaming-db-02",
-    "HELIX-Origin/helix-gaming-db-03",
-    "HELIX-Origin/helix-gaming-db-ingest",
+    "HELIX-Origin/ugl-db-00",
+    "HELIX-Origin/ugl-db-01",
+    "HELIX-Origin/ugl-db-02",
+    "HELIX-Origin/ugl-db-03",
+    "HELIX-Origin/ugl-db-ingest",
     "HELIX-Origin/universal-game-launcher",
     "HELIX-Origin/helix-jekyll-theme",
     "HELIX-Origin/helix-origin.github.io",

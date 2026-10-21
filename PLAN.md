@@ -50,6 +50,36 @@ flowchart TD
 
 ---
 
+### 🚀 Sprint 36: [Ecosystem] — OpenCode Config Modernization & First-Party Plugin Suite (W.63 / W.64)
+- **Project Identifier:** `[Ecosystem]` (`projects/agents`)
+- **Target Objective:** Modernize the `.opencode` configuration onto current V2 shapes and lock in granular, human-confirmed git gating; then establish a home for the first-party OpenCode plugin & agent suite. Record a declined third-party candidate so it is not re-proposed.
+
+```mermaid
+flowchart TD
+    S36_1["[Ecosystem] W.63a: Migrate opencode.jsonc (plugins array, V2 permissions array)"] --> S36_2["[Ecosystem] W.63b: Record last-wins ordering invariant & configurable-equivalents finding"]
+    S36_2 --> S36_3["[Ecosystem] W.63c: Evaluate & decline @coool/opencode-decision-mode"]
+    S36_3 --> S36_4["[Ecosystem] W.64: First-Party Plugin & Agent Suite (Proposed)"]
+```
+
+#### 📝 Execution Tasks
+
+1. **[Ecosystem] W.63a — Config Migration (DONE)**:
+   - Replace singular `plugin` with the `plugins` array; replace V1 object `permissions` with a V2 `permissions` ARRAY of 51 `{action, resource, effect}` rules.
+   - Broad allows FIRST, gated `ask` rules LAST (**last matching rule wins**); verify JSON parses, 2 plugins, 51 rules, 0 CRLF, no legacy `plugin` key.
+2. **[Ecosystem] W.63b — Findings & Posture Decision (DONE)**:
+   - Record that "auto-expand tool output" does NOT exist in OpenCode (TUI-interactive only); configurable equivalents are `permissions` auto-approve and `session.permissions: "autoaccept"`.
+   - Decision: granular `ask` rules, NOT autoaccept (autoaccept/`--auto` would auto-approve the git `ask` rules and undermine invariant #1).
+3. **[Ecosystem] W.63c — Candidate Decline (DONE)**:
+   - `@coool/opencode-decision-mode`: NOT RECOMMENDED (version skew 0.1.6↔0.1.7, created 2026-10-19, 0 stars/forks/issues/releases, MIT, pre-1.0, off-machine per-record state to third-party runtimes, plugin-API target ^2.0.32 vs client 1.18.29 unverified, orthogonal to the context-bloat problem); nothing added to config.
+4. **[Ecosystem] W.64 — First-Party Plugin & Agent Suite (Proposed)**:
+   - Handoff-protocol plugin (cross-reference W.58 / W.62; first entry of the suite).
+   - Custom reviewer plugin (native HELIX review workflow).
+   - SQLite metadata database management & integration plugin (query/maintain the HELIX metadata KB from OpenCode).
+   - Open-ended: further first-party plugins/agents that measurably enhance OpenCode capabilities.
+   - Framing: the agents ecosystem repo should be a great starting point for anyone needing a unified ecosystem, with per-repo ecosystem scaffolding.
+
+---
+
 ## 🧭 Project-Local Sprint Plans Index
 
 > Per-repository active sprints, execution tasks, and backlog items have been completely migrated to each repository's own tracking ledgers under `projects/<repo>/PLAN.md`. See each repository for project-scoped sprint planning:
@@ -64,9 +94,9 @@ flowchart TD
 - **[docs]**: [`projects/docs/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/docs/PLAN.md)
 - **[wiki]**: [`projects/wiki/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/wiki/PLAN.md)
 - **[helix-origin.github.io]**: [`projects/helix-origin.github.io/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/helix-origin.github.io/PLAN.md)
-- **[helix-gaming-db-00]**: [`projects/helix-gaming-db-00/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/helix-gaming-db-00/PLAN.md)
-- **[helix-gaming-db-01..03]**: [`projects/helix-gaming-db-01/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/helix-gaming-db-01/PLAN.md)
-- **[helix-gaming-db-ingest]**: [`projects/helix-gaming-db-ingest/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/helix-gaming-db-ingest/PLAN.md)
+- **[ugl-db-00]**: [`projects/ugl-db-00/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/ugl-db-00/PLAN.md)
+- **[ugl-db-01..03]**: [`projects/ugl-db-01/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/ugl-db-01/PLAN.md)
+- **[ugl-db-ingest]**: [`projects/ugl-db-ingest/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/ugl-db-ingest/PLAN.md)
 
 ---
 

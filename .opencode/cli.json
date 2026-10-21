@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "session": {
+    "thinking": "show",
+    "verbosity": "high"
+  },
+  "mini": {
+    "thinking": "show"
+  },
+  "keybinds": {
+    "session.toggle.thinking": "<leader>h"
+  }
+}

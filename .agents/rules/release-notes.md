@@ -25,7 +25,7 @@ To establish a uniform, detailed, human-readable, and universal release notes st
 > [!IMPORTANT]
 > **Assets must ONLY be uploaded to repositories that distribute a packaged application or resource.**
 > - **Packaged Repositories (Assets Allowed):** `universal-game-launcher`, `nh-reader`, `theme-toolkit`, `depressurizer` (desktop installers/binaries) and `ffxiv-config` (packaged configuration archive).
-> - **Zero-Asset Repositories (No Uploaded Assets):** `docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `agents`, and `.github`. These repositories publish GitHub Releases with comprehensive release notes, changelog highlights, and git tags, but **never attach binary or zip assets**.
+> - **Zero-Asset Repositories (No Uploaded Assets):** `docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `windhawk-themes`, `ugl-db-00` through `03`, `agents`, and `.github`. These repositories publish GitHub Releases with comprehensive release notes, changelog highlights, and git tags, but **never attach binary or zip assets**.
 
 ### Repository Versioning & Asset Matrix
 
@@ -41,10 +41,10 @@ To establish a uniform, detailed, human-readable, and universal release notes st
 | **helix-origin.github.io** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; portal site checkpoint) | `index.md` |
 | **docs** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; documentation hub) | `README.md` |
 | **wiki** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; technical wiki hub) | `README.md` |
-| **helix-gaming-db-00** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v2.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
-| **helix-gaming-db-01** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
-| **helix-gaming-db-02** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
-| **helix-gaming-db-03** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
+| **ugl-db-00** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v2.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
+| **ugl-db-01** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
+| **ugl-db-02** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
+| **ugl-db-03** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
 | **agents** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; AI governance ecosystem) | `ROADMAP.md`, `PLAN.md` |
 
 ---

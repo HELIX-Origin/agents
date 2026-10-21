@@ -8,7 +8,7 @@
 </p>
 
 
-> Centralized AI agent instructions, binding rules, engineering skills, templates, and workspace coordination framework for all active repositories within the [HELIX Origin](https://github.com/HELIX-Origin) organization (`helix-jekyll-theme`, `helix-origin.github.io`, `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`, `helix-gaming-db-00` through `03`, `ffxiv-config`).
+> Centralized AI agent instructions, binding rules, engineering skills, templates, and workspace coordination framework for all active repositories within the [HELIX Origin](https://github.com/HELIX-Origin) organization (`helix-jekyll-theme`, `helix-origin.github.io`, `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`, `ugl-db-00` through `03`, `ffxiv-config`).
 
 ---
 
@@ -112,10 +112,10 @@ This repository houses the authoritative operational blueprint for AI coding ass
 │   ├── universal-game-launcher/ <- Tauri v2 Universal Game Launcher
 │   ├── theme-toolkit/         <- Tauri v2 cross-platform desktop theme studio
 │   ├── windhawk-themes/       <- Windows 11 Windhawk styling suites
-│   ├── helix-gaming-db-00/    <- REST metadata API & gaming database (shard 00 / core)
-│   ├── helix-gaming-db-01/    <- REST metadata API & gaming database (shard 01)
-│   ├── helix-gaming-db-02/    <- REST metadata API & gaming database (shard 02)
-│   ├── helix-gaming-db-03/    <- REST metadata API & gaming database (shard 03)
+│   ├── ugl-db-00/    <- REST metadata API & gaming database (shard 00 / core)
+│   ├── ugl-db-01/    <- REST metadata API & gaming database (shard 01)
+│   ├── ugl-db-02/    <- REST metadata API & gaming database (shard 02)
+│   ├── ugl-db-03/    <- REST metadata API & gaming database (shard 03)
 │   └── ffxiv-config/          <- FFXIV HUD, hotbar, and macro configuration setup
 └── scratch/                   <- UNTRACKED: Temporary agent working files
 ```

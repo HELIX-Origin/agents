@@ -44,7 +44,7 @@
 | skill | file-editing | .agents/skills/file-editing.md | Skill: Safe File Editing (paths, EOL, exact match) |  |  | 1dfee1a5c65e | fs |
 | skill | game-metadata-providers | .agents/skills/game-metadata-providers.md | Skill: Game Metadata Providers & Multi-Source Enrichment |  |  | 56c1bd462424 | fs |
 | skill | gfm-content | .agents/skills/gfm-content.md | Skill: GitHub Flavored Markdown content (GFM) |  |  | bb6d3167ac39 | fs |
-| skill | helix-gaming-db-expansion | .agents/skills/helix-gaming-db-expansion.md | Skill: HELIX Gaming DB — Multi-Platform Metadata Expansion & Automated Ingestion Pipeline |  |  | 01ac1bef4827 | fs |
+| skill | ugl-db-expansion | .agents/skills/ugl-db-expansion.md | Skill: HELIX Gaming DB — Multi-Platform Metadata Expansion & Automated Ingestion Pipeline |  |  | 01ac1bef4827 | fs |
 | skill | helix-theme | .agents/skills/helix-theme.md | Skill: helix-docs theme — structure, consumption, repair |  |  | 4c676bd105dd | fs |
 | skill | jekyll-remote-theme | .agents/skills/jekyll-remote-theme.md | Skill: Jekyll remote theme + GitHub Pages configuration |  |  | d0f8ff897cac | fs |
 | skill | large-session-management | .agents/skills/large-session-management.md | Skill: Large Session & Context Management |  |  | a8514ee76fef | fs |

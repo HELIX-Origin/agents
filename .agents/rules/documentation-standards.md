@@ -65,7 +65,7 @@ Within the centralized `docs` and `wiki` repositories:
 Every project repository under `projects/` must maintain a concise, minimal entry point `README.md` (~30–50 lines).
 
 ### Invariant Rules:
-1. **Zero Embedded Docs Folders:** Project repositories (`universal-game-launcher`, `nh-reader`, `theme-toolkit`, `windhawk-themes`, `ffxiv-config`, `helix-gaming-db-00`–`03`) must **NEVER** contain local `docs/` or `wiki/` documentation folders, Jekyll site configs, or GitHub Pages deployments.
+1. **Zero Embedded Docs Folders:** Project repositories (`universal-game-launcher`, `nh-reader`, `theme-toolkit`, `windhawk-themes`, `ffxiv-config`, `ugl-db-00`–`03`) must **NEVER** contain local `docs/` or `wiki/` documentation folders, Jekyll site configs, or GitHub Pages deployments.
 2. **Direct Gateway Links:** Project `README.md` files must link directly to the centralized hubs:
    - 📖 **Documentation**: `https://docs.helix-origin.club/<project>/`
    - 🧠 **Technical Wiki**: `https://wiki.helix-origin.club/<project>/`

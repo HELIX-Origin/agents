@@ -5,7 +5,7 @@
 > Pair with [`ROADMAP.md`](./ROADMAP.md) (ecosystem direction), [`PLAN.md`](./PLAN.md) (sprint execution), and [`TODO.md`](./TODO.md) (task ledger).
 > Historical post-mortems live in [`.github/BUGS-ARCHIVE.md`](./.github/BUGS-ARCHIVE.md).
 > Per-project bugs and quirks are tracked exclusively within each repository under `projects/<repo>/BUGS.md`.
-> Last updated: 2026-10-19
+> Last updated: 2026-10-20
 
 ---
 
@@ -47,7 +47,16 @@
 
 ## ⚠️ Active & Open Bugs
 
-*(No critical open bugs currently blocking ecosystem operations. All quality gate suites pass: `npm run typecheck`, `npm run test`, `npm run validate` 100% green.)*
+### 2026-10-20 — [Ecosystem] (projects/agents): Compression session markers persisted into handoff block new-session continuation
+- **Project Identifier:** `[Ecosystem]`
+- **Repository Path:** `projects/agents`
+- **Severity**: 🟠 High (state synchronization breakdown — new sessions cannot resume)
+- **Status**: ⚠️ open
+- **Scope / Affected Component**: `compress` tool (context management), `HANDOFF.md` session-state ledger, `.agents/rules/session-handoff.md`
+- **Reported Issue**: A fresh session could not continue prior work — the handoff content carried **session-locked compression markers** from the previous session (compressed-block IDs and raw message IDs). Those identifiers are scoped to the conversation that produced them and do not exist in a new session, so the new session repeatedly tried to resolve them and failed.
+- **Root Cause**: The `compress` tool's boundary IDs (compressed-block placeholders and raw message IDs) are session-scoped tokens with meaning only inside their originating conversation. Any handoff, ledger, or checkpoint text that records or references them becomes permanently unresolvable after a context reset or in a new session.
+- **Proposed / Applied Fix**: (1) Binding rule in `.agents/rules/session-handoff.md` — handoff and archive content must be **marker-free**: translate state into durable references only (file paths, issue numbers, section headings), never conversation-scoped IDs. (2) Pre-publish validation: grep handoff/ledger output for the session-marker pattern before refreshing `HANDOFF.md`. (3) If a new session encounters stale markers, ignore them and resume from the ledgers (ledgers win).
+- **Verification**: workspace-wide grep for session-marker patterns in `*.md` returns zero matches (verified 2026-10-20 after sanitizing the theme handoff).
 
 ---
 

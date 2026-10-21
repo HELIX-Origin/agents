@@ -5,7 +5,7 @@
 > Pair with [`PLAN.md`](./PLAN.md) (sprint execution), [`TODO.md`](./TODO.md) (executable tasks), and [`BUGS.md`](./BUGS.md) (known issues).
 > Project-specific roadmaps and milestones live exclusively within each project's own repository (`projects/<repo>/ROADMAP.md`).
 > Historical delivered milestones live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md).
-> Last updated: 2026-10-19
+> Last updated: 2026-10-20
 
 ---
 
@@ -52,6 +52,7 @@ flowchart TB
 | **v1.1.0** | Headless CLI & Scaffolding Engine | ✅ Shipped | Modular TypeScript ESM CLI, dual extension mechanism, SQLite metadata knowledge base (`knowledge.db`), domain-neutral scaffolding engine (`kb-scaffold.ts`), and project-type starter suites. |
 | **v1.2.0** | Context Self-Monitoring & Plugins | 🚀 Active | OpenCode V2-native context-pressure self-monitoring plugin (W.62), curated plugin/MCP compatibility watch (W.61), and potato-hardware resource budgets. |
 | **v1.3.0** | Multi-Model & Toolchain Federation | 🔮 Backlog | Pluggable LLM tool adapters, schema validation pipelines, and automated multi-repo secret synchronization helpers. |
+| **v1.4.0** | Output Visibility Plugin | 🔮 Backlog | Importable OpenCode V2 plugin fully fixing the working-indicator visibility gap: proper message parsing & handling to surface all output hidden behind the working indicator, with extensive configuration for versatile display control so users can see everything OpenCode does. |
 
 ---
 

@@ -12,7 +12,7 @@
 - **Target Components:** `src/lib/plugins/metadata/helix-db.ts`, `src/lib/plugins/metadata/developers/`, `src/lib/plugins/metadata/universal.ts`
 
 **Locked user directives (normalized by domain):**
-- **Three-Tier REST API Client**: Fully integrate `universal-game-launcher` with the new Three-Tier REST API (`/api/manifest.json`, `/api/v2/` relational discovery, `/api/v3/` dedicated adult tier) deployed on `https://api.helix-origin.club/helix-gaming-db`.
+- **Three-Tier REST API Client**: Fully integrate `universal-game-launcher` with the new Three-Tier REST API (`/api/manifest.json`, `/api/v2/` relational discovery, `/api/v3/` dedicated adult tier) deployed on `https://api.helix-origin.club/ugl-db`.
 - **Hand-Rolled Metadata Replacement**: Completely replace the 28 hardcoded per-developer static game files in `src/lib/plugins/metadata/developers/*.ts` with dynamic API client calls and local cache.
 - **Offline Resilience & KV Persistence**: Guarantee seamless offline capability by caching dual-tier search indices and detailed game payloads via the client's persistent serverless KV tier (`api.kvSetJson` / `api.kvGetJson`).
 
@@ -26,41 +26,41 @@
 
 ---
 
-### 🎯 [helix-gaming-db] (`projects/helix-gaming-db`) Workstream W.52: REST Metadata API Expansion — Comprehensive Endpoints, Contributor Fork/PR Tooling, Expanded Catalog & GitHub Issue Templates (Release v1.1.0)
-- **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`)
+### 🎯 [ugl-db] (`projects/ugl-db`) Workstream W.52: REST Metadata API Expansion — Comprehensive Endpoints, Contributor Fork/PR Tooling, Expanded Catalog & GitHub Issue Templates (Release v1.1.0)
+- **Project Identifiers:** `[ugl-db]` (`projects/ugl-db`)
 - **Target Components:** `scripts/build-search-index.mjs`, `api/v1/`, `api/v2/`, `api/v3/`, `schemas/`, `.github/ISSUE_TEMPLATE/`, `.github/workflows/`
 
 **Locked user directives (normalized by domain):**
-- **Three-Tier REST Architecture**: Expand `helix-gaming-db` into three purpose-built tiers: Root gateway (`/api/manifest.json`), v1 Client API, v2 Relational Discovery & Contributor API, and v3 Dedicated Adult / 18+ Gaming API.
+- **Three-Tier REST Architecture**: Expand `ugl-db` into three purpose-built tiers: Root gateway (`/api/manifest.json`), v1 Client API, v2 Relational Discovery & Contributor API, and v3 Dedicated Adult / 18+ Gaming API.
 - **Contributor Fork/PR Suite**: Provide starter schemas and developer templates for forking the repository and submitting pull requests.
 - **Database Catalog Expansion**: Expand curated catalog to 80 verified titles and 42 developers across PC indie gems, adult visual novels, and emulation classics.
 - **Automated PR Reviews & Issue Triage**: Author structured GitHub Issue forms, PR templates, and automated verification workflows (`pr-automation.yml`, `issue-triage.yml`, `verify-pr.mjs`).
 
 **Implementation checklist:**
-- [x] **[helix-gaming-db] Three-Tier Endpoint & Generator Suite**: Expanded `scripts/build-search-index.mjs` generating `/api/manifest.json`, `/api/v1/`, `/api/v2/`, and `/api/v3/`.
-- [x] **[helix-gaming-db] Contributor Starter Templates & Schemas**: Authored `api/v2/contribute/templates/game.json`, `developer.json`, and schemas.
-- [x] **[helix-gaming-db] Curated Catalog Expansion**: Expanded catalog to 80 verified games and 42 developers; schema validation (`npm test`) passing with 100% compliance.
-- [x] **[helix-gaming-db] Community Issue Forms & PR Template Suite**: Created `.github/ISSUE_TEMPLATE/` forms and `pull_request_template.md`.
-- [x] **[helix-gaming-db] PR Automation & Issue Triage Workflows**: Authored `scripts/verify-pr.mjs`, deployed `.github/workflows/pr-automation.yml` (automated reviews and labels) and `issue-triage.yml`.
+- [x] **[ugl-db] Three-Tier Endpoint & Generator Suite**: Expanded `scripts/build-search-index.mjs` generating `/api/manifest.json`, `/api/v1/`, `/api/v2/`, and `/api/v3/`.
+- [x] **[ugl-db] Contributor Starter Templates & Schemas**: Authored `api/v2/contribute/templates/game.json`, `developer.json`, and schemas.
+- [x] **[ugl-db] Curated Catalog Expansion**: Expanded catalog to 80 verified games and 42 developers; schema validation (`npm test`) passing with 100% compliance.
+- [x] **[ugl-db] Community Issue Forms & PR Template Suite**: Created `.github/ISSUE_TEMPLATE/` forms and `pull_request_template.md`.
+- [x] **[ugl-db] PR Automation & Issue Triage Workflows**: Authored `scripts/verify-pr.mjs`, deployed `.github/workflows/pr-automation.yml` (automated reviews and labels) and `issue-triage.yml`.
 - [x] **[helix-docs] Documentation & Technical Wiki Sync**: Updated `endpoints.md`, `contributing.md`, `index.md`, and `architecture.md`.
 
 ---
 
-### 🎯 [helix-gaming-db] (`projects/helix-gaming-db`) & [Universal-Game-Launcher] (`projects/Universal-Game-Launcher`) Workstream W.50: HELIX Gaming DB REST API Foundation, Static v1 Endpoints, JSON Schemas, Remote Theme Docs / Wiki & UGL Integration (Release v1.0.0)
-- **Project Identifiers:** `[helix-gaming-db]` (`projects/helix-gaming-db`), `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`)
+### 🎯 [ugl-db] (`projects/ugl-db`) & [Universal-Game-Launcher] (`projects/Universal-Game-Launcher`) Workstream W.50: HELIX Gaming DB REST API Foundation, Static v1 Endpoints, JSON Schemas, Remote Theme Docs / Wiki & UGL Integration (Release v1.0.0)
+- **Project Identifiers:** `[ugl-db]` (`projects/ugl-db`), `[Universal-Game-Launcher]` (`projects/Universal-Game-Launcher`)
 - **Target Components:** `api/v1/`, `schemas/`, `scripts/`, `_config.yml`, `_docs/`, `_wiki/`, `src/lib/plugins/metadata/helix-db.ts`
 
 **Locked user directives (normalized by domain):**
-- **Dedicated Gaming Metadata Repository & REST API Architecture**: Establish `helix-gaming-db` as a dedicated repo hosted on GitHub Pages (`/api/v1/`) serving static, cacheable JSON endpoints mimicking a production REST API (`manifest.json`, `search/index.json`, `games/{slug}.json`, `developers/{slug}.json`).
+- **Dedicated Gaming Metadata Repository & REST API Architecture**: Establish `ugl-db` as a dedicated repo hosted on GitHub Pages (`/api/v1/`) serving static, cacheable JSON endpoints mimicking a production REST API (`manifest.json`, `search/index.json`, `games/{slug}.json`, `developers/{slug}.json`).
 - **Draft 2020-12 JSON Schemas & Automated Validation**: Implement formal schemas for manifests, games, and developers with zero-error validation via `scripts/validate.mjs`.
 - **Theme-Neutral Documentation & Technical Wiki**: Deploy portal and technical wiki using `remote_theme: HELIX-Origin/helix-docs` maintaining strict theme-neutrality.
 - **Client Integration in Universal Game Launcher**: Integrate `metadata-helix` as a primary high-priority provider querying `helix-origin.club` with cascade fallback to `helix-origin.github.io` and offline cache.
 
 **Implementation checklist:**
-- [x] **[helix-gaming-db] Agent Ecosystem Synchronization**: Registered in `AGENTS.md`, `.agents/rules/workspace.md`, and tracking ledgers.
-- [x] **[helix-gaming-db] Repository Scaffolding & JSON Schemas**: Initialized repository, authoring `manifest.schema.json`, `game.schema.json`, and `developer.schema.json`.
-- [x] **[helix-gaming-db] Static REST v1 Endpoints & Seed Datasets**: Authored 62 curated game payloads, 28 studio profiles, search index, and manifest.
-- [x] **[helix-gaming-db] Jekyll Remote Theme Docs & Technical Wiki**: Deployed portal homepage and interactive API explorer with `remote_theme: HELIX-Origin/helix-docs`.
+- [x] **[ugl-db] Agent Ecosystem Synchronization**: Registered in `AGENTS.md`, `.agents/rules/workspace.md`, and tracking ledgers.
+- [x] **[ugl-db] Repository Scaffolding & JSON Schemas**: Initialized repository, authoring `manifest.schema.json`, `game.schema.json`, and `developer.schema.json`.
+- [x] **[ugl-db] Static REST v1 Endpoints & Seed Datasets**: Authored 62 curated game payloads, 28 studio profiles, search index, and manifest.
+- [x] **[ugl-db] Jekyll Remote Theme Docs & Technical Wiki**: Deployed portal homepage and interactive API explorer with `remote_theme: HELIX-Origin/helix-docs`.
 - [x] **[Universal-Game-Launcher] Client Metadata Provider Integration (`metadata-helix`)**: Created `helix-db.ts` wired into `universal.ts` metadata cascade.
 - [x] **[Ecosystem] Verification Gate & Quality Assurance**: Passed schema tests, `cargo check`, `cargo test` (35 passing), `svelte-check`, and live deployment.
 

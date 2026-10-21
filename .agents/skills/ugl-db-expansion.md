@@ -1,6 +1,6 @@
 # Skill: HELIX Gaming DB — Multi-Platform Metadata Expansion & Automated Ingestion Pipeline
 
-> Authoritative engineering standard and operational guide for progressively expanding the **HELIX Gaming DB** (`projects/helix-gaming-db-00` through `03`) catalog to cover every game available across all supported PC and emulation platforms via automated ingestion scripts, data sanitization pipelines, scheduled GitHub Actions workflows, and the **Cloudflare Worker Unified Gateway** (`api.helix-origin.club`).
+> Authoritative engineering standard and operational guide for progressively expanding the **HELIX Gaming DB** (`projects/ugl-db-00` through `03`) catalog to cover every game available across all supported PC and emulation platforms via automated ingestion scripts, data sanitization pipelines, scheduled GitHub Actions workflows, and the **Cloudflare Worker Unified Gateway** (`api.helix-origin.club`).
 
 ---
 
@@ -71,7 +71,7 @@ flowchart TD
     W_Enrich --> T_Index
 ```
 
-### 2.1 Ingestion Scripts Architecture (`projects/helix-gaming-db-00/scripts/ingest/`)
+### 2.1 Ingestion Scripts Architecture (`projects/ugl-db-00/scripts/ingest/`)
 Ingestion scripts are modular, standalone Node.js ES modules (`.mjs`) adhering to the `scripts/ingest/` standard:
 
 1. **`ingest-steam.mjs`**:
@@ -183,7 +183,7 @@ As the database scales across thousands of games and platforms, repository size 
 
 ```mermaid
 flowchart TD
-    subgraph RootRegistry["HELIX Gaming DB Shard 00 / Root Registry (helix-gaming-db-00)"]
+    subgraph RootRegistry["HELIX Gaming DB Shard 00 / Root Registry (ugl-db-00)"]
         Manifest["api/manifest.json (Federation Master)"]
         UnifiedIndex["api/v2/search/index.json (Global Unified Search)"]
         Catalog["api/v2/catalog/index.json (Unified Catalog)"]
@@ -191,10 +191,10 @@ flowchart TD
     end
 
     subgraph Shards["Volume-Sharded Metadata Repositories (HELIX-Origin/*)"]
-        DB01["helix-gaming-db-01 (All Platforms / Volume Partition 01)"]
-        DB02["helix-gaming-db-02 (All Platforms / Volume Partition 02)"]
-        DB03["helix-gaming-db-03 (All Platforms / Volume Partition 03)"]
-        DBXX["helix-gaming-db-## (Future Sequential Shards as needed)"]
+        DB01["ugl-db-01 (All Platforms / Volume Partition 01)"]
+        DB02["ugl-db-02 (All Platforms / Volume Partition 02)"]
+        DB03["ugl-db-03 (All Platforms / Volume Partition 03)"]
+        DBXX["ugl-db-## (Future Sequential Shards as needed)"]
     end
 
     subgraph Automation["Automated Shard Provisioning & PAT Replication"]
@@ -212,8 +212,8 @@ flowchart TD
 ```
 
 ### 6.1 Architectural Principles:
-1. **Identical Structure & Multi-Provider Support**: Shard repositories do NOT partition by platform or storefront. Instead, every shard (`helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, etc.) is an exact copy carrying the full boilerplate, schemas, validation tools, `i18next` localized taxonomies, search generators, and GitHub Actions workflows. Every shard natively supports all platforms (PC, PlayStation, Nintendo, Xbox, Retro, and Adult).
-2. **Content Volume Splitting**: Repositories simply partition the collection volume (game records and artwork) horizontally across sequentially numbered repositories (`helix-gaming-db-###`) to guarantee repositories stay well below GitHub free tier storage (<1GB) and file count limits.
+1. **Identical Structure & Multi-Provider Support**: Shard repositories do NOT partition by platform or storefront. Instead, every shard (`ugl-db-01`, `ugl-db-02`, `ugl-db-03`, etc.) is an exact copy carrying the full boilerplate, schemas, validation tools, `i18next` localized taxonomies, search generators, and GitHub Actions workflows. Every shard natively supports all platforms (PC, PlayStation, Nintendo, Xbox, Retro, and Adult).
+2. **Content Volume Splitting**: Repositories simply partition the collection volume (game records and artwork) horizontally across sequentially numbered repositories (`ugl-db-###`) to guarantee repositories stay well below GitHub free tier storage (<1GB) and file count limits.
 3. **Multi-Repo Cycling API**: Client applications (including `universal-game-launcher`) cycle across all active metadata repositories when searching or retrieving metadata. Because all shards share the identical endpoint hierarchy (`/api/v1/`, `/api/v2/`, `/api/v3/`, `locales/`), the client cycles between the repositories seamlessly.
 4. **Automated PAT Replication Across Shards**:
    - Organization repositories share automated CI/CD and PR auto-merge workflows powered by a shared `PAT_TOKEN` secret.

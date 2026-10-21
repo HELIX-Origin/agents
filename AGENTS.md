@@ -20,7 +20,7 @@
    This agents ecosystem is engineered exclusively for active repositories within the `HELIX-Origin`
    GitHub organization (`https://github.com/HELIX-Origin`): `helix-jekyll-theme`, `helix-origin.github.io`,
    `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`,
-   `helix-gaming-db-00`, `helix-gaming-db-01`, `helix-gaming-db-02`, `helix-gaming-db-03`, `helix-gaming-db-ingest`, `ffxiv-config`, and `depressurizer`. Never work with,
+   `ugl-db-00`, `ugl-db-01`, `ugl-db-02`, `ugl-db-03`, `ugl-db-ingest`, `ffxiv-config`, and `depressurizer`. Never work with,
    read, explore, modify, or **directly mention by name** any external, third-party, or deleted
    projects or repositories that are not part of the `HELIX-Origin` organization across rules,
    skills, playbooks, or tracking files. This is mandatory to prevent agents from getting mixed up.
@@ -84,7 +84,7 @@
    release assets must **only** be uploaded to repositories distributing a packaged application
    or resource (`universal-game-launcher`, `nh-reader`, `theme-toolkit`, `ffxiv-config`, `depressurizer`).
    All other repositories (`docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`,
-   `windhawk-themes`, `helix-gaming-db-00` through `03`, `agents`, `.github`) publish
+   `windhawk-themes`, `ugl-db-00` through `03`, `agents`, `.github`) publish
    zero-asset GitHub Releases with release notes and tags. See `.agents/rules/release-notes.md`.
 
 11. **Organization-wide Semantic Versioning invariant.**
@@ -172,11 +172,11 @@
 │   ├── universal-game-launcher/ <- Tauri v2 Universal Game Launcher (multi-platform library & launcher)
 │   ├── theme-toolkit/         <- Tauri v2 desktop theme studio & applicator (Windows, macOS, Linux)
 │   ├── windhawk-themes/       <- (docs/ in scope)
-│   ├── helix-gaming-db-00/    <- REST metadata API & gaming database (shard 00 / core)
-│   ├── helix-gaming-db-01/    <- REST metadata API & gaming database (shard 01)
-│   ├── helix-gaming-db-02/    <- REST metadata API & gaming database (shard 02)
-│   ├── helix-gaming-db-03/    <- REST metadata API & gaming database (shard 03)
-│   ├── helix-gaming-db-ingest/<- Dedicated automated metadata crawler, ingestion & cross-shard router
+│   ├── ugl-db-00/    <- REST metadata API & gaming database (shard 00 / core)
+│   ├── ugl-db-01/    <- REST metadata API & gaming database (shard 01)
+│   ├── ugl-db-02/    <- REST metadata API & gaming database (shard 02)
+│   ├── ugl-db-03/    <- REST metadata API & gaming database (shard 03)
+│   ├── ugl-db-ingest/<- Dedicated automated metadata crawler, ingestion & cross-shard router
 │   ├── ffxiv-config/          <- FFXIV HUD, hotbar, and macro configuration setup
 │   └── depressurizer/         <- Tauri v2 cross-platform Steam library categorizer & AutoCat manager (revival fork)
 └── (other projects)           <- out of scope unless asked
@@ -201,6 +201,7 @@
 | Task | Where |
 | --- | --- |
 | Git permission rules | `.agents/rules/git-operations.md` |
+| GitLab CI/CD & SSH deployment (free-tier) | `.agents/rules/gitlab-cicd.md` |
 | Workspace invariants | `.agents/rules/workspace.md` |
 | Release notes standards | `.agents/rules/release-notes.md` |
 | Project artwork standards | `.agents/rules/project-artwork.md` |
@@ -216,6 +217,7 @@
 | Large task handling rules | `.agents/rules/large-task-handling.md` |
 | Background task execution rules | `.agents/rules/background-tasks.md` |
 | Session & context management rules | `.agents/rules/session-management.md` |
+| Subagent management (orchestration) | `.agents/rules/subagent-management.md` |
 | Session handoff rules (permanent HANDOFF.md) | `.agents/rules/session-handoff.md` |
 | Clone organization repos | `.agents/skills/clone-org-repos.md` |
 | Clone all org repos (scripts) | `clone-org-repos-windows.ps1`, `clone-org-repos-linux.sh`, `clone-org-repos-macos.sh` |
@@ -225,6 +227,7 @@
 | Task decomposition & incremental steps | `.agents/skills/task-decomposition.md` |
 | Large session & context management | `.agents/skills/large-session-management.md` |
 | Session handoff (read, migrate & refresh HANDOFF.md) | `.agents/skills/session-handoff.md` |
+| Subagent management playbook | `.agents/skills/subagent-management.md` |
 | Shell command management (Windows/PowerShell) | `.agents/skills/shell-command-management.md` |
 | Safe file editing (paths, EOL, exact match) | `.agents/skills/file-editing.md` |
 | Test execution without blocking | `.agents/skills/test-execution.md` |
@@ -245,7 +248,7 @@
 | Universal Game Launcher architecture & design system | `.agents/skills/universal-game-launcher.md` |
 | Game metadata providers & multi-source enrichment | `.agents/skills/game-metadata-providers.md` |
 | Steam Web API key-only integration (depressurizer) | `.agents/skills/steam-web-api.md` |
-| HELIX Gaming DB multi-platform expansion & ingestion | `.agents/skills/helix-gaming-db-expansion.md` |
+| HELIX Gaming DB multi-platform expansion & ingestion | `.agents/skills/ugl-db-expansion.md` |
 | Windhawk styler mod engineering | `.agents/skills/windhawk-styler-engineering.md` |
 | Windows deskthemepack & theme packaging | `.agents/skills/windows-deskthemepack-engineering.md` |
 | macOS desktop theme engineering | `.agents/skills/macos-theme-engineering.md` |
@@ -267,6 +270,7 @@
 | Agent: Security reviewer | `.agents/agents/security-reviewer/security-reviewer.md` |
 | Agent: Git auditor | `.agents/agents/git-guard/git-auditor.md` |
 | Agent: Handoff writer (session keeper) | `.agents/agents/session-keeper/handoff-writer.md` |
+| Agent: Subagent orchestrator (split work, keep parent lean) | `.agents/agents/subagent-orchestrator/subagent-orchestrator.md` |
 
 ## Session start checklist
 

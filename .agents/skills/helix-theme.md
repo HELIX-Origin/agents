@@ -86,7 +86,7 @@ flowchart TB
 | universal-game-launcher | "Documentation Home" | "Universal Game Launcher Technical Wiki" |
 | windhawk-themes | "Documentation Directory" | "Target & Configuration Wiki" |
 | theme-toolkit | "Documentation Home" | "Theme Toolkit Technical Wiki" |
-| helix-gaming-db | "Documentation Directory" | "Community Wiki" |
+| ugl-db | "Documentation Directory" | "Community Wiki" |
 | ffxiv-config | "Documentation Directory" | — |
 | helix-origin.github.io | portal root (`/`, layout `default`) | — |
 
