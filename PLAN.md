@@ -4,8 +4,8 @@
 >
 > Pair with [`ROADMAP.md`](./ROADMAP.md) (ecosystem direction), [`TODO.md`](./TODO.md) (executable tasks), and [`BUGS.md`](./BUGS.md) (known issues).
 > Project-specific sprint plans and execution tasks live exclusively in each respective repository (`projects/<repo>/PLAN.md`).
-> Historical delivered milestones and archives live in [`.github/`](./.github/).
-> Last updated: 2026-10-19
+> Historical delivered milestones and changes live in [`CHANGELOG.md`](./CHANGELOG.md).
+> Last updated: 2026-10-23
 
 ---
 
@@ -17,86 +17,78 @@
 
 ---
 
+## 🧭 Project Tracking Index
+
+> Entry point to per-project **PLAN** tracking: one line per project (short title + link). Detail lives only in each repository. Regenerate with `npm --prefix scripts run index`; do not edit between the markers.
+
+<!-- project-index:start -->
+- **[nh-reader]** — [No active item recorded](./projects/nh-reader/PLAN.md) · _Native C++ Windows desktop reader_
+- **[windows-game-explorer]** — [Sprint 34 — Cloud Gaming Streaming Hooks & Gamepad Handheld Mode (v2.2.0)](./projects/windows-game-explorer/PLAN.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
+- **[theme-toolkit]** — [Sprint 1 — Native Windows C++ Architecture & Rebrand to Theme Studio (v1.0.0, W.01)](./projects/theme-toolkit/PLAN.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
+- **[depressurizer]** — [Sprint 5 — Native Windows C++ Modernization & UI Polish (v1.0.0, W.05)](./projects/depressurizer/PLAN.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
+- **[windhawk-themes]** — [Milestone M.02b: Command Center Suite Polish & Geometry Alignment](./projects/windhawk-themes/PLAN.md) · _Windhawk styler mod themes_
+- **[ffxiv-config]** — [Sprint 1 — 8.x Configuration Sync, Media Asset & Governance Alignment](./projects/ffxiv-config/PLAN.md) · _FFXIV HUD, hotbar and macro configuration_
+<!-- project-index:end -->
+
+---
+
 ## 🎯 Active Sprints
 
-### 🚀 Sprint 35: [Ecosystem] — OpenCode Context-Pressure Self-Monitoring Plugin (W.62) & Ecosystem Watch (W.61)
+### 🚀 Sprint 35: [Ecosystem] — Per-Project Ecosystem Enhancement, Universal Commands & Skill Expansion (W.65)
 - **Project Identifier:** `[Ecosystem]` (`projects/agents`)
-- **Target Objective:** Deliver a lightweight, V2-native OpenCode plugin (`.opencode/plugins/` or `scripts/opencode-plugin/`) that auto-injects the context-pressure scoreboard at every checkpoint and gates work at soft-target posture, preventing context overflows. Maintain recurring compatibility watch for OpenCode V2-compatible releases of curated plugins/MCP tools.
+- **Target Objective:** Enhance per-project `.agents/` ecosystems to work alongside the global workspace ecosystem; establish tool-agnostic `.agents/commands/` workflow runbooks; expand language and tool skills; transition root tracking ledgers to entry points pointing to per-project files; remove legacy `.opencode/` configurations and `*-ARCHIVE.md` files in favor of living ledgers and `CHANGELOG.md`.
 
 ```mermaid
 flowchart TD
-    S35_1["[Ecosystem] W.62a: V2-Native Plugin Architecture Proof-of-Concept"] --> S35_2["[Ecosystem] W.62b: Scoreboard Injection from Session API"]
-    S35_2 --> S35_3["[Ecosystem] W.62c: Soft-Target Posture Gating (100k / 120k thresholds)"]
-    S35_3 --> S35_4["[Ecosystem] W.62d: Low-Overhead Verification on Reference Hardware"]
-    S35_4 --> S35_5["[Ecosystem] W.61: Curated Plugin & MCP Compatibility Verification"]
+    S35_1["[Ecosystem] W.65a: Entry-point tracking index (kb-index.ts)"] --> S35_2["[Ecosystem] W.65b: Tool-agnostic .agents/commands/ runbooks"]
+    S35_2 --> S35_3["[Ecosystem] W.65c: Language & runtime skill expansion (Svelte 5, Rust, SQLite, etc.)"]
+    S35_3 --> S35_4["[Ecosystem] W.65d: Per-project .agents/ scaffolding alignment"]
+    S35_4 --> S35_5["[Ecosystem] W.65e: Archive retirement & CHANGELOG.md historical ledger"]
 ```
 
 #### 📝 Execution Tasks
 
-1. **[Ecosystem] W.62a — V2 Plugin Architecture Proof-of-Concept**:
-   - Scaffold minimal V2-native plugin module (`{ id, effect | setup }`).
-   - Validate plugin load status in `~/.local/share/opencode/log/opencode.log` with zero runtime errors.
-2. **[Ecosystem] W.62b — Scoreboard Injection**:
-   - Wire plugin to read token usage, DCP compress count, and substantive turn count.
-   - Inject the session-handoff scoreboard automatically at every checkpoint.
-3. **[Ecosystem] W.62c — Soft-Target Posture Gating**:
-   - At soft posture (100k tokens / 60% of window), restrict allowed agent actions to verification, ledger sync, and `HANDOFF.md` rewrite.
-   - Emit clear user-visible notice prompting session transition.
-4. **[Ecosystem] W.62d — Performance & Overhead Verification**:
-   - Verify minimal memory/CPU footprint (potato-class hardware budget).
-5. **[Ecosystem] W.61 — Curated Plugin & MCP Watch**:
-   - Periodically re-check `@franlol/opencode-md-table-formatter`, `opencode-agent-skills`, and `opencode-websearch-cited` for V2 releases.
-   - Survey new lightweight plugins and MCP servers under strict no-clutter curation rules.
+1. **[Ecosystem] W.65a — Entry-Point Tracking Index**:
+   - Automated project tracking index generation (`kb-index.ts`) in root ledgers (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`, `HANDOFF.md`).
+2. **[Ecosystem] W.65b — Universal Workflow Commands**:
+   - Establish `.agents/commands/` containing tool-agnostic runbooks (`onboard.md`, `verify.md`, `fix-bug.md`, `implement-feature.md`, `review-change.md`, `update-docs.md`, `cut-release.md`).
+3. **[Ecosystem] W.65c — Skill Library Expansion**:
+   - Author domain-specific skills: `svelte5-runes.md`, `rust-patterns.md`, `typescript-esm-scripts.md`, `sqlite-in-app.md`, `sveltekit-frontend.md`, `github-actions-ci.md`.
+4. **[Ecosystem] W.65d — Per-Project Agents Alignment**:
+   - Ensure per-project `.agents/` directories contain tailored rules, skills, agents, and commands.
+5. **[Ecosystem] W.65e — Clean Archive Retirement & Changelog**:
+   - Retire `.github/*-ARCHIVE.md` files; maintain living ledgers as concise entry points with `CHANGELOG.md` as the permanent chronological record.
 
 ---
 
-### 🚀 Sprint 36: [Ecosystem] — OpenCode Config Modernization & First-Party Plugin Suite (W.63 / W.64)
-- **Project Identifier:** `[Ecosystem]` (`projects/agents`)
-- **Target Objective:** Modernize the `.opencode` configuration onto current V2 shapes and lock in granular, human-confirmed git gating; then establish a home for the first-party OpenCode plugin & agent suite. Record a declined third-party candidate so it is not re-proposed.
+## ⏳ Queued Sprints
+
+### 🚀 Sprint 36: [Web & Docs] — Documentation Hubs & Glassmorphism Jekyll Theme Rebuild (v1.3.0, W.66)
+- **Target Objective:** Recreate `helix-origin.github.io`, `docs`, and `wiki` repositories from scratch.
+- **Architecture & Styling:**
+  - Build a custom glassmorphism styled Jekyll theme (`helix-jekyll-theme` rebuilt from scratch) utilizing modern SCSS-first design (frosted glass blur, glowing borders, high-contrast typography, responsive layout).
+  - Feature-rich homepage portals for each hub (`helix-origin.github.io` organization landing, `docs` user documentation hub, `wiki` technical reference hub).
+  - Extensive, detailed, and theme-neutral documentation covering all active HELIX-Origin projects.
 
 ```mermaid
 flowchart TD
-    S36_1["[Ecosystem] W.63a: Migrate opencode.jsonc (plugins array, V2 permissions array)"] --> S36_2["[Ecosystem] W.63b: Record last-wins ordering invariant & configurable-equivalents finding"]
-    S36_2 --> S36_3["[Ecosystem] W.63c: Evaluate & decline @coool/opencode-decision-mode"]
-    S36_3 --> S36_4["[Ecosystem] W.64: First-Party Plugin & Agent Suite (Proposed)"]
+    Q1["Phase 1: Glassmorphism Custom Jekyll Theme Scaffold"] --> Q2["Phase 2: helix-origin.github.io Main Organization Portal"]
+    Q2 --> Q3["Phase 3: docs User Documentation Hub & Guides"]
+    Q3 --> Q4["Phase 4: wiki Technical Reference & Engineering Specs"]
+    Q4 --> Q5["Phase 5: GitHub Pages CI Workflows & Deployment"]
 ```
 
 #### 📝 Execution Tasks
-
-1. **[Ecosystem] W.63a — Config Migration (DONE)**:
-   - Replace singular `plugin` with the `plugins` array; replace V1 object `permissions` with a V2 `permissions` ARRAY of 51 `{action, resource, effect}` rules.
-   - Broad allows FIRST, gated `ask` rules LAST (**last matching rule wins**); verify JSON parses, 2 plugins, 51 rules, 0 CRLF, no legacy `plugin` key.
-2. **[Ecosystem] W.63b — Findings & Posture Decision (DONE)**:
-   - Record that "auto-expand tool output" does NOT exist in OpenCode (TUI-interactive only); configurable equivalents are `permissions` auto-approve and `session.permissions: "autoaccept"`.
-   - Decision: granular `ask` rules, NOT autoaccept (autoaccept/`--auto` would auto-approve the git `ask` rules and undermine invariant #1).
-3. **[Ecosystem] W.63c — Candidate Decline (DONE)**:
-   - `@coool/opencode-decision-mode`: NOT RECOMMENDED (version skew 0.1.6↔0.1.7, created 2026-10-19, 0 stars/forks/issues/releases, MIT, pre-1.0, off-machine per-record state to third-party runtimes, plugin-API target ^2.0.32 vs client 1.18.29 unverified, orthogonal to the context-bloat problem); nothing added to config.
-4. **[Ecosystem] W.64 — First-Party Plugin & Agent Suite (Proposed)**:
-   - Handoff-protocol plugin (cross-reference W.58 / W.62; first entry of the suite).
-   - Custom reviewer plugin (native HELIX review workflow).
-   - SQLite metadata database management & integration plugin (query/maintain the HELIX metadata KB from OpenCode).
-   - Open-ended: further first-party plugins/agents that measurably enhance OpenCode capabilities.
-   - Framing: the agents ecosystem repo should be a great starting point for anyone needing a unified ecosystem, with per-repo ecosystem scaffolding.
-
----
-
-## 🧭 Project-Local Sprint Plans Index
-
-> Per-repository active sprints, execution tasks, and backlog items have been completely migrated to each repository's own tracking ledgers under `projects/<repo>/PLAN.md`. See each repository for project-scoped sprint planning:
-
-- **[universal-game-launcher]**: [`projects/universal-game-launcher/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/universal-game-launcher/PLAN.md)
-- **[nh-reader]**: [`projects/nh-reader/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/nh-reader/PLAN.md)
-- **[helix-jekyll-theme]**: [`projects/helix-jekyll-theme/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/helix-jekyll-theme/PLAN.md)
-- **[windhawk-themes]**: [`projects/windhawk-themes/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/windhawk-themes/PLAN.md)
-- **[theme-toolkit]**: [`projects/theme-toolkit/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/theme-toolkit/PLAN.md)
-- **[depressurizer]**: [`projects/depressurizer/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/depressurizer/PLAN.md)
-- **[ffxiv-config]**: [`projects/ffxiv-config/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/ffxiv-config/PLAN.md)
-- **[docs]**: [`projects/docs/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/docs/PLAN.md)
-- **[wiki]**: [`projects/wiki/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/wiki/PLAN.md)
-- **[helix-origin.github.io]**: [`projects/helix-origin.github.io/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/helix-origin.github.io/PLAN.md)
-- **[ugl-db-00]**: [`projects/ugl-db-00/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/ugl-db-00/PLAN.md)
-- **[ugl-db-01..03]**: [`projects/ugl-db-01/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/ugl-db-01/PLAN.md)
-- **[ugl-db-ingest]**: [`projects/ugl-db-ingest/PLAN.md`](file:///d:/Projects/GitHub/HELIX%20Origin/projects/ugl-db-ingest/PLAN.md)
+1. **[Web & Docs] Phase 1 — Glassmorphism Jekyll Theme Engine**:
+   - Rebuild custom Jekyll theme from scratch with Dart Sass SCSS tokens, frosted glass components, responsive portal navigation, and code syntax highlighting.
+2. **[Web & Docs] Phase 2 — Organization Portal (`helix-origin.github.io`)**:
+   - Recreate repository with homepage portal showcasing all HELIX-Origin projects, direct links, and project badges.
+3. **[Web & Docs] Phase 3 — User Documentation Hub (`docs`)**:
+   - Recreate repository with homepage portal, quick-start guides, and user manuals for each application.
+4. **[Web & Docs] Phase 4 — Technical Wiki Hub (`wiki`)**:
+   - Recreate repository with technical architecture specs, schemas, and developer references.
+5. **[Web & Docs] Phase 5 — CI/CD & GitHub Pages Deployment**:
+   - Setup GitHub Actions workflows for building and deploying each site to GitHub Pages with zero warnings.
 
 ---
 
@@ -106,7 +98,7 @@ flowchart TD
 - **Project Identifier:** `[Ecosystem]` (`projects/agents`)
 - ✅ `[Ecosystem]` **W.56 — Community Health Standards & Domain-Neutral Scaffolding**: Authored `.agents/rules/community-health-files.md`, reusable community templates, domain-neutral links (`--docs-url`, `--wiki-url`, `--portal-url`, etc.), and leak protection asserting no foreign/broken URLs across generated files.
 - ✅ `[Ecosystem]` **W.57 — SQLite Metadata Knowledge Base (`knowledge.db`)**: Schema migrations `v001`/`v002` (metadata-only artifacts and entries), Query API (`kb-read.ts`), synchronization engine (`kb-sync.ts`), deterministic export (`kb-export.ts`), and invariant validation (`kb-write.ts`). Local-only lifecycle under `scripts/agents-kb/data/`.
-- ✅ `[Ecosystem]` **W.58 — Permanent Session Handoff Protocol (`HANDOFF.md`)**: Permanent git-tracked session-state ledger (`.agents/rules/session-handoff.md`), self-monitoring scoreboard, incremental updates, and DCP compression coexistence.
+- ✅ `[Ecosystem]` **W.58 — Permanent Session Handoff Protocol (`HANDOFF.md`)**: Permanent git-tracked session-state ledger (`.agents/rules/session-handoff.md`), self-monitoring scoreboard, and incremental updates.
 - ✅ `[Ecosystem]` **W.59 — Headless CLI Standards & Structured Logging**: Standardized modular TypeScript ESM CLI (`scripts/agents-kb/`), dual extension mechanism (first-class modules vs body files), structured per-run logging to gitignored `logs/`, and automated test runner (`test.ts`).
 - ✅ `[Ecosystem]` **W.60 — Project-Local Agents Interoperability & Project-Type Scaffolding**: Binding rule `.agents/rules/project-agents-interoperability.md`, CLI scaffold engine (`kb-scaffold.ts`), and project-type starter suites (`tauri-desktop`, `jekyll-theme`, `node-ts-cli`, `rust-library`, `docs-site`).
 

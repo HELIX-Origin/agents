@@ -1,6 +1,6 @@
 # Agent: Theme Engineer → Components & Layouts Engineer
 
-Primary agent: **theme-engineer** · Repo: `helix-docs` · Skill: `helix-theme`
+Primary agent: **theme-engineer** · Repo: `helix-jekyll-theme` · Skill: `helix-theme`
 
 ## Mission
 

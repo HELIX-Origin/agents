@@ -1,21 +1,21 @@
-# Skill: helix-docs theme — structure, consumption, repair
+# Skill: helix-jekyll-theme theme — structure, consumption, repair
 
-> Everything an agent needs to work on the shared Jekyll theme `helix-docs`, or to fix any
+> Everything an agent needs to work on the shared Jekyll theme `helix-jekyll-theme`, or to fix any
 > site that consumes it. Applies to **all** projects under `projects/` that use GitHub
 > Pages. The theme repo uses a modular component structure while keeping its own HELIX
 > style and palette.
 
-## What helix-docs is
+## What helix-jekyll-theme is
 
-- Repo: `projects/helix-docs` — a remote theme consumed by the other projects.
-- Consuming sites set `remote_theme: HELIX-Origin/helix-docs` in `_config.yml`.
+- Repo: `projects/helix-jekyll-theme` — a remote theme consumed by the other projects.
+- Consuming sites set `remote_theme: HELIX-Origin/helix-jekyll-theme` in `_config.yml`.
 - GitHub Pages serves the theme's **precompiled** `assets/css/site.css`; the theme never
   compiles SCSS at build time (see skill `sass-compile`).
 
 ## Theme repo layout
 
 ```
-projects/helix-docs/
+projects/helix-jekyll-theme/
   _layouts/             page structure ONLY (default, docs, wiki, catalogue, store,
                         changelog, faq, catalogue-item, store-item) — no nav logic
   _includes/            components/ (header, sidebar, nav, breadcrumbs, footer, toc)
@@ -32,7 +32,7 @@ projects/helix-docs/
 ```mermaid
 flowchart TB
     site[_config.yml remote_theme] --> plugin[jekyll-remote-theme]
-    plugin --> theme[helix-docs theme]
+    plugin --> theme[helix-jekyll-theme theme]
     theme --> inc[components: header, sidebar, nav, breadcrumbs, footer]
     frontmatter[page frontmatter: parent / nav_order] --> inc
     theme --> css[precompiled site.css]
@@ -42,7 +42,7 @@ flowchart TB
 
 - `_config.yml`:
   ```yaml
-  remote_theme: HELIX-Origin/helix-docs
+  remote_theme: HELIX-Origin/helix-jekyll-theme
   plugins:
     - jekyll-remote-theme
   ```
@@ -80,15 +80,7 @@ flowchart TB
 
 ## Per-project parent anchor titles (exact — typo breaks the tree)
 
-| Project | docs parent | wiki parent |
-| --- | --- | --- |
-| nh-reader | "Documentation Home" | "NH Reader Technical Wiki" |
-| universal-game-launcher | "Documentation Home" | "Universal Game Launcher Technical Wiki" |
-| windhawk-themes | "Documentation Directory" | "Target & Configuration Wiki" |
-| theme-toolkit | "Documentation Home" | "Theme Toolkit Technical Wiki" |
-| ugl-db | "Documentation Directory" | "Community Wiki" |
-| ffxiv-config | "Documentation Directory" | — |
-| helix-origin.github.io | portal root (`/`, layout `default`) | — |
+No site currently consumes the theme with a per-project docs/wiki tree (the hub sites are retired; rebuilds are planned for later). When one returns, define each project's exact parent anchor titles in that site's own configuration before authoring pages — a typo silently breaks the tree.
 
 ## Repair checklist for a consuming site
 

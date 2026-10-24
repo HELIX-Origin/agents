@@ -1,13 +1,13 @@
 # Skill: Jekyll remote theme + GitHub Pages configuration
 
-> How any `HELIX-Origin` project site under `projects/` must be configured to consume `helix-docs` as a remote
+> How any `HELIX-Origin` project site under `projects/` must be configured to consume `helix-jekyll-theme` as a remote
 > theme, and how to build/verify it locally. Workspace-wide.
 
 ## GitHub Pages (production)
 
 - `_config.yml`:
   ```yaml
-  remote_theme: HELIX-Origin/helix-docs
+  remote_theme: HELIX-Origin/helix-jekyll-theme
   ```
 - GitHub Pages provides the `jekyll-remote-theme` gem automatically; still list it in
   `plugins` so local builds match production:

@@ -70,9 +70,8 @@ Project-specific extra forms (e.g. a rule/feature request) may be added alongsid
   notes" section where relevant.
 
 ### `SUPPORT.md`
-- Point to the centralized **docs** (`https://docs.helix-origin.club/<project>/`) and **wiki**
-  (`https://wiki.helix-origin.club/<project>/`) hubs first, then [Discussions]/Issues, then the
-  organization portal (`https://www.helix-origin.club/`).
+- Point to the project's own documentation (README and repository documentation files) first, then
+  [Discussions]/Issues.
 
 ### `PRIVACY.md`
 - State the **local-first** posture explicitly: what is stored (and where), what is transmitted

@@ -11,21 +11,13 @@
 
 These rules apply to **every active project** under `projects/` belonging to `HELIX-Origin`:
 
-## Active `HELIX-Origin` organization projects (as of 2026-10-17)
+## Active `HELIX-Origin` organization projects (as of 2026-10-23)
 
-- `projects/docs` — dedicated organization-wide documentation hub (`https://docs.helix-origin.club`).
-- `projects/wiki` — dedicated organization-wide technical knowledge base & wiki (`https://wiki.helix-origin.club`).
 - `projects/helix-jekyll-theme` — shared remote Jekyll theme engine (+ its own preview site).
-- `projects/helix-origin.github.io` — organization discovery portal (`https://www.helix-origin.club`).
 - `projects/nh-reader` — Tauri v2 desktop manga/comic reader (scripts, workflows, desktop core).
-- `projects/universal-game-launcher` — Tauri v2 universal game library & launcher.
+- `projects/windows-game-explorer` — Native C++ Windows Game Explorer (File Explorer shell extension & library, Win2K/XP to 11+).
 - `projects/theme-toolkit` — cross-platform desktop theme studio & applicator (Windows, macOS, Linux).
-- `projects/windhawk-themes` — Windows 11 styling suites for Windhawk styler mods.
-- `projects/ugl-db-00` — REST metadata API & database (core / volume shard 00).
-- `projects/ugl-db-01` — REST metadata API & database (volume shard 01).
-- `projects/ugl-db-02` — REST metadata API & database (volume shard 02).
-- `projects/ugl-db-03` — REST metadata API & database (volume shard 03).
-- `projects/ugl-db-ingest` — automated metadata crawler, ingestion pipeline & cross-shard router.
+- `projects/windhawk-themes` — Windhawk theming suites for Windows 11 (Windhawk styler mods).
 - `projects/ffxiv-config` — FFXIV HUD, hotbar, and macro configuration setup.
 - `projects/depressurizer` — Steam library categorizing & management tool (revival fork).
 
@@ -80,19 +72,19 @@ There is no single org-wide default license; the choice is made per repository.
 - `TODO.md` — actionable checklist; **toggle items from `- [ ]` to `- [x]` as they complete** and add
   new unchecked items before starting new work.
 - `BUGS.md` — known issues, architectural invariants, quirks, and workarounds. Move entries from Open to Resolved when fixed, and immediately purge or update any quirk entry superseded by a new architectural decision.
-- **100% Active Direction Accuracy Invariant (Root & Archives)**: All tracking documents (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`), their archival counterparts (`.github/ROADMAP-ARCHIVE.md`, `.github/TODO-ARCHIVE.md`, `.github/BUGS-ARCHIVE.md`), and `.agents/` skills/rules MUST reflect the **current, active direction** of every project with zero contradictions. When a user decision pivots or supersedes an earlier requirement (e.g., consolidating plugins, changing UI navigation, restoring or dropping a feature, or rebranding a project), agents MUST **replace or remove** the superseded statements everywhere — including inside `.github/*-ARCHIVE.md` — rather than leaving obsolete history that could confuse agents.
-- **Normalized & Categorized Locked User Directives (Root & Archives)**: Never leave raw, chronological chat quotes or contradictory historical directives in `TODO.md` or `.github/TODO-ARCHIVE.md`. All `Locked user directives` across both active and archived workstreams MUST be:
+- **100% Active Direction Accuracy Invariant**: All tracking documents (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) and `.agents/` skills/rules MUST reflect the **current, active direction** of every project with zero contradictions. When a user decision pivots or supersedes an earlier requirement (e.g., consolidating plugins, changing UI navigation, restoring or dropping a feature, or rebranding a project), agents MUST **replace or remove** the superseded statements everywhere rather than leaving obsolete history that could confuse agents.
+- **Normalized & Categorized Locked User Directives**: Never leave raw, chronological chat quotes or contradictory historical directives in `TODO.md`. All `Locked user directives` MUST be:
   1. **Normalized & Polished**: Rewritten into clear, concise, typo-free engineering specifications.
   2. **Categorized by Domain / Component**: Grouped under explicit bold sub-headers (e.g., **Plugin & Helper Architecture**, **Metadata & Cache Management**, **UI Layout & Platform Icons**, **Per-Game Customization**) so it is immediately clear what goes to what.
-  3. **Deduplicated & Aligned**: Merged in place when requirements evolve, ensuring zero conflicting rules or obsolete project/feature references across active and archived workstreams.
-- **Atomic Checklist Groups & Prompt Workstream Archival**:
-  - Group `Implementation checklist` items in `TODO.md` and `.github/TODO-ARCHIVE.md` and `Execution Tasks` in `PLAN.md` by functional component (`- [ ] **[<project-name>] Component Group**:` followed by atomic `- [ ]` sub-tasks). Never stuff multiple distinct deliverables into a single run-on paragraph bullet.
-  - When a major workstream or sprint phase finishes and a new architectural scope begins, archive the completed workstream checklist into `.github/TODO-ARCHIVE.md` (preserving its normalized, domain-categorized directives and atomic checklist groups) and open a fresh, focused workstream ID (`W.XX` / `Sprint XX`).
-- **Bare Minimal Living Ledgers & Normalized Dedicated Archival**: Maintain `ROADMAP.md`, `TODO.md`, and `BUGS.md` lean, sharp, and focused on active workstreams. Detailed historical task checklists, delivered milestone technical narratives, and resolved bug post-mortems in `.github/` (`.github/ROADMAP-ARCHIVE.md`, `.github/TODO-ARCHIVE.md`, `.github/BUGS-ARCHIVE.md`) must be kept equally clean, normalized, and free of non-organization or deleted repository mentions.
-- **Mandatory Project Tagging**: In workspace root tracking documents (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) and `.github/*-ARCHIVE.md` files,
+  3. **Deduplicated & Aligned**: Merged in place when requirements evolve, ensuring zero conflicting rules or obsolete project/feature references.
+- **Atomic Checklist Groups & Bare-Minimal Completion**:
+  - Group `Implementation checklist` items in `TODO.md` and `Execution Tasks` in `PLAN.md` by functional component (`- [ ] **[<project-name>] Component Group**:` followed by atomic `- [ ]` sub-tasks). Never stuff multiple distinct deliverables into a single run-on paragraph bullet.
+  - When a major workstream or sprint phase finishes and a new architectural scope begins, collapse the completed workstream to a one-line entry under Completed Workstreams, record the details in `CHANGELOG.md`, and open a fresh, focused workstream ID (`W.XX` / `Sprint XX`).
+- **Bare Minimal Living Ledgers (no archive files)**: Maintain `ROADMAP.md`, `PLAN.md`, `TODO.md`, and `BUGS.md` lean, sharp, and focused on active work. There are no separate archive ledgers; completed work is a bare-minimal one-line entry in the primary ledger and `CHANGELOG.md` is the historical record. Keep every ledger free of non-organization or deleted repository mentions.
+- **Mandatory Project Tagging**: In workspace root tracking documents (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`),
   every milestone, sprint, task, workstream, quirk, or bug MUST be explicitly prefixed with its current active project tag
-  and relative path (`[<project-name>] (<project-path>)`, e.g. `[universal-game-launcher] (projects/universal-game-launcher)`). Never omit
-  project attribution or leave stale pre-rebrand repository paths in active or archived sections.
+  and relative path (`[<project-name>] (<project-path>)`, e.g. `[windows-game-explorer] (projects/windows-game-explorer)`). Never omit
+  project attribution or leave stale pre-rebrand repository paths.
 - Update all four when: starting a task, completing a task, hitting a blocker, or changing scope.
 
 ## Communication

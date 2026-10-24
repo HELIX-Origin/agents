@@ -8,7 +8,7 @@
 - **Log everything**: Capture stdout+stderr to timestamped logs
 - **Track execution**: Record PID and log path
 - **Verify via logs**: Don't assume success; inspect log tail before proceeding
-- **Use existing tooling**: Prefer repo's existing logged scripts (e.g. Universal-Game-Launcher's scripts)
+- **Use existing tooling**: Prefer repo's existing logged scripts or CMake/CTest harnesses (e.g. `projects/windows-game-explorer`)
 
 ## Workflow
 
@@ -25,7 +25,8 @@
 
 Foreground quick check:
 ```powershell
-cd projects/Universal-Game-Launcher; npm run check
+cmake -B "projects/windows-game-explorer/build" -S "projects/windows-game-explorer"
+cmake --build "projects/windows-game-explorer/build" --config Release
 ```
 
 Background build with logging:
@@ -33,7 +34,7 @@ Background build with logging:
 $ts = (Get-Date -Format "yyyyMMdd_HHmmss")
 $log = "logs\build-$ts.log"
 New-Item -Force -ItemType Directory logs | Out-Null
-Start-Process -NoNewWindow powershell -ArgumentList "-Command", "cd 'projects/Universal-Game-Launcher'; npm run build *>&1 | Tee-Object -FilePath '$log'"
+Start-Process -NoNewWindow powershell -ArgumentList "-Command", "cmake --build 'projects/windows-game-explorer/build' --config Release *>&1 | Tee-Object -FilePath '$log'"
 # Note: record that it's running; check log later
 ```
 
@@ -42,18 +43,15 @@ Background tests:
 $ts = (Get-Date -Format "yyyyMMdd_HHmmss")
 $log = "logs\test-$ts.log"
 New-Item -Force -ItemType Directory logs -ErrorAction SilentlyContinue | Out-Null
-# Example: cargo test in background
-Start-Process -NoNewWindow powershell -ArgumentList "-Command", "cd 'projects/Universal-Game-Launcher\src-tauri'; cargo test *>&1 | Tee-Object -FilePath '$((Get-Item ..\..).FullName)\logs\test-$ts.log'"
+Start-Process -NoNewWindow powershell -ArgumentList "-Command", "ctest --test-dir 'projects/windows-game-explorer/build' -C Release --output-on-failure *>&1 | Tee-Object -FilePath '$log'"
 ```
 
-## Using Universal-Game-Launcher's Logged Scripts
+## Native CMake & CTest Verification in `windows-game-explorer`
 
-Universal-Game-Launcher has purpose-built logged wrappers:
-- `npm run tauri:build` → logs to `logs/tauri-build-<ts>.log`
-- `npm run tauri:dev` → logs to `logs/tauri-dev-<ts>.log`
-- `npm run log -- <type> <cmd> [args...]` → generic logged execution
-
-Prefer these when working in Universal-Game-Launcher.
+`windows-game-explorer` uses CMake and CTest:
+- `cmake -B build -S .` → configures the MSVC solution
+- `cmake --build build --config Release` → builds `GameExplorerCore`, `GameExplorerShell`, `GameExplorerConfig`, `GameExplorerManager`, and `GameExplorerTests` with `/W4 /WX`
+- `ctest --test-dir build -C Release --output-on-failure` → executes unit tests
 
 ## Log Inspection
 

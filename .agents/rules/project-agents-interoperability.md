@@ -1,7 +1,7 @@
 # Rule: Project-Local Agents Interoperability
 
 > BINDING. Individual project repositories may carry their own internal agents ecosystems
-> (`AGENTS.md`, `.agents/`, `.opencode/`, `.github/copilot-instructions.md`). The workspace-root
+> (`AGENTS.md`, `.agents/`, `.github/copilot-instructions.md`). The workspace-root
 > ecosystem is designed to **work alongside and enhance** those project-local systems — never to
 > replace, clobber, or conflict with them.
 
@@ -11,7 +11,6 @@ When starting work on any project under `projects/`, check for project-local age
 
 - `AGENTS.md` (project root)
 - `.agents/` (`rules/`, `skills/`, `templates/`, `agents/`, …)
-- `.opencode/` (config, commands)
 - `.github/copilot-instructions.md`
 
 Load and honor them for all project-internal work. Absence is normal — not every project has

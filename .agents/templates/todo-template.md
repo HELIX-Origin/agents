@@ -19,7 +19,7 @@
 - **Improve & Categorize User Directives**: Rewrite user directives into clean, self-contained engineering requirements grouped by domain sub-headers (e.g., **Architecture & Plugins**, **UI & Icons**, **Data & Cache**) so it is immediately clear what goes to what. Never dump raw chronological chat quotes or leave contradictory superseded statements.
 - **100% Active Direction Accuracy**: Whenever a requirement pivots or supersedes an earlier decision, replace the superseded directive in place across `ROADMAP.md`, `PLAN.md`, `TODO.md`, and `BUGS.md`.
 - **Same-Change Updates**: When a task changes behavior or scope, update this file **in the same change**.
-- **Done Moves Down**: When a workstream is done, check it off and archive detailed checklists to `.github/TODO-ARCHIVE.md`, leaving a concise single-line summary under Completed Workstreams.
+- **Done Moves Down**: When a workstream is done, check it off and collapse it to a concise single-line summary under Completed Workstreams, leaving detailed historical records in `CHANGELOG.md`.
 - **Explicit Project Tagging**: In multi-project or organization tracking ledgers, every workstream header, checklist group, and individual checkbox item MUST be explicitly prefixed with its project name and repository path (e.g., `[{{PROJECT_NAME}}] ({{PROJECT_PATH}})` or `- [ ] [{{PROJECT_NAME}}] ...`) to prevent agent context confusion.
 - **Tracking Docs Stay True**: Update `ROADMAP.md`, `TODO.md`, `BUGS.md`, and `PLAN.md` first or in lockstep with code changes.
 - **Always Track Everything**: Every new feature request, enhancement, or bug report must be logged before execution.

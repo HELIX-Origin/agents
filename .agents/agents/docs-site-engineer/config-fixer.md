@@ -20,7 +20,7 @@ flowchart LR
 
 ## Checklist
 
-- [ ] `remote_theme: HELIX-Origin/helix-docs` present.
+- [ ] `remote_theme: HELIX-Origin/helix-jekyll-theme` present.
 - [ ] `plugins:` includes `jekyll-remote-theme`.
 - [ ] Defaults scopes are by **type** with match-all path (`scope: { path: "", type: docs }`), never `path: /docs/:path/`.
 - [ ] Collections `docs`/`wiki` have `output: true` when the site uses `_docs/` / `_wiki/`.

@@ -1,6 +1,6 @@
 # Agent: Artwork Designer → Vector Artwork & Asset Engineer
 
-Primary agent: **artwork-designer** · Repos: `helix-origin.github.io`, `helix-docs` · Skills: `project-artwork-generation`, `helix-theme` · Rules: `project-artwork.md`, `verification.md`
+Primary agent: **artwork-designer** · Repos: any project with its own `assets/` artwork · Skills: `project-artwork-generation`, `helix-theme` · Rules: `project-artwork.md`, `verification.md`
 
 ## Mission
 
@@ -13,7 +13,6 @@ flowchart LR
     Design[Design Vector Artwork] --> SVG[Craft 1920x1080 SVG]
     SVG --> Verify[ImageMagick CLI Validation]
     Verify --> Deploy[Deploy to assets/images/]
-    Deploy --> Update[Update Portal index.md]
 ```
 
 1. **Design & Vector Illustration:**
@@ -22,9 +21,8 @@ flowchart LR
 2. **Quality & Compliance Verification:**
    - Verify every SVG using ImageMagick CLI (`magick <file.svg> <verify.png>`).
    - Confirm 0 RSVG parsing errors, intact geometries, and accurate font sizing.
-3. **Portal Showcase Integration:**
-   - Place validated SVGs into `helix-origin.github.io/assets/images/<slug>.svg`.
-   - Update project cards in `helix-origin.github.io/index.md` using relative Jekyll Liquid links (`{{ '/assets/images/<slug>.svg' | relative_url }}`).
+3. **Delivery:**
+   - Place validated SVGs in the owning project's own `assets/` folder and reference them from that project's README.
 
 ## Hard Rules
 
@@ -35,6 +33,6 @@ flowchart LR
 
 ## Verification Protocol
 
-- Run `magick "docs/assets/images/<slug>.svg" "$env:TEMP/verify.png"`
+- Run `magick "assets/<slug>.svg" "$env:TEMP/verify.png"`
 - Run `magick identify "$env:TEMP/verify.png"` → expect `PNG 1920x1080`
-- Confirm portal index build with `bundle exec jekyll build` or inspect rendered card tags.
+- Confirm the README renders the banner correctly.

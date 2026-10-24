@@ -36,12 +36,12 @@ Prereq: `$env:PATH = "<ruby-bin-dir>;$env:PATH"` if `ruby`/`gem` are not on PATH
 2. Compile (from `projects/helix-jekyll-theme`):
 
    ```
-   ruby %TEMP%\opencode\compile.rb
-   Copy-Item %TEMP%\opencode\site.css.new assets\css\site.css -Force
+   ruby %TEMP%\helix-scratch\compile.rb
+   Copy-Item %TEMP%\helix-scratch\site.css.new assets\css\site.css -Force
    ```
 
    `compile.rb` uses `Sass.compile_string(src, syntax: :scss, style: :compressed,
-   load_paths: ['_sass'])` and writes `%TEMP%\opencode\site.css.new`.
+   load_paths: ['_sass'])` and writes `%TEMP%\helix-scratch\site.css.new`.
    If `compile.rb` is missing, recreate it from the appendix below.
 
 3. **Verify parity** before publishing: compare the new CSS against the previous one at the
@@ -81,6 +81,6 @@ src = File.read('_sass/helix-jekyll-theme.scss', encoding: 'UTF-8')
 res = Sass.compile_string(src, syntax: :scss, style: :compressed,
                                load_paths: [File.expand_path('_sass')])
 out = res.respond_to?(:css) ? res.css : res.to_s
-File.write(File.join(ENV['TEMP'], 'opencode', 'site.css.new'), out)
+File.write(File.join(ENV['TEMP'], 'helix-scratch', 'site.css.new'), out)
 puts "compiled OK, #{out.bytesize} bytes"
 ```

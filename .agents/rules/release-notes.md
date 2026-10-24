@@ -2,7 +2,7 @@
 
 **Status:** BINDING.
 **Scope:** All repositories under `projects/` belonging to the `HELIX-Origin` organization.
-**Base Reference:** Adapted from `NH-Reader` and `Universal-Game-Launcher` canonical release standards.
+**Base Reference:** Adapted from `NH-Reader` and `Windows-Game-Explorer` canonical release standards.
 
 ---
 
@@ -24,27 +24,20 @@ To establish a uniform, detailed, human-readable, and universal release notes st
 ### Release Asset Attachment Invariant
 > [!IMPORTANT]
 > **Assets must ONLY be uploaded to repositories that distribute a packaged application or resource.**
-> - **Packaged Repositories (Assets Allowed):** `universal-game-launcher`, `nh-reader`, `theme-toolkit`, `depressurizer` (desktop installers/binaries) and `ffxiv-config` (packaged configuration archive).
-> - **Zero-Asset Repositories (No Uploaded Assets):** `docs`, `wiki`, `helix-origin.github.io`, `helix-jekyll-theme`, `windhawk-themes`, `ugl-db-00` through `03`, `agents`, and `.github`. These repositories publish GitHub Releases with comprehensive release notes, changelog highlights, and git tags, but **never attach binary or zip assets**.
+> - **Packaged Repositories (Assets Allowed):** `windows-game-explorer`, `nh-reader`, `theme-toolkit`, `depressurizer` (desktop installers/binaries) and `ffxiv-config` (packaged configuration archive).
+> - **Zero-Asset Repositories (No Uploaded Assets):** `helix-jekyll-theme`, `windhawk-themes`, `agents`, and `.github`. These repositories publish GitHub Releases with comprehensive release notes, changelog highlights, and git tags, but **never attach binary or zip assets**.
 
 ### Repository Versioning & Asset Matrix
 
 | Repository / Project | Versioning Standard | Tag Identifier Pattern | Prebuilt Release Assets Uploaded? | Primary Tracking Docs |
 |---|---|---|---|---|
-| **universal-game-launcher** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.3.3`) | ✅ Yes (Windows, macOS, Linux desktop installers & packages) | `CHANGELOG.md`, `ROADMAP.md` |
+| **windows-game-explorer** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v2.0.0`) | ✅ Yes (Windows native binaries & installers) | `CHANGELOG.md`, `ROADMAP.md` |
 | **nh-reader** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.7.5`) | ✅ Yes (Windows, macOS, Linux installers, Android APK) | `CHANGELOG.md`, `ROADMAP.md` |
 | **theme-toolkit** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ✅ Yes (Windows, macOS, Linux desktop installers & packages) | `CHANGELOG.md`, `ROADMAP.md` |
 | **depressurizer** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ✅ Yes (Windows desktop binaries & packages) | `CHANGELOG.md`, `ROADMAP.md` |
 | **ffxiv-config** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ✅ Yes (Packaged configuration archive `ffxiv-config.zip`) | `README.md` |
 | **windhawk-themes** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ❌ No (Zero attached assets; git tag only) | `ROADMAP.md`, `PLAN.md`, `CHANGELOG.md` |
-| **helix-jekyll-theme** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.1.0`) | ❌ No (Zero attached assets; git remote theme & gem) | `changelog.md` |
-| **helix-origin.github.io** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; portal site checkpoint) | `index.md` |
-| **docs** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; documentation hub) | `README.md` |
-| **wiki** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; technical wiki hub) | `README.md` |
-| **ugl-db-00** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v2.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
-| **ugl-db-01** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
-| **ugl-db-02** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
-| **ugl-db-03** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; REST metadata database) | `api/manifest.json` |
+| **helix-jekyll-theme** _(retired — future rebuild)_ | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.1.0`) | ❌ No (Zero attached assets; git remote theme & gem) | `changelog.md` |
 | **agents** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ❌ No (Zero attached assets; AI governance ecosystem) | `ROADMAP.md`, `PLAN.md` |
 
 ---

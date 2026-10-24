@@ -2,61 +2,40 @@
 
 **Status:** BINDING — GLOBAL.
 **Scope:** Every agent, every project under `projects/`, and the workspace tracking docs.
-**Applies to:** The centralized `docs` repository (`projects/docs`), the centralized `wiki` repository (`projects/wiki`), project `README.md` entry points, and workspace root Markdown.
+**Applies to:** Project `README.md` entry points, each project's own documentation files, and workspace root Markdown.
 
 ---
 
 ## Purpose
 
-To establish authoritative documentation standards across the **HELIX Origin** organization following our centralized documentation and wiki architecture. All detailed documentation, user manuals, and technical wikis live in dedicated organization hubs (`docs.helix-origin.club` and `wiki.helix-origin.club`), while project repositories remain clean, minimal codebases with concise entry-point READMEs.
+To establish authoritative documentation standards across the **HELIX Origin** organization. The organization's centralized documentation and technical-wiki hub sites are **retired**; rebuilds are planned for later (unscheduled). Until they exist, each project keeps its documentation self-contained in its own repository, and nothing links to retired hub addresses.
 
 ---
 
-## 1. Centralized Documentation Hub Architecture
+## 1. Documentation Surfaces
 
-The organization enforces a strict separation of documentation surfaces across dedicated repositories:
-
-```
-┌───────────────────────────────────────────────────────────────────────────────────┐
-│                           HELIX Origin Web Ecosystem                              │
-├──────────────────────────┬──────────────────────────┬─────────────────────────────┤
-│   Organization Portal    │    Documentation Hub     │     Technical Wiki Hub      │
-│ (helix-origin.github.io) │          (docs)          │           (wiki)            │
-│ www.helix-origin.club    │ docs.helix-origin.club   │ wiki.helix-origin.club      │
-├──────────────────────────┼──────────────────────────┼─────────────────────────────┤
-│ Central landing portal   │ User manuals, getting    │ Technical architecture,     │
-│ and central gateway      │ started guides, feature  │ API specs, visual trees,    │
-│ links to Docs & Wiki.    │ walkthroughs & catalogue │ schemas & dev references    │
-│                          │ organized by project.    │ organized by project.       │
-└──────────────────────────┴──────────────────────────┴─────────────────────────────┘
-```
-
-### Surface Responsibilities
-
-| Surface / Repository | Path & Scope | Primary Responsibility |
+| Surface | Status | Responsibility |
 |---|---|---|
-| **Documentation Hub (`docs`)** | `projects/docs/` (`_docs/<project>/`, `_catalogue/`) | **User-Centric & Theme-Neutral.** Product documentation, installation guides, user manuals, and the theme showcase catalogue (`_catalogue/`). |
-| **Technical Wiki Hub (`wiki`)** | `projects/wiki/` (`_wiki/<project>/`) | **Deep Technical & Architectural.** In-depth technical specifications, developer APIs, schema definitions, visual tree topologies, and curation guidelines. |
-| **Organization Portal (`helix-origin.github.io`)** | `projects/helix-origin.github.io/` (`index.md`) | **Central Discovery Gateway.** Links directly to Docs Hub and Wiki Hub; never hosts project-specific docs or raw JSON API endpoints. |
-| **Project Code Repositories** | `projects/<project>/` (`README.md`) | **Minimal Entry Points.** Standalone open-source codebases; contain **NO** embedded `docs/` folders and **NO** GitHub Pages sites. Root `README.md` links directly to `docs` and `wiki`. |
+| **Project `README.md`** | Active | Minimal entry point (see §3). |
+| **Project documentation files** | Active (interim) | Each project's own manuals and technical notes, kept in that repository (for example a `docs/` folder or Markdown files at the root). No GitHub Pages site is required. |
+| **Centralized documentation hub** | Retired — rebuild planned | Product documentation and a catalogue/store section. When rebuilt, it follows §2. |
+| **Centralized technical wiki hub** | Retired — rebuild planned | Deep technical and architectural references. When rebuilt, it follows §2. |
+| **Organization portal** | Retired — rebuild planned | Discovery gateway linking to the hubs. |
 
-> **Single-site repositories publish from the repository root.** When a repository *is* the published
-> site (the portal, `docs`, `wiki`), its Jekyll root is the **repository root** — never a nested
-> `docs/` folder. Non-site Markdown (`README.md`, `CONTRIBUTING.md`, `SECURITY.md`, etc.) must carry
-> `published: false` front matter so it is never emitted as a site page, and non-Markdown legal files
-> (`LICENSE`) must be listed in `_config.yml` `exclude`.
+> Never create, link to, or describe the retired hubs as live. Planning a rebuild is tracked as an unscheduled backlog item in the workspace ledgers, not as documentation.
 
 ---
 
-## 2. Documentation Theme-Neutrality Invariant (CORE)
+## 2. Theme-Neutrality & Mod-Agnostic Rule (MANDATORY for all documentation)
 
-Within the centralized `docs` and `wiki` repositories:
-1. **Theme-neutral & mod-agnostic:** Documentation in `docs/_docs/` and `wiki/_wiki/` describes valid visual targets, mod schemas, engine mechanisms, and *how to use or build for the software*. It must remain general, reusable, and free of author-specific theme branding.
-2. **Catalogue isolation:** An author's specific theme/suite (its exact color palette, token names, radius scales, glass recipes, and specific geometries) lives **strictly in `docs/_catalogue/`**.
-3. **Hard Prohibitions:**
+Any documentation (project docs now, hub content later) explains *how to work with the software and mods*. It never promotes or encodes an individual author's theme.
+
+1. **Theme-neutral & mod-agnostic:** Documentation describes valid visual targets, mod schemas, engine mechanisms, and *how to use or build for the software*. It stays general, reusable, and free of author-specific theme branding.
+2. **Catalogue isolation:** An author's specific theme/suite (its exact color palette, token names, radius scales, glass recipes, and geometries) lives **strictly in a catalogue/store section**, never in general guides.
+3. **Hard prohibitions:**
    - Never make a catalogue theme or suite the source of truth for general documentation.
-   - Never copy a specific catalogue theme's token names or recipes into general `docs/_docs/` or `wiki/_wiki/` guides.
-   - The catalogue may link to docs/wiki; docs/wiki must never depend on the catalogue.
+   - Never copy a specific catalogue theme's token names or recipes into general guides.
+   - A catalogue may link to general documentation; general documentation must never depend on the catalogue.
 
 ---
 
@@ -65,50 +44,44 @@ Within the centralized `docs` and `wiki` repositories:
 Every project repository under `projects/` must maintain a concise, minimal entry point `README.md` (~30–50 lines).
 
 ### Invariant Rules:
-1. **Zero Embedded Docs Folders:** Project repositories (`universal-game-launcher`, `nh-reader`, `theme-toolkit`, `windhawk-themes`, `ffxiv-config`, `ugl-db-00`–`03`) must **NEVER** contain local `docs/` or `wiki/` documentation folders, Jekyll site configs, or GitHub Pages deployments.
-2. **Direct Gateway Links:** Project `README.md` files must link directly to the centralized hubs:
-   - 📖 **Documentation**: `https://docs.helix-origin.club/<project>/`
-   - 🧠 **Technical Wiki**: `https://wiki.helix-origin.club/<project>/`
-   - 🌐 **Organization Portal**: `https://www.helix-origin.club/`
-3. **Structure of a Minimal Entry Point README:**
-   - **Header & Tagline**: Project name, vector banner (if available), and one-sentence mission.
-   - **Compliant HTML Badges**: Version/Release, License (`BSD-3-Clause`), Docs badge, Wiki badge, CI/Status.
-   - **Overview**: 1–2 paragraphs introducing the project's purpose and core capabilities.
-   - **Primary Gateways**: Direct links to documentation and wiki hubs.
-   - **Quick Start / Installation**: Minimal 2–5 line command snippet to clone, build, or run locally.
-   - **Verification & Quality Gate**: Standard test command (`npm test`, `cargo test`, `pwsh ...`).
-   - **License**: Canonical link to `LICENSE` (`BSD-3-Clause`).
-4. **Domain-Neutral Scaffold Templates:** The scaffold templates under `.agents/templates/` and the
-   `kb-scaffold` CLI must **never hardcode** an organization's domain or slug. Treat **both**
-   organization base URLs as leak surfaces: the custom domain (`*.helix-origin.club`) **and** the
-   GitHub Pages fallback paths (`helix-origin.github.io/<repo>`), so generated output stays portable even if the
-   custom domain is retired. Docs, wiki, portal, Discord, and Discussions links are **opt-in** and
-   rendered only when the user supplies them (`--docs-url`, `--wiki-url`, `--portal-url`,
-   `--discord-url`, `--with-discussions`, …), so generated files stay correct for any user — not just
-   `HELIX-Origin`. The only always-on attribution is the `README.md` footer linking the agents
-   ecosystem repository.
+1. **README stays minimal:** exhaustive specifications, schemas, and manuals live in the repository's own documentation files, not in the README.
+2. **No retired-hub links:** READMEs and badges must not link to retired hub addresses. When hubs are rebuilt, READMEs link to them instead of duplicating detail.
+3. **Structure of a minimal entry point README:**
+   - **Header & Tagline**: project name, vector banner (if available), one-sentence mission.
+   - **Compliant HTML badges**: version/release, license (the repository's own license identifier), CI/status.
+   - **Overview**: 1–2 paragraphs on purpose and core capabilities.
+   - **Quick Start / Installation**: minimal 2–5 line snippet to clone, build, or run locally.
+   - **Verification & Quality Gate**: standard test command (`npm test`, `cargo test`, `pwsh ...`).
+   - **Community-health links**: contributing, code of conduct, security, support, changelog, and the other required documents.
+   - **License**: canonical link to `LICENSE`, stating the repository's chosen license.
+4. **Domain-neutral scaffold templates:** The scaffold templates under `.agents/templates/` and the `kb-scaffold` CLI must **never hardcode** an organization's domain or slug. Treat the custom domain and any GitHub Pages fallback path as leak surfaces. Docs, wiki, portal, Discord, and Discussions links are **opt-in** and rendered only when the user supplies them (`--docs-url`, `--wiki-url`, `--portal-url`, `--discord-url`, `--with-discussions`, …), so generated files stay correct for any user. The only always-on attribution is the `README.md` footer linking the agents ecosystem repository.
 
 ---
 
 ## 4. HTML Badge Standards (MANDATORY)
 
-All badges across all Markdown files (`README.md`, `docs/`, `wiki/`, and root tracking files) **must** use raw HTML `<a>` and `<img>` tags rather than Markdown syntax (`[![alt](src)](url)`).
+All badges across all Markdown files (`README.md`, documentation files, and root tracking files) **must** use raw HTML `<a>` and `<img>` tags rather than Markdown syntax (`[![alt](src)](url)`).
 
-- **Explicit Dimensions:** Badges must declare `height="20"` on their `<img>` tag to guarantee size consistency across high-DPI displays and eliminate layout shifts:
+- **Explicit dimensions:** Badges must declare `height="20"` on their `<img>` tag to guarantee size consistency across high-DPI displays and eliminate layout shifts:
   ```html
-  <a href="https://docs.helix-origin.club/universal-game-launcher/"><img src="https://img.shields.io/badge/Docs-docs.helix--origin.club-brightgreen" alt="Documentation" height="20" /></a>
-  <a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD--3--Clause-blue.svg" alt="License: BSD-3-Clause" height="20" /></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" height="20" /></a>
   ```
-- **Centered Alignment:** Group top-level badges inside `<p align="center">` or `<div align="center">`.
+- **Centered alignment:** Group top-level badges inside `<p align="center">` or `<div align="center">`.
 
 ---
 
-## 5. Universal Semantic Versioning in Documentation
+## 5. Flow-Oriented Documents Use Mermaid
 
-All documentation, wiki pages, release references, and badges must consistently use **Semantic Versioning** (`vMAJOR.MINOR.PATCH`, e.g. `v1.0.0`, `v0.1.0`). Milestone-based versioning (`M.01`, etc.) is strictly prohibited across all documentation surfaces.
+Documents describing a flow (contribution path, disclosure path, decision path, lifecycle, session cycle) use GitHub-flavored `mermaid` diagrams. Supported types: flowchart, sequence, state, class, entity-relationship, and XY chart. Quote labels containing special characters.
 
 ---
 
-## 6. Enforcement
+## 6. Universal Semantic Versioning in Documentation
 
-Any documentation change that creates embedded `docs/` folders in project repositories, violates theme neutrality, introduces Markdown badge syntax, or creates bloated `README.md` files must be rejected and corrected immediately before committing.
+All documentation, release references, and badges must consistently use **Semantic Versioning** (`vMAJOR.MINOR.PATCH`, e.g. `v1.0.0`, `v0.1.0`). Milestone-based versioning (`M.01`, etc.) is strictly prohibited across all documentation surfaces.
+
+---
+
+## 7. Enforcement
+
+Any documentation change that violates theme neutrality, links to a retired hub, introduces Markdown badge syntax, or creates a bloated `README.md` must be rejected and corrected immediately before committing.

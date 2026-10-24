@@ -18,7 +18,7 @@
 - Ensure Ruby is available in the shell PATH when running bundle/jekyll:
   `$env:PATH = "<ruby-bin-dir>;$env:PATH"; ...`
 - For Jekyll: `bundle exec jekyll build --source "<site-source-dir>" --destination "<site-dest-dir>"`
-- Set `workdir: projects/helix-docs` when building the theme.
+- Set `workdir: projects/helix-jekyll-theme` when building the theme.
 
 ## Long-running commands
 - Use `background: true` on the `shell` tool for builds, tests, and dev servers (do NOT append `&`).

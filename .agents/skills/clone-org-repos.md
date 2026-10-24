@@ -6,8 +6,8 @@
 
 ## 1. Scope & Invariants
 
-- **Organization Repositories Only:** All active engineering and documentation projects belong to the `HELIX-Origin` organization on GitHub (`https://github.com/HELIX-Origin/<repo>`).
-- **Clone Destination:** Every organization repository must be cloned inside `projects/<repo>` (e.g., `projects/helix-docs/`). The `projects/` directory is untracked in the root repository.
+- **Organization Repositories Only:** All active engineering projects belong to the `HELIX-Origin` organization on GitHub (`https://github.com/HELIX-Origin/<repo>`).
+- **Clone Destination:** Every organization repository must be cloned inside `projects/<repo>` (e.g., `projects/windows-game-explorer/`). The `projects/` directory is untracked in the root repository.
 - **Never Touch Non-Organization Repositories:** Any directory or repository outside the `HELIX-Origin` organization is strictly off-limits and must never be explored, tracked, modified, or mentioned.
 - **Git Authorization:** Cloning new repositories or checking out branches requires explicit user authorization for that exact operation, in the current conversation. Task scope alone is never authorization.
 
@@ -17,12 +17,13 @@
 
 | Repository | GitHub URL | Description | Local Directory |
 |---|---|---|---|
-| **helix-docs** | `https://github.com/HELIX-Origin/helix-docs.git` | Shared Jekyll theme & preview site | `projects/helix-docs` |
-| **helix-origin.github.io** | `https://github.com/HELIX-Origin/helix-origin.github.io.git` | Organization portal & project directory | `projects/helix-origin.github.io` |
-| **NH-Reader** | `https://github.com/HELIX-Origin/NH-Reader.git` | Cross-platform desktop manga reader | `projects/NH-Reader` |
-| **Windhawk-Themes** | `https://github.com/HELIX-Origin/Windhawk-Themes.git` | Windows 11 Windhawk styler mod suites | `projects/Windhawk-Themes` |
-| **Universal-Game-Launcher** | `https://github.com/HELIX-Origin/Universal-Game-Launcher.git` | Tauri v2 cross-platform universal game library & launcher | `projects/Universal-Game-Launcher` |
-| **Theme-Toolkit** | `https://github.com/HELIX-Origin/Theme-Toolkit.git` | Tauri v2 cross-platform desktop theme studio & applicator | `projects/Theme-Toolkit` |
+| **helix-jekyll-theme** _(retired — future rebuild)_ | `https://github.com/HELIX-Origin/helix-jekyll-theme.git` | Shared Jekyll theme & preview site | `projects/helix-jekyll-theme` |
+| **nh-reader** | `https://github.com/HELIX-Origin/nh-reader.git` | Cross-platform desktop manga reader | `projects/nh-reader` |
+| **windhawk-themes** | `https://github.com/HELIX-Origin/windhawk-themes.git` | Windhawk theming styler mod suites | `projects/windhawk-themes` |
+| **windows-game-explorer** | `https://github.com/HELIX-Origin/windows-game-explorer.git` | Native C++ Windows Game Explorer (shell extension & library) | `projects/windows-game-explorer` |
+| **theme-toolkit** | `https://github.com/HELIX-Origin/theme-toolkit.git` | Tauri v2 desktop theme studio & applicator | `projects/theme-toolkit` |
+| **ffxiv-config** | `https://github.com/HELIX-Origin/ffxiv-config.git` | FFXIV HUD, hotbar & macro configuration | `projects/ffxiv-config` |
+| **depressurizer** | `https://github.com/HELIX-Origin/depressurizer.git` | Tauri v2 Steam library categorizer (revival fork) | `projects/depressurizer` |
 | **agents** | `https://github.com/HELIX-Origin/agents.git` | This workspace: agent rules, skills & CTL | `projects/agents` *(skipped by default)* |
 | **.github** | `https://github.com/HELIX-Origin/.github.git` | Organization profile & community health files | `projects/.github` |
 

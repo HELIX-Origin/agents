@@ -10,11 +10,11 @@
 
 ## 📜 Tracking Rules
 
-- **100% Active Direction Accuracy (Root & Archives)**: `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`, and `.github/*-ARCHIVE.md` must reflect the 100% current, active direction of all projects with zero contradictions. Immediately replace or remove superseded statements across both root and archive files.
+- **100% Active Direction Accuracy**: `ROADMAP.md`, `PLAN.md`, `TODO.md`, and `BUGS.md` must reflect the 100% current, active direction of all projects with zero contradictions. Immediately replace or remove superseded statements across all root tracking files.
 - **Zero External Mentions**: Never directly mention by name any external, third-party, or deleted projects or repositories.
 - **No Typo Duplication**: When recording user reports or directives, clean and fix all typos to preserve professional quality.
 - **Explicit Project Tagging**: Every milestone, sprint, task, or deliverable header and row MUST explicitly include its current project name and repository path (e.g., `[{{PROJECT_NAME}}] ({{PROJECT_PATH}})`).
-- **Bare Minimal Root & Normalized Archive**: Keep `ROADMAP.md` focused on active and upcoming milestones; archive delivered milestone narratives into `.github/ROADMAP-ARCHIVE.md` in normalized format.
+- **Bare Minimal Completed Entries**: Keep `ROADMAP.md` focused on active and upcoming milestones; retain delivered milestones as concise one-line entries under Historical Milestones, with full narratives in `CHANGELOG.md`.
 
 ---
 

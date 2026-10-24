@@ -4,7 +4,7 @@
 >
 > Pair with [`PLAN.md`](./PLAN.md) (sprint execution), [`TODO.md`](./TODO.md) (executable tasks), and [`BUGS.md`](./BUGS.md) (known issues).
 > Project-specific roadmaps and milestones live exclusively within each project's own repository (`projects/<repo>/ROADMAP.md`).
-> Historical delivered milestones live in [`.github/ROADMAP-ARCHIVE.md`](./.github/ROADMAP-ARCHIVE.md).
+> Historical delivered milestones and changes live in [`CHANGELOG.md`](./CHANGELOG.md).
 > Last updated: 2026-10-20
 
 ---
@@ -14,6 +14,21 @@
 - **Ecosystem Scope Only**: This document tracks the strategic direction, architectural tiers, and milestone releases of the generic AI agents framework, rules, skills, templates, and CLI toolchain. Projects developed with this framework maintain their own independent `ROADMAP.md` inside their repository root.
 - **100% Active Direction Accuracy**: Reflect the current, active architecture of the agents ecosystem with zero contradictions.
 - **Universal Semantic Versioning Invariant**: The ecosystem strictly adheres to Semantic Versioning (`vMAJOR.MINOR.PATCH`).
+
+---
+
+## 🧭 Project Tracking Index
+
+> Entry point to per-project **ROADMAP** tracking: one line per project (short title + link). Detail lives only in each repository. Regenerate with `npm --prefix scripts run index`; do not edit between the markers.
+
+<!-- project-index:start -->
+- **[nh-reader]** — [No active item recorded](./projects/nh-reader/ROADMAP.md) · _Native C++ Windows desktop reader_
+- **[windows-game-explorer]** — [Milestone M15: Windows Game Explorer Shell Extension & Native Re-Architecture (v2.0.0)](./projects/windows-game-explorer/ROADMAP.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
+- **[theme-toolkit]** — [Milestone M1: Native Windows C++ Architecture & Rebrand to Theme Studio (v1.0.0)](./projects/theme-toolkit/ROADMAP.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
+- **[depressurizer]** — [Milestone M5: Native Windows C++ Modernization & UI Polish (v1.0.0)](./projects/depressurizer/ROADMAP.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
+- **[windhawk-themes]** — [Milestone M1: Foundation & Scaffolding](./projects/windhawk-themes/ROADMAP.md) · _Windhawk styler mod themes_
+- **[ffxiv-config]** — [Milestone M2: Dawntrail 8.x Config & Governance](./projects/ffxiv-config/ROADMAP.md) · _FFXIV HUD, hotbar and macro configuration_
+<!-- project-index:end -->
 
 ---
 
@@ -50,16 +65,18 @@ flowchart TB
 |---|---|---|---|
 | **v1.0.0** | Core Governance & Roles | ✅ Shipped | Baseline rules, skills, templates, role playbooks, and multi-session tracking protocols. |
 | **v1.1.0** | Headless CLI & Scaffolding Engine | ✅ Shipped | Modular TypeScript ESM CLI, dual extension mechanism, SQLite metadata knowledge base (`knowledge.db`), domain-neutral scaffolding engine (`kb-scaffold.ts`), and project-type starter suites. |
-| **v1.2.0** | Context Self-Monitoring & Plugins | 🚀 Active | OpenCode V2-native context-pressure self-monitoring plugin (W.62), curated plugin/MCP compatibility watch (W.61), and potato-hardware resource budgets. |
-| **v1.3.0** | Multi-Model & Toolchain Federation | 🔮 Backlog | Pluggable LLM tool adapters, schema validation pipelines, and automated multi-repo secret synchronization helpers. |
-| **v1.4.0** | Output Visibility Plugin | 🔮 Backlog | Importable OpenCode V2 plugin fully fixing the working-indicator visibility gap: proper message parsing & handling to surface all output hidden behind the working indicator, with extensive configuration for versatile display control so users can see everything OpenCode does. |
+| **v1.2.0** | Universal Agents & Tool-Agnostic Workflows | 🚀 Active | Tool-agnostic workflow runbooks (`.agents/commands/`), expanded language/tool skill library, per-project `.agents/` scaffolding across all org projects, entry-point tracking index generator, and living ledger hygiene. |
+| **v1.3.0** | Documentation & Web Hubs Rebuild | ⏳ Planned | Create `helix-jekyll-theme` first to host the custom glassmorphism styled Jekyll theme, followed by rebuilding `helix-origin.github.io`, `docs`, and `wiki` repositories from scratch with homepage portals for each site and extensive, detailed documentation and technical wiki. |
+| **v1.4.0** | Multi-Model & Toolchain Federation | 🔮 Backlog | Pluggable LLM tool adapters, schema validation pipelines, and automated multi-repo secret synchronization helpers. |
+| **v1.5.0** | Automated Ecosystem Synchronization | 🔮 Backlog | Automated cross-repository consistency linters, schema validators, and ecosystem health checks in GitHub Actions CI. |
 
 ---
 
 ## 🚀 Active Ecosystem Tracks
 
+- **Web Ecosystem & Documentation Rebuild**: Building `helix-jekyll-theme` first to host the custom glassmorphism Jekyll theme, then recreating `helix-origin.github.io`, `docs`, and `wiki` from scratch featuring homepage portals for each hub and comprehensive documentation.
 - **Scaffolding & Templates Engine**: Continuous refinement of engine starter templates (`bodies/scaffold/`) with domain-neutral links, GitHub-flavored mermaid diagrams, and configurable licensing.
-- **Context Pressure Self-Monitoring**: Implementation of OpenCode V2-native plugin to automatically observe session token thresholds (100k soft / 120k hard) and enforce handoff refresh checkpoints.
+- **Tool-Agnostic Workflow Runbooks**: Standardizing executable runbooks under `.agents/commands/` (`onboard`, `verify`, `fix-bug`, `implement-feature`, `review-change`, `update-docs`, `cut-release`) ensuring every AI assistant operates consistently.
 - **Local SQLite Metadata Knowledge Base**: Maintenance of the local-only `knowledge.db` registry for artifact indexing, fast reference lookup, and invariant assertion.
 
 ---

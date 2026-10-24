@@ -22,11 +22,10 @@ No change, feature, bug fix, or documentation update is complete without running
 
 | Project | Verification Command | Gate Criteria |
 |---|---|---|
-| **helix-docs** | `bundle exec jekyll build` | 0 errors, 0 warnings. Valid generated site. |
-| **helix-origin.github.io** | `bundle exec jekyll build` | 0 errors, 0 warnings. |
+| **helix-jekyll-theme** _(retired — future rebuild)_ | `bundle exec jekyll build` | 0 errors, 0 warnings. Valid generated site. |
 | **depressurizer** | `cargo check` (`-D warnings`), `cargo test --lib`, `npm run check`, `npm run build` | 0 Rust errors, 0 warnings, 0 test failures, 0 Svelte errors/warnings, clean build. |
 | **nh-reader** | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` | 0 Rust errors/warnings, 0 test failures, 0 Svelte errors/warnings, all i18n keys valid. |
-| **universal-game-launcher** | `node scripts/test.mjs check rust frontend build` | 0 Rust errors/warnings, 0 test failures, 0 Svelte errors/warnings. |
+| **windows-game-explorer** | `cmake -B build -S .` & `cmake --build build --config Release` & `ctest --test-dir build -C Release --output-on-failure` | 0 C++ compiler/linker errors or warnings (`/W4 /WX`), all tests pass. |
 | **theme-toolkit** | `node scripts/test.mjs check rust frontend build` | 0 Rust errors/warnings, 0 test failures, 0 Svelte errors/warnings. |
 | **windhawk-themes** | `pwsh -NoProfile -File tools/Test-WindhawkStyles.ps1` | 0 errors. All styler YAML definitions parse correctly. |
 | **Deskthemepack / Packaging** | `makecab.exe /F <theme>.ddf`, asset existence check | Valid cabinet archive, 0 missing assets, valid .theme INI. |

@@ -59,7 +59,7 @@ echo "PID:$! LOG:$LOG"
 
 ## Integration with Project Logging
 
-- Universal-Game-Launcher already has `scripts/lib/logger.mjs`, `scripts/run.mjs`, `scripts/build.mjs`, `scripts/dev.mjs` — use these when available
+- Windows-Game-Explorer already has `scripts/lib/logger.mjs`, `scripts/run.mjs`, `scripts/build.mjs`, `scripts/dev.mjs` — use these when available
 - For other projects, add simple timestamped logging when introducing long-running workflows
 - Follow existing repo conventions
 - Never delete logs from successful runs until user confirms

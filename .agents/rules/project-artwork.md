@@ -56,10 +56,10 @@ Artwork must honor the specific project's visual identity while staying grounded
 
 | Project | Base Dark | Primary Accent | Secondary Accent |
 |---|---|---|---|
-| **helix-docs** | `#07111f` / `#040a14` | `#48d8f2` (Cyan) | `#b06cff` (Purple) |
+| **helix-jekyll-theme** | `#07111f` / `#040a14` | `#48d8f2` (Cyan) | `#b06cff` (Purple) |
 | **Windhawk-Themes** | `#081426` / `#050c18` | `#48d8f2` (Specular Glass) | `#b06cff` (Windhawk Accent) |
 | **NH-Reader** | `#171424` / `#101820` | `#9275ff` (Violet) | `#65d6df` (Teal) |
-| **Universal-Game-Launcher** | `#120e24` / `#0a0814` | `#9d4edd` (Neon Purple) | `#38bdf8` (Cyan Blue) |
+| **Windows-Game-Explorer** | `#120e24` / `#0a0814` | `#9d4edd` (Neon Purple) | `#38bdf8` (Cyan Blue) |
 | **Theme-Toolkit** | `#0a121e` / `#050911` | `#38bdf8` (Sky Cyan) | `#a855f7` (Orchid Purple) |
 
 ---
@@ -72,14 +72,3 @@ Artwork must honor the specific project's visual identity while staying grounded
    magick "<path-to-svg>" "$env:TEMP/verify-output.png"
    ```
 3. **Zero Errors:** ImageMagick must render the file without RSVG parser errors, clipped geometries, or unclosed paths.
-
----
-
-## 5. Portal Consumption Rules
-
-In `helix-origin.github.io/index.md`:
-- Every project card must point to a local relative SVG asset:
-  ```html
-  <img src="{{ '/assets/images/<project-slug>.svg' | relative_url }}" alt="<Project Name> icon and project name" loading="lazy" decoding="async">
-  ```
-- Never use hotlinked GitHub avatar URLs (`https://github.com/...png`) for project cards on the portal.

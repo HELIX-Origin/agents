@@ -64,7 +64,7 @@
 - A trailing backslash inside a double-quoted string escapes the closing quote. Avoid
   `"C:\dir\"`; use `"C:\dir"` or `"C:\dir\\"`.
 - Build programmatic paths with `Join-Path`.
-- `%TEMP%` is easy to mis-quote; use **`$env:TEMP\opencode`** (the approved scratch dir).
+- `%TEMP%` is easy to mis-quote; use **`$env:TEMP\helix-scratch`** (the approved scratch dir).
 - Both `/` and `\` work for most Windows tools; when in doubt keep native `\`.
 - Prefer **`-LiteralPath`** for any path derived from a variable.
 
@@ -72,7 +72,7 @@
 
 | Tool | How |
 | --- | --- |
-| npm scripts | `npm run <script>` (set `workdir` to the repo). Universal-Game-Launcher: prefer `npm run tauri:dev` / `tauri:build` / `log` (logged wrappers). |
+| npm scripts | `npm run <script>` (set `workdir` to the repo). |
 | Node | `node <file>` |
 | Rust / Tauri | `cargo check` / `cargo test` / `cargo build` with `workdir` on the crate (`src-tauri`) |
 | Ruby / Jekyll / Sass | prepend PATH first: `$env:PATH = "C:\Ruby33-x64\bin;$env:PATH"`, then `bundle exec jekyll build --source <abs> --destination <abs>` |
@@ -81,10 +81,10 @@
 Always confirm installs with `Get-Command <tool> -ErrorAction SilentlyContinue` before assuming a
 tool is missing.
 
-## Background execution (OpenCode)
+## Background execution
 
-- Set **`background: true`** on the `shell` tool. It returns immediately and notifies on completion.
-  **Do not** append `&` — that is a bash idiom and is not needed.
+- Use your harness's background-execution option for long commands so the call returns immediately and
+  you are notified on completion. **Do not** append `&` — that is a bash idiom and is not needed.
 - **Do not poll or sleep.** Continue independent work and react to the completion notification.
 - For durable transcripts, redirect to `logs/<task>-<YYYY-MM-DD_HH-MM-SS>.log` (see
   `.agents/rules/background-tasks.md` and the `test-execution` skill).

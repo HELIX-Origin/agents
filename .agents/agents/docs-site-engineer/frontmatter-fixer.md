@@ -21,13 +21,7 @@ and nav order.
 
 ## Per-project parent anchors (exact)
 
-| Project | docs parent | wiki parent |
-| --- | --- | --- |
-| NH-Reader | "Documentation Home" | "NH Reader Technical Wiki" |
-| Universal-Game-Launcher | "Documentation Home" | "Universal Game Launcher Technical Wiki" |
-| Windhawk-Themes | "Documentation Directory" | "Target & Configuration Wiki" |
-| Theme-Toolkit | "Documentation Home" | "Theme Toolkit Technical Wiki" |
-| helix-origin.github.io | portal root (`/`, layout `default`) | — |
+No site currently consumes the theme with a per-project docs/wiki tree (the hub sites are retired; rebuilds are planned for later). When one returns, define each project's exact parent anchor titles in that site's own configuration before authoring pages — a typo silently breaks the tree.
 
 ## Traps
 

@@ -8,6 +8,8 @@ temp/
 Thumbs.db
 *.tmp
 *.log
+.vscode/
+.idea/
 opencode-session.json
 *-session.json
 

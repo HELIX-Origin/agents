@@ -1,6 +1,6 @@
 # Skill: Tauri & Rust Desktop Client Engineering
 
-> Domain knowledge and engineering runbook for cross-platform Tauri and Rust applications (`projects/NH-Reader`, `projects/Universal-Game-Launcher`, `projects/Theme-Toolkit`).
+> Domain knowledge and engineering runbook for cross-platform Tauri and Rust applications (`projects/nh-reader`, `projects/theme-toolkit`).
 
 ---
 

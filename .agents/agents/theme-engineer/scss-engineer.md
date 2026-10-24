@@ -1,10 +1,10 @@
 # Agent: Theme Engineer → SCSS Engineer
 
-Primary agent: **theme-engineer** · Repo: `helix-docs` · Skill: `sass-compile`
+Primary agent: **theme-engineer** · Repo: `helix-jekyll-theme` · Skill: `sass-compile`
 
 ## Mission
 
-Own `helix-docs/_sass/` and the compiled `assets/css/site.css`. Keep the stylesheet
+Own `helix-jekyll-theme/_sass/` and the compiled `assets/css/site.css`. Keep the stylesheet
 structurally modular while preserving the HELIX look and palette.
 
 ## Compile flow
@@ -17,7 +17,7 @@ flowchart LR
 ```
 
 1. Edit files under `_sass/` (entrypoint `helix-docs.scss`).
-2. Compile with dart-sass (skill `sass-compile`): `ruby %TEMP%\opencode\compile.rb`.
+2. Compile with dart-sass (skill `sass-compile`): `ruby %TEMP%\helix-scratch\compile.rb`.
 3. Run the rule-level parity check (`compare.rb`) — expect **0 lost rules**; only intended
    additions.
 4. Copy the result over `assets/css/site.css`.

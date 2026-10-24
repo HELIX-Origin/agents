@@ -118,17 +118,3 @@ magick identify "$env:TEMP/artwork-test.png"
 # 3. Optional: Export compressed WebP or thumbnail if requested
 magick "<svg-path>" -resize 960x540 "$env:TEMP/artwork-thumb.webp"
 ```
-
----
-
-## Step 6: Portal Card Integration
-
-Once validated:
-1. Save the vector asset to `helix-origin.github.io/assets/images/<project-slug>.svg`.
-2. Update `helix-origin.github.io/index.md`:
-   ```html
-   <div class="project-card">
-   <a href="https://www.helix-origin.club/<project-repo>/" class="project-img">
-   <img src="{{ '/assets/images/<project-slug>.svg' | relative_url }}" alt="<Project Title> icon and project name" loading="lazy" decoding="async">
-   </a>
-   ```

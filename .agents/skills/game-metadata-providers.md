@@ -1,6 +1,6 @@
 # Skill: Game Metadata Providers & Multi-Source Enrichment
 
-> Authoritative engineering reference for how **Universal Game Launcher** (`projects/Universal-Game-Launcher`) discovers, queries, normalizes, merges, and caches game metadata and artwork across all metadata providers, local game engine manifests, and retro console databases.
+> Authoritative engineering reference for how **Windows Game Explorer** (`projects/windows-game-explorer`) discovers, queries, normalizes, merges, and caches game metadata and artwork across installed storefront providers and local game manifests.
 
 ---
 
@@ -33,11 +33,12 @@ Metadata is resolved **field-by-field** across a prioritized cascade of sources 
 | `developers` & `publishers` | Local Manifest / PE `CompanyName` / Steam Store / GOG Catalog | Wikidata Claims (`P178` Developer, `P123` Publisher), Wikipedia Infobox, ScreenScraper, TheGamesDB | PCGamingWiki Cargo (`Game.Developers`, `Game.Publishers`), IGDB (`involved_companies`) |
 | `releaseDate` & `releaseYear` | Steam Store, GOG Catalog, Epic Catalog, `.itch/receipt.json.gz` | Wikidata Claim (`P577` Publication Date), ScreenScraper, TheGamesDB | PCGamingWiki (`Game.Released`), IGDB (`first_release_date`) |
 | `genres` & `categories` | Steam Store, GOG Catalog, Local Engine (`RPG Maker`, `Ren'Py`) | Wikidata Claim (`P136` Genre), Console Category (`Nintendo GameCube`, etc.), TheGamesDB | IGDB (`genres`, `themes`, `game_modes`), PCGamingWiki (`Game.Genres`) |
-| `capsuleImage` (2:3 Vertical Cover) | Steam (`library_600x900_2x.jpg`), GOG (`_product_card_v2_mobile_slider_639.jpg`), Epic (`OfferImageTall`) | Libretro Thumbnails (`Named_Boxarts/<Title>.png`), Wikipedia (`pageimages` 1000px), TheGamesDB (`boxart/front`), ScreenScraper (`box-3D` / `box-2D`) | SteamGridDB (`/grids/game/{id}`), IGDB (`t_cover_big`) |
+| `capsuleImage` (2:3 Vertical Cover) | Steam (`library_600x900_2x.jpg`), GOG (`_product_card_v2_mobile_slider_639.jpg`), Epic (`OfferImageTall`) | Libretro Thumbnails (`Named_Boxarts/<Title>.png`), Wikipedia (`pageimages` 1000px), TheGamesDB (`boxart/front`), ScreenScraper (`box-3D` / `box-2D`) | SteamGridDB (`/grids/game/{id}`), IGDB (`t_cover_big`), VNDB (`image.url`) |
 | `heroImage` (16:9 Wide Banner) | Steam (`library_hero.jpg`), GOG (`_bg_crop_1920x1080.jpg`), Epic (`OfferImageWide`) | Libretro Thumbnails (`Named_Snaps/<Title>.png` or `Named_Titles/<Title>.png`), ScreenScraper (`fanart`), TheGamesDB (`fanart`) | SteamGridDB (`/heroes/game/{id}`), IGDB (`artworks` `t_1080p`) |
-| `logoImage` (Transparent ClearLogo) | Steam (`logo.png`) | Libretro Thumbnails (`Named_Logos/<Title>.png`), ScreenScraper (`wheel` / `wheel-hd`), TheGamesDB (`clearlogo`) | SteamGridDB (`/logos/game/{id}`) |
-| `screenshots` (Up to 10) | Steam (`screenshots[].path_full`), GOG (`api.gog.com/products/{id}`) | Libretro Thumbnails (`Named_Snaps/<Title>.png` + `Named_Titles/<Title>.png`), ScreenScraper (`ss`), TheGamesDB (`screenshot`) | IGDB (`screenshots` `t_1080p`) |
-| `movies` (Video Previews) | Steam (`movies[].mp4.max` / `webm.max`), GOG (`videos`) | ScreenScraper (`video`), IGDB (`videos.video_id`) | — |
+| `iconImage` (Square App Icon) | Local Executable `ExtractIconExW` (256×256) / Steam `clienticon` | Libretro Thumbnails (`Named_Logos/<Title>.png`), ScreenScraper (`wheel`), TheGamesDB (`clearlogo`) | SteamGridDB (`/icons/game/{id}`), VNDB |
+
+> [!NOTE] **Streamlined Image Pipeline (No Screenshots or Videos)**:
+> In Windows Game Explorer (v2.0.0), screenshots, preview galleries, and video trailers are completely dropped. The asset pipeline exclusively fetches and caches **Icons**, **Heroes** (wide banners), and **Covers** (tall box art) dynamically based on the user's configured library view layout.
 
 ---
 
@@ -158,6 +159,47 @@ Official retro artwork CDN providing boxarts, title screens, gameplay snaps, and
 
 ### 3.5 TheGamesDB API v1 (`metadata-thegamesdb`)
 - **Authentication**: Requires `apikey` parameter (`https://api.thegamesdb.net/key.php`). When no `apikey` is configured in `metadata-thegamesdb`, transparently fall back to the backend Wikipedia + Wikidata + Libretro pipeline so retro metadata enhancement always succeeds!
+
+### 3.6 Niche, Indie & Visual Novel Providers (VNDB, itch.io, MobyGames & Local Asset Scraper)
+
+A critical requirement for Windows Game Explorer is supporting **all** games — including niche, narrative, visual novel, and indie titles (such as *Crossdressing in Camelot*, *The Proteus Effect*, and indie standalone releases) that are frequently missing from mainstream databases like SteamGridDB or IGDB alone.
+
+1. **VNDB API (Visual Novel Database - kana endpoint)**:
+   - **Endpoint**: `POST https://api.vndb.org/kana/vn`
+   - **Authentication**: Keyless (HTTPS POST with JSON payload).
+   - **Query Schema**: `{"filters": ["search", "=", "{clean_title}"], "fields": "title, alttitle, devstatus, released, rating, description, image.url, image.sexual, developers.name, tags.name"}`
+   - **Coverage**: World-class coverage for English and Japanese visual novels, indie narrative games (*Crossdressing in Camelot*, *The Proteus Effect*, etc.).
+   - **Artwork**: Resolves high-resolution vertical cover art (`image.url`), developer circles, full synopsis, release date, and community ratings.
+
+2. **itch.io API & Scraper Engine**:
+   - **Local Receipt**: Inspect `.itch/receipt.json.gz` (decompressing gzip) if installed via itch.io app.
+   - **Search Scraper**: Query `https://itch.io/search?q={clean_title}` or itch.io game search API to extract cover capsules, developer username, description, and game tags.
+
+3. **Local Executable Metadata & Folder Artwork Scraper (Zero-Network Fallback)**:
+   - **PE Version Info (`VerQueryValueW`)**: Read `ProductName`, `FileDescription`, `CompanyName`, and `LegalCopyright` directly from the Win32 executable resources.
+   - **PE Embedded Icon Extraction**: Call `ExtractIconExW` / `PrivateExtractIconsW` to extract the uncompressed 256×256 PNG or 48×48 icon embedded in the game binary.
+   - **Folder Artwork Discovery**: Inspect the game folder and parent folder for standard media files:
+     - Vertical covers: `cover.png`, `cover.jpg`, `poster.png`, `capsule.jpg`, `folder.jpg`, `boxart.png`
+     - Hero banners: `hero.png`, `banner.png`, `backdrop.jpg`, `background.png`, `wide.jpg`
+     - Logos: `logo.png`, `clearlogo.png`
+   - **Local Engine Manifests**: Inspect Ren'Py (`game/options.rpy`, `game/options.rpyc`), RPG Maker (`data/System.json`, `www/data/System.json`), Wolf RPG, NW.js `package.json`, and Unity `app.info`.
+
+4. **Multi-Tier Cascade Priority**:
+   ```
+   1. Local Manifest / Engine / Embedded PE VersionInfo & Local Folder Art
+         ↓ (if missing metadata or artwork)
+   2. Mainstream Digital Store APIs (Steam Store, Epic, GOG)
+         ↓ (if not found / niche)
+   3. Visual Novel & Narrative Database (VNDB API)
+         ↓ (if not found / indie)
+   4. itch.io Search & Scraper
+         ↓ (if not found / classic)
+   5. Wikipedia & Wikidata MediaWiki Extracts / TheGamesDB / Libretro
+         ↓ (if not found / artwork needed)
+   6. SteamGridDB (covers, heroes, logos, icons)
+         ↓ (if ambiguous)
+   7. Disambiguation UI / Manual Asset Override in Configuration Utility
+   ```
 - **Endpoint**:
   - `GET https://api.thegamesdb.net/v1/Games/ByGameName?name={encoded_title}&apikey={apiKey}&include=boxart,platform&fields=overview,publishers,genres,rating,players`
 - **Image URL Construction**:
@@ -168,8 +210,8 @@ Official retro artwork CDN providing boxarts, title screens, gameplay snaps, and
 ### 3.6 ScreenScraper API v2 (`metadata-screenscraper`)
 - **Authentication**: Requires registered ScreenScraper developer credentials (`devid`, `devpassword`) and optional user account (`ssid`, `sspassword`). When unconfigured or rate-limited, transparently fall back to the backend Wikipedia + Wikidata + Libretro pipeline!
 - **Endpoints**:
-  - Search: `https://api.screenscraper.fr/api2/jeuRecherche.php?devid={devId}&devpassword={devPass}&softname=UniversalGameLauncher&output=json&recherche={encoded_title}&ssid={userId}&sspassword={userPass}`
-  - Game Info: `https://api.screenscraper.fr/api2/jeuInfos.php?devid={devId}&devpassword={devPass}&softname=UniversalGameLauncher&output=json&gameid={gameId}&ssid={userId}&sspassword={userPass}`
+  - Search: `https://api.screenscraper.fr/api2/jeuRecherche.php?devid={devId}&devpassword={devPass}&softname=WindowsGameExplorer&output=json&recherche={encoded_title}&ssid={userId}&sspassword={userPass}`
+  - Game Info: `https://api.screenscraper.fr/api2/jeuInfos.php?devid={devId}&devpassword={devPass}&softname=WindowsGameExplorer&output=json&gameid={gameId}&ssid={userId}&sspassword={userPass}`
 - **Media Types (`response.jeu.medias`)**:
   - `box-3D` / `box-2D` → `capsuleImage`
   - `fanart` → `heroImage`

@@ -10,11 +10,11 @@
 
 ## 📜 Tracking Rules
 
-- **100% Active Direction Accuracy (Root & Archives)**: `BUGS.md` and `.github/BUGS-ARCHIVE.md` must reflect the 100% current, active direction of all projects with zero contradictions. Immediately update or remove any quirk or bug entry superseded by a new architectural decision.
+- **100% Active Direction Accuracy**: `BUGS.md` must reflect the 100% current, active direction of all projects with zero contradictions. Immediately update or remove any quirk or bug entry superseded by a new architectural decision.
 - **Zero External Mentions**: Never directly mention by name any external, third-party, or deleted projects or repositories.
 - **No Typo Duplication**: When recording user reports, clean and fix all typos to preserve professional quality.
 - **Explicit Project Tagging**: Every quirk, open bug, and resolved bug entry header MUST be explicitly prefixed with its current project name and repository path (`[{{PROJECT_NAME}}] ({{PROJECT_PATH}}): {{BUG_TITLE}}`).
-- **Bare Minimal Root & Normalized Archive**: Keep `BUGS.md` focused on active issues and current architectural invariants; move detailed post-mortems of resolved bugs to `.github/BUGS-ARCHIVE.md`.
+- **Bare Minimal Completed Entries**: Keep `BUGS.md` focused on active issues and current architectural invariants; collapse resolved bugs to minimal one-line summaries with detailed historical records kept in `CHANGELOG.md`.
 
 ---
 

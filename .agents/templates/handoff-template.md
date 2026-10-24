@@ -43,7 +43,7 @@ flowchart LR
 ---
 
 ## N) Shell / Tooling Notes
-- Non-interactive shell policy active (no pagers/editers, fail-fast); use OpenCode Read/Write/Edit for files.
+- Non-interactive shell policy active (no pagers/editers, fail-fast); use the harness's file read/write/edit tools for files.
 - <disabled tools, experimental flags, environment quirks — only what is NOT discoverable from the repo>
 
 ---

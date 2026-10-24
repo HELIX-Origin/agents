@@ -1,240 +1,121 @@
-# TODO.md — HELIX Origin Consolidated Task Ledger
+# TODO.md — Organization & Ecosystem Actionable Checklist
 
-> 📋 **Living Source of Truth**: Actionable task ledger across all active repositories in the **HELIX Origin** organization.
-> Statuses: ⬜ backlog · 🚧 in progress · ✅ done (tracked as `- [ ]` and `- [x]` checkboxes).
-> High-level direction lives in [`ROADMAP.md`](./ROADMAP.md), active sprint planning in [`PLAN.md`](./PLAN.md), issues in [`BUGS.md`](./BUGS.md).
-> Completed historical workstreams live in [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md).
-> Last updated: 2026-10-19
+> 📋 **Living Source of Truth**: Actionable task ledger for the **HELIX-Origin Agents Ecosystem**.
+> Detail lives in each repository's own `TODO.md`; high-level architecture in [`ROADMAP.md`](./ROADMAP.md), active sprints in [`PLAN.md`](./PLAN.md), issues in [`BUGS.md`](./BUGS.md).
+> Historical delivery record lives in [`CHANGELOG.md`](./CHANGELOG.md).
 
 ---
 
 ## 📜 Tracking Rules
 
-- **100% Active Direction Accuracy**: This file and its companion ledgers (`ROADMAP.md`, `PLAN.md`, `BUGS.md`) must always reflect the current, active direction of all projects with zero contradictions. Whenever a requirement changes or supersedes an earlier decision, immediately replace or remove the superseded statements in place.
-- **Normalized & Categorized Locked User Directives**: Never paste raw chronological chat logs or contradictory historical quotes. Rewrite user directives into clean, typo-free engineering specifications grouped under explicit bold domain sub-headers so it is immediately clear what goes to what.
-- **Zero Non-Organization Mentions**: Only reference active repositories belonging to the `HELIX-Origin` GitHub organization (`helix-jekyll-theme`, `helix-origin.github.io`, `docs`, `wiki`, `nh-reader`, `universal-game-launcher`, `theme-toolkit`, `windhawk-themes`, `ugl-db-00` through `03`, `ffxiv-config`, `depressurizer`). Never directly mention external, third-party, or deleted projects/repositories by name.
-- **Atomic Checklist Groups & Archival**: Group checklist items by functional component (`- [ ] **[<project-name>] Component Group**:` followed by atomic `- [ ]` sub-tasks). Never stuff multiple distinct deliverables into a single run-on paragraph. Move completed workstreams to [`.github/TODO-ARCHIVE.md`](./.github/TODO-ARCHIVE.md) and leave a concise single-line summary under `## ✅ Completed Workstreams`.
-- **Mandatory Project Tagging**: Every workstream, checklist group, task, and backlog item must explicitly include its current project tag (`[<project-name>] (<project-path>)`).
-- **Active Items First**: The currently active workstream must always be placed at the top of the content sections.
+- **100% Active Direction Accuracy**: Reflect the current, active state of the ecosystem with zero contradictions.
+- **Normalized Directives**: Rewrite user directives into clean, typo-free engineering requirements grouped by domain sub-headers.
+- **Done Moves Down**: When a workstream is done, collapse it to a one-line entry under Completed Workstreams with full history in `CHANGELOG.md`.
+- **Mandatory Project Tagging**: Prefix every item with its active project tag (`[Ecosystem]`, `[<project-name>]`).
+
+---
+
+## 🧭 Project Tracking Index
+
+> Entry point to per-project **TODO** tracking: one line per project (short title + link). Detail lives only in each repository. Regenerate with `npm --prefix scripts run index`; do not edit between the markers.
+
+<!-- project-index:start -->
+- **[nh-reader]** — [No active item recorded](./projects/nh-reader/TODO.md) · _Native C++ Windows desktop reader_
+- **[windows-game-explorer]** — [No active item recorded](./projects/windows-game-explorer/TODO.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
+- **[theme-toolkit]** — [Workstream W.01: Native Windows C++ Architecture & Rebrand to Theme Studio (v1.0.0)](./projects/theme-toolkit/TODO.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
+- **[depressurizer]** — [Workstream W.05: Native Windows C++ Modernization & UI Polish (v1.0.0)](./projects/depressurizer/TODO.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
+- **[windhawk-themes]** — [Workstream W.01: Suite Polish & Multi-Mod Verification](./projects/windhawk-themes/TODO.md) · _Windhawk styler mod themes_
+- **[ffxiv-config]** — [Workstream W.01: 8.x Configuration Sync, Media Asset & Governance Alignment](./projects/ffxiv-config/TODO.md) · _FFXIV HUD, hotbar and macro configuration_
+<!-- project-index:end -->
 
 ---
 
 ## 🔥 Active Workstreams
 
-### 🎯 [Ecosystem] Workstream W.57: Session Output Protocol — Subagent Management (visible-work retired)
-- **Project Identifiers:** `[Ecosystem]` (`projects/agents` root ecosystem)
-- **Status:** ✅ completed & superseded (2026-10-20). **User rationale:** the visibility protocol was a good idea but too extensive, and that extensiveness revealed a massive flaw in its logic — it over-cluttered the session and destabilized long runs. The subagent-management protocol serves the same underlying need (transparent, reliable progress) without those caveats, via a more sustainable and manageable method: orchestration through subagents with short, verifiable parent turns.
-- **Checklist:**
-  - [x] `[Ecosystem]` Write `.agents/rules/visible-work.md` (binding, workspace-wide) — later retired.
-  - [x] `[Ecosystem]` Write `.agents/skills/visible-work.md` (playbook) — later retired.
-  - [x] `[Ecosystem]` Add both rows to `AGENTS.md` quick-reference table — later rewired.
-  - [x] `[Ecosystem]` **Retire visible-work trio** (2026-10-20): deleted `.agents/rules/visible-work.md`, `.agents/skills/visible-work.md`, `.agents/agents/visible-worker/visible-worker.md`.
-  - [x] `[Ecosystem]` **Install replacement trio**: `.agents/rules/subagent-management.md` (binding orchestration rule), `.agents/skills/subagent-management.md` (playbook: task-splitting, prompt template, parallel-ownership rules), `.agents/agents/subagent-orchestrator/subagent-orchestrator.md` (role playbook); all three wired into `AGENTS.md` quick reference.
-  - [x] `[Ecosystem]` Attempt native fix via `C:\Users\Joshu\.config\opencode\cli.json` (`session.thinking: "show"`, `session.verbosity: "high"`) — ❌ DID NOT RESOLVE the visibility problem (root cause per user: the TUI's **working indicator** hides live progress while tools run; no GUI toggle exists; thinking blocks themselves do display). Recorded as failed, not counted as a solution.
-  - [x] `[Ecosystem]` Plugin approach — abandoned by user (time/credit cost). Final, shipped solution (2026-10-20): **behavioral ecosystem enforcement** — rewritten `.agents/rules/visible-work.md` (all reasoning teed into the live window as visible text; no background work of any kind; empty turns = protocol violation), rewritten `.agents/skills/visible-work.md` (narrate→act→report loop, anti-patterns, narrow subagent policy), new `.agents/agents/visible-worker/visible-worker.md` (role playbook with mermaid loop + hard bans + escalation). All three wired into `AGENTS.md` quick reference.
-  - [ ] `[Ecosystem]` **Future project (backlog, not actionable yet)**: ship the working-indicator visibility fix as a standalone importable OpenCode V2 plugin — proper parsing & message handling to output all information hidden behind the working indicator; extensive configuration for versatile display options so users can see all output when using OpenCode. Planned in root `ROADMAP.md` (v1.4.0 backlog); pick up after the theme `v2.0.0` workstream.
-
-### 🎯 [Ecosystem] Workstream W.56: Organization Community Health Files Standard — GitHub Community/Health Documents Across All Repositories
-- **Project Identifiers:** `[Ecosystem]` (all `projects/*` repositories; per-repository rollout tracked below)
-- **Target Components:**
-  - **Binding rule (`.agents/rules/community-health-files.md`)**: Required file set, naming/placement, per-file content requirements, README linkage, and enforcement.
-  - **Reusable templates (`.agents/templates/`)**: `contributing-template.md`, `code-of-conduct-template.md`, `security-template.md`, `support-template.md`, `privacy-template.md`, `changelog-template.md`, `governance-template.md`, `tos-template.md`, `citation-template.cff`, `pull-request-template.md`, `issue-template-config.yml`, `issue-template-bug.yml`, `issue-template-feature.yml`.
-  - **Per-repository documents**: root `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, `PRIVACY.md`, `CHANGELOG.md`, `GOVERNANCE.md`, `CITATION.cff`, conditional `TOS.md`, plus `.github/pull_request_template.md` and `.github/ISSUE_TEMPLATE/{config.yml,bug_report.yml,feature_request.yml}`.
+### 🎯 [Ecosystem] Workstream W.65: Agents Ecosystem Enhancement, Per-Project Scaffolding & Tool-Agnostic Workflows
+- **Project Identifiers:** `[Ecosystem]` (workspace root & all active org projects)
+- **Status:** 🚧 In progress (session state).
+- **Target Components:** Global `.agents/` ecosystem, per-project `.agents/` ecosystems, tracking ledgers, and scripts.
 
 **Locked user directives (normalized by domain):**
-- **1. GitHub Community/Health Files Everywhere**: Every HELIX-Origin repository must ship the standard community-health documents (contributing, code of conduct, security, support, privacy, changelog, governance, citation, and — for apps/services interacting with third-party services — terms of service) so GitHub surfaces them as tabs/links. Documents are self-contained, public-facing, and must never reference the private agents ecosystem.
+- **Tool-Agnostic Commands**: Build a comprehensive, tool-agnostic command runbook directory under `.agents/commands/` (`onboard.md`, `verify.md`, `fix-bug.md`, `implement-feature.md`, `review-change.md`, `update-docs.md`, `cut-release.md`) so any AI agent can follow identical workflow protocols.
+- **Drop Legacy Tooling**: Completely remove all `.opencode/` folders workspace-wide. Scrub all legacy tool references across rules, skills, playbooks, and tracking ledgers.
+- **Living Ledgers & Archive Retirement**: Retire all `*-ARCHIVE.md` files (`.github/BUGS-ARCHIVE.md`, `.github/ROADMAP-ARCHIVE.md`, `.github/TODO-ARCHIVE.md`). Living ledgers (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) remain clean and concise entry points with bare-minimal one-line completed summaries; `CHANGELOG.md` serves as the permanent chronological record.
+- **Expand Skill Library**: Author dedicated modular skills for all languages, frameworks, and tools across the organization (`svelte5-runes.md`, `rust-patterns.md`, `typescript-esm-scripts.md`, `sqlite-in-app.md`, `sveltekit-frontend.md`, `github-actions-ci.md`).
+- **Complete Per-Project Scaffolding**: Ensure all 6 active repositories (`nh-reader`, `windows-game-explorer`, `theme-toolkit`, `depressurizer`, `windhawk-themes`, `ffxiv-config`) have complete, self-contained `.agents/` directories (`rules/`, `skills/`, `agents/`) and clean `AGENTS.md` entry points.
+- **Windows Game Explorer Project Rebrand & Authentic Game Library Invariant**: Formally establish **Windows Game Explorer** (`projects/windows-game-explorer`). The project's goal is strictly to revive and modernize the classic Windows 7/Vista Game Explorer (`shell:Games`) directly inside Windows 11 File Explorer. Falling back to a generic shortcuts folder (`CDefView` file rows) completely defeats the project's purpose and is strictly prohibited.
+- **Modern Storefront Auto-Discovery Architecture**: Unlike Microsoft's abandoned Game Explorer that relied on manual Game Definition Files (GDF XML), installer COM calls, and defunct online servers, Windows Game Explorer automatically discovers and indexes games directly from installed store manifests on disk (Steam, Epic, GOG, itch.io, Battle.net, and standalone executables) and uses the installed storefront providers directly as the sole source of truth for metadata and box art (eliminating external third-party scrapers like IGDB, VNDB, and SteamGridDB).
+- **Game Explorer Manager Companion Application (`GameExplorerManager.exe`)**: Revive the classic Game Explorer Manager (GEM) utility as a dedicated Win32 management companion for adding local games, selecting box art (~2:3 case style), editing metadata, and persisting definitions to `%USERPROFILE%\Game Explorer\metadata\<appId>.json`.
+- **Authentic Two-Section Categorization**: Organize File Explorer items into two distinct collapsible sections via native Windows Shell `ICategoryProvider` and `ICategorizer`: `▾ Game Providers (N)` for installed storefront clients and `▾ Games (N)` for installed game titles.
+- **Ban on Blind Trial-and-Error Shell Extension Code Loops**: Forbid iterative guesswork and toggling between broken raw `IShellView` hacks and dumb `CDefView` shortcuts. Require thorough research into official Microsoft documentation on `FOLDERTYPEID_Games`, `IThumbnailProvider`, `IPreviewHandler`, `IPropertyStore`, and modern Windows 11 WinUI 3 / XAML island shell architecture before touching shell integration code.
+- **Encoding & Parsing Integrity**: Ensure all markdown and ledger files are strictly valid UTF-8 without BOM or CP-1252 double-encoding corruption.
+- **Native Build & Verification Tooling for C++ Projects**: Replace legacy Node.js `.mjs` Tauri v2 scripts across native C++ projects (`windows-game-explorer`, `nh-reader`, `theme-toolkit`, `depressurizer`) with a native CMake/CTest/PowerShell (or native C++ CLI) build, test, and signing runner that requires zero Node.js/Tauri dependencies.
 
 **Implementation checklist:**
-- [x] **[Ecosystem] 1. Community Health Files Standard & Templates**:
-  - [x] `[Ecosystem]` Author binding rule `.agents/rules/community-health-files.md` (required set, content requirements, README linkage, invariants) and register it in `AGENTS.md`.
-  - [x] `[Ecosystem]` Add reusable community-health templates under `.agents/templates/` and replace the legacy workspace-coupled PR template with a self-contained community-health version.
-- [x] **[depressurizer] (projects/depressurizer) 2. Community Health Files Rollout**:
-  - [x] `[depressurizer]` Add root files: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, `PRIVACY.md`, `TOS.md`, `CHANGELOG.md`, `GOVERNANCE.md`, `CITATION.cff`.
-  - [x] `[depressurizer]` Add `.github/pull_request_template.md` and YAML issue forms (`config.yml`, `bug_report.yml`, `feature_request.yml`, `autocat-request.yml`); retire the legacy Markdown issue templates.
-  - [x] `[depressurizer]` Link the community documents from `README.md` and correct stale local-VDF wording to the client-free Web API direction.
-- [x] **[Ecosystem] 2b. Per-Repo Rollout: Community-Health Files + Project-Local Agents Ecosystem + Tracking Files (user directive 2026-10-18)**:
-  - **Locked directive:** every repository gets (1) the full community-health set, (2) its **own self-contained** agents ecosystem (`AGENTS.md`, `.agents/`, `.github/copilot-instructions.md`) generated via the headless CLI scaffold, and (3) its **own** `ROADMAP.md`/`PLAN.md`/`TODO.md`/`BUGS.md` holding that repo's items migrated from the root ledgers. The workspace-root ecosystem stays private, never referenced from repos, and enhances (never replaces) repo-local ones. No git operations; files only.
-  - [x] `[Ecosystem]` Scaffold bodies made self-contained (no workspace references). **(Delivered 2026-10-18.)**
-  - [x] `[Ecosystem]` Scaffold engine enhanced with configurable license (defaults to `MIT` per GitHub standard; configurable via `--license`), opt-in tracking ledgers (defaults to `AGENTS.md` only; `--tracking <files>`), and opt-in community-health files (`CODE_OF_CONDUCT.md`, `PRIVACY.md`, `SECURITY.md`, `SUPPORT.md`, `CHANGELOG.md`, `GOVERNANCE.md`, `CONTRIBUTING.md`, etc. via `--health <files>`). **(Delivered 2026-10-18.)**
-  - [x] `[Ecosystem]` Optional `.env` configuration auto-loading support implemented (`--env [path]`, auto-detects `.env` in cwd; supports `SCAFFOLD_TYPE`, `SCAFFOLD_LICENSE`, `SCAFFOLD_TRACKING`, `SCAFFOLD_HEALTH`, `SCAFFOLD_ARGS`, etc.; CLI flags override `.env`), plus tracked prebuilt `.env.example` with all supported keys. **(Delivered 2026-10-18.)**
-  - [x] `[Ecosystem]` Scaffold templates made domain-neutral (leak protection covers **both** organization base URLs, `*.helix-origin.club` and the GitHub Pages fallback paths `helix-origin.github.io/<repo>`): all organization/domain links are opt-in (`--docs-url`, `--wiki-url`, `--portal-url`, `--discord-url`, `--with-discussions`, `--repo-url`, `--repo-slug`, `--org-url`, `--org-name`; matching `SCAFFOLD_*` env keys), absent links are omitted entirely, `renderTemplate` supports `{{#KEY}}`/`{{^KEY}}` conditionals with a brace-order fix, and only `README.md` carries an always-on attribution footer linking `https://github.com/HELIX-Origin/agents`. **(Delivered 2026-10-19; `npm run typecheck` + 5/5 tests green.)**
-  - [x] `[Ecosystem]` Flow-oriented templates now use GitHub-flavored mermaid diagrams: `contributing` (PR path), `security` (disclosure path), `governance` (decision path), `bugs` (bug lifecycle), and `handoff` (session cycle); the existing `roadmap`/`plan`/`todo` diagrams are retained. Documented as rule 5 in `.agents/rules/documentation-standards.md` and covered by scaffold tests. **(Delivered 2026-10-19.)**
-  - [x] `[universal-game-launcher]` Community-health suite (`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, `PRIVACY.md`, `TOS.md`, `CHANGELOG.md`, `GOVERNANCE.md`, `CITATION.cff`, PR template, issue forms) + project-local ecosystem & tracking files (`AGENTS.md`, `.agents/rules/local-conventions.md`, `.github/copilot-instructions.md`, `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`, `HANDOFF.md`) migrated and tailored. **(Delivered 2026-10-18.)**
-  - [x] `[nh-reader]` Community-health gaps + project-local ecosystem + tracking files: added `CODE_OF_CONDUCT.md`, `SUPPORT.md`, `GOVERNANCE.md`, `.github/pull_request_template.md`, `AGENTS.md`, `.agents/rules/local-conventions.md`, `.github/copilot-instructions.md`, and tailored `ROADMAP.md`/`PLAN.md`/`TODO.md`/`BUGS.md`/`HANDOFF.md`; refreshed stale URLs/versions and removed workspace/external references across existing docs; added README community links + attribution footer. **(Delivered 2026-10-19.)**
-  - [x] `[theme-toolkit]` Community-health gaps + project-local ecosystem + tracking files.
-  - [x] `[windhawk-themes]` Community-health gaps + project-local ecosystem + tracking files.
-  - [x] `[ffxiv-config]` Community-health gaps + project-local ecosystem + tracking files.
-  - [x] `[helix-jekyll-theme]` Community-health gaps + project-local ecosystem + tracking files.
-  - [x] `[helix-origin.github.io]` Community-health gaps + project-local ecosystem + tracking files.
-  - [x] `[helix-origin.github.io]` Flattened the Jekyll site root from `docs/` to the repository root (config, `index.md`, `CNAME`, assets); non-site `README.md` now carries `published: false`, `LICENSE` is excluded from the build, and artwork/release rules were updated. **(Delivered 2026-10-19.)**
-  - [x] `[docs]` Community-health gaps + project-local ecosystem + tracking files.
-  - [x] `[wiki]` Community-health gaps + project-local ecosystem + tracking files.
-  - [x] `[ugl-db-00]` .. `[ugl-db-03]` Community-health gaps + project-local ecosystem + tracking files (per shard).
-  - [x] `[ugl-db-ingest]` Community-health gaps + project-local ecosystem + tracking files (already migrated).
-  - [x] `[Ecosystem]` Root-ledger reconciliation: after per-repo migration is verified, replace migrated per-repo workstreams in root `ROADMAP.md`/`PLAN.md`/`TODO.md`/`BUGS.md` and archives with one-line pointers.
-  - [x] `[Ecosystem]` Verify no repo file references the workspace ecosystem; zero-leak scan.
-- [x] **[Ecosystem] 3. Agents Ecosystem Knowledge Base (SQLite) — Design & Read-Only Integration (W.57)**:
-  - [x] `[Ecosystem]` W.57a — Finalize agents DB design (`.agents/skills/agents-db-design.md`) — includes universal org/repo support, filesystem-canonical approach, and export/import round-trips. **(Delivered)**
-  - [x] `[Ecosystem]` W.57b — Create schema prototype + migration `v001__init.sql` (`.agents/migrations/`). **(Delivered 2026-10-18 — metadata-only schema via `v002__metadata_only.sql`: `artifacts` rebuilt without `content_md`/`frontmatter`/`checksum_fs`, `kind` widened to rule/skill/agent/template/document/fragment, new `metadata_entries` key/value table; `migrate.ts` hardened with per-file applied-tracking, legacy `last_migration` backfill, and `schema_version` recompute — regression fixed where a second run re-applied v001 and downgraded the version)**
-  - **Locked user directives (amended 2026-10-18):**
-    - **4. Local-Only Database Lifecycle**: `knowledge.db` and `secure.db` live in `scripts/agents-kb/data/` (next to the headless CLI, mirroring `logs/`) and are **created by initial setup after cloning** the agents ecosystem (`setup.ts`, idempotent) — gitignored, never tracked, never pushed. Per-repo tracking is **solely per repo, locally**: clones/forks start with a clean DB, and repo-scoped information never reaches other people's clones or forks of the agents ecosystem repo.
-    - **5. Metadata Helpers Only — Never Content**: The databases are helpers that store **metadata used by** agents, rules, skills, templates, etc. (path/hash registries, tags, cross-references, defaults). They **never store rules, agents, skills, or templates themselves** — that content in the DB would break the agent tools' ability to see those at runtime, since the tools load them from the filesystem.
-  - [x] `[Ecosystem]` Local-only lifecycle implemented: `kb-config.ts` (`DATA_DIR`/`KB_PATH`/`SECURE_KB_PATH` under `scripts/agents-kb/data/`, `defaultConfig().tracked = false`), root `.gitignore` ignores `scripts/agents-kb/data/*` + `scripts/agents-kb/logs/*` with tracked `README.md` exceptions, existing local DB migrated to `scripts/agents-kb/data/knowledge.db` (verified: rerun → 0 applied, schema_version 2.0.0), `scripts/agents-kb/data/README.md` written.
-  - [x] `[Ecosystem]` `.agents/skills/agents-db-design.md` corrected: metadata-helper-only invariant (rules/agents/skills/templates content never stored), v002 metadata-only `artifacts` + `metadata_entries` schema documented, DB → metadata export (no filesystem content regeneration), local-only lifecycle, `scripts/agents-kb/data/` location.
-  - [x] `[Ecosystem]` W.57c — Implement read-only DB access with filesystem fallback (no behavior change). **(Delivered 2026-10-18 — `scripts/agents-kb/kb-read.ts`: DB-first Query API `getByKey`/`getByPath`/`list`/`findRefs`/`search` with filesystem merge/fallback, alias + ref traversal, scored search; `tryOpenDb()` never creates the DB; v1 schema → fs fallback; gate green, 2/2 tests)**
-  - [x] `[Ecosystem]` W.57d — Add export/sync scripts (`scripts/agents-kb/kb-export.ts`, `scripts/agents-kb/kb-sync.ts`) for deterministic **metadata** export/import round-trips (the DB never regenerates filesystem content). **(Delivered 2026-10-18 — `kb-sync.ts` (fs→DB upsert + soft-delete orphans, idempotent: 88 inserted then 88 unchanged), `kb-export.ts` (DB→deterministic Markdown report `kb-export.md`, 88 artifacts; byte-identical on rerun); npm scripts `sync`/`export`; typecheck clean)**
-  - [x] `[Ecosystem]` W.57e — Add controlled write path with invariant validation (no ecosystem refs in project repos, license correctness). **(Delivered 2026-10-18 — `scripts/agents-kb/kb-write.ts`: `upsertArtifact`/`upsertMetadata`/`softDeleteArtifact` with full invariant validation (kind enum, allowed path roots, file existence, content_hash match, value-type/JSON validity, org seed); `validateInvariants` + `runValidate` CLI; npm script `validate`; test body `kb-write.test.ts` green; 88 artifacts validate clean)**
-  - [x] `[Ecosystem]` W.57f — Document fork customization (`org_slug`, repo mappings) in `workspace.md`/`AGENTS.md`. **(Delivered 2026-10-18 — fork-customization section in `.agents/rules/workspace.md` (slug override via code or `AGENTS_KB_ORG`/`AGENTS_KB_ORG_SLUG` env, local-only lifecycle, env override list); `defaultOrgSlug()` added to `kb-config.ts`; AGENTS.md quick-ref unchanged — env vars documented in `scripts/README.md`)**
+- [x] **[Ecosystem] 1. Tool-Agnostic Commands Directory**:
+  - [x] `[Ecosystem]` Create `.agents/commands/` with `README.md`, `onboard.md`, `verify.md`, `fix-bug.md`, `implement-feature.md`, `review-change.md`, `update-docs.md`, `cut-release.md`.
+- [x] **[Ecosystem] 2. Drop Legacy Tooling Workspace-Wide**:
+  - [x] `[Ecosystem]` Remove `.opencode/` directories workspace-wide and across all project repositories.
+  - [x] `[Ecosystem]` Scrub references from `AGENTS.md`, `README.md`, rules, skills, and tracking files.
+- [x] **[Ecosystem] 3. Archive Retirement & Living Ledger Model**:
+  - [x] `[Ecosystem]` Delete `.github/*-ARCHIVE.md` files; establish root `CHANGELOG.md` (Keep a Changelog format).
+  - [x] `[Ecosystem]` Update invariant 3 in `AGENTS.md` and update all ledger templates.
+- [x] **[Ecosystem] 4. Universal Skills Library Expansion**:
+  - [x] `[Ecosystem]` Create `svelte5-runes.md`, `rust-patterns.md`, `typescript-esm-scripts.md`, `sqlite-in-app.md`, `sveltekit-frontend.md`, `github-actions-ci.md`.
+- [x] **[Ecosystem] 5. Per-Project Agents Ecosystem Scaffolding**:
+  - [x] `[Ecosystem]` Complete `.agents/{rules,skills,agents}/` and `AGENTS.md` in `nh-reader`.
+  - [x] `[Ecosystem]` Complete `.agents/{rules,skills,agents}/` and `AGENTS.md` in `windows-game-explorer`.
+  - [x] `[Ecosystem]` Complete `.agents/{rules,skills,agents}/` and `AGENTS.md` in `theme-toolkit`.
+  - [x] `[Ecosystem]` Complete `.agents/{rules,skills,agents}/` and `AGENTS.md` in `depressurizer`.
+  - [x] `[Ecosystem]` Complete `.agents/{rules,skills,agents}/` and `AGENTS.md` in `windhawk-themes`.
+  - [x] `[Ecosystem]` Complete `.agents/{rules,skills,agents}/` and `AGENTS.md` in `ffxiv-config`.
+- [x] **[Ecosystem] 6. Windows Game Explorer Rebrand & Shell Extension Governance**:
+  - [x] `[Ecosystem]` Author `.agents/rules/windows-shell-extension.md` banning generic shortcut folder degradation and blind trial-and-error shell loops.
+  - [x] `[Ecosystem]` Rename and update `.agents/skills/windows-game-explorer.md` to authoritative Windows Game Explorer architecture.
+  - [x] `[Ecosystem]` Update `.agents/registry/projects.json` to reflect `windows-game-explorer` (`projects/windows-game-explorer`).
+  - [x] `[windows-game-explorer]` Align `README.md`, `HANDOFF.md`, `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`.
+- [x] **[Ecosystem] 7. Verification & Ledger Synchronization**:
+  - [x] `[Ecosystem]` Run `npm --prefix scripts run index` and `index:check`.
+  - [x] `[Ecosystem]` Run `npm --prefix scripts run sync` and `export`.
+  - [x] `[Ecosystem]` Run `npm --prefix scripts test` (6/6 passing).
+  - [x] `[Ecosystem]` Update `HANDOFF.md` with final session status.
 
 ---
 
-### 🎯 [Ecosystem] Workstream W.58: Session Handoff Protocol — Permanent `HANDOFF.md` Session-State Ledger (Delivered, amended 2026-10-18)
-- **Project Identifiers:** `[Ecosystem]` (`projects/agents`)
-- **Target Components:**
-  - **Binding rule (`.agents/rules/session-handoff.md`)**: lifecycle of the permanent, git-tracked workspace-root `HANDOFF.md` — write/refresh triggers, active self-monitoring scoreboard, consume-at-start-and-migrate protocol, incremental maintenance, compression (DCP) coexistence, ledger-accuracy parity, ecosystem isolation, no secrets.
-  - **Skill (`.agents/skills/session-handoff.md`)**: continuous self-monitoring, Phase A maintain procedure, Phase B migrate-and-refresh procedure, migration mapping table, anti-patterns.
-  - **Template (`.agents/templates/handoff-template.md`)**: structural baseline (header, per-workstream sections with state/delivered/next tasks/ledgers, shell notes, quick resume checklist).
-  - **Agent (`.agents/agents/session-keeper/handoff-writer.md`)**: session-keeper role playbook with monitoring duty and write/consume checklists.
-
-**Locked user directives (normalized by domain):**
-- **1. Permanent Session-State Ledger**: `HANDOFF.md` is a permanent, **git-tracked** file at the workspace root holding live in-flight session state (exact next steps, fresh file/environment facts, workstream posture). It is read at the very start of every session and **kept current at all times** — created at the first worth-carrying milestone, refreshed at every workstream state change, fully rewritten at session end / soft-target posture — so it can serve its purpose. It is **never gitignored and never deleted**; consumption migrates its content into the ledgers (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) and then refreshes the file (migrated-only state collapses to one-line delivered notes).
-- **2. Active Limit Self-Monitoring (never wait for the user)**: The agent must actively and silently monitor its own context pressure at every checkpoint (token meter, DCP compress count this session, pressure reminders, ~40-turn / ≥3-workstream fallbacks) against the fixed thresholds (soft 100k / hard 120k, 60% of window when < 160k) and execute the postures autonomously. The user must never have to notify the agent that a limit was exceeded — that is a protocol failure.
-- **3. Compression (DCP / `compress`) Coexistence**: The handoff protocol must work alongside the compress tool in workspaces with it enabled: `HANDOFF.md` is the disk-durable store sourced independently of compressed conversation memory, compress summaries must preserve the handoff file's current state, and compressing never substitutes for refreshing the handoff.
+### ⏳ [Web & Docs] Workstream W.66: Documentation Hubs & Glassmorphism Jekyll Theme Rebuild (Queued — v1.3.0)
+- **Target Components:** `helix-origin.github.io`, `docs`, `wiki` + custom glassmorphism Jekyll theme (`helix-jekyll-theme` rebuilt from scratch).
+- **Architecture & Design:**
+  - Build a custom glassmorphism styled Jekyll theme with modern SCSS tokens, frosted glass blur, glowing borders, and responsive portal layouts.
+  - Recreate `helix-origin.github.io` as the main organization landing portal showcasing all active projects and resources.
+  - Recreate `docs` as the comprehensive user documentation hub with installation, usage, and quickstart guides.
+  - Recreate `wiki` as the extensive technical reference and engineering specification hub.
+  - Setup zero-warning GitHub Actions CI/CD deployment pipelines for GitHub Pages.
 
 **Implementation checklist:**
-- [x] **[Ecosystem] 1. Session Handoff Standard (rule, skill, template, agent)**:
-  - [x] `[Ecosystem]` Author binding rule `.agents/rules/session-handoff.md` and register it in `AGENTS.md` (quick reference + workspace layout + session start checklist).
-  - [x] `[Ecosystem]` Author skill `.agents/skills/session-handoff.md` and template `.agents/templates/handoff-template.md`.
-  - [x] `[Ecosystem]` Author agent playbook `.agents/agents/session-keeper/handoff-writer.md`.
-  - [x] `[Ecosystem]` Root `.gitignore` treatment: originally ignored as a temporary file; **superseded 2026-10-18** — `HANDOFF.md` is permanent and git-tracked (ignore rule removed).
-  - [x] `[Ecosystem]` Integrate handoff steps into `.agents/rules/session-management.md` (session start/end checklists) and `.agents/skills/large-session-management.md`.
-  - [x] `[Ecosystem]` Codify a **fixed max session size** (never re-calculated): hard ceiling **120k tokens**, soft target **100k tokens**, **60% of window** when < 160k, fallback heuristics (~40 substantive turns / ≥ 3 open workstreams / compaction suggested) — defined once in the rule and mirrored in the skill and agent.
-  - [x] `[Ecosystem]` **Amendment 2026-10-18 — permanent ledger**: rule, skill, template, agent, `session-management.md`, `large-session-management.md`, and `AGENTS.md` (layout, quick reference, session start checklist) rewritten for the permanent, always-current, never-deleted `HANDOFF.md` lifecycle (incremental refresh; migrate-and-refresh instead of delete).
-  - [x] `[Ecosystem]` **Amendment 2026-10-18 — active self-monitoring**: binding context-pressure scoreboard (token meter, compress count, DCP reminders, turn/workstream fallbacks → self-executing postures) added to rule, skill, agent, and `session-management.md` mandatory practice 7 — the agent never waits for the user to flag a limit.
-  - [x] `[Ecosystem]` **Amendment 2026-10-18 — DCP compression coexistence**: coexistence section (disk-durable store, lifecycle-preserving compress summaries, compress ≠ handoff substitute, compression-proof consumption) added to rule + skill; template and `BUGS.md` quirks updated.
+- [ ] **[Web & Docs] 1. Custom Glassmorphism Jekyll Theme**:
+  - [ ] `[Web & Docs]` Rebuild Jekyll theme from scratch with Dart Sass architecture, glassmorphism token scales, and responsive layout primitives.
+  - [ ] `[Web & Docs]` Build portal card layouts, navigation sidebars, and high-contrast typography.
+- [ ] **[Web & Docs] 2. Organization Portal (`helix-origin.github.io`)**:
+  - [ ] `[Web & Docs]` Recreate repository; implement landing portal showcasing all HELIX-Origin projects.
+- [ ] **[Web & Docs] 3. User Documentation Hub (`docs`)**:
+  - [ ] `[Web & Docs]` Recreate repository; implement comprehensive, theme-neutral documentation for all org projects.
+- [ ] **[Web & Docs] 4. Technical Wiki Hub (`wiki`)**:
+  - [ ] `[Web & Docs]` Recreate repository; implement technical architecture specifications and developer manuals.
+- [ ] **[Web & Docs] 5. GitHub Pages Deployment Workflows**:
+  - [ ] `[Web & Docs]` Author GitHub Actions CI workflows for building and deploying each site to GitHub Pages.
 
 ---
-
-### 🎯 [Ecosystem] Workstream W.59: Headless CLI Standards — Dual Extension Mechanism, Structured Logging & Folder Documentation (Delivered 2026-10-18)
-- **Project Identifiers:** `[Ecosystem]` (`projects/agents`) — `scripts/agents-kb/` headless TS ESM CLI
-- **Locked user directives (normalized by domain):**
-- **1. Reusable Script Extensions (no temp scripts)**: Test, inspection, and helper scripts must be built as reusable extensions of the modular TypeScript ESM CLI (e.g. `scripts/agents-kb/`) — never temporary/ad-hoc scripts — so they never have to be remade; reusability is the rationale.
-- **2. Dual Extension Mechanism (body files ≠ all extensions)**: Future extensions are **not always body files**. Body files suit pluggable *content* units (tests under `bodies/test/*.test.ts`, migration SQL under `.agents/migrations/*.sql`); new **first-class TypeScript ESM modules** (`kb-read.ts`, `kb-log.ts`, future exporters/validators/commands) must be added when the capability needs real logic/exports. Locking extensions solely to body files leaves a massive gap and limits the headless CLI — choose the mechanism by nature of the capability.
-- **3. Detailed Logging for Debug & Verification**: Create a logs directory with **all log files gitignored** so the CLI can log every action in detail — catching issues and verifying the CLI runs as intended.
-- **4. Tracked Folder Documentation**: The logs folder itself stays tracked via a `README.md` inside it (explaining its purpose) despite the log files being ignored; the `scripts/` folder also needs a proper `README.md` explaining its purpose.
-- **Implementation checklist:**
-  - [x] `[Ecosystem]` Update `.agents/rules/script-standards.md` with the headless-CLI invariant: no temp scripts, dual extension mechanism (modules vs body files), structured logging to gitignored `logs/`.
-  - [x] `[Ecosystem]` Add logging module `scripts/agents-kb/kb-log.ts` (console+file tee, per-run file, retention pruning, never fails CLI) and gitignore rules: `scripts/agents-kb/logs/*` + `!scripts/agents-kb/logs/README.md`.
-  - [x] `[Ecosystem]` Add body-file loader `scripts/agents-kb/kb-body.ts` (discovers/imports `*.test.ts` bodies; ENOENT-safe; default-or-named `run` export contract).
-  - [x] `[Ecosystem]` Add test runner `scripts/agents-kb/test.ts` + first body `scripts/agents-kb/bodies/test/migrations.test.ts` (fresh build, idempotent rerun, metadata-only schema shape, legacy backfill, schema_version downgrade guard — regression tests for the fixed migrate bug).
-  - [x] `[Ecosystem]` Add initial-setup module `scripts/agents-kb/setup.ts` (idempotent: creates `data/` + `logs/` dirs, runs migrations, seeds the organization row) — the tracked READMEs + gitignore rules for both folders are already in place.
-  - [x] `[Ecosystem]` Make `kb-config.ts` paths lazy/overridable (`kbPath()` + `AGENTS_KB_PATH` env, `TESTS_DIR`) so tests run the real pipeline against throwaway DBs (`DATA_DIR`/`LOGS_DIR` constants and local-only paths already in place).
-  - [x] `[Ecosystem]` Write `scripts/README.md` (purpose, structure, extension mechanisms, env overrides) and `scripts/agents-kb/logs/README.md` (log purpose, naming, retention, git policy).
-
----
-
-### 🎯 [Ecosystem] Workstream W.60: Project-Local Agents Interoperability & Per-Project Ecosystem Scaffolding (Delivered 2026-10-18)
-- **Project Identifiers:** `[Ecosystem]` (`projects/agents`) — `.agents/rules/` + `scripts/agents-kb/` headless TS ESM CLI
-- **Target Components:**
-  - **Interoperability rule (`.agents/rules/project-agents-interoperability.md`)**: discovery of project-local agents assets, precedence matrix (org-wide invariants vs project-internal conventions), enhancement direction (ours enhances theirs; never clobber; ecosystem isolation preserved).
-  - **Scaffold module (`scripts/agents-kb/kb-scaffold.ts`)**: optional headless-CLI feature that generates a complete project-local agents ecosystem (`AGENTS.md`, `.agents/rules/`, `.agents/skills/`, `.agents/templates/`, `.agents/agents/`) inside a target project for users who want per-project agents.
-  - **Project-type template suites (body files)**: scaffold content packs for distinct project types/engines (e.g. Tauri v2 desktop, Jekyll theme, Node/TS CLI, Rust library, docs site) under the body-file extension mechanism.
-
-**Locked user directives (normalized by domain):**
-- **1. Interoperability**: Some projects/repositories have their own internal agents. The workspace-root agents ecosystem must work with those — it is used to **enhance** per-project agents, rules, skills, templates, etc. in projects that have their own (project-local files are first-class and never clobbered unprompted; org-wide invariants always win).
-- **2. Optional Scaffolding Feature in the Headless CLI**: The ability to author proper per-project agents, skills, rules, and templates ships as an **optional feature of the headless CLI** for users who desire per-project agents ecosystems — meaning proper **templates for various project types and engines** are required.
-
-**Implementation checklist:**
-- [x] `[Ecosystem]` Author binding rule `.agents/rules/project-agents-interoperability.md` (discovery, precedence matrix, enhancement direction, invariants).
-- [x] `[Ecosystem]` Register `AGENTS.md` invariant 15 (project-local agents interoperability), quick-reference row, and session-start checklist step 7 (discover & honor project-local agents assets).
-- [x] `[Ecosystem]` Add scaffold module `scripts/agents-kb/kb-scaffold.ts` (first-class TS ESM module): `--type <engine> --path <project>` scaffolding with dry-run, idempotent merge (never overwrites existing project-local files unprompted), structured logging via `kb-log.ts`. **(Delivered 2026-10-18)**
-- [x] `[Ecosystem]` Author project-type template suites as body files (`scripts/agents-kb/bodies/scaffold/<type>/…`): at minimum `tauri-desktop`, `jekyll-theme`, `node-ts-cli`, `rust-library`, `docs-site` — each with `AGENTS.md`, starter rules, skills, templates, and agent playbooks tailored to the engine. **(Delivered 2026-10-18 — each type: AGENTS.md, .agents/rules/local-conventions.md, .github/copilot-instructions.md)**
-- [x] `[Ecosystem]` Add scaffold test bodies (`tests/scaffold.test.ts`): dry-run makes no writes, idempotent re-run, never-clobber guard, engine-specific content present. **(Delivered 2026-10-18 — 5 types, dry-run/idempotency/never-clobber/content checks green)**
-- [x] `[Ecosystem]` Document the feature in `scripts/README.md` and `.agents/rules/project-agents-interoperability.md` integration section; note the KB artifact recording (per-repo agent assets, W.57). **(Delivered 2026-10-18 — README updated with scaffold command/type list; scaffold section added to interop rule)**
-
----
-
-### 🎯 [Ecosystem] Workstream W.62: OpenCode Context-Pressure Self-Monitoring Plugin (Proposed)
-- **Project Identifiers:** `[Ecosystem]` (`projects/agents`) — V2-native OpenCode plugin under `.opencode/plugins/` (or `scripts/opencode-plugin/`) that auto-injects the context-pressure scoreboard at every checkpoint and forces a `HANDOFF.md` refresh at soft-target posture.
-- **Target Components:**
-  - **V2 plugin module**: default export `{ id, effect | setup }` (V2 shape) so it loads under the current OpenCode build (the V1-only plugins that prompted W.61 are the cautionary example).
-  - **Scoreboard injection**: reads token usage / compress count / workstream count from OpenCode's session API and injects a one-line scoreboard into the system prompt or a tool result at each checkpoint, so the agent can see its own posture without relying on memory.
-  - **Soft-target enforcement**: at soft-target posture, blocks new implementation work and only permits verification + ledger sync + HANDOFF rewrite until the posture is cleared; emits a user-visible notice.
-  - **Potato-budget**: must be lightweight (no background polling loops, no heavy deps); runs only on checkpoint events.
-- **Why:** the session-handoff protocol's self-monitoring rule (`.agents/rules/session-handoff.md`) depends on the agent noticing its own token pressure; twice this session the agent failed to act on the 100k soft target until the user flagged it. An internal V2 plugin is the only reliable mechanism — the agent cannot self-observe accurately from within the context window.
-- **Locked user directives (proposed 2026-10-18):**
-  - **1. V2-native only**: must use the V2 plugin API (`{ id, effect | setup }`); never ship a V1-shaped default export.
-  - **2. Read-only, low-overhead**: no mutations to sessions or files except the HANDOFF refresh that the agent itself performs; no background polling; checkpoint-event driven.
-  - **3. Curated**: single-purpose plugin; no feature creep into unrelated capabilities (those belong in W.61 survey scope).
-- **Implementation checklist:**
-  - [ ] `[Ecosystem]` Read the V2 plugins guide (`https://opencode.ai/v2/docs/build/plugins`) and scaffold a minimal V2 plugin that logs/returns a checkpoint scoreboard (proof-of-concept).
-  - [ ] `[Ecosystem]` Wire scoreboard to the session-handoff rule's thresholds (100k soft / 120k hard / 60% of window < 160k; compress count; ~40 turns / ≥3 workstreams).
-  - [ ] `[Ecosystem]` Add soft-target gating: at soft posture, only verification + ledger sync + HANDOFF rewrite permitted; user-visible notice.
-  - [ ] `[Ecosystem]` Verify it loads green under the current OpenCode build (plugin view + `~/.local/share/opencode/log/opencode.log`), add to `.opencode/opencode.jsonc` only after verification, and document in `scripts/README.md` / `BUGS.md` quirk set.
-  - [ ] `[Ecosystem]` Test on potato-class hardware (Dell OptiPlex 3040 SFF reference) for overhead before adoption.
-
----
-
-### 🎯 [Ecosystem] Workstream W.61: OpenCode Ecosystem Watch — V2 Plugin Compatibility Restore & Curated Plugin/MCP/LSP Discovery (In Progress)
-
-- **Project Identifiers:** `[Ecosystem]` (`projects/agents`) — `.opencode/opencode.jsonc` project plugin/MCP/LSP config
-- **Target Components:**
-  - **V2 compatibility restore**: three plugins removed 2026-10-18 from `.opencode/opencode.jsonc` because they load only under the V1 plugin API (fails on V2's required default export `{ id, effect | setup }`): `@franlol/opencode-md-table-formatter`, `opencode-agent-skills`, `opencode-websearch-cited`.
-  - **Curated discovery**: periodic survey of the OpenCode ecosystem for new plugins **and MCP / LSP configurations** the agents ecosystem can genuinely benefit from — under a hard low-end-hardware budget.
-
-**Locked user directives (normalized by domain):**
-- **1. Restore Compatibility ASAP**: Regularly check whether V2-compatible versions of the removed plugins (or compatible alternatives providing the same capability) are available, and restore them as soon as possible.
-- **2. Curated Discovery With a Hard Cap on Clutter**: Regularly also check for new beneficial **plugins, MCP servers, and LSP configurations** — but strictly curated: the goal is the **benefits without clutter**. Never accumulate so much that the OpenCode instance risks corruption, instability, or lockup. Only adopt candidates that are compatible, actively maintained, non-overlapping with existing capability, and low-overhead.
-- **3. Potato-Computer Budget**: Some users run from very modest hardware — the reference environment is a slightly upgraded Dell OptiPlex 3040 SFF (Small Form Factor; RAM upgrade, GPU upgrade, new tri-channel internal WiFi + Bluetooth card). Every candidate must be evaluated for RAM/CPU/disk/network overhead on such potato-class machines; prefer lightweight or optional/deferred-load configurations and skip anything heavy (headless browsers, large indexers, always-on model servers) unless the benefit clearly justifies the cost.
-
-**Implementation checklist:**
-- [x] `[Ecosystem]` Remove V1-incompatible plugins from `.opencode/opencode.jsonc` (kept `@tarquinen/opencode-dcp`, `@plannotator/opencode`) and record the ecosystem quirk in `BUGS.md` (2026-10-18).
-- [ ] `[Ecosystem]` Re-check `@franlol/opencode-md-table-formatter`, `opencode-agent-skills`, and `opencode-websearch-cited` npm latest releases for V2-compatible versions (or same-capability alternatives) at session starts / periodically; re-add to the `plugin` array when available and verify green (plugin view + no `failed to load plugin` in `~/.local/share/opencode/log/opencode.log`).
-- [ ] `[Ecosystem]` Periodically survey for new ecosystem-beneficial **plugins, MCP servers, and LSP configurations**; evaluate each against the curation policy (compatible, maintained, no capability overlap, low resource overhead, no lockup/corruption risk **on potato-class hardware**); adopt only clear wins and keep the total list minimal.
-
----
-
-### 🏗 [Ecosystem] Workstream W.63: OpenCode Config Modernization, Plugin Evaluation & Decline Record (Delivered 2026-10-20)
-- **Project Identifiers:** `[Ecosystem]` (`projects/agents`) — `.opencode/opencode.jsonc` permissions/plugins configuration
-- **Target Components:**
-  - **V2 config migration**: replaced the legacy singular `plugin` key with the current `plugins` array; replaced the V1 object-form `permissions` with a V2 `permissions` ARRAY of 51 `{action, resource, effect}` rules.
-  - **Granular permission gating**: auto-`allow` for safe tools (`read`, `edit`, `glob`, `grep`, `webfetch`, `websearch`, `external_directory`, `skill`, `subagent`, `question`), read-only shell inspection (`git status|diff|log|show|ls-files|remote -v`), read-only `gh` (`issue view|list`, `pr view|list`, `release view|list`, `repo view`), and `magick *`; then a catch-all `{action:"shell",resource:"*",effect:"ask"}`; then every git-mutating/destructive command = `ask` (`git add|commit|push|pull|fetch|merge|rebase|reset|revert|stash|checkout|switch|clean|tag|branch|mv|restore|worktree`, `gh issue create|close|edit`, `gh pr create|merge`, `gh release create`, `rm *`, `sudo *`).
-  - **Load-bearing ordering invariant**: **last matching rule wins**, so broad allows are FIRST and gated rules LAST; reordering would silently un-gate git and break workspace invariant #1 (No unauthorized git operations).
-  - **Declined candidate record**: `@coool/opencode-decision-mode` evaluated and declined (see below).
-- **Why:** the config had drifted onto deprecated V1 shapes; centralizing granular gating in a sorted, last-wins rule array makes git safety explicit and machine-verifiable.
-- **Locked user directives (normalized by domain):**
-  - **1. Granular `ask`, never autoaccept**: keep the git rules as `ask` (not `deny`) so a human confirms each mutation; therefore do NOT enable `session.permissions: "autoaccept"` or `--auto`, which would auto-approve the `ask` rules and undermine invariant #1.
-  - **2. Configurable equivalents only**: "auto-expand tool output" does NOT exist in OpenCode — expanding/collapsing tool calls is TUI-interactive only. The configurable equivalents are auto-approve via `permissions`, and `session.permissions: "autoaccept"` in the CLI config; this workstream deliberately adopts the former posture (granular `ask`) and rejects the latter.
-- **Implementation checklist:**
-  - [x] `[Ecosystem]` Migrate `.opencode/opencode.jsonc`: singular `plugin` → `plugins` array; V1 object `permissions` → V2 `permissions` ARRAY of 51 `{action, resource, effect}` rules; broad allows first, gated `ask` rules last. **(Delivered 2026-10-20 — verified: parses as JSON with comments stripped, 2 plugins, 51 rules, 0 CRLF, no legacy `plugin` key)**
-  - [x] `[Ecosystem]` Record the last-matching-rule-wins ordering invariant and the "auto-expand tool output does not exist in OpenCode" finding; decision: granular `ask` rules, NOT autoaccept. **(Delivered 2026-10-20 — documented in this workstream; granular `ask` posture protects invariant #1)**
-  - [x] `[Ecosystem]` Evaluate `@coool/opencode-decision-mode` against the curation policy. **(Delivered 2026-10-20 — NOT RECOMMENDED; nothing added to config)**
-    - **Declined — `@coool/opencode-decision-mode`:** npm latest 0.1.6 published 2026-10-20 (repo 0.1.7 — version skew), repo created 2026-10-19, 0 stars / 0 forks / 0 open issues / no releases, MIT, pre-1.0. Registers `decision`/`decision_map`/`decision_results` tools delegating judgment calls to a third-party runtime (OpenRouter / TypeSafe / OpenAI) requiring provider API keys and sending per-record state off-machine (telemetry-free claim is author-asserted, unverified). Targets `@opencode/plugin ^2.0.32` while the client here is 1.18.29 → plugin-API compatibility unverified. Decisive: orthogonal to and does not help the workspace's real context-bloat/crash problem.
-
----
-
-### 🏗 [Ecosystem] Workstream W.64: First-Party OpenCode Plugin & Agent Suite (Proposed)
-- **Project Identifiers:** `[Ecosystem]` (`projects/agents`) — first-party OpenCode plugins and agents under `.opencode/plugins/` / `.opencode/agents/` (or `scripts/opencode-plugin/`)
-- **Target Components:**
-  - **Handoff-protocol plugin** — already planned (see W.58 / W.62): the permanent `HANDOFF.md` session-state auto-refresh. This workstream is the home for the whole first-party suite; the handoff plugin is its first entry (detail lives in W.58 / W.62, not duplicated here).
-  - **Custom reviewer plugin** — an OpenCode plugin providing the workspace's review workflow natively (repo / PR / code review with the HELIX review standards).
-  - **SQLite metadata database management & integration plugin** — a plugin to manage/integrate the workspace's SQLite metadata database (the HELIX metadata KB referenced by `scripts/`), for querying/maintaining it from within OpenCode.
-  - **Open-ended**: further first-party plugins/agents wherever they measurably enhance OpenCode capabilities.
-- **Why / framing (user's words, paraphrased accurately):** our agents ecosystem repo should be a great starting point for anyone who needs a unified ecosystem, with the ability to scaffold per-repo ecosystems for it to work with.
-- **Implementation checklist:**
-  - [ ] `[Ecosystem]` Handoff-protocol plugin (cross-reference W.58 / W.62; the first entry of this suite).
-  - [ ] `[Ecosystem]` Custom reviewer plugin (native HELIX review workflow).
-  - [ ] `[Ecosystem]` SQLite metadata database management & integration plugin (query/maintain the HELIX metadata KB from OpenCode).
-  - [ ] `[Ecosystem]` Open-ended: further first-party plugins/agents that measurably enhance OpenCode capabilities.
-
-
-
 
 ## Completed Workstreams (Bare-Minimal Index)
 
-> Per-repo workstreams have been migrated to each repository's own tracking files (projects/<repo>/TODO.md, ROADMAP.md, PLAN.md, BUGS.md, HANDOFF.md). See each repo for details. The full historical archive remains in [.github/TODO-ARCHIVE.md](./.github/TODO-ARCHIVE.md).
+> Detailed historical changes are recorded in [`CHANGELOG.md`](./CHANGELOG.md). Per-project workstreams live in each repository's own tracking ledgers (`projects/<repo>/TODO.md`).
 
-- **[Ecosystem]** W.56 2b per-repo migration: COMPLETE (all 15 org repos scaffolded + tailored).
-- **[Ecosystem]** W.57/W.58/W.59/W.60/W.61/W.62: delivered (see PLAN.md / HANDOFF.md).
-- **[Ecosystem]** W.63: delivered 2026-10-20 (`.opencode` config modernization + plugin decline record). W.64: proposed (first-party plugin & agent suite).
-
+- **[Ecosystem]** W.64 — Legacy Tool Suite Deprecation: Retired legacy tool configurations.
+- **[Ecosystem]** W.63 — Legacy Configuration Modernization & Evaluation: Completed and superseded by tool-agnostic architecture.
+- **[Ecosystem]** W.62 — Context-Pressure Self-Monitoring: Codified into permanent `HANDOFF.md` self-monitoring protocol and `session-handoff.md` rule.
+- **[Ecosystem]** W.61 — Curated Tool Ecosystem Watch: Audited and consolidated into universal agent rules.
+- **[Ecosystem]** W.60 — Project-Local Agents Interoperability & CLI Scaffolder: First-class interoperability rule, CLI scaffolder engine (`kb-scaffold.ts`).
+- **[Ecosystem]** W.59 — Headless CLI Standards: Dual extension mechanism, structured logging, folder documentation.
+- **[Ecosystem]** W.58 — Session Handoff Protocol: Permanent git-tracked `HANDOFF.md` ledger and self-monitoring scoreboard.
+- **[Ecosystem]** W.57 — SQLite Metadata Knowledge Base (`knowledge.db`): Schema migrations, query API, sync, and export engines.
+- **[Ecosystem]** W.56 — Organization Community Health Files Standard: Community-health documents across all active repositories.

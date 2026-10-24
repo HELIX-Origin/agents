@@ -15,8 +15,11 @@
     "export": "node agents-kb/kb-export.ts",
     "validate": "node agents-kb/kb-write.ts",
     "scaffold": "node agents-kb/kb-scaffold.ts",
+    "index": "node agents-kb/kb-index.ts",
+    "index:check": "node agents-kb/kb-index.ts --check",
     "test": "node agents-kb/test.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check:agents": "npm run typecheck && npm run test && npm run index:check"
   },
   "devDependencies": {
     "@types/node": "^26.0.0",

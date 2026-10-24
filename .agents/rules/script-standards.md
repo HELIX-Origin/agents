@@ -7,8 +7,8 @@
 
 ## 1. Absolute Invariants
 
-1. **Tauri v2 Desktop Applications — Native `.mjs` Scripts**:
-   - All scripting and task automation in Tauri v2 applications (`projects/Universal-Game-Launcher`, `projects/NH-Reader`, `projects/Theme-Toolkit`, etc.) **must be implemented in native ES Modules (`.mjs`)** run via Node.js.
+1. **Desktop Applications — Native `.mjs` Scripts**:
+   - All scripting and task automation in desktop applications (`projects/windows-game-explorer`, `projects/nh-reader`, `projects/theme-toolkit`, etc.) **must be implemented in native ES Modules (`.mjs`)** run via Node.js.
    - Do not use ad-hoc shell scripts, batch files, or un-modular `.js` files for internal project orchestration.
    - Scripts live under `scripts/` with a modular architecture:
      - `scripts/lib/runner.mjs`: Shared runner utility providing formatted logging (`[title]`, `[error]`, `[timing]`), cross-platform child process execution (`spawn`), exit code propagation, and signal handling (`SIGINT`, `SIGTERM`).

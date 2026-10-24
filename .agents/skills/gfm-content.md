@@ -13,7 +13,7 @@
 - **Code blocks** — fenced with a language tag:
   ````md
   ```yaml
-  remote_theme: HELIX-Origin/helix-docs
+  remote_theme: HELIX-Origin/helix-jekyll-theme
   ```
   ````
   Languages to use: `yaml`/`yml`, `ruby`, `js`, `ps1`, `html`, `css`, `plaintext`, etc.
@@ -34,7 +34,7 @@
 
 ## Mermaid diagrams (GFM)
 
-GitHub (and the helix-docs theme, which ships built-in mermaid support) renders
+GitHub (and the helix-jekyll-theme theme, which ships built-in mermaid support) renders
 ` ```mermaid ` fences. Use them anywhere a diagram clarifies structure, flow, or hierarchy
 — in both agent docs and site documentation. **Keep them legible:**
 
@@ -50,7 +50,7 @@ Example (architecture, top-down, 5 nodes):
 ```mermaid
 flowchart TB
     site[_config.yml remote_theme] --> plugin[jekyll-remote-theme]
-    plugin --> theme[helix-docs theme]
+    plugin --> theme[helix-jekyll-theme theme]
     theme --> inc[components: header, sidebar, nav, footer]
     frontmatter[page frontmatter: parent / nav_order] --> inc
 ```
