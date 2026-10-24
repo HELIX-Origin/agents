@@ -19,7 +19,7 @@
 
 <!-- project-index:start -->
 - **[nh-reader]** — [Delivered · 0 open workstreams](./projects/nh-reader/HANDOFF.md) · _Native C++ Windows desktop reader_
-- **[windows-game-explorer]** — [W.57 delivered · Primary Metadata Provider Architecture (SteamGridDB & IGDB primary defaults, keyless Steam Store & Libretro fallbacks), He…](./projects/windows-game-explorer/HANDOFF.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
+- **[windows-game-explorer]** — [W.57 delivered · v2.1.1 released & documentation suite delivered · Primary Metadata Provider Architecture (SteamGridDB & IGDB primary defau…](./projects/windows-game-explorer/HANDOFF.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
 - **[theme-toolkit]** — [W.01 active · Rebranded to Theme Studio · Supporting Windows 2000 to Windows 11+ · Pivot to Native C++ Windows Desktop Theme Studio (Tauri…](./projects/theme-toolkit/HANDOFF.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
 - **[depressurizer]** — [W.05 active · Pivot to Native Windows C++ Modernization & UI Polish (Tauri v2 rewrite abandoned).](./projects/depressurizer/HANDOFF.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
 - **[windhawk-themes]** — [Initialized · 0 open workstreams](./projects/windhawk-themes/HANDOFF.md) · _Windhawk styler mod themes_
