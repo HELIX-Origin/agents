@@ -21,7 +21,7 @@
 
 <!-- project-index:start -->
 - **[nh-reader]** — [No active item recorded](./projects/nh-reader/TODO.md) · _Native C++ Windows desktop reader_
-- **[windows-game-explorer]** — [No active item recorded](./projects/windows-game-explorer/TODO.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
+- **[windows-game-explorer]** — [Bug Resolution Workstream (Zero Guessing / Research-Backed Fixes)](./projects/windows-game-explorer/TODO.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
 - **[theme-toolkit]** — [Workstream W.01: Native Windows C++ Architecture & Rebrand to Theme Studio (v1.0.0)](./projects/theme-toolkit/TODO.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
 - **[depressurizer]** — [Workstream W.05: Native Windows C++ Modernization & UI Polish (v1.0.0)](./projects/depressurizer/TODO.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
 - **[windhawk-themes]** — [Workstream W.01: Suite Polish & Multi-Mod Verification](./projects/windhawk-themes/TODO.md) · _Windhawk styler mod themes_

@@ -1,7 +1,7 @@
 # HANDOFF.md — Agents Ecosystem Session Handoff
 
 **Last updated:** 2026-10-24
-**Current session status:** W.65 delivered & windows-game-explorer v2.1.1 released · All 6 active project ecosystems scaffolded; tool-agnostic `.agents/commands/` established; archives retired; Windows Game Explorer (`projects/windows-game-explorer`) artwork discovery hub, responsive GUI layout, unblocked SafeSearch / NSFW toggle, generic Chrome user agent, and secure credential masking delivered with 20/20 unit tests passing and official v2.1.1 release published.
+**Current session status:** W.65 delivered & windows-game-explorer v2.2.0 released · All 6 active project ecosystems scaffolded; tool-agnostic `.agents/commands/` established; archives retired; Windows Game Explorer (`projects/windows-game-explorer`) scope boundaries codified (no cloud gaming, no handheld overlay, write-only OneDrive backup, cache reset fresh rebuild); BUG-10, BUG-11, BUG-12, BUG-13 resolved (VNDB Kana API, itch.io storefront scraping, loose aspect ratio support, strict title verification, cache reset & repopulation engine, companion app launch fix) with 21/21 unit tests passing and official v2.2.0 release packaged. "All owned games" and cloud gaming plans completely dropped per user directive.
 **Workspace Root:** D:\Projects\GitHub\HELIX Origin
 
 > Permanent, git-tracked session-state ledger for the **Agents Ecosystem**. Maintained **incrementally** — refresh at every
@@ -19,7 +19,7 @@
 
 <!-- project-index:start -->
 - **[nh-reader]** — [Delivered · 0 open workstreams](./projects/nh-reader/HANDOFF.md) · _Native C++ Windows desktop reader_
-- **[windows-game-explorer]** — [W.57 delivered · v2.1.1 released & documentation suite delivered · Primary Metadata Provider Architecture (SteamGridDB & IGDB primary defau…](./projects/windows-game-explorer/HANDOFF.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
+- **[windows-game-explorer]** — [W.59 delivered & v2.2.0 released · Direct JSON Metadata Architecture, Robust Multi-View Artwork Fallbacks, Responsive Manager Layout & Inst…](./projects/windows-game-explorer/HANDOFF.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
 - **[theme-toolkit]** — [W.01 active · Rebranded to Theme Studio · Supporting Windows 2000 to Windows 11+ · Pivot to Native C++ Windows Desktop Theme Studio (Tauri…](./projects/theme-toolkit/HANDOFF.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
 - **[depressurizer]** — [W.05 active · Pivot to Native Windows C++ Modernization & UI Polish (Tauri v2 rewrite abandoned).](./projects/depressurizer/HANDOFF.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
 - **[windhawk-themes]** — [Initialized · 0 open workstreams](./projects/windhawk-themes/HANDOFF.md) · _Windhawk styler mod themes_

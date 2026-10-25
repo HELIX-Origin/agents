@@ -63,3 +63,19 @@ When implementing or refining the Windows Game Explorer shell view:
   - Process accelerator tables via `IShellBrowser::TranslateAcceleratorSB`.
   - Maintain absolute recursion guards on `UIActivate(SVUIA_ACTIVATE_FOCUS)` and never call `SetFocus` during non-focus activations.
   - Return `S_OK` / `E_NOTIMPL` strictly according to Windows Shell specifications.
+
+---
+
+## 5. Scope Invariants & Architectural Boundaries
+
+1. **Native PC Service & Official Client Delegation**:
+   - Windows Game Explorer is exclusively a Windows PC File Explorer shell integration and companion management utility for locally installed PC games.
+   - Game execution delegates strictly through official platform clients (`steam.exe -applaunch <appId>`, etc.) or native installed executables to guarantee DRM validation, cloud saves, and overlays remain intact. The app is an organizer, not a runtime engine.
+2. **No Cloud Gaming**:
+   - Cloud gaming streaming services (e.g. GeForce NOW, Xbox Cloud Gaming) are fundamentally unsupported due to their streaming architecture and lack of local installed files. Never plan or fabricate cloud streaming hooks.
+3. **No Handheld Big Picture Overlays**:
+   - Handheld Big Picture overlays are outside the project's scope. Windows Game Explorer is a desktop Windows 11 File Explorer extension, not a fullscreen console shell.
+4. **OneDrive Write-Only Backup Invariant**:
+   - The OneDrive directory (`%OneDrive%\Windows Game Explorer`) is strictly a **write-only backup and recovery mirror**. It is never the primary storage or read location for active artwork or metadata. All reads occur strictly from local `%USERPROFILE%\Game Explorer\`.
+5. **Cache Reset Means Complete Fresh Rebuild**:
+   - The `Reset Cache` button (`StorefrontScanner::ResetArtworkCache`) purges the existing cache and immediately executes `ScanAll(Database::Instance())` to rebuild a 100% fresh, authentic metadata and artwork cache from scratch across all installed games.
