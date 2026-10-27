@@ -26,6 +26,7 @@
 - **[depressurizer]** — [Workstream W.05: Native Windows C++ Modernization & UI Polish (v1.0.0)](./projects/depressurizer/TODO.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
 - **[windhawk-themes]** — [Workstream W.01: Suite Polish & Multi-Mod Verification](./projects/windhawk-themes/TODO.md) · _Windhawk styler mod themes_
 - **[ffxiv-config]** — [Workstream W.01: 8.x Configuration Sync, Media Asset & Governance Alignment](./projects/ffxiv-config/TODO.md) · _FFXIV HUD, hotbar and macro configuration_
+- **[ffxiv-dat-toolkit]** — [TODO.md](./projects/ffxiv-dat-toolkit/TODO.md) _(repository not cloned locally)_ · _FFXIV DAT toolkit (decode, transform and repack character/config .DAT files)_
 <!-- project-index:end -->
 
 ---
@@ -39,13 +40,13 @@
 
 **Locked user directives (normalized by domain):**
 - **Tool-Agnostic Commands**: Build a comprehensive, tool-agnostic command runbook directory under `.agents/commands/` (`onboard.md`, `verify.md`, `fix-bug.md`, `implement-feature.md`, `review-change.md`, `update-docs.md`, `cut-release.md`) so any AI agent can follow identical workflow protocols.
-- **Drop Legacy Tooling**: Completely remove all `.opencode/` folders workspace-wide. Scrub all legacy tool references across rules, skills, playbooks, and tracking ledgers.
+- **OpenCode Configuration Layer (supersedes "Drop Legacy Tooling")**: Ship a self-contained `.opencode/` folder in the workspace root **and** in all six active project repositories (`nh-reader`, `windows-game-explorer`, `theme-toolkit`, `depressurizer`, `windhawk-themes`, `ffxiv-config`). Every copy pins **Big Pickle** (`opencode/big-pickle`) as the only permitted model via `model` + provider `policies` plus a catalog-filtering plugin, and carries context-management settings (compaction budget, tool-output and image caps, background compaction, todo/subagent limits) and an `opencode-protocols.md` instruction file. Project copies must stay standalone and never reference the private agents ecosystem. The tool-agnostic `.agents/commands/` runbooks remain authoritative and `.opencode/` never relaxes a workspace invariant.
 - **Living Ledgers & Archive Retirement**: Retire all `*-ARCHIVE.md` files (`.github/BUGS-ARCHIVE.md`, `.github/ROADMAP-ARCHIVE.md`, `.github/TODO-ARCHIVE.md`). Living ledgers (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) remain clean and concise entry points with bare-minimal one-line completed summaries; `CHANGELOG.md` serves as the permanent chronological record.
 - **Expand Skill Library**: Author dedicated modular skills for all languages, frameworks, and tools across the organization (`svelte5-runes.md`, `rust-patterns.md`, `typescript-esm-scripts.md`, `sqlite-in-app.md`, `sveltekit-frontend.md`, `github-actions-ci.md`).
 - **Complete Per-Project Scaffolding**: Ensure all 6 active repositories (`nh-reader`, `windows-game-explorer`, `theme-toolkit`, `depressurizer`, `windhawk-themes`, `ffxiv-config`) have complete, self-contained `.agents/` directories (`rules/`, `skills/`, `agents/`) and clean `AGENTS.md` entry points.
 - **Windows Game Explorer Project Rebrand & Authentic Game Library Invariant**: Formally establish **Windows Game Explorer** (`projects/windows-game-explorer`). The project's goal is strictly to revive and modernize the classic Windows 7/Vista Game Explorer (`shell:Games`) directly inside Windows 11 File Explorer. Falling back to a generic shortcuts folder (`CDefView` file rows) completely defeats the project's purpose and is strictly prohibited.
 - **Modern Storefront Auto-Discovery Architecture**: Unlike Microsoft's abandoned Game Explorer that relied on manual Game Definition Files (GDF XML), installer COM calls, and defunct online servers, Windows Game Explorer automatically discovers and indexes games directly from installed store manifests on disk (Steam, Epic, GOG, itch.io, Battle.net, and standalone executables) and uses the installed storefront providers directly as the sole source of truth for metadata and box art (eliminating external third-party scrapers like IGDB, VNDB, and SteamGridDB).
-- **Game Explorer Manager Companion Application (`GameExplorerManager.exe`)**: Revive the classic Game Explorer Manager (GEM) utility as a dedicated Win32 management companion for adding local games, selecting box art (~2:3 case style), editing metadata, and persisting definitions to `%USERPROFILE%\Game Explorer\metadata\<appId>.json`.
+- **Game Explorer Studio Companion Application (`GameExplorerStudio.exe`)**: Revive the classic Game Explorer Manager (GEM) workflow as a single native Win32 companion GUI with three tabs - **Library Manager** (add local games, select box art ~2:3 case style, edit metadata, persist definitions to `%USERPROFILE%\Game Explorer\metadata\<appId>.json`), **Game Catalogue** (paged owned-games browser with a Windows-only gate, filter/sort toolbar, and owned libraries read in memory from Steam's Web API plus read-only GOG/itch/Xbox/Ubisoft Connect caches and an optional authenticated legendary cache for Epic, with storefront-delegated installs), and **Configuration** (shell integration, layout mode, storefront toggles, credentials, cloud sync). There is exactly one companion executable; the former standalone `GameExplorerConfig.exe` and `GameExplorerManager.exe` are retired.
 - **Authentic Two-Section Categorization**: Organize File Explorer items into two distinct collapsible sections via native Windows Shell `ICategoryProvider` and `ICategorizer`: `▾ Game Providers (N)` for installed storefront clients and `▾ Games (N)` for installed game titles.
 - **Ban on Blind Trial-and-Error Shell Extension Code Loops**: Forbid iterative guesswork and toggling between broken raw `IShellView` hacks and dumb `CDefView` shortcuts. Require thorough research into official Microsoft documentation on `FOLDERTYPEID_Games`, `IThumbnailProvider`, `IPreviewHandler`, `IPropertyStore`, and modern Windows 11 WinUI 3 / XAML island shell architecture before touching shell integration code.
 - **Encoding & Parsing Integrity**: Ensure all markdown and ledger files are strictly valid UTF-8 without BOM or CP-1252 double-encoding corruption.
@@ -54,9 +55,11 @@
 **Implementation checklist:**
 - [x] **[Ecosystem] 1. Tool-Agnostic Commands Directory**:
   - [x] `[Ecosystem]` Create `.agents/commands/` with `README.md`, `onboard.md`, `verify.md`, `fix-bug.md`, `implement-feature.md`, `review-change.md`, `update-docs.md`, `cut-release.md`.
-- [x] **[Ecosystem] 2. Drop Legacy Tooling Workspace-Wide**:
-  - [x] `[Ecosystem]` Remove `.opencode/` directories workspace-wide and across all project repositories.
-  - [x] `[Ecosystem]` Scrub references from `AGENTS.md`, `README.md`, rules, skills, and tracking files.
+- [x] **[Ecosystem] 2. OpenCode Configuration Layer**:
+  - [x] `[Ecosystem]` Author `.opencode/opencode.jsonc`, `plugins/big-pickle-only.ts`, `plugins/context-budget.ts`, `instructions/opencode-protocols.md`, and `README.md` in the workspace root.
+  - [x] `[Ecosystem]` Mirror the self-contained, project-agnostic variant into all six active project repositories without referencing the private agents ecosystem.
+  - [x] `[Ecosystem]` Verify enforcement live: exactly one model listed in the catalog (`opencode/big-pickle`) and both plugins loading with zero errors/warnings.
+  - [x] `[Ecosystem]` Make the plugin sources type-check cleanly: standalone `.opencode/tsconfig.json` plus a `types/opencode-plugin.d.ts` shim for the runtime-provided `@opencode/plugin` module (0 diagnostics in all seven copies).
 - [x] **[Ecosystem] 3. Archive Retirement & Living Ledger Model**:
   - [x] `[Ecosystem]` Delete `.github/*-ARCHIVE.md` files; establish root `CHANGELOG.md` (Keep a Changelog format).
   - [x] `[Ecosystem]` Update invariant 3 in `AGENTS.md` and update all ledger templates.
@@ -103,6 +106,50 @@
   - [ ] `[Web & Docs]` Recreate repository; implement technical architecture specifications and developer manuals.
 - [ ] **[Web & Docs] 5. GitHub Pages Deployment Workflows**:
   - [ ] `[Web & Docs]` Author GitHub Actions CI workflows for building and deploying each site to GitHub Pages.
+
+---
+
+### ⏳ [ffxiv-dat-toolkit] Workstream W.01: FFXIV DAT Toolkit — Codec, Schema Mapping & Transformation Pipeline (Queued — v0.1.0)
+- **Project Identifier:** `[ffxiv-dat-toolkit]` (`projects/ffxiv-dat-toolkit`) — CLI name `fudat`.
+- **Status:** ⏳ Queued. No repository scaffolded yet; the specification is locked.
+- **Target Components:** `fudat-codec`, `fudat-schema`, `fudat-transforms`, and the `fudat` CLI entry point.
+
+**Locked user directives (normalized by domain):**
+- **FFXIV-Specific Scope**: The toolkit exists solely for Final Fantasy XIV character and client configuration `.DAT` files. It is not a generic game-file utility, and must never be presented as one.
+- **Three-Tier Decoupling**: Binary handling (`fudat-codec`) must remain ignorant of game semantics; game semantics live only in the schema engine (`fudat-schema`); user-facing operations live only in the transformation engine (`fudat-transforms`). The tiers communicate exclusively through flattened JSON and a typed AST.
+- **Codec Fidelity & Integrity**: Validate magic bytes, format versions and metadata blocks on read; apply the game's XOR mask keys and byte-shift tables; verify trailing block checksums and halt on mismatch; recompute offsets, alignment padding, checksums and XOR obfuscation symmetrically on write.
+- **Comprehensive Schema Coverage**: Maintain static definition libraries mapping array indexes and magic flags to human-readable entities (`ADDON.DAT` element identifiers such as `Element_Hotbar_1`), covering `MACRO.DAT`, `KEYBIND.DAT`, `HOTBAR.DAT` (including the 8.x Command Panel arrays) and `ADDON.DAT` UI clusters.
+- **Locale-Safe Payloads**: Parse and emit UTF-8 for localized macros, layout profiles and custom identifiers with no truncation, and enforce structural validation caps (hotbar slot limits, macro string bounds).
+- **Programmatic Transformation**: Provide resolution/DPI coordinate translation, isolated node replacement (for example legacy → 8.x action IDs), and layout syncing across character files that preserves each character's macro bank.
+- **Write Safety First**: Never overwrite a character `.DAT` in place — stage to a temporary ring, verify, then swap; always leave a `.bak` footprint before mutating.
+- **Domain Risk Containment**: Treat client verification as brittle: byte-parity round-trip CI is mandatory, schema mapping must absorb expansion-era structural changes, and multibyte string handling must be explicit.
+
+**Implementation checklist:**
+- [ ] **[ffxiv-dat-toolkit] 1. Repository & Foundations**:
+  - [ ] `[ffxiv-dat-toolkit]` Scaffold `projects/ffxiv-dat-toolkit` with the three modules, CLI entry point, license, community-health files and zero-warning CI.
+  - [ ] `[ffxiv-dat-toolkit]` Implement the baseline binary I/O wrapper with explicit endianness and bounds checks.
+- [ ] **[ffxiv-dat-toolkit] 2. Codec Engine (`fudat-codec`)**:
+  - [ ] `[ffxiv-dat-toolkit]` Header validation for magic bytes, format version and metadata block.
+  - [ ] `[ffxiv-dat-toolkit]` Reverse and implement the XOR mask arrays and byte-shift tables.
+  - [ ] `[ffxiv-dat-toolkit]` Checksum verification and recomputation with a hard halt before any write.
+  - [ ] `[ffxiv-dat-toolkit]` Symmetric compilation: offsets, alignment padding, checksum injection, XOR re-application.
+  - [ ] `[ffxiv-dat-toolkit]` Byte-parity CI proving decode → encode reproduces pristine client `.DAT` files.
+- [ ] **[ffxiv-dat-toolkit] 3. Schema Mapping Engine (`fudat-schema`)**:
+  - [ ] `[ffxiv-dat-toolkit]` Document byte offsets for `MACRO.DAT` and `KEYBIND.DAT`.
+  - [ ] `[ffxiv-dat-toolkit]` Define `HOTBAR.DAT` bindings including the 8.x Command Panel arrays.
+  - [ ] `[ffxiv-dat-toolkit]` Index `ADDON.DAT` coordinate boundaries for job gauges and action bars.
+  - [ ] `[ffxiv-dat-toolkit]` Static definition libraries mapping magic flags to entity identifiers (`Element_Hotbar_1`, `Element_Beastmaster_Bestiary`, …).
+  - [ ] `[ffxiv-dat-toolkit]` UTF-8 payload parsing plus a validation ruleset for structural caps and string bounds.
+  - [ ] `[ffxiv-dat-toolkit]` Deterministic, Git-diffable JSON serialization protocol.
+- [ ] **[ffxiv-dat-toolkit] 4. Transformation Engine (`fudat-transforms`)**:
+  - [ ] `[ffxiv-dat-toolkit]` CLI `dump`, `pack` and `transform` commands with a stable argument contract.
+  - [ ] `[ffxiv-dat-toolkit]` Resolution/DPI translator for coordinate anchors and layout scale.
+  - [ ] `[ffxiv-dat-toolkit]` Asset injector/swapper for isolated nodes (legacy → 8.x action IDs, layout block replacement).
+  - [ ] `[ffxiv-dat-toolkit]` Global layout sync across character IDs preserving individual macro banks.
+- [ ] **[ffxiv-dat-toolkit] 5. Write Safety & Verification**:
+  - [ ] `[ffxiv-dat-toolkit]` Atomic staged-write path (stage → verify → swap) that never overwrites in place.
+  - [ ] `[ffxiv-dat-toolkit]` Automatic `.bak` footprints before any mutation.
+  - [ ] `[ffxiv-dat-toolkit]` Cross-variant matrix confirming generated assets parse on all supported retail clients.
 
 ---
 

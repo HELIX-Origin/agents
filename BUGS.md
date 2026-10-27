@@ -29,6 +29,7 @@
 - **[depressurizer]** — [No open bugs](./projects/depressurizer/BUGS.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
 - **[windhawk-themes]** — [1 open — 2026-10-19 — : {{BUG_TITLE}}](./projects/windhawk-themes/BUGS.md) · _Windhawk styler mod themes_
 - **[ffxiv-config]** — [No open bugs](./projects/ffxiv-config/BUGS.md) · _FFXIV HUD, hotbar and macro configuration_
+- **[ffxiv-dat-toolkit]** — [BUGS.md](./projects/ffxiv-dat-toolkit/BUGS.md) _(repository not cloned locally)_ · _FFXIV DAT toolkit (decode, transform and repack character/config .DAT files)_
 <!-- project-index:end -->
 
 ---
@@ -55,6 +56,11 @@
 - 🖥️ **[Ecosystem] Non-Interactive Shell Policy:** The agent shell has no TTY — pagers/editors (`less`, `vim`, `man`) hang until timeout. Use file read/write tools and non-interactive command flags only.
 - 🧪 **[Ecosystem] TypeScript ESM CLI Scripts:** `scripts/agents-kb/*.ts` run on Node with `node --experimental-strip-types` (ESM, `.ts` imports with explicit extension).
 - 💬 **[Ecosystem] PowerShell Strips Quotes in Inline `node -e`:** PowerShell mangles quote nesting in `node -e '...'` / `node -e "..."` arguments, silently corrupting inline JavaScript. Never run inline `node -e` — write a CLI module/script file under `scripts/` and execute it instead.
+
+### [ffxiv-dat-toolkit] (projects/ffxiv-dat-toolkit) Domain Constraints
+- 🧨 **[ffxiv-dat-toolkit] Client verification is brittle by design:** a block rewritten without recalculated length offsets and trailing checksums causes character-selection failure or runtime memory errors. Accepted as a hard constraint — byte-parity round-trip CI gates every write path, and staged writes are never swapped in unverified.
+- 🔄 **[ffxiv-dat-toolkit] Expansion-era schema volatility:** layout files change shape across major updates (for example the 8.x Command Panel array growth). Schema mapping must stay data-driven so a patch cannot strand the pipelines.
+- 🔤 **[ffxiv-dat-toolkit] Multibyte payloads:** non-ASCII macro and layout strings break if processed as byte strings. All string handling is explicit UTF-8 with length validation, never implicit locale conversion.
 
 ---
 

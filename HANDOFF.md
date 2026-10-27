@@ -1,7 +1,7 @@
 # HANDOFF.md — Agents Ecosystem Session Handoff
 
-**Last updated:** 2026-10-24
-**Current session status:** W.65 delivered & windows-game-explorer v2.2.0 released · All 6 active project ecosystems scaffolded; tool-agnostic `.agents/commands/` established; archives retired; Windows Game Explorer (`projects/windows-game-explorer`) scope boundaries codified (no cloud gaming, no handheld overlay, write-only OneDrive backup, cache reset fresh rebuild); BUG-10, BUG-11, BUG-12, BUG-13 resolved (VNDB Kana API, itch.io storefront scraping, loose aspect ratio support, strict title verification, cache reset & repopulation engine, companion app launch fix) with 21/21 unit tests passing and official v2.2.0 release packaged. "All owned games" and cloud gaming plans completely dropped per user directive.
+**Last updated:** 2026-10-26
+**Current session status:** `windows-game-explorer` v2.5.0 released, tagged and published — release commit `c573ce5` on `origin/main`, tag `v2.5.0`, GitHub release with the setup EXE, portable ZIP and ROMs template (SHA256s verified) · `game-explorer.bat release` passed in one pass (0 errors / 0 warnings under `/W4 /WX`, 61/61 unit tests, 0 PSScriptAnalyzer diagnostics) · next planned work is M18 Windows 10 vs 11 shell compatibility research (`ARCH-01`); relocation and install-progress tracking are dropped · `.opencode/` ecosystems active across root and all six project repositories.
 **Workspace Root:** D:\Projects\GitHub\HELIX Origin
 
 > Permanent, git-tracked session-state ledger for the **Agents Ecosystem**. Maintained **incrementally** — refresh at every
@@ -19,55 +19,77 @@
 
 <!-- project-index:start -->
 - **[nh-reader]** — [Delivered · 0 open workstreams](./projects/nh-reader/HANDOFF.md) · _Native C++ Windows desktop reader_
-- **[windows-game-explorer]** — [W.59 delivered & v2.2.0 released · Direct JSON Metadata Architecture, Robust Multi-View Artwork Fallbacks, Responsive Manager Layout & Inst…](./projects/windows-game-explorer/HANDOFF.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
+- **[windows-game-explorer]** — [`v2.5.0` released, tagged and published — release commit `c573ce5` on `origin/main`, tag `v2.5.0`, GitHub release with the setup EXE, porta…](./projects/windows-game-explorer/HANDOFF.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
 - **[theme-toolkit]** — [W.01 active · Rebranded to Theme Studio · Supporting Windows 2000 to Windows 11+ · Pivot to Native C++ Windows Desktop Theme Studio (Tauri…](./projects/theme-toolkit/HANDOFF.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
 - **[depressurizer]** — [W.05 active · Pivot to Native Windows C++ Modernization & UI Polish (Tauri v2 rewrite abandoned).](./projects/depressurizer/HANDOFF.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
 - **[windhawk-themes]** — [Initialized · 0 open workstreams](./projects/windhawk-themes/HANDOFF.md) · _Windhawk styler mod themes_
 - **[ffxiv-config]** — [8.x Configuration Sync & Governance Alignment Completed](./projects/ffxiv-config/HANDOFF.md) · _FFXIV HUD, hotbar and macro configuration_
+- **[ffxiv-dat-toolkit]** — [HANDOFF.md](./projects/ffxiv-dat-toolkit/HANDOFF.md) _(repository not cloned locally)_ · _FFXIV DAT toolkit (decode, transform and repack character/config .DAT files)_
 <!-- project-index:end -->
 
 ---
 
-## 1) [Ecosystem] W.65: Agents Ecosystem Enhancement & Per-Project Scaffolding (Delivered, v1.2.0)
+## 1) [Ecosystem] (projects/agents) — W.65: Agents Ecosystem Enhancement & Per-Project Scaffolding (Delivered, v1.2.0)
 - **State:** Delivered (v1.2.0). All ecosystem scaffolding, tool-agnostic commands, skills, and tracking ledgers validated with 0 errors.
 - **Delivered (this session):**
   - **Tool-Agnostic Commands (`.agents/commands/`):** Established universal runbooks for `onboard.md`, `verify.md`, `fix-bug.md`, `implement-feature.md`, `review-change.md`, `update-docs.md`, and `cut-release.md`.
-  - **Legacy Tooling Removal:** Scrubbed and removed all `.opencode/` folders across workspace root and all projects.
+  - **Legacy Tooling Removal (superseded by W.66):** `.opencode/` folders were removed in this workstream and reinstated in Sprint 36 as the OpenCode-specific layer.
   - **Archive Retirement & Living Ledgers:** Deleted `.github/*-ARCHIVE.md` files; created root `CHANGELOG.md` (Keep a Changelog standard); updated invariant 3 across `AGENTS.md` and templates.
   - **Universal Skills Library Expansion:** Authored 6 new modular skills: `svelte5-runes.md`, `rust-patterns.md`, `typescript-esm-scripts.md`, `sqlite-in-app.md`, `sveltekit-frontend.md`, `github-actions-ci.md`.
   - **Complete Per-Project `.agents/` Scaffolding:** Authored tailored `.agents/{rules,skills,agents}/` and `AGENTS.md` across all 6 active repositories (`nh-reader`, `windows-game-explorer`, `theme-toolkit`, `depressurizer`, `windhawk-themes`, `ffxiv-config`).
   - **Windows Game Explorer Project Rebrand & Binding Shell Rules:**
     - Formally rebranded project to **Windows Game Explorer** (`projects/windows-game-explorer`) across `.agents/registry/projects.json`, `AGENTS.md`, `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`, and project-local files.
     - Authored `.agents/rules/windows-shell-extension.md` establishing the **Game Library Experience Invariant** (generic shortcut folder degradation is strictly prohibited; the project is dedicated to reviving the classic Windows 7 Game Explorer inside modern Windows 11 with rich box art, preview pane, and properties) and the **Ban on Blind Trial-and-Error Shell Loops** (requiring official Microsoft documentation research on `FOLDERTYPEID_Games`, `IThumbnailProvider`, `IPreviewHandler`, `IPropertyStore`, and modern WinUI 3 XAML island Explorer).
-    - Locked architectural directives: retired external third-party scrapers (IGDB, VNDB, SteamGridDB) in favor of installed storefronts directly providing metadata and box art; defined the **Game Explorer Manager** (`GameExplorerManager.exe`) companion GUI revival for local game additions and box art management; implemented two-section categorization (`▾ Game Providers (N)` and `▾ Games (N)`).
+    - **Locked architectural directives:** retired external third-party scrapers (IGDB, VNDB, SteamGridDB) in favour of installed storefronts directly providing metadata and box art; defined the **Game Explorer Manager** (`GameExplorerManager.exe`) companion GUI revival for local game additions and box art management (later superseded by the single **Game Explorer Studio** app, `GameExplorerStudio.exe`, in W.61); implemented two-section categorization (`▾ Game Providers (N)` and `▾ Games (N)`).
     - Pruned all invalid legacy Tauri v2 bugs from `BUGS.md`.
     - Renamed and aligned global skill `.agents/skills/windows-game-explorer.md` to pure native C++20 Win32 architecture, scrubbing all remaining Tauri/Svelte references.
   - **Encoding & Parsing:** Cleaned CP-1252 double-encoding / mojibake in root ledgers; verified UTF-8 without BOM.
-- **Next tasks:** Begin Workstream W.66: Documentation Hubs & Glassmorphism Jekyll Theme Rebuild (recreating `helix-origin.github.io`, `docs`, and `wiki` from scratch with custom glassmorphism Jekyll theme and homepage portals).
-- **Ledgers:** `TODO.md` (W.65 delivered / W.66 queued), `PLAN.md` (Sprint 35 delivered / Sprint 36 queued), `ROADMAP.md` (v1.2.0 delivered / v1.3.0 planned).
+- **Next tasks:** Workstream W.66 — OpenCode configuration layer (delivered, Sprint 36) followed by Sprint 37: Documentation Hubs & Glassmorphism Jekyll Theme Rebuild (recreating `helix-origin.github.io`, `docs`, and `wiki` from scratch with a custom glassmorphism Jekyll theme and homepage portals).
+- **Ledgers:** `TODO.md` (W.65 delivered / W.66 active), `PLAN.md` (Sprint 35 delivered / Sprint 36 active / Sprint 37 queued), `ROADMAP.md` (v1.2.0 delivered / v1.3.0 planned).
 
 ---
 
 ## 2) Delivered Workstreams (Bare-Minimal Summary)
-- **[Ecosystem]** W.64 — Legacy Tool Suite Deprecation: Retired legacy tool configurations.
-- **[Ecosystem]** W.63 — Legacy Configuration Modernization & Evaluation: Completed and superseded by tool-agnostic architecture.
-- **[Ecosystem]** W.62 — Context-Pressure Self-Monitoring: Codified into permanent `HANDOFF.md` self-monitoring protocol and `session-handoff.md` rule.
-- **[Ecosystem]** W.61 — Curated Tool Ecosystem Watch: Audited and consolidated into universal agent rules.
-- **[Ecosystem]** W.60 — Project-Local Agents Interoperability & CLI Scaffolder: First-class interoperability rule, CLI scaffolder engine (`kb-scaffold.ts`).
-- **[Ecosystem]** W.59 — Headless CLI Standards: Dual extension mechanism, structured logging, folder documentation.
-- **[Ecosystem]** W.58 — Session Handoff Protocol: Permanent git-tracked `HANDOFF.md` ledger and self-monitoring scoreboard.
-- **[Ecosystem]** W.57 — SQLite Metadata Knowledge Base (`knowledge.db`): Schema migrations, query API, sync, and export engines.
-- **[Ecosystem]** W.56 — Organization Community Health Files Standard: Community-health documents across all active repositories.
+- **[Ecosystem] W.64 — Legacy Tool Suite Deprecation:** Retired legacy tool configurations.
+- **[Ecosystem] W.63 — Legacy Configuration Modernization & Evaluation:** Completed and superseded by tool-agnostic architecture.
+- **[Ecosystem] W.62 — Context-Pressure Self-Monitoring:** Codified into permanent `HANDOFF.md` self-monitoring protocol and `session-handoff.md` rule.
+- **[Ecosystem] W.61 — Curated Tool Ecosystem Watch:** Audited and consolidated into universal agent rules.
+- **[Ecosystem] W.60 — Project-Local Agents Interoperability & CLI Scaffolder:** First-class interoperability rule, CLI scaffolder engine (`kb-scaffold.ts`).
+- **[Ecosystem] W.59 — Headless CLI Standards:** Dual extension mechanism, structured logging, folder documentation.
+- **[Ecosystem] W.58 — Session Handoff Protocol:** Permanent git-tracked `HANDOFF.md` ledger and self-monitoring scoreboard.
+- **[Ecosystem] W.57 — SQLite Metadata Knowledge Base (`knowledge.db`):** Schema migrations, query API, sync, and export engines.
+- **[Ecosystem] W.56 — Organization Community Health Files Standard:** Community-health documents across all active repositories.
 
 ---
 
 ## 3) Shell / Tooling Notes
-- Node v26.8.1 — native TS type stripping; `.ts` imports need explicit extensions; package at `scripts/package.json` (ESM, engines ≥22.18, strict tsconfig).
+- **Node v26.8.1 — native TS type stripping**: `.ts` imports need explicit extensions; package at `scripts/package.json` (ESM, engines ≥22.18, strict tsconfig).
 - Never run inline `node -e` (PowerShell strips quotes) — write CLI module files under `scripts/`.
 - Read-only git by default; only mutate repositories with explicit user permission in current conversation.
-- LF everywhere; `.gitattributes` `* text=auto eol=lf`; `core.autocrlf=input`.
+- **LF everywhere**: `.gitattributes` `* text=auto eol=lf`; `core.autocrlf=input`.
 - Tool reads can be fabricated — verify with shell reads (`Get-Content`/`Select-String`) before editing.
 - **Keep turns concise** — format in clean GitHub-style markdown.
+
+---
+
+## 4) [ffxiv-dat-toolkit] (projects/ffxiv-dat-toolkit) — FFXIV DAT Toolkit (`fudat`) (Queued)
+
+- **State:** planned project with a locked specification. No repository exists yet, so nothing is
+  scaffolded and no code has been written.
+- **Delivered:** specification only — migrated into the root ledgers (this section is now a pointer,
+  not the source of truth).
+- **Architecture:** three strictly decoupled tiers — `fudat-codec` (binary ingest/validate/XOR/
+  checksum), `fudat-schema` (magic flags → typed AST), `fudat-transforms` (resolution/DPI
+  translation, node injection, cross-character layout sync) — round-tripping through Git-diffable
+  JSON. Scope is Final Fantasy XIV only; it is not a generic game-file toolkit.
+- **Next tasks:**
+  - [ ] Scaffold `projects/ffxiv-dat-toolkit` (three modules + CLI entry point, license,
+        community-health files, zero-warning CI) and create its own `ROADMAP.md` / `PLAN.md` /
+        `TODO.md` / `BUGS.md`.
+  - [ ] Phase 1: `fudat-codec` binary I/O wrapper, header validation, XOR masks, checksum
+        verification, and byte-parity round-trip CI against pristine client `.DAT` files.
+- **Ledgers:** `ROADMAP.md` (Planned Org Projects), `PLAN.md` (Sprint 38), `TODO.md`
+  (Workstream W.01), `BUGS.md` (Domain Constraints).
 
 ---
 
