@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Windows Game Explorer v2.6.0 Released (`v2.6.0`, commit `e7f1e52`, tagged and published)**:
+  - **Dynamic Sizing & Resizability Synchronization**: Standalone `explorer.exe shell:games` window transformed to 100% dynamic sizing and resizability (`WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU`) with fluid layout on the XAML root grid, scroll viewer, and responsive wrapping grids (zero hardcoded sizes or fixed maximum columns). Standalone mode cleanly hides the Left Navigation Pane (`NamespaceTreeControl`) and bottom status bar, sizing the view sink to the full client area (`0, 0, fullW, fullH`). Implemented 1px size delta in `LibraryViewHost::Resize` guaranteeing `DesktopWindowContentBridge` receives `WM_SIZE` and triggers layout recalculation. Verified across multiple resolutions and maximized states via `PrintWindow`.
+  - **Fluent 3D Controller Face Button Color & Shadow Correction**: Corrected face button colors to standard scheme (Y=Yellow, B=Red, X=Blue, A=Green) and removed floor-shadow ovals under the grips across all ICO, PNG, and installer BMP assets.
+  - **Comprehensive Markdown Documentation Audit & Harmonization**: Audited all 48 markdown files in the repository. Removed obsolete `detailsArtPath` / 4th slot references, eliminated lingering Patreon search references, updated emulator matrix to include Xemu (Xbox) and VICE (Commodore 64/128), updated test suite count to 87 unit tests (87/87 passing), and documented Windows 11 (Build 22000+) requirement.
+  - **Security Disclosure Policy Alignment**: Completely eliminated arbitrary 5-day response time assumptions from security disclosure policies and templates organization-wide, establishing that reports are reviewed as time and capacity permit without fixed turnaround promises.
+  - **Mandatory Research-First & Zero-Guessing Rule (Rule 17)**: Formalized invariant organization-wide banning guesswork and speculative trial-and-error edits across all projects, mandating online documentation research and empirical inspection prior to code modifications.
 - **Windows Game Explorer v2.5.0 Released (`v2.5.0`, commit `c573ce5`, tagged and published)**: Game Explorer Studio
   (`GameExplorerStudio.exe`) hosts Library Manager, Game Catalogue and Configuration. The Game
   Catalogue is a single paged list of every owned storefront game (search; storefront, install-state,
