@@ -39,15 +39,15 @@ The disclosure path every report follows:
 
 ```mermaid
 flowchart TD
-    report[Private report] --> ack[Acknowledge within 5 days]
+    report[Private report] --> ack[Review report]
     ack --> triage[Triage severity]
     triage --> fix[Ship a fix]
     fix --> note[Changelog + release]
 ```
 
-We aim to acknowledge reports within **5 business days** and to ship a fix for confirmed issues in a
-reasonable window depending on severity. Security fixes are noted in
-[CHANGELOG.md](./CHANGELOG.md).
+We will try to review and respond to reports as time and capacity permit, but we make no assumptions
+or promises regarding response times or fixed turnaround windows. Confirmed security fixes will be
+documented in [CHANGELOG.md](./CHANGELOG.md).
 
 ## 🎯 Scope
 
