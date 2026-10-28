@@ -7,7 +7,7 @@
 </p>
 
 
-> Centralized AI agent instructions, binding rules, engineering skills, templates, and workspace coordination framework for all active repositories within the [HELIX Origin](https://github.com/HELIX-Origin) organization (`nh-reader`, `windows-game-explorer`, `theme-toolkit`, `windhawk-themes`, `ffxiv-config`, `depressurizer`). Additional repositories (`helix-jekyll-theme` and the centralized docs/wiki/portal hubs) are retired and planned for future rebuilds.
+> Centralized AI agent instructions, binding rules, engineering skills, templates, and workspace coordination for HELIX-Origin projects. The canonical project inventory is [`.agents/registry/projects.json`](.agents/registry/projects.json); it records project IDs, paths, kinds, and short descriptions. Some registered projects may be planned and not cloned locally.
 
 ---
 
@@ -99,14 +99,19 @@ This repository houses the authoritative operational blueprint for AI coding ass
 │       ├── security-reviewer/           <- Secret, credential & path hygiene reviewer
 │       └── theme-engineer/              <- SCSS, component, and Jekyll preview engineers
 ├── projects/                  <- UNTRACKED: Local working copies of active org repos
-│   ├── nh-reader/             <- Native C++ Windows desktop reader
-│   ├── windows-game-explorer/ <- Native C++ Windows Game Explorer (shell extension & library)
+│   ├── nh-reader/             <- nhentai.net desktop reader (Tauri v2 now; Win32/Direct2D rewrite planned)
+│   ├── windows-game-explorer/ <- Native C++20 Win32 Game Explorer (Shell DLL, Studio GUI & service)
 │   ├── theme-toolkit/         <- Native C++ Windows Theme Studio
 │   ├── windhawk-themes/       <- Windhawk theming suites for Windows 11
 │   ├── depressurizer/         <- Native C++ Steam library categorizer (revival fork)
 │   └── ffxiv-config/          <- FFXIV HUD, hotbar, and macro configuration setup
 └── scratch/                   <- UNTRACKED: Temporary agent working files
 ```
+
+The workspace root is the `HELIX-Origin/agents` Git repository. Every `projects/<id>` directory is
+a separate repository with its own branch and working tree. Use `.agents/registry/projects.json`
+to resolve project IDs to paths and kinds. Some registry entries are planned and not locally cloned.
+Read the selected project's own `AGENTS.md` before project work.
 
 ---
 
@@ -121,7 +126,8 @@ cd agents
 
 ### 2. Clone Organization Repositories
 
-All active projects belong in the gitignored `projects/` directory. Run the cross-platform clone script (see [`.agents/skills/clone-org-repos.md`](.agents/skills/clone-org-repos.md)):
+Registered project checkouts belong in the gitignored `projects/` directory. The registry is the
+project inventory; clone utilities are separate setup tools. See [`.agents/skills/clone-org-repos.md`](.agents/skills/clone-org-repos.md):
 
 ```powershell
 # Windows (PowerShell)

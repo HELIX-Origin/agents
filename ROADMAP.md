@@ -22,8 +22,8 @@
 > Entry point to per-project **ROADMAP** tracking: one line per project (short title + link). Detail lives only in each repository. Regenerate with `npm --prefix scripts run index`; do not edit between the markers.
 
 <!-- project-index:start -->
-- **[nh-reader]** — [No active item recorded](./projects/nh-reader/ROADMAP.md) · _Native C++ Windows desktop reader_
-- **[windows-game-explorer]** — [Milestone M18: Windows 10 vs 11 Shell Compatibility Research (planned)](./projects/windows-game-explorer/ROADMAP.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
+- **[nh-reader]** — [No active item recorded](./projects/nh-reader/ROADMAP.md) · _nhentai.net desktop reader (Tauri v2 today; native Win32 + Direct2D v1.0.0 rewrite planned)_
+- **[windows-game-explorer]** — [No active item recorded](./projects/windows-game-explorer/ROADMAP.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
 - **[theme-toolkit]** — [Milestone M1: Native Windows C++ Architecture & Rebrand to Theme Studio (v1.0.0)](./projects/theme-toolkit/ROADMAP.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
 - **[depressurizer]** — [Milestone M5: Native Windows C++ Modernization & UI Polish (v1.0.0)](./projects/depressurizer/ROADMAP.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
 - **[windhawk-themes]** — [Milestone M1: Foundation & Scaffolding](./projects/windhawk-themes/ROADMAP.md) · _Windhawk styler mod themes_

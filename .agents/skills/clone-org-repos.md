@@ -13,23 +13,15 @@
 
 ---
 
-## 2. Organization Repositories Overview
+## 2. Registered Project Inventory
 
-| Repository | GitHub URL | Description | Local Directory |
-|---|---|---|---|
-| **helix-jekyll-theme** _(retired — future rebuild)_ | `https://github.com/HELIX-Origin/helix-jekyll-theme.git` | Shared Jekyll theme & preview site | `projects/helix-jekyll-theme` |
-| **nh-reader** | `https://github.com/HELIX-Origin/nh-reader.git` | Cross-platform desktop manga reader | `projects/nh-reader` |
-| **windhawk-themes** | `https://github.com/HELIX-Origin/windhawk-themes.git` | Windhawk theming styler mod suites | `projects/windhawk-themes` |
-| **windows-game-explorer** | `https://github.com/HELIX-Origin/windows-game-explorer.git` | Native C++ Windows Game Explorer (shell extension & library) | `projects/windows-game-explorer` |
-| **theme-toolkit** | `https://github.com/HELIX-Origin/theme-toolkit.git` | Tauri v2 desktop theme studio & applicator | `projects/theme-toolkit` |
-| **ffxiv-config** | `https://github.com/HELIX-Origin/ffxiv-config.git` | FFXIV HUD, hotbar & macro configuration | `projects/ffxiv-config` |
-| **depressurizer** | `https://github.com/HELIX-Origin/depressurizer.git` | Tauri v2 Steam library categorizer (revival fork) | `projects/depressurizer` |
-| **agents** | `https://github.com/HELIX-Origin/agents.git` | This workspace: agent rules, skills & CTL | `projects/agents` *(skipped by default)* |
-| **.github** | `https://github.com/HELIX-Origin/.github.git` | Organization profile & community health files | `projects/.github` |
+`.agents/registry/projects.json` is the canonical inventory of project checkouts and their current
+IDs, paths, kinds, and descriptions. Consult it instead of maintaining a duplicate repository table
+in this skill. A registered entry may be planned and not cloned; verify the target path exists.
 
-> This table is a human-readable overview. The bulk-clone scripts in §3 enumerate
-> the organization **live** via `gh repo list`, so they stay correct even as the
-> organization changes.
+The agents workspace itself is the current repository root; it must never be nested or cloned
+inside its own `projects/` directory. Organization-level repositories that are not project checkouts
+in the registry are not project targets merely because a bulk-clone utility can discover them.
 
 ---
 

@@ -7,7 +7,9 @@
 ## 1. Workspace Identity & Scope
 
 - **Organization Focus:** All software and theme engineering belongs exclusively to the **HELIX Origin** organization (`https://github.com/HELIX-Origin`).
-- **Organization Repositories:** All active projects reside under the gitignored `projects/` directory (`projects/nh-reader`, `projects/windows-game-explorer`, `projects/theme-toolkit`, `projects/windhawk-themes`, `projects/ffxiv-config`, `projects/depressurizer`). (`helix-jekyll-theme` and the centralized docs/wiki/portal hubs are retired and reserved for future rebuilds.)
+- **Project Registry:** `.agents/registry/projects.json` is the single source of truth for project IDs, relative paths, kinds, and short descriptions. Some entries may be planned and not cloned. Verify that the requested project path exists before opening it; do not rely on copied lists in handoffs or prior conversations.
+- **Repository Boundaries:** This workspace root is the private `HELIX-Origin/agents` repository. Every `projects/<id>` directory is a separate Git repository whose history and working-tree status must be checked independently. The parent workspace's branch, status, and session do not describe a child project's Git state.
+- **Target Resolution:** Before acting, identify the active session's actual working directory and Git root, then follow the user's explicit workspace/repository request. Do not infer a target from conversation history, a prior session, or a stale handoff. If the user requests the agents workspace, stay at this root and do not enter a project repository. If the target is ambiguous, ask before opening or editing another repository.
 - **Zero Non-Org Mentions:** Never explore, modify, or directly mention by name any projects or repositories not belonging to the `HELIX-Origin` GitHub organization.
 
 ---
@@ -24,17 +26,24 @@
 8. **Release & Asset Attachment Invariant:** All repositories across the organization must publish GitHub Releases. However, release assets must ONLY be uploaded to repositories distributing a packaged application or resource (`windows-game-explorer`, `nh-reader`, `theme-toolkit`, `ffxiv-config`, `depressurizer`). All other repositories (`windhawk-themes`, `agents`) publish zero-asset releases with release notes and tags. See `.agents/rules/release-notes.md`.
 9. **Universal Semantic Versioning Invariant:** Every repository across the organization strictly adheres to Semantic Versioning (`vMAJOR.MINOR.PATCH`). Milestone-based releases and milestone git tags are prohibited across all repositories.
 10. **Repository README Minimal Entry Point Invariant:** Project root `README.md` files must be concise, minimal entry points (~30–50 lines): what the project is, install/run, and links to community-health documents. Exhaustive technical specifications and manuals do not belong in the README; keep them in the repository's own documentation files. When organization documentation and wiki hubs are rebuilt, READMEs will link to those hubs instead. See `.agents/rules/documentation-standards.md`.
+11. **Mandatory Research-First & Zero-Guessing Invariant (All Work):** Guesswork and trial-and-error edits are strictly banned across **all work** (every domain, language, tool, script, config, asset, or doc — never limited to specific fields). Always research official primary documentation online (`search_web`) and verify state empirically before editing any file. See `.agents/rules/mandatory-research.md`.
 
 ---
 
-## 3. Subsystem Architecture
+## 3. Project Architecture & Local Instructions
 
-- **`projects/nh-reader`**: Cross-platform desktop client built with Tauri (Rust) and SvelteKit (Svelte 5 runes). Version manifests (`package.json`, `tauri.conf.json`, `Cargo.toml`) must move together.
-- **`projects/windows-game-explorer`**: Native C++20 Windows Game Explorer recreating the classic Windows 7/Vista Game Explorer (`shell:Games`) inside File Explorer (`GameExplorerShell.dll`), paired with `GameExplorerConfig.exe` (integration configuration utility) and `GameExplorerManager.exe` (Game Explorer Manager GUI for managing games and adding local games).
-- **`projects/theme-toolkit`**: Cross-platform desktop theme authoring and packaging studio for Windows, macOS, and Linux.
-- **`projects/windhawk-themes`**: Windhawk theming suites for Windows 11 targeting 5 styler mods. Uses `WindhawkBlur` and vertical gradient rim borders. Releases use Semantic Versioning (`vMAJOR.MINOR.PATCH`) with zero attached assets.
-- **`projects/depressurizer`**: Tauri v2 cross-platform Steam library categorizer and AutoCat manager (revival fork). Strictly retains its original GPL-3.0 license.
-- **`projects/ffxiv-config`**: Information-dense HUD, hotbar, and macro configuration setup for Final Fantasy XIV.
+Do not use this file as a detailed inventory of project architectures: those change independently
+and are documented in each registered project's own repository. Resolve the project ID to its
+`path` in `.agents/registry/projects.json`, confirm that path is the Git root you intend to work
+in, and read that repository's `AGENTS.md` and `.github/copilot-instructions.md` (if present)
+before making project changes. A project-local `.agents/` may define project-internal conventions;
+the workspace-root rules still govern org-wide invariants. Never carry implementation assumptions
+from another project's checkout or an old session into the selected repository.
+
+**Windows Game Explorer** is a native C++20 Win32 application suite. Its current architecture and
+quality gates are in `projects/windows-game-explorer/AGENTS.md` and its project-local rules. The
+workspace skill `.agents/skills/windows-game-explorer.md` is a concise supplementary reference;
+the project-local instructions and source tree are authoritative when details differ.
 
 ---
 
@@ -42,7 +51,7 @@
 
 | Subsystem / Area | Verification Command |
 |---|---|
-| Desktop App<br>(`nh-reader`) | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n` |
+| Desktop App<br>(`nh-reader`, current Tauri line) | `cargo check`, `cargo test`, `npm run check`, `npm run check:i18n`; from v1.0.0: CMake build `/W4 /WX` + `ctest` |
 | Windows Game Explorer<br>(`windows-game-explorer`) | `cmake -B build -S .`, `cmake --build build --config Release`, `ctest --test-dir build -C Release --output-on-failure` |
 | Theme Toolkit<br>(`theme-toolkit`) | `cargo check`, `cargo test`, `npm run check`, `npm run build` |
 | Depressurizer<br>(`depressurizer`) | `cargo check`, `cargo test`, `npm run check`, `npm run build` |

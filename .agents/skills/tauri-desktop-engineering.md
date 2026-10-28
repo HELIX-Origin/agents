@@ -1,6 +1,9 @@
 # Skill: Tauri & Rust Desktop Client Engineering
 
 > Domain knowledge and engineering runbook for cross-platform Tauri and Rust applications (`projects/nh-reader`, `projects/theme-toolkit`).
+>
+> **Scope note:** `nh-reader` applies only to the current Tauri release line. Its v1.0.0 rewrite
+> moves to `.agents/skills/native-windows-cpp.md` (Win32 + Direct2D, Windows 10 1809+ / 11).
 
 ---
 

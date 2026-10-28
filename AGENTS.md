@@ -17,14 +17,11 @@
    code to the user's projects. See `.agents/rules/git-operations.md`.
 
 2. **Organization scope invariant — never mention non-org projects or repositories.**
-   This agents ecosystem is engineered exclusively for active repositories within the `HELIX-Origin`
-   GitHub organization (`https://github.com/HELIX-Origin`): `nh-reader`,
-   `windows-game-explorer`, `theme-toolkit`, `windhawk-themes`, `ffxiv-config`,
-   `depressurizer`, and the scheduled web rebuild repositories (`helix-jekyll-theme` built first,
-   followed by `helix-origin.github.io`, `docs`, and `wiki`). Never work with,
-   read, explore, modify, or **directly mention by name** any external, third-party, or deleted
-   projects or repositories that are not part of the `HELIX-Origin` organization across rules,
-   skills, playbooks, or tracking files. This is mandatory to prevent agents from getting mixed up.
+   This ecosystem covers repositories registered in `.agents/registry/projects.json` under the
+   `HELIX-Origin` GitHub organization. That registry is the canonical project inventory; entries
+   may be planned and not cloned. Verify the requested project's path before opening it. Never
+   work with, read, explore, modify, or directly mention projects outside the active organization
+   scope.
 
 3. **Keep the tracking docs 100% accurate, normalized, and current.** `ROADMAP.md`, `PLAN.md`, `TODO.md`, and `BUGS.md` are the workspace memory and must reflect the **100% current, active direction** of all projects with zero contradictions. There are no separate archive ledgers: completed work stays as bare-minimal one-line entries in the primary ledgers, and `CHANGELOG.md` is the historical record:
    - **Active Direction Accuracy**: When a user decision supersedes or changes an earlier direction, immediately replace or remove the superseded statements across all root tracking files. Never leave raw chat logs, obsolete project names, deleted repository references, or superseded features in any ledger.
@@ -51,7 +48,7 @@
 
 7. **Agents ecosystem isolation invariant.**
    The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs `ROADMAP.md`,
-   `PLAN.md`, `TODO.md`, `BUGS.md`) lives strictly at the workspace root (`projects/agents`).
+   `PLAN.md`, `TODO.md`, `BUGS.md`) lives strictly at this agents repository root.
    It is **never** stored inside the individual project repositories under `projects/` and
    **must never be mentioned, referenced, or linked** inside any project repository (e.g. in
    `README.md`, documentation, code comments, or configuration files). Project repositories are
@@ -130,6 +127,26 @@
    standards) are never relaxed by project-local config, while project-local rules win on
    project-internal conventions. See `.agents/rules/project-agents-interoperability.md`.
 
+16. **Resolve the requested repository before acting.**
+   This checkout is the private `HELIX-Origin/agents` workspace; each directory under `projects/`
+   is a separate repository, not a subdirectory of the agents repository. At task start, verify
+   the actual working directory and Git root. The user's explicit repository/workspace selection
+   is authoritative: do not infer a target from a previous session, a linked session, a project
+   name mentioned in context, or a stale handoff. If the user asks to work in the agents workspace,
+   stay at this repository root and do not open or edit a project repository. If they ask for a
+   project, target exactly `projects/<id>` from `.agents/registry/projects.json`, then read that
+   repository's own `AGENTS.md` and local instructions before any project work. Do not create or
+   switch sessions, worktrees, repositories, or Git branches as a substitute for resolving scope.
+
+17. **Mandatory research-first & zero-guessing invariant (applies to ALL work).**
+   Guesswork and speculative trial-and-error edits are strictly banned across **all work** in all
+   repositories — never limited to any specific field, language, or subsystem. Before writing or
+   editing any code, script, configuration, asset, or documentation, you **MUST** first perform
+   online documentation research (`search_web` against official primary documentation and
+   specifications) and empirical inspection to establish the verified root cause or exact
+   specification. Never edit files based on assumptions or use build/test cycles as a guessing
+   loop. See `.agents/rules/mandatory-research.md`.
+
 
 
 
@@ -151,6 +168,10 @@
 ├── clone-org-repos-macos.sh   <- Clone all HELIX-Origin repos into projects/ (macOS)
 ├── .github/                   <- GitHub configuration & Copilot instructions
 │   └── copilot-instructions.md<- Universal workspace guidance for GitHub Copilot
+├── .opencode/                 <- OpenCode layer: Big Pickle-only model pin + context plugins + protocols
+│   ├── opencode.jsonc         <-   model/policies, compaction, tool-output & media caps, git-ask permissions
+│   ├── plugins/               <-   catalog enforcement (Big Pickle only) + context-budget hint
+│   └── instructions/          <-   OpenCode operating protocols (never relaxes .agents/ rules)
 ├── .agents/                   <- universal agent resources (any agent can read them)
 │   ├── rules/                 <- binding constraints
 │   ├── skills/                <- domain knowledge packs
@@ -161,18 +182,21 @@
 │   └── agents/                <- role playbooks: agents/<primary>/<sub>/…
 ├── scripts/                   <- workspace headless CLI (scripts/agents-kb: setup/migrate/test + kb modules; data/ & logs/ gitignored with tracked READMEs)
 ├── projects/                  <- UNTRACKED: local git repositories
-│   ├── nh-reader/             <- Native C++ Windows desktop reader (Win2K/XP to 11+)
-│   ├── windows-game-explorer/ <- Native C++ Windows Game Explorer (File Explorer shell extension & library)
-│   ├── theme-toolkit/         <- Native C++ Windows Theme Studio (theme studio & applicator, Win2K to 11+)
+│   ├── nh-reader/             <- nhentai.net desktop reader (Tauri v2 now; Win32/Direct2D rewrite planned)
+│   ├── windows-game-explorer/ <- Native C++20 Win32 Game Explorer: Shell DLL, Studio GUI & service
+│   ├── theme-toolkit/         <- Native C++ Windows Theme Studio and applicator
 │   ├── windhawk-themes/       <- Windhawk theming suites for Windows 11
 │   ├── ffxiv-config/          <- FFXIV HUD, hotbar, and macro configuration setup
 │   ├── depressurizer/         <- Native C++ Windows Steam categorizer & AutoCat manager (revival fork)
-│   ├── helix-jekyll-theme/    <- Custom glassmorphism Jekyll theme (built first to host web/docs/wiki themes)
-│   ├── helix-origin.github.io/<- Organization landing portal (scheduled rebuild)
-│   ├── docs/                  <- Centralized user documentation hub (scheduled rebuild)
-│   └── wiki/                  <- Technical reference and engineering wiki hub (scheduled rebuild)
-└── (other projects)           <- out of scope unless asked
+│   └── (registered projects)  <- See .agents/registry/projects.json; some may be planned, not cloned
+└── scratch/                   <- UNTRACKED: temporary workspace files
 ```
+
+`projects/<id>` is a project repository root with its own Git history and potentially its own
+agent instructions and tracking files. `.agents/registry/projects.json` is the canonical
+ID-to-relative-path-and-project-kind map; a registry entry does not guarantee that a local clone
+exists, so check the path before opening it. Never treat project files as part of the agents
+repository or use the root workspace's branch/status to describe a project's Git state.
 
 ## Environment quirks (Windows 11)
 
@@ -192,11 +216,15 @@
 
 | Task | Where |
 | --- | --- |
+| OpenCode configuration layer (root + per-project) | `.opencode/README.md` |
+| OpenCode operating protocols | `.opencode/instructions/opencode-protocols.md` |
 | Git permission rules | `.agents/rules/git-operations.md` |
+| Mandatory research-first & zero-guessing rule | `.agents/rules/mandatory-research.md` |
 | Workspace invariants | `.agents/rules/workspace.md` |
 | Release notes standards | `.agents/rules/release-notes.md` |
 | Project artwork standards | `.agents/rules/project-artwork.md` |
 | Verification standards | `.agents/rules/verification.md` |
+| Native GUI visual verification (screenshots, OCR, ImageMagick pixel probes) | `.agents/skills/native-gui-visual-verification.md` |
 | Security & secret hygiene | `.agents/rules/security-hygiene.md` |
 | Styling standards & SCSS-first | `.agents/rules/styling-standards.md` |
 | Documentation & content standards (theme-neutrality, HTML badges) | `.agents/rules/documentation-standards.md` |
@@ -222,7 +250,6 @@
 | Shell command management (Windows/PowerShell) | `.agents/skills/shell-command-management.md` |
 | Safe file editing (paths, EOL, exact match) | `.agents/skills/file-editing.md` |
 | Test execution without blocking | `.agents/skills/test-execution.md` |
-| helix-jekyll-theme knowledge / repair _(retired — future rebuild)_ | `.agents/skills/helix-theme.md` |
 | Project artwork generation | `.agents/skills/project-artwork-generation.md` |
 | Template: Project artwork (16:9) | `.agents/templates/project-artwork-template.svg` |
 | Template: Roadmap ledger | `.agents/templates/roadmap-template.md` |
@@ -246,10 +273,6 @@
 | macOS desktop theme engineering | `.agents/skills/macos-theme-engineering.md` |
 | Linux desktop theme engineering | `.agents/skills/linux-theme-engineering.md` |
 | GFM content rules (+ mermaid) | `.agents/skills/gfm-content.md` |
-| Remote-theme config for a site _(retired — future rebuild)_ | `.agents/skills/jekyll-remote-theme.md` |
-| Agent: SCSS engineer _(retired — future rebuild)_ | `.agents/agents/theme-engineer/scss-engineer.md` |
-| Agent: Components & layouts _(retired — future rebuild)_ | `.agents/agents/theme-engineer/components-engineer.md` |
-| Agent: Preview builder _(retired — future rebuild)_ | `.agents/agents/theme-engineer/preview-builder.md` |
 | Agent: Artwork designer | `.agents/agents/artwork-designer/artwork-designer.md` |
 | Agent: Config fixer | `.agents/agents/docs-site-engineer/config-fixer.md` |
 | Agent: Frontmatter fixer | `.agents/agents/docs-site-engineer/frontmatter-fixer.md` |
@@ -267,19 +290,22 @@
 ## Session start checklist
 
 1. Read `AGENTS.md` (done — it's this file).
-2. Read `HANDOFF.md` **immediately** (permanent, git-tracked session-state ledger) — it holds the previous
-   large session's progress — then migrate its content into `ROADMAP.md` / `PLAN.md` / `TODO.md` /
-   `BUGS.md`, reconcile (ledgers win), and **refresh it** (never delete) per `.agents/rules/session-handoff.md`.
-   Actively self-monitor context pressure every checkpoint against that rule's scoreboard — never wait for the user to flag a limit.
-3. Read `ROADMAP.md` → `PLAN.md` → `TODO.md` → `BUGS.md`; **ensure the agents ecosystem (`.agents/`, `AGENTS.md`, and tracking ledgers) is 100% current and synchronized first** — updating agent rules and tracking ledgers always takes priority before touching project code. Resume at the first unchecked TODO item.
-4. Before editing **any** documentation content, consult `.agents/rules/documentation-standards.md` —
-   documentation stays **theme-neutral/mod-agnostic**; a theme/suite's specifics belong only in a
-   catalogue/store section.
-6. Confirm which exact git operations, if any, the user has explicitly authorized in the
-   current conversation — and for which repository.
-7. When touching a project, discover and honor its own internal agents assets if present
-   (`AGENTS.md`, `.agents/`, `.github/copilot-instructions.md`) per
-   `.agents/rules/project-agents-interoperability.md` — never clobber them unprompted; the
-   workspace-root ecosystem enhances them and org-wide invariants always win.
-8. If this is a large/multi-step task, load `task-decomposition` skill and follow `large-task-handling.md`. If session may be long, load `large-session-management` skill and follow `session-management.md`. Follow `background-tasks.md` for any long-running commands.
-9. For any shell command, follow `.agents/skills/shell-command-management.md` (quote paths with spaces, set `workdir` instead of `cd`, PowerShell-native tools only). For file edits, follow `.agents/skills/file-editing.md` (read first, exact match, preserve EOL) — never edit files via the shell.
+2. Confirm the actual session working directory and Git root. Resolve the user's explicit target:
+   this agents repository or one exact `projects/<id>` repository from `.agents/registry/projects.json`.
+   Do not infer the target from previous sessions, chat history, or a handoff. If the user asks for
+   agents-workspace work, remain at this root and do not open project repositories.
+3. For agents-workspace work, read this root `HANDOFF.md`, then the root `ROADMAP.md` → `PLAN.md` →
+   `TODO.md` → `BUGS.md`; reconcile handoff against the root ledgers. For project work, first enter
+   only the explicitly selected project's existing registry path and read that repository's own
+   `AGENTS.md`, local rules, and project `HANDOFF.md` / ledgers. Root tracking documents describe
+   cross-project work and are not evidence of a project's current Git state or checkpoint.
+4. Before editing documentation, consult `.agents/rules/documentation-standards.md`.
+5. Confirm which exact Git operations, if any, the user has authorized in the current conversation
+   and for which repository.
+6. When touching a project, discover and honor its own `AGENTS.md`, `.agents/`, and
+   `.github/copilot-instructions.md` per `.agents/rules/project-agents-interoperability.md`.
+7. For large/multi-step tasks, follow `large-task-handling.md`; for long sessions, follow
+   `session-management.md`; for long-running commands, follow `background-tasks.md`.
+8. Follow `.agents/skills/shell-command-management.md` for commands and
+   `.agents/skills/file-editing.md` for edits. Read files before editing and preserve their
+   line endings; never edit files via shell commands.

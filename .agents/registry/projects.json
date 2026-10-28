@@ -2,11 +2,12 @@
   "$comment": "Registry of HELIX-Origin repositories under projects/. Drives the global ledgers' Project Tracking Index (kb-index.ts) and, later, project-type to pack mapping. Descriptions are one short line; per-project detail lives only in each repository's own tracking files.",
   "org": "HELIX-Origin",
   "projects": [
-    { "id": "nh-reader", "path": "projects/nh-reader", "kind": "windows-cpp", "description": "Native C++ Windows desktop reader" },
+    { "id": "nh-reader", "path": "projects/nh-reader", "kind": "windows-cpp", "description": "nhentai.net desktop reader (Tauri v2 today; native Win32 + Direct2D v1.0.0 rewrite planned)" },
     { "id": "windows-game-explorer", "path": "projects/windows-game-explorer", "kind": "windows-cpp", "description": "Native C++ Windows Game Explorer (File Explorer shell extension & game library)" },
     { "id": "theme-toolkit", "path": "projects/theme-toolkit", "kind": "windows-cpp", "description": "Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)" },
     { "id": "depressurizer", "path": "projects/depressurizer", "kind": "windows-cpp", "description": "Native C++ Windows Steam categorizer & AutoCat manager (revival fork)" },
     { "id": "windhawk-themes", "path": "projects/windhawk-themes", "kind": "windhawk-mods", "description": "Windhawk styler mod themes" },
-    { "id": "ffxiv-config", "path": "projects/ffxiv-config", "kind": "game-config", "description": "FFXIV HUD, hotbar and macro configuration" }
+    { "id": "ffxiv-config", "path": "projects/ffxiv-config", "kind": "game-config", "description": "FFXIV HUD, hotbar and macro configuration" },
+    { "id": "ffxiv-dat-toolkit", "path": "projects/ffxiv-dat-toolkit", "kind": "ffxiv-toolkit", "description": "FFXIV DAT toolkit (decode, transform and repack character/config .DAT files)" }
   ]
 }

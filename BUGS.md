@@ -23,7 +23,7 @@
 > Entry point to per-project **BUGS** tracking: one line per project (short title + link). Detail lives only in each repository. Regenerate with `npm --prefix scripts run index`; do not edit between the markers.
 
 <!-- project-index:start -->
-- **[nh-reader]** — [No open bugs](./projects/nh-reader/BUGS.md) · _Native C++ Windows desktop reader_
+- **[nh-reader]** — [No open bugs](./projects/nh-reader/BUGS.md) · _nhentai.net desktop reader (Tauri v2 today; native Win32 + Direct2D v1.0.0 rewrite planned)_
 - **[windows-game-explorer]** — [No open bugs](./projects/windows-game-explorer/BUGS.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
 - **[theme-toolkit]** — [1 open — 2026-10-19 — : {{BUG_TITLE}}](./projects/theme-toolkit/BUGS.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
 - **[depressurizer]** — [No open bugs](./projects/depressurizer/BUGS.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_

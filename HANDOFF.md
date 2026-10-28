@@ -1,7 +1,7 @@
 # HANDOFF.md — Agents Ecosystem Session Handoff
 
-**Last updated:** 2026-10-26
-**Current session status:** `windows-game-explorer` v2.5.0 released, tagged and published — release commit `c573ce5` on `origin/main`, tag `v2.5.0`, GitHub release with the setup EXE, portable ZIP and ROMs template (SHA256s verified) · `game-explorer.bat release` passed in one pass (0 errors / 0 warnings under `/W4 /WX`, 61/61 unit tests, 0 PSScriptAnalyzer diagnostics) · next planned work is M18 Windows 10 vs 11 shell compatibility research (`ARCH-01`); relocation and install-progress tracking are dropped · `.opencode/` ecosystems active across root and all six project repositories.
+**Last updated:** 2026-10-27
+**Current session status:** `windows-game-explorer` M19 active: standalone `shell:games` dynamic window sizing and resizability synchronization delivered (zero hardcoded sizes, fluid XAML island layout, navpane hidden only in standalone mode) · Fluent 3D controller icon face buttons corrected (Y=Yellow, B=Red, X=Blue, A=Green) · Mandatory research-first & zero-guessing rule locked down organization-wide · 87/87 unit tests passing with zero errors and zero warnings (`/W4 /WX`).
 **Workspace Root:** D:\Projects\GitHub\HELIX Origin
 
 > Permanent, git-tracked session-state ledger for the **Agents Ecosystem**. Maintained **incrementally** — refresh at every
@@ -18,8 +18,8 @@
 > Entry point to per-project **HANDOFF** tracking: one line per project (short title + link). Detail lives only in each repository. Regenerate with `npm --prefix scripts run index`; do not edit between the markers.
 
 <!-- project-index:start -->
-- **[nh-reader]** — [Delivered · 0 open workstreams](./projects/nh-reader/HANDOFF.md) · _Native C++ Windows desktop reader_
-- **[windows-game-explorer]** — [`v2.5.0` released, tagged and published — release commit `c573ce5` on `origin/main`, tag `v2.5.0`, GitHub release with the setup EXE, porta…](./projects/windows-game-explorer/HANDOFF.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
+- **[nh-reader]** — [Rewrite prep delivered · M14 Phase 0 complete, Phase 1 ready; M13 deferred until v1.0.0](./projects/nh-reader/HANDOFF.md) · _nhentai.net desktop reader (Tauri v2 today; native Win32 + Direct2D v1.0.0 rewrite planned)_
+- **[windows-game-explorer]** — [`v2.5.0` released. Active development branch: `dev/m18-m19-explorer` in main workspace repository. M19 active:](./projects/windows-game-explorer/HANDOFF.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
 - **[theme-toolkit]** — [W.01 active · Rebranded to Theme Studio · Supporting Windows 2000 to Windows 11+ · Pivot to Native C++ Windows Desktop Theme Studio (Tauri…](./projects/theme-toolkit/HANDOFF.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
 - **[depressurizer]** — [W.05 active · Pivot to Native Windows C++ Modernization & UI Polish (Tauri v2 rewrite abandoned).](./projects/depressurizer/HANDOFF.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
 - **[windhawk-themes]** — [Initialized · 0 open workstreams](./projects/windhawk-themes/HANDOFF.md) · _Windhawk styler mod themes_
@@ -50,6 +50,7 @@
 ---
 
 ## 2) Delivered Workstreams (Bare-Minimal Summary)
+- **[Ecosystem] W.67 — nh-reader v1.0.0 Win32 direction sync:** Registry, root path descriptions, verification/release tables, project ledgers and the project-local agents docs now distinguish the current Tauri line from the locked Windows 10 1809+/11 Win32 + Direct2D rewrite; pre-rewrite snapshot and plan recorded in `projects/nh-reader`.
 - **[Ecosystem] W.64 — Legacy Tool Suite Deprecation:** Retired legacy tool configurations.
 - **[Ecosystem] W.63 — Legacy Configuration Modernization & Evaluation:** Completed and superseded by tool-agnostic architecture.
 - **[Ecosystem] W.62 — Context-Pressure Self-Monitoring:** Codified into permanent `HANDOFF.md` self-monitoring protocol and `session-handoff.md` rule.

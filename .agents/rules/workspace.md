@@ -7,21 +7,30 @@
 - Any project or repository not actively part of the `HELIX-Origin` GitHub organization is strictly off-limits. Do not read, list, search, modify, or **directly mention by name** any external, third-party, or discontinued/deleted projects or repositories anywhere in `AGENTS.md`, `.agents/`, `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`, or `.github/`.
 - Mentioning external projects, competitor tools, or deleted/pre-rebrand repository names in tracking files or skills is strictly prohibited to prevent agents from getting mixed up.
 
-## Scope
+## Scope and repository routing
 
-These rules apply to **every active project** under `projects/` belonging to `HELIX-Origin`:
+These rules apply to this agents workspace and its registered HELIX-Origin project repositories.
+The canonical inventory is `.agents/registry/projects.json`; do not maintain a second hand-written
+active-project list here. Registry entries define project ID, workspace-relative path, project kind,
+and a short description. An entry may be planned or not cloned, so verify that its path exists
+before opening it.
 
-## Active `HELIX-Origin` organization projects (as of 2026-10-23)
+- The agents repository root and every `projects/<id>` directory are separate Git repositories.
+  The `projects/` directory is local-only/ignored by the agents repository; project files are not
+  part of the agents repository's tracked tree.
+- Resolve the task's target from the user's explicit request and the live session/workspace root.
+  Never infer it from a prior session, a project name in conversation history, or a stale handoff.
+- For an agents-workspace task, remain in the agents repository and do not inspect or edit project
+  repositories. For a project task, use exactly the registry path, confirm its Git root/status,
+  then read that project's own `AGENTS.md` and local agent instructions.
+- Do not create or switch sessions, worktrees, repositories, or branches to compensate for an
+  unresolved target. Ask the user when their target is genuinely ambiguous.
 
-- `projects/helix-jekyll-theme` — shared remote Jekyll theme engine (+ its own preview site).
-- `projects/nh-reader` — Tauri v2 desktop manga/comic reader (scripts, workflows, desktop core).
-- `projects/windows-game-explorer` — Native C++ Windows Game Explorer (File Explorer shell extension & library, Win2K/XP to 11+).
-- `projects/theme-toolkit` — cross-platform desktop theme studio & applicator (Windows, macOS, Linux).
-- `projects/windhawk-themes` — Windhawk theming suites for Windows 11 (Windhawk styler mods).
-- `projects/ffxiv-config` — FFXIV HUD, hotbar, and macro configuration setup.
-- `projects/depressurizer` — Steam library categorizing & management tool (revival fork).
+## Mandatory research-first & zero-guessing invariant (GLOBAL RULE — ALL WORK)
 
-Everything else outside these active `HELIX-Origin` repositories is strictly out of scope and must never be referenced.
+- Guesswork, unverified assumptions, and trial-and-error edits are strictly prohibited across **ALL work** in all repositories (every domain, language, tool, script, configuration, asset, or documentation task — never limited to specific fields).
+- Before touching or editing any file, agents **MUST** first conduct online documentation research (`search_web` against official primary documentation and specifications) and empirical measurement/inspection to prove the exact root cause or specification.
+- Never use build, test, or register cycles as a speculative debugging loop. See `.agents/rules/mandatory-research.md`.
 
 ## Agent ecosystem priority rule (GLOBAL RULE)
 
@@ -32,9 +41,20 @@ Updating and maintaining the agents ecosystem (`AGENTS.md`, `.agents/rules/`, `.
 
 ## Agents ecosystem isolation invariant
 
-The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) lives strictly at the workspace root (`projects/agents`). It is **never** copied into the individual project repositories under `projects/` and **must never be mentioned, referenced, or linked** inside any project repository (e.g. in `README.md`, documentation, code comments, or configuration files). Project repositories are public, standalone open-source codebases whose documentation must remain completely self-contained for external human contributors.
+The agents ecosystem (`.agents/`, `AGENTS.md`, and workspace root tracking docs `ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) lives strictly at the root of the `HELIX-Origin/agents` repository. It is **never** copied into the individual project repositories under `projects/` and **must never be mentioned, referenced, or linked** inside any project repository (e.g. in `README.md`, documentation, code comments, or configuration files). Project repositories are public, standalone open-source codebases whose documentation must remain completely self-contained for external human contributors. The workspace root is not a child of `projects/`; `projects/<id>` entries are separate clones.
 
 **Project-local ecosystems (W.56):** every project repository owns its **own, fully self-contained** agents ecosystem (`AGENTS.md`, `.agents/`, `.github/copilot-instructions.md`) and its **own tracking files** (`ROADMAP.md`, `PLAN.md`, `TODO.md`, `BUGS.md`) holding that repository's items only. They are generated from the headless CLI scaffold (`kb-scaffold.ts`) plus the workspace templates, contain no workspace-root paths or ledger references, carry no `[project] (path)` tags (single-project scope), and never relax org-wide invariants. Per-repo items migrate from the root ledgers into the owning repo; the root ledgers retain only ecosystem and cross-repo items plus a one-line pointer per migrated workstream.
+
+## OpenCode configuration layer (`.opencode/`)
+
+`.opencode/` is the **OpenCode-specific adapter** on top of the tool-agnostic `.agents/` ecosystem — not a replacement for it, and never a place to hide an org-wide invariant.
+
+- **Location:** one `.opencode/` at the workspace root and one self-contained `.opencode/` in **each** active project repository (`nh-reader`, `windows-game-explorer`, `theme-toolkit`, `depressurizer`, `windhawk-themes`, `ffxiv-config`).
+- **Mandatory contents per copy:** `opencode.jsonc`, `plugins/big-pickle-only.ts`, `plugins/context-budget.ts`, `instructions/opencode-protocols.md`, plus `types/opencode-plugin.d.ts` and `tsconfig.json` for standalone type checking of the plugins (a root `README.md` is added on top).
+- **Single-model invariant:** only **Big Pickle** (`opencode/big-pickle`) may be used. Enforced twice — `model` + `policies` in `opencode.jsonc`, and a catalog-filtering plugin. Never add another provider, model, or model override to any configuration.
+- **Precedence:** `AGENTS.md` and `.agents/rules/` always win. `.opencode/` may add operating protocols, context budget limits, and git-mutation prompts; it may never relax git safety, licensing, SemVer/release, community-health, zero-warning, documentation, or isolation rules.
+- **Isolation:** a project's `.opencode/` must stay standalone and must never reference or link the private agents ecosystem, exactly like its `AGENTS.md` / `.agents/` (see the isolation invariant above). Plugin identifiers use a neutral `helix.*` prefix and plugin docs stay generic.
+- **Maintenance:** changing an org-wide OpenCode setting means updating the root copy **and** every project copy in the same change, keeping them behaviourally identical.
 
 ## Per-Project Licensing (BINDING, with Revival Fork Exception)
 
@@ -89,7 +109,7 @@ There is no single org-wide default license; the choice is made per repository.
 
 ## Communication
 
-- Use clear paths (`projects/helix-jekyll-theme/_includes/nav.html`).
+- Use clear paths relative to the selected repository (for example, `projects/<id>/src/...`).
 - Report progress against TODO items, not just prose.
 - If credits may run out mid-task, leave TODO.md in a state a fresh session can resume from
   (first unchecked item = next action).

@@ -32,7 +32,7 @@ To establish a uniform, detailed, human-readable, and universal release notes st
 | Repository / Project | Versioning Standard | Tag Identifier Pattern | Prebuilt Release Assets Uploaded? | Primary Tracking Docs |
 |---|---|---|---|---|
 | **windows-game-explorer** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v2.0.0`) | ✅ Yes (Windows native binaries & installers) | `CHANGELOG.md`, `ROADMAP.md` |
-| **nh-reader** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.7.5`) | ✅ Yes (Windows, macOS, Linux installers, Android APK) | `CHANGELOG.md`, `ROADMAP.md` |
+| **nh-reader** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.7.5`) | ✅ Yes (Windows installer + portable ZIP; the v1.0.0 rewrite drops macOS/Linux/Android assets) | `CHANGELOG.md`, `ROADMAP.md` |
 | **theme-toolkit** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ✅ Yes (Windows, macOS, Linux desktop installers & packages) | `CHANGELOG.md`, `ROADMAP.md` |
 | **depressurizer** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v1.0.0`) | ✅ Yes (Windows desktop binaries & packages) | `CHANGELOG.md`, `ROADMAP.md` |
 | **ffxiv-config** | **Semantic Versioning (SemVer)** | `v<major>.<minor>.<patch>` (e.g. `v0.1.0`) | ✅ Yes (Packaged configuration archive `ffxiv-config.zip`) | `README.md` |
