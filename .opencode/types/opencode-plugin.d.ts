@@ -2,7 +2,7 @@
  * Local type shim for the OpenCode V2 plugin runtime module.
  *
  * `@opencode/plugin` is supplied by the OpenCode runtime when it loads a plugin, so it is not a
- * resolvable package for an editor: these repositories ship no Node manifest and never install a
+ * resolvable package for an editor: this repository ships no Node manifest and never installs a
  * copy of the runtime. Without this declaration TypeScript reports "cannot find module" plus
  * implicit-`any` parameters for `ctx` and `editor`.
  *
@@ -61,9 +61,11 @@ declare module "@opencode/plugin" {
       callback: (event: any) => void | Promise<void>,
       options?: { providerID?: string },
     ): Promise<Registration>
+    compact(input: { sessionID: string; delivery?: "steer" | "queue" }): Promise<{ id: string }>
   }
 
   export interface PluginContext {
+    readonly options: Record<string, unknown>
     readonly provider: {
       transform(callback: (editor: ProviderEditor) => void): Promise<Registration>
       reload(): Promise<void>

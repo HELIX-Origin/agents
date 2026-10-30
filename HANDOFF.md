@@ -1,7 +1,7 @@
 # HANDOFF.md — Agents Ecosystem Session Handoff
 
-**Last updated:** 2026-10-27
-**Current session status:** `windows-game-explorer` M19 active: standalone `shell:games` dynamic window sizing and resizability synchronization delivered (zero hardcoded sizes, fluid XAML island layout, navpane hidden only in standalone mode) · Fluent 3D controller icon face buttons corrected (Y=Yellow, B=Red, X=Blue, A=Green) · Mandatory research-first & zero-guessing rule locked down organization-wide · 87/87 unit tests passing with zero errors and zero warnings (`/W4 /WX`).
+**Last updated:** 2026-10-28
+**Current session status:** `windows-game-explorer` v2.7.0 released and published to GitHub with installer and portable distribution packages · updated README banner and integrated real UI preview screenshots across documentation (Details pane, Notification bell flyout, Studio Library Manager, Studio Game Catalogue) · all changes committed and pushed to `origin/main` · 112/112 unit tests passing with zero errors and zero warnings (`/W4 /WX`).
 **Workspace Root:** D:\Projects\GitHub\HELIX Origin
 
 > Permanent, git-tracked session-state ledger for the **Agents Ecosystem**. Maintained **incrementally** — refresh at every
@@ -18,8 +18,8 @@
 > Entry point to per-project **HANDOFF** tracking: one line per project (short title + link). Detail lives only in each repository. Regenerate with `npm --prefix scripts run index`; do not edit between the markers.
 
 <!-- project-index:start -->
-- **[nh-reader]** — [Rewrite prep delivered · M14 Phase 0 complete, Phase 1 ready; M13 deferred until v1.0.0](./projects/nh-reader/HANDOFF.md) · _nhentai.net desktop reader (Tauri v2 today; native Win32 + Direct2D v1.0.0 rewrite planned)_
-- **[windows-game-explorer]** — [`v2.6.0` released on `main`. Standalone dynamic sizing, 87 unit tests, and repository documentation updated.](./projects/windows-game-explorer/HANDOFF.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
+- **[nh-reader]** — [Sprint 2 Completed · v0.8.0 Staged & Verified · Ready for Commit & Push](./projects/nh-reader/HANDOFF.md) · _nhentai.net desktop reader (Tauri v2 today; native Win32 + Direct2D v1.0.0 rewrite planned)_
+- **[windows-game-explorer]** — [Catalogue details pane rework, per-game update checker, and the notification bell are delivered in the working tree (uncommitted, not yet r…](./projects/windows-game-explorer/HANDOFF.md) · _Native C++ Windows Game Explorer (File Explorer shell extension & game library)_
 - **[theme-toolkit]** — [W.01 active · Rebranded to Theme Studio · Supporting Windows 2000 to Windows 11+ · Pivot to Native C++ Windows Desktop Theme Studio (Tauri…](./projects/theme-toolkit/HANDOFF.md) · _Native C++ Windows theme studio & applicator for Windows 2000 to 11+ (Theme Studio)_
 - **[depressurizer]** — [W.05 active · Pivot to Native Windows C++ Modernization & UI Polish (Tauri v2 rewrite abandoned).](./projects/depressurizer/HANDOFF.md) · _Native C++ Windows Steam categorizer & AutoCat manager (revival fork)_
 - **[windhawk-themes]** — [Initialized · 0 open workstreams](./projects/windhawk-themes/HANDOFF.md) · _Windhawk styler mod themes_
@@ -50,7 +50,7 @@
 ---
 
 ## 2) Delivered Workstreams (Bare-Minimal Summary)
-- **[Ecosystem] W.67 — nh-reader v1.0.0 Win32 direction sync:** Registry, root path descriptions, verification/release tables, project ledgers and the project-local agents docs now distinguish the current Tauri line from the locked Windows 10 1809+/11 Win32 + Direct2D rewrite; pre-rewrite snapshot and plan recorded in `projects/nh-reader`.
+- **[Ecosystem] W.67 — nh-reader Tauri v2 direction restore:** Codebase restored to working Tauri v2 + Svelte 5 + Rust client; Sprint 2 performance optimization, Browse/navigation modernization, i18n parity, and comprehensive docs delivered for v0.8.0.
 - **[Ecosystem] W.64 — Legacy Tool Suite Deprecation:** Retired legacy tool configurations.
 - **[Ecosystem] W.63 — Legacy Configuration Modernization & Evaluation:** Completed and superseded by tool-agnostic architecture.
 - **[Ecosystem] W.62 — Context-Pressure Self-Monitoring:** Codified into permanent `HANDOFF.md` self-monitoring protocol and `session-handoff.md` rule.

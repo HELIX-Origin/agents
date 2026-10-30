@@ -1,71 +1,32 @@
 {
   "$schema": "https://opencode.ai/config.json",
 
-  // The one model permitted anywhere in this workspace. Model-level enforcement is backed up
-  // by `.opencode/plugins/big-pickle-only.ts`, which strips every other model from the catalog.
-  "model": "opencode/big-pickle",
+  "model": "opencode/beam-free",
 
-  // Hard provider block. Policies evaluate broadest-last, so a nested project config can never
-  // re-enable another provider. The built-in `opencode` provider carries Big Pickle.
-  "policies": [
-    { "action": "provider.use", "resource": "*", "effect": "deny" },
-    { "action": "provider.use", "resource": "opencode", "effect": "allow" }
-  ],
-
-  // Workspace operating protocols (OpenCode-specific; AGENTS.md still carries the invariants).
   "instructions": [".opencode/instructions/*.md"],
 
-  // --- Context management -------------------------------------------------------------
-  // Compact before the window is exhausted and keep a useful working tail afterwards.
   "compaction": {
     "auto": true,
     "keep": { "tokens": 20000 },
     "buffer": 24000
   },
-
-  // Stop a single noisy command or oversized image from eating the window.
   "tool_output": {
     "max_lines": 1500,
     "max_bytes": 51200
-  },
-  "media": {
-    "image": {
-      "auto_resize": true,
-      "max_width": 1600,
-      "max_height": 1600,
-      "max_base64_bytes": 4194304
-    }
   },
 
   "experimental": {
     "todo": true,
     "subagent_depth": 1,
-    "background_compaction": true,
-    "location_idle_timeout": "4 hours"
+    "background_compaction": true
   },
 
-  // --- Git safety ---------------------------------------------------------------------
-  // Repository-mutating git commands always require an explicit prompt. Read-only commands
-  // (status, log, diff, show, ls-files, remote -v) stay frictionless.
-  "permissions": [
-    { "action": "shell", "resource": "git add *", "effect": "ask" },
-    { "action": "shell", "resource": "git commit *", "effect": "ask" },
-    { "action": "shell", "resource": "git push *", "effect": "ask" },
-    { "action": "shell", "resource": "git pull *", "effect": "ask" },
-    { "action": "shell", "resource": "git merge *", "effect": "ask" },
-    { "action": "shell", "resource": "git rebase *", "effect": "ask" },
-    { "action": "shell", "resource": "git reset *", "effect": "ask" },
-    { "action": "shell", "resource": "git stash *", "effect": "ask" },
-    { "action": "shell", "resource": "git checkout *", "effect": "ask" },
-    { "action": "shell", "resource": "git switch *", "effect": "ask" },
-    { "action": "shell", "resource": "git clean *", "effect": "ask" },
-    { "action": "shell", "resource": "git tag *", "effect": "ask" },
-    { "action": "shell", "resource": "git branch *", "effect": "ask" },
-    { "action": "shell", "resource": "git mv *", "effect": "ask" },
-    { "action": "shell", "resource": "git rm *", "effect": "ask" },
-    { "action": "shell", "resource": "git restore *", "effect": "ask" },
-    { "action": "shell", "resource": "git apply *", "effect": "ask" },
-    { "action": "shell", "resource": "git cherry-pick *", "effect": "ask" },
-    { "action": "shell", "resource": "git revert *", "effect": "ask" }
+  "plugins": [
+    "projects/depressurizer/.opencode/plugins",
+    "projects/ffxiv-config/.opencode/plugins",
+    "projects/nh-reader/.opencode/plugins",
+    "projects/theme-toolkit/.opencode/plugins",
+    "projects/windhawk-themes/.opencode/plugins",
+    "projects/windows-game-explorer/.opencode/plugins"
   ]
 }

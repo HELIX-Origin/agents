@@ -1,0 +1,17 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "enabled": true,
+  "debug": false,
+  "registryPath": ".agents/registry/projects.json",
+  "reportOnStartup": true,
+
+  "pluginDirs": [
+    "projects/depressurizer/.opencode/plugins",
+    "projects/ffxiv-config/.opencode/plugins",
+    "projects/nh-reader/.opencode/plugins",
+    "projects/theme-toolkit/.opencode/plugins",
+    "projects/windhawk-themes/.opencode/plugins",
+    "projects/windows-game-explorer/.opencode/plugins"
+  ]
+}
